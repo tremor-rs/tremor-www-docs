@@ -1,1 +1,1 @@
-pip3 install mkdocs-material
+sudo pip3 install mkdocs-material

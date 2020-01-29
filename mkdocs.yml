@@ -1,0 +1,19 @@
+site_name: Tremor Usage Guide
+site_author: The Tremor Team
+repo_url: https://github.com/wayfair-tremor/docs
+repo_name: wayfair-tremor/docs
+edit_uri: edit/master/docs
+docs_dir: docs
+site_dir: html
+pages:
+theme:
+  name: material
+  logo: img/logo.png
+extra:
+  repo_icon: github
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true
+nav:
+  - Home: index.md

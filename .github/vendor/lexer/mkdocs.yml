@@ -1,0 +1,10 @@
+site_name: tremor-mkdocs-lexer
+docs_dir: docs
+theme:
+  name: material
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true
+nav:
+  - Home: index.md

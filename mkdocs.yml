@@ -20,6 +20,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - 'Architecture Overview': overview.md
+  - 'Security': Security.md
   - Tremor Query:
     - Overview: tremor-query/index.md
     - Walkthrough: tremor-query/walkthrough.md

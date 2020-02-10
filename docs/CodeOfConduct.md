@@ -37,7 +37,7 @@ The enforcement policies listed above apply to all official Tremor venues; inclu
 
 *Adapted from the [Node.js Policy on Trolling](http://blog.izs.me/post/30036893703/policy-on-trolling) as well as the [Contributor Covenant v1.3.0](https://www.contributor-covenant.org/version/1/3/0/).*
 
-[mod_team]: http://www.tremor.rs/community/teams/#moderation-mod
+[mod_team]: https://www.tremor.rs/community/teams/#moderation-mod
 
 ## Origins
 

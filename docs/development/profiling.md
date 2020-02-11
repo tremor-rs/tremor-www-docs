@@ -1,6 +1,6 @@
 # Profiling Tremor
 
-This is a short canned synopsis of profiling tremor
+This is a short canned synopsis of profiling tremor.
 
 ## Valgrind
 
@@ -14,9 +14,9 @@ Install valgrind via homebrew
 brew install valgrind
 ```
 
-### Dependant utilities
+### Dependent utilities
 
-The Google Performance Toolkit, gprof2dot, qcachegrind are also required / useful
+The Google Performance Toolkit, gprof2dot, qcachegrind are also required / useful.
 
 ```bash
 brew install gprof2dot
@@ -54,23 +54,23 @@ RUST_BACKTRACE=1 PROFILEFREQUENCY=1000 valgrind --tool=callgrind \
     target/release/tremor-cli script run examples/config-spike5.tremor data.json
 ```
 
-Note: When using a **release** build make sure debug symbols are configured in Cargo.toml and enable link time optimisations ( LTO )
+Note: When using a **release** build make sure debug symbols are configured in Cargo.toml and enable link time optimisations ( LTO ).
 
 ## Flamegraphs
 
-Install rust flamegraph support
+Install rust [flamegraph](https://github.com/flamegraph-rs/flamegraph#systems-performance-work-guided-by-flamegraphs) support:
 
 ```bash
 cargo install flamegraph
 ```
 
-Perform a benchmark run with flamegraph support ( on Mac OS X )
+Perform a benchmark run with flamegraph support ( on Mac OS X ):
 
 ```bash
 flamegraph target/release/tremor-server -c bench/real-workflow-througput-json.yaml bench/link.yaml
 ```
 
-This generates a `flamegraph.svg` file which can be opened in Chrome
+This generates a `flamegraph.svg` file which can be opened from a browser.
 
 ```bash
 open flamegraph.svg

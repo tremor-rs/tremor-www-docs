@@ -135,7 +135,7 @@ Here docs can in indented, the indentation will be truncated to the lowest numbe
 """
 ```
 
-The above **heredoc** would truncate 3 spaces characters since `...a` has 3 spaces infant of it even so other lines have 4.
+The above **heredoc** would truncate 3 spaces characters since `...a` has 3 spaces in front of it even so other lines have 4.
 
 #### Arrays
 

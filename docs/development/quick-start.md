@@ -11,10 +11,10 @@ This page explains how to get tremor running on a local system for development o
 
 Tremor can be run on any platform without using docker by installing the rust ecosystem. To install the rust ecosystem you can use `rustup` which is a toolchain installer.
 
-To install rustup, you run the following command on *nix systems and follow the on-screen instructions:
+To install [rustup](https://www.rust-lang.org/tools/install), you run the following command on *nix systems and follow the on-screen instructions:
 
 ```bash
-curl https://sh.rustup.rs -sSf | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 For Windows (64-bit) you can download the rustup installer by clicking [here](https://win.rustup.rs/x86_64)
@@ -31,6 +31,7 @@ You need to install xcode and the commandline tools.
 
 ### Additional Libraries
 
+For macOS:
 ```bash
 brew install openssl
 brew install autoconf
@@ -38,9 +39,14 @@ brew install re2c
 brew install bison #make sure to follow the printed instructions!
 ```
 
+For ubuntu:
+```bash
+sudo apt install libssl-dev libclang-dev cmake
+```
+
 ### Running Tremor
 
-After installing rust and cloning the repository from `git.csnzoo.com`, you can start tremor server by changing to `tremor-server` directory in tremor and running:
+After installing rust and cloning the repository, you can start tremor server by changing to `tremor-server` directory in tremor and running:
 
 ```bash
 cargo run
@@ -52,15 +58,7 @@ To run the test suite, in the root (`tremor-runtime`) directory you can run:
 cargo test
 ```
 
-this will run all the tests in the suite, except those which are feature-gated and not needed to quickly test tremor.
-
-### Additional Rust libraries
-
-We need addiotnal libraries those can be isntalled via homebrew:
-
-```bash
-brew install openssl
-```
+This will run all the tests in the suite, except those which are feature-gated and not needed to quickly test tremor.
 
 #### Rustfmt
 

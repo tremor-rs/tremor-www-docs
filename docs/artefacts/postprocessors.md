@@ -8,15 +8,15 @@ Online codecs, postprocessors can be chained to perform multiple operations in s
 
 ### lines
 
-Delimits the output ( events ) into lines ( by '\n' )
+Delimits the output ( events ) into lines ( by '\n' ).
 
 ### base64
 
 Encodes raw data into base64 encoded bytes.
 
-### length-prefixerd
+### length-prefixed
 
-Prefixes the data with a network byte order (big endian) lenght of the data in bytes
+Prefixes the data with a network byte order (big endian) lenght of the data in bytes.
 
 ### compression
 

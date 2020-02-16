@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  tremor:
+    image: wayfair/tremor/tremor-runtime:5948de571d90b9d0b4b73102e0d27eaae691eff7-2995fa9-PR-5
+    depends_on:
+      - postgres
+      - timescaledb
+    ports:
+      - 4242:4242
+    environment:
+      - RUST_BACKTRACE=full
+      - RUST_LOG=trace
+    volumes:
+      - ./etc/tremor:/etc/tremor:rw
+      - ./var/log:/var/log:rw
+  pgweb:
+    image: sosedoff/pgweb
+    depends_on:
+      - postgres
+      - timescaledb
+      - tremor
+    ports:
+      - 8081:8081
+    environment:
+      - DATABASE_URL=postgres://postgres:example@timescaledb:5432/measurements?sslmode=disable
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    ports:
+      - 9876:5432
+    volumes:
+      - ./seed_pg.sh:/docker-entrypoint-initdb.d/init.sh
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+  timescaledb:
+    image: timescale/timescaledb
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+    volumes:
+      - ./seed_tsdb.sh:/docker-entrypoint-initdb.d/init.sh
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]

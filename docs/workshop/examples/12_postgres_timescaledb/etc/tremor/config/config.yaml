@@ -1,0 +1,55 @@
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor-server.
+#
+binding:
+  - id: alerter
+    links:
+      '/onramp/postgres-input/{instance}/out': [ '/pipeline/alerts/{instance}/in' ]
+      '/pipeline/alerts/{instance}/out': [ '/offramp/timescaledb-output/{instance}/in' ]
+mapping:
+  /binding/alerter/cyclopes:
+    instance: 'cyclopes'
+onramp:
+  - id: postgres-input         # A unique id for binding/mapping
+    type: postgres             # The unique type descriptor for the onramp
+    codec: json         # The underlying data format expected for application payload data
+    config:
+      host: postgres
+      port: 5432
+      user: postgres
+      password: example
+      dbname: products
+      interval_ms: 10000
+      query: "SELECT * FROM transactions WHERE created_at >= $1 AND created_at < $2;"
+      consume_from: "2019-12-01 00:00:00.000000 +00:00"
+      cache:
+        path: "/etc/tremor/cache.json"
+        size: 4096
+offramp:
+  - id: timescaledb-output
+    type: postgres
+    codec: json
+    config:
+      host: timescaledb
+      port: 5432
+      user: postgres
+      password: example
+      dbname: measurements
+      table: events
+  - id: debug
+    type: stdout
+    codec: json
+pipeline:
+  - id: alerts
+    interface:
+      inputs: [ in ]
+      outputs: [ out ]
+    nodes:
+      - id: script
+        op: runtime::tremor
+        config:
+          script: |
+            event
+    links:
+      in: [ script ]
+      script: [ out ]

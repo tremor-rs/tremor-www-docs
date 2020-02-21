@@ -11,8 +11,11 @@ pages:
 theme:
   name: material
   logo: img/logo.png
+  palette:
+    primary: 'black'
+    accent: 'indigo'
 extra:
-  repo_icon: gitlab
+  repo_icon: github
 markdown_extensions:
   - codehilite
   - toc:

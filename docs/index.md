@@ -1,8 +1,14 @@
 # Tremor
 
-Tremor is an event processing originally system designed primarily for the needs of Wayfair Operations.
+Tremor is an event processing originally system designed primarily for the needs of platform engineering and infrastructure.
 
-Tremor has been running in production since October 2018, processes 6 terabytes of data per day, or in the region of 10 billion log messages per minute and 10 million metrics per second.
+Tremor has been running in production since October 2018, processes 10 terabytes of data per day, or 10 billion messages per minute and 10 million metrics per second. Tremor achieves this with 10x footprint reduction in bare metal infrastructure and cloud based deployments in 6 ( and counting ) systems at Wayfair, whilst reducing memory usage by 10x and delivering better quality of service under conditions when our network is saturated at peak eCommerce trading lifecycles.
+
+Tremor reduces cost, reduces complexity and consolidates and simplifies our operational environment to
+spark SRE joy, to reduce workload on our NOC and to drop our operating costs.
+
+As a secondary benefit, tremor is relatively low latency and relatively high throughput however this is
+an explicit non-goal of the project.
 
 Tremor runs 24x7 365 days per year and is implemented in the Rust programming language.
 

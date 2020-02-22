@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   tremor:
-    image: tremor-runtime
+    image: tremorproject/tremor:latest
     ports:
       - 4242:4242
     environment:

@@ -18,7 +18,7 @@ services:
     links:
       - elastic
   tremor:
-    image: tremor-runtime
+    image: tremorproject/tremor:latest
     depends_on:
       - kibana
     ports:

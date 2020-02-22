@@ -1,0 +1,1656 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Logstash - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#logstash-benchmark" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../.." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Logstash
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../.." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../overview/" title="Architecture Overview" class="md-nav__link">
+      Architecture Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-query/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+      Walkthrough
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-query/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-query/functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/cli/" title="Tremor Tool" class="md-nav__link">
+      Tremor Tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../operations/configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../artefacts/codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../artefacts/onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../artefacts/offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../artefacts/operators/" title="Operators" class="md-nav__link">
+      Operators
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4" checked>
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Logstash
+      </label>
+    
+    <a href="./" title="Logstash" class="md-nav__link md-nav__link--active">
+      Logstash
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#logstash" class="md-nav__link">
+    Logstash
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark-methodology" class="md-nav__link">
+    Benchmark methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identify-performance-related-tunables-for-logstash" class="md-nav__link">
+    Identify performance related tunables for logstash
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-baseline-benchmark" class="md-nav__link">
+    Identity baseline benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-each-logstash-tunable-run-a-benchmark" class="md-nav__link">
+    For each logstash tunable, run a benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-each-tremor-tunable-run-a-benchmark" class="md-nav__link">
+    For each tremor tunable, run a benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark-conditioning-and-environment" class="md-nav__link">
+    Benchmark conditioning and environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baseline-analysis" class="md-nav__link">
+    Baseline Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-analysis" class="md-nav__link">
+    Production Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apache-logs-scenario" class="md-nav__link">
+    Apache Logs Scenario
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-level-2-replacement-scenario" class="md-nav__link">
+    Logging Level 2 Replacement Scenario
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-level-2-replacement-bad-case" class="md-nav__link">
+    Logging Level 2 Replacement bad case
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../issue-investigation/" title="Investigation" class="md-nav__link">
+      Investigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#logstash" class="md-nav__link">
+    Logstash
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark-methodology" class="md-nav__link">
+    Benchmark methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identify-performance-related-tunables-for-logstash" class="md-nav__link">
+    Identify performance related tunables for logstash
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-baseline-benchmark" class="md-nav__link">
+    Identity baseline benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-each-logstash-tunable-run-a-benchmark" class="md-nav__link">
+    For each logstash tunable, run a benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-each-tremor-tunable-run-a-benchmark" class="md-nav__link">
+    For each tremor tunable, run a benchmark
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark-conditioning-and-environment" class="md-nav__link">
+    Benchmark conditioning and environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baseline-analysis" class="md-nav__link">
+    Baseline Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-analysis" class="md-nav__link">
+    Production Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apache-logs-scenario" class="md-nav__link">
+    Apache Logs Scenario
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-level-2-replacement-scenario" class="md-nav__link">
+    Logging Level 2 Replacement Scenario
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-level-2-replacement-bad-case" class="md-nav__link">
+    Logging Level 2 Replacement bad case
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/development/benchmarks/LogstashBenchmark.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="logstash-benchmark">Logstash Benchmark<a class="headerlink" href="#logstash-benchmark" title="Permanent link">&para;</a></h1>
+<p>This section documents how to setup logstash for benchmarking to
+compare against tremor-script.</p>
+<p><strong>The following benchmarks were taken with tremor <code>v0.5.0</code> on June 2019.</strong></p>
+<h2 id="logstash">Logstash<a class="headerlink" href="#logstash" title="Permanent link">&para;</a></h2>
+<p>Assert that JDK 8 or higher is on your system path</p>
+<div class="codehilite"><pre><span></span><code>$ java -version
+java version <span class="s2">&quot;1.8.0_192-ea&quot;</span>
+Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build <span class="m">1</span>.8.0_192-ea-b04<span class="o">)</span>
+Java HotSpot<span class="o">(</span>TM<span class="o">)</span> <span class="m">64</span>-Bit Server VM <span class="o">(</span>build <span class="m">25</span>.192-b04, mixed mode<span class="o">)</span>
+$ javac -version
+javac <span class="m">1</span>.8.0_192-ea
+</code></pre></div>
+
+
+<p>Assert that JRuby 9.2 or higher is on your system path</p>
+<div class="codehilite"><pre><span></span><code>$ jruby -v
+jruby <span class="m">9</span>.2.6.0 <span class="o">(</span><span class="m">2</span>.5.3<span class="o">)</span> <span class="m">2019</span>-02-11 15ba00b Java HotSpot<span class="o">(</span>TM<span class="o">)</span> <span class="m">64</span>-Bit Server VM <span class="m">25</span>.192-b04 on <span class="m">1</span>.8.0_192-ea-b04 +jit <span class="o">[</span>darwin-x86_64<span class="o">]</span>
+</code></pre></div>
+
+
+<p>Assert that the <code>rake</code> and <code>bundler</code> ruby tools are installed</p>
+<div class="codehilite"><pre><span></span><code>$ gem install rake bundler
+Fetching: rake-12.3.2.gem <span class="o">(</span><span class="m">100</span>%<span class="o">)</span>
+Successfully installed rake-12.3.2
+Fetching: bundler-2.0.2.gem <span class="o">(</span><span class="m">100</span>%<span class="o">)</span>
+Successfully installed bundler-2.0.2
+<span class="m">2</span> gems installed
+</code></pre></div>
+
+
+<p>Clone and build logstash and its benchmark tool</p>
+<div class="codehilite"><pre><span></span><code>git clone https://github.com/elastic/logstash
+<span class="nb">cd</span> logstash
+gradle clean assemble
+<span class="nb">cd</span> tools/benchmark-cli
+gradle clean assemble
+</code></pre></div>
+
+
+<h2 id="benchmark-methodology">Benchmark methodology<a class="headerlink" href="#benchmark-methodology" title="Permanent link">&para;</a></h2>
+<p>In the first ( this ) version, this was a manual process</p>
+<h2 id="identify-performance-related-tunables-for-logstash">Identify performance related tunables for logstash<a class="headerlink" href="#identify-performance-related-tunables-for-logstash" title="Permanent link">&para;</a></h2>
+<p>Number of logstash workers ( default 2 )</p>
+<p>Batch size for micro-batching queues in logstash workers ( default 128 )</p>
+<h2 id="identity-baseline-benchmark">Identity baseline benchmark<a class="headerlink" href="#identity-baseline-benchmark" title="Permanent link">&para;</a></h2>
+<p>Literally named baseline and is a equivalent in functionality to tremor's <code>empty-passthrough-json</code> benchmark</p>
+<h2 id="for-each-logstash-tunable-run-a-benchmark">For each logstash tunable, run a benchmark<a class="headerlink" href="#for-each-logstash-tunable-run-a-benchmark" title="Permanent link">&para;</a></h2>
+<p>Given the baseline logstash benchmark and record <a href="../logstash-baseline-log.txt">results</a> and initial <a href="../logstash-baseline-log-analysis.csv">analysis</a></p>
+<p>Document command line arguments required to execute each run/iteration</p>
+<div class="codehilite"><pre><span></span><code>$ java -cp build/libs/benchmark-cli.jar org.logstash.benchmark.cli.Main <span class="se">\</span>
+      --testcase<span class="o">=</span>baseline --distribution-version<span class="o">=</span><span class="m">5</span>.5.0 <span class="se">\</span>
+      --ls-workers &lt;num-workers&gt; <span class="se">\</span>
+      --ls-batch-size &lt;batch-size&gt;
+</code></pre></div>
+
+
+<h2 id="for-each-tremor-tunable-run-a-benchmark">For each tremor tunable, run a benchmark<a class="headerlink" href="#for-each-tremor-tunable-run-a-benchmark" title="Permanent link">&para;</a></h2>
+<p>Given the <code>empty-passthrough-json</code> equivalent benchmark</p>
+<p>Tremor has no performance related tunables</p>
+<p>Tremor's benchmark framework has no performance related tunables for the <code>empty-passthrough-json</code> equivalent benchmark</p>
+<p>Record <a href="../tremor-baseline-log.txt">results</a></p>
+<h2 id="benchmark-conditioning-and-environment">Benchmark conditioning and environment<a class="headerlink" href="#benchmark-conditioning-and-environment" title="Permanent link">&para;</a></h2>
+<p>The <code>benchmark-cli</code> tool that ships with logstash suffers from a number of issues.</p>
+<p>The number of events in each run is fixed and limited to 1 million events per run.</p>
+<p>No accomodation is made for warmup to ensure that the JVM has reached a stable state before results recording begins.</p>
+<p>The framework also incorrectly terminates after each run once 1 million results have been submitted. It should not complete until all workers have drained their respective queues and the benchmark reaches a quiescent state. Quiescence is not asserted.</p>
+<p>This means that the number of recorded processed events can be less than the configured target by a significant margin. As these are <em>micro-benchmarks</em> and we are concerned with Order of Magnitude differences in performance we have not expended effort resolving these issues.</p>
+<p>A further issue with the logstash <code>benchmark-cli</code> tool is that the results suffer from the coordinated ommission problem.</p>
+<p>The coordinated ommission problem, is a term first-coined by Gil Tene based on his observations in benchmarking the Azul Vega hardware and Zing JVM with C4 garbage collector and related ZTS subsystems). In a nutshell, coordinated-ommission is where a benchmarking tool ( usually unintentionally ) incorrectly records events under measurement time spans by failing to record the intended verses actual time to record. Specifically, it is insufficient to record the start time and end time of a particular event of interest. Capturing the start and end time allows the delta or servicing time to be computed. It does not capture any synchronization overhead, waiting time, delays or other system induced hiccups introduced between up to the point the event should have started. We fail to capture unintentional drift introduced artificially by the benchmark framework when CO is in force. Well-designed benchmarks should be CO-free.</p>
+<p>Tremor's benchmarking facility allows events to be injected at a fixed frequency. This simple tactic ( which more specifically, pins the intended commencement time for an event to begin processing to a starting epoch ) is sufficient to practically account for any hiccups or drift in expected verses actual inter-arrival based on designed constraints in a benchmark framework. By selecting a fixed static frequency any measured hiccups should be outside of the control of the benchmark framework - they are either artefacts of the scenario under test, or the system upon which it is being tested. These conditions are optimal in all benchmark testing, but an absolute necessity for any latency-sensitive testing, especially where fine-grained statistic quartiles are being computed if they are to impart results that are fit for low-level analysis and interpretation.</p>
+<p>Coordinated-ommission-free benchmarks are important for micro-benchmarking and latency-driven benchmarking. However, as we are interested in Order of Magnitude ( finger in the air ) characteristics rather than isolating long-tail latencies or understanding fine grained latency characteristics on a per-event basis ( say, at the long-tail of performance beyond the 99.99th percentile )</p>
+<p>In short, tremor makes some effort to account for coordinated-ommission where relevant, but logstash's benchmark framework does not. However, as we are taking a 50,000 foot view of characteristic throughput and are not focusing on specific per-event latency characteristics the identified issues are negligeable for our analysis.</p>
+<p>It would be incorrect however, to focus on per-event performance characteristics or focus in on specific latency quartiles or throughput quartiles to derive any sigificance. Such an analysis would require more effort and would not necessarily deliver any greater value.</p>
+<p>We have not used lab quality environments to run any of the benchmarks. All benchmarks were run on the same development grade laptop ( not ideal ) with the same background processes active on an intel / Mac OS X x86_64 environment. As such we consider the results indicative of characteristics and <code>good enough</code> for high level analysis.</p>
+<p>It should, however, be a small task to follow this report to replicate the characteristic results detailed in this report and accompanying evidence and to replicate same on similar resources.</p>
+<h2 id="baseline-analysis">Baseline Analysis<a class="headerlink" href="#baseline-analysis" title="Permanent link">&para;</a></h2>
+<p>Logstash's <code>benchmark-cli</code> was put through 40 variations of its two tunable parameters.</p>
+<p>We tested with 1, 2, 4 and 8 logstash workers.</p>
+<p>We tested each worker configuration with queue batch size bounds of 1, 2, 4, 8, 16, 32, 64, 128, 256 and 512.</p>
+<p>The best of 3 runs was recorded.</p>
+<p>As tremor has no tunables we simply recorded the best of 3 runs.</p>
+<p>Logstash is configured out of the box for 2 workers and a batch size of 128. There are marginally better configurations possible with 4 or 8 workers showing marginal throughput benefits given the use-case selected. Configuring a single worker has a significant negative impact on performance.</p>
+<p>As such logstash is well-configured out of the box, at least for typical development or non-production activities.</p>
+<p>The optimal configuration on the test machine was configured with 8 workers ( default 2 ) and a batch size of 256 ( default 128 ). This is less than 1% of a difference. Generally speaking, batch sizes of less than 32 tend to significantly reduce throughput for any number of configured workers. Also, generally speaking, the improvement from 2 worker threads to more does not demonstrate any improvement in scaling. As such multi-core scaling with logstash does not seem to be of much benefit beyond 2 workers ( threads ).</p>
+<p>It should be noted that the benchmark creates artificial conditions and that the baseline working-set is atypical of production working sets. On the other hand, this conditioning is the same with respect to tremor whose baseline benchmark is equivalent.</p>
+<p>In both cases we simply ingest, forward and publish an event or <code>pass it through</code> the system under test.</p>
+<p>As logstash is configured for a fixed ceiling of events ( 1 million ) for a benchmark run, and tremor is configured for a specific test duration ( as many events as possible in 40 seconds ) we need to baseline the results. We bias in favor of tremor as normative and compute the effective throughput at 40 seconds for each logstash run. So a 63 second run with 8 workes and a batch size of 1 38 seconds run at batch size 256 respectively for logstash is counted as the equivalent 40 seconds run as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Logstash Default (W2 W128)</th>
+<th>Logstash Worst (W1 B1)</th>
+<th>Logstash Best (W8 B256)</th>
+<th>Tremor (baseline)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1033811</td>
+<td>466708</td>
+<td>1041943</td>
+<td>21402853</td>
+</tr>
+</tbody>
+</table>
+<p>Note that we truncate / floor round the equivalent logstash 40-second results for each selected configuration.</p>
+<p>Relative to the worst case logstash benchmark run performance:</p>
+<table>
+<thead>
+<tr>
+<th>Logstash W2 W128 ( default )</th>
+<th>Logstash W8 B1</th>
+<th>Logstash W8 B256</th>
+<th>Tremor ( baseline )</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.22</td>
+<td>1</td>
+<td>2.23</td>
+<td>45.86</td>
+</tr>
+</tbody>
+</table>
+<p>Logstash can itself benefit from at least a 2x improvement, and this is consistent with the default out of the box configuration.</p>
+<p>Tremor, however, is a factor of 45 better than the logstash worst case. Tremor, compared to the logstash best case, is still a factor of 20.54 higher throughput.</p>
+<p>So the total effective range of improvement for the given benchmark ( all other things considered equal ) is somewhere between a 20x to 45x increase in throughput favoring tremor over logstash for the baseline use case based on exprimental conditions detailed in this report.</p>
+<h2 id="production-analysis">Production Analysis<a class="headerlink" href="#production-analysis" title="Permanent link">&para;</a></h2>
+<p>Of course, we don't typically deploy logstash or tremor into production as a simple distribution proxy or interconnect that simply passes through events. Logstash would be a pretty bad choice compared to tremor. But tremor, although it has excellent conditioning and is designed for elegantly handling back-pressure and saturation conditions for log shipping and distribution - it does not provide the delivery semantics, retention and feature-set of technologies such as Kafka.</p>
+<p>For the level 1 traffic limiting, traffic shaping and rate limiting use cases in Level 3 Logging at Wayfair for which tremor was originally designed we have seen a 7x-8x improvement in density compared to logstash for v0.4 of tremor. v0.5 should increase this to the 10x ballpark as we benefit from SIMD vectorization of JSON deserialization. However, there is further room for improvement as the tremor-script langauge has evolved to handle level 2 logging to replace ruby and logstash with far richer configuration than level 1. In v0.5 performance is a non-goal; as such there are many optimisations to the new tremor-script domain specific langauge that we have yet to undertake - so in practice for level 2 logging we won't see the full benefit of SIMD vectorization as some of those gains are ammortised by additional essential complexity of providing a richer DSL to support replacing logstash in level 2.</p>
+<p>Indicatively, we stand to see a range of 20x-40x improvement. In production we have <em>observed</em> closer to a 7x-8x improvement in density with the L3 replacement, and with the v0.4 upgrade to L1 in GCP pre-live. We expect a further modest incremental improvement in L1 with v0.5, and a good ~10x over logstash for L2 this ( v0.5 ) release.</p>
+<h2 id="apache-logs-scenario">Apache Logs Scenario<a class="headerlink" href="#apache-logs-scenario" title="Permanent link">&para;</a></h2>
+<p>Logstash ships with a benchmark where logstash is configured for Apache log processing and elementization. We have ported this benchmark to tremor for coparative purposes.</p>
+<p>Tremor processes <a href="../tremor-apache-log.txt">44109658</a>  messages in 100 seconds fixed interval ( continuously replaying ), whereas logstash takes 751 seconds to process the same <a href="../logstash-apache-log.txt">6900000</a> log records.</p>
+<p>This is 48x speedup in favour of tremor.</p>
+<h2 id="logging-level-2-replacement-scenario">Logging Level 2 Replacement Scenario<a class="headerlink" href="#logging-level-2-replacement-scenario" title="Permanent link">&para;</a></h2>
+<p>Tremor ships with a benchmark where the enrichment component of logstash replacement running in production has been used to drive the implementation of tremor-script features in the v0.5 release.</p>
+<p>We have minimally modified the logstash benchmark client to support running logstash equivalent configuration of tremor ( or vice-versa ) to get as close to possible to a fair apples-to-apples comparison. We have stopped short of fixing fundemental issues with the logstash benchmark framework itself.</p>
+<p>Tremor process <a href="../tremor-l2-log.txt">2262222</a> records in 100 seconds fixed interval ( continuously replaying ), whereas logstash takes 66 seconds to process <a href="../logstash-l2-log.txt">200000</a> records. This equates to a ballpark 7.5x speedup in favour of tremor.</p>
+<h2 id="logging-level-2-replacement-bad-case">Logging Level 2 Replacement bad case<a class="headerlink" href="#logging-level-2-replacement-bad-case" title="Permanent link">&para;</a></h2>
+<p>Benchmarking the validation/transformation scenario  involves a more complex script with loops and deeper nested expressions. Here some of the shortcuts we took to implement the new tremor script in a reasonable timeframe surface as performance bottlenecks.</p>
+<p>Again ran the transformation script with both Logstash as well tremor with configurations as close to equivalent as possible.</p>
+<p>Tremor processes <a href="../tremor-transform-log.txt">73132</a> records in 100 seconds fixed interval ( continuously replaying ), whereas logstash takes 87 seconds to process <a href="../logstash-transform-log.txt">150000</a> records. In this case tremor is about 2.3x slower then a comparable logstasv configuration.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../../benchmarking/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Overview
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../testing/" title="Testing" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Testing
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+    
+  </body>
+</html>

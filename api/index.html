@@ -1,0 +1,3436 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>API - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#document-status" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                API
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../overview/" title="Architecture Overview" class="md-nav__link">
+      Architecture Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+      Walkthrough
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/cli/" title="Tremor Tool" class="md-nav__link">
+      Tremor Tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/operators/" title="Operators" class="md-nav__link">
+      Operators
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/benchmarks/LogstashBenchmark/" title="Logstash" class="md-nav__link">
+      Logstash
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/issue-investigation/" title="Investigation" class="md-nav__link">
+      Investigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        API
+      </label>
+    
+    <a href="./" title="API" class="md-nav__link md-nav__link--active">
+      API
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#document-status" class="md-nav__link">
+    Document status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#well-known-api-endpoints" class="md-nav__link">
+    Well known API endpoints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paths" class="md-nav__link">
+    Paths
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-binding" class="md-nav__link">
+    GET /binding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-binding" class="md-nav__link">
+    POST /binding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-bindingartefact-id" class="md-nav__link">
+    DELETE /binding/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-bindingartefact-id" class="md-nav__link">
+    GET /binding/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-offramp" class="md-nav__link">
+    GET /offramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-offramp" class="md-nav__link">
+    POST /offramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-offrampartefact-id" class="md-nav__link">
+    DELETE /offramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-offrampartefact-id" class="md-nav__link">
+    GET /offramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-onramp" class="md-nav__link">
+    GET /onramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-onramp" class="md-nav__link">
+    POST /onramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-onrampartefact-id" class="md-nav__link">
+    DELETE /onramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-onrampartefact-id" class="md-nav__link">
+    GET /onramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-pipeline" class="md-nav__link">
+    GET /pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-pipeline" class="md-nav__link">
+    POST /pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-pipelineartefact-id" class="md-nav__link">
+    DELETE /pipeline/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-pipelineartefact-id" class="md-nav__link">
+    GET /pipeline/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-version" class="md-nav__link">
+    GET /version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-artefact-kindartefact-idinstance-id" class="md-nav__link">
+    DELETE /{artefact-kind}/{artefact-id}/{instance-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-artefact-kindartefact-idinstance-id" class="md-nav__link">
+    GET /{artefact-kind}/{artefact-id}/{instance-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-artefact-kindartefact-idinstance-id" class="md-nav__link">
+    POST /{artefact-kind}/{artefact-id}/{instance-id}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schemas" class="md-nav__link">
+    Schemas
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-artefact" class="md-nav__link">
+    Schema for type: artefact
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-artefact_id" class="md-nav__link">
+    Schema for type: artefact_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding" class="md-nav__link">
+    Schema for type: binding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding_dst" class="md-nav__link">
+    Schema for type: binding_dst
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding_map" class="md-nav__link">
+    Schema for type: binding_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding_state" class="md-nav__link">
+    Schema for type: binding_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-codec" class="md-nav__link">
+    Schema for type: codec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-instance" class="md-nav__link">
+    Schema for type: instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-instance_id" class="md-nav__link">
+    Schema for type: instance_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-instance_set" class="md-nav__link">
+    Schema for type: instance_set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-interface" class="md-nav__link">
+    Schema for type: interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-links" class="md-nav__link">
+    Schema for type: links
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-mapping" class="md-nav__link">
+    Schema for type: mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-nodes" class="md-nav__link">
+    Schema for type: nodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-offramp" class="md-nav__link">
+    Schema for type: offramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-offramp_state" class="md-nav__link">
+    Schema for type: offramp_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-onramp" class="md-nav__link">
+    Schema for type: onramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-onramp_state" class="md-nav__link">
+    Schema for type: onramp_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-operator" class="md-nav__link">
+    Schema for type: operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-pipeline" class="md-nav__link">
+    Schema for type: pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-pipeline_state" class="md-nav__link">
+    Schema for type: pipeline_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-port_id" class="md-nav__link">
+    Schema for type: port_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-preprocessor" class="md-nav__link">
+    Schema for type: preprocessor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-publish_ok" class="md-nav__link">
+    Schema for type: publish_ok
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-registry_set" class="md-nav__link">
+    Schema for type: registry_set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-stream_names" class="md-nav__link">
+    Schema for type: stream_names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-version" class="md-nav__link">
+    Schema for type: version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#document-status" class="md-nav__link">
+    Document status
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#well-known-api-endpoints" class="md-nav__link">
+    Well known API endpoints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paths" class="md-nav__link">
+    Paths
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-binding" class="md-nav__link">
+    GET /binding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-binding" class="md-nav__link">
+    POST /binding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-bindingartefact-id" class="md-nav__link">
+    DELETE /binding/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-bindingartefact-id" class="md-nav__link">
+    GET /binding/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-offramp" class="md-nav__link">
+    GET /offramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-offramp" class="md-nav__link">
+    POST /offramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-offrampartefact-id" class="md-nav__link">
+    DELETE /offramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-offrampartefact-id" class="md-nav__link">
+    GET /offramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-onramp" class="md-nav__link">
+    GET /onramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-onramp" class="md-nav__link">
+    POST /onramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-onrampartefact-id" class="md-nav__link">
+    DELETE /onramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-onrampartefact-id" class="md-nav__link">
+    GET /onramp/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-pipeline" class="md-nav__link">
+    GET /pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-pipeline" class="md-nav__link">
+    POST /pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-pipelineartefact-id" class="md-nav__link">
+    DELETE /pipeline/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-pipelineartefact-id" class="md-nav__link">
+    GET /pipeline/{artefact-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-version" class="md-nav__link">
+    GET /version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-artefact-kindartefact-idinstance-id" class="md-nav__link">
+    DELETE /{artefact-kind}/{artefact-id}/{instance-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-artefact-kindartefact-idinstance-id" class="md-nav__link">
+    GET /{artefact-kind}/{artefact-id}/{instance-id}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-artefact-kindartefact-idinstance-id" class="md-nav__link">
+    POST /{artefact-kind}/{artefact-id}/{instance-id}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schemas" class="md-nav__link">
+    Schemas
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-artefact" class="md-nav__link">
+    Schema for type: artefact
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-artefact_id" class="md-nav__link">
+    Schema for type: artefact_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding" class="md-nav__link">
+    Schema for type: binding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding_dst" class="md-nav__link">
+    Schema for type: binding_dst
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding_map" class="md-nav__link">
+    Schema for type: binding_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-binding_state" class="md-nav__link">
+    Schema for type: binding_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-codec" class="md-nav__link">
+    Schema for type: codec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-instance" class="md-nav__link">
+    Schema for type: instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-instance_id" class="md-nav__link">
+    Schema for type: instance_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-instance_set" class="md-nav__link">
+    Schema for type: instance_set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-interface" class="md-nav__link">
+    Schema for type: interface
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-links" class="md-nav__link">
+    Schema for type: links
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-mapping" class="md-nav__link">
+    Schema for type: mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-nodes" class="md-nav__link">
+    Schema for type: nodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-offramp" class="md-nav__link">
+    Schema for type: offramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-offramp_state" class="md-nav__link">
+    Schema for type: offramp_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-onramp" class="md-nav__link">
+    Schema for type: onramp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-onramp_state" class="md-nav__link">
+    Schema for type: onramp_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-operator" class="md-nav__link">
+    Schema for type: operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-pipeline" class="md-nav__link">
+    Schema for type: pipeline
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-pipeline_state" class="md-nav__link">
+    Schema for type: pipeline_state
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-port_id" class="md-nav__link">
+    Schema for type: port_id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-preprocessor" class="md-nav__link">
+    Schema for type: preprocessor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-publish_ok" class="md-nav__link">
+    Schema for type: publish_ok
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-registry_set" class="md-nav__link">
+    Schema for type: registry_set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-stream_names" class="md-nav__link">
+    Schema for type: stream_names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-for-type-version" class="md-nav__link">
+    Schema for type: version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/api.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>API</h1>
+                
+                <h2 id="document-status">Document status<a class="headerlink" href="#document-status" title="Permanent link">&para;</a></h2>
+<p>Work In Progress</p>
+<h2 id="well-known-api-endpoints">Well known API endpoints<a class="headerlink" href="#well-known-api-endpoints" title="Permanent link">&para;</a></h2>
+<p>This document summarises the tremor REST API</p>
+<table>
+<thead>
+<tr>
+<th>Url</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>http://localhost:9898/</td>
+<td>The default ( development ) endpoint on a local ( development ) host</td>
+</tr>
+</tbody>
+</table>
+<h2 id="paths">Paths<a class="headerlink" href="#paths" title="Permanent link">&para;</a></h2>
+<p>The endpoint paths support by the Tremor REST API</p>
+<h3 id="get-binding"><strong>GET</strong> /binding<a class="headerlink" href="#get-binding" title="Permanent link">&para;</a></h3>
+<p>Lists bindings</p>
+<p><em>Description:</em></p>
+<p>Returns a list of identifiers for each binding stored in the repository</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>find_bindings</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="post-binding"><strong>POST</strong> /binding<a class="headerlink" href="#post-binding" title="Permanent link">&para;</a></h3>
+<p>Publish a new binding to the tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Publishes a new binding to the tremor artefact repository if the artefact id
+is unique.</p>
+<p>Returns artefact data, on success.</p>
+<p>If an arterfact of the same name already exists, a conflict error is returned.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>publish_binding</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>201</td>
+<td>application/json</td>
+<td>#/components/schemas/binding</td>
+</tr>
+<tr>
+<td>201</td>
+<td>application/yaml</td>
+<td>#/components/schemas/binding</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="delete-bindingartefact-id"><strong>DELETE</strong> /binding/{artefact-id}<a class="headerlink" href="#delete-bindingartefact-id" title="Permanent link">&para;</a></h3>
+<p>Remove binding from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns old artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>delete_binding_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/binding</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/binding</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-bindingartefact-id"><strong>GET</strong> /binding/{artefact-id}<a class="headerlink" href="#get-bindingartefact-id" title="Permanent link">&para;</a></h3>
+<p>Get binding data from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>get_binding_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/binding_state</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/binding_state</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-offramp"><strong>GET</strong> /offramp<a class="headerlink" href="#get-offramp" title="Permanent link">&para;</a></h3>
+<p>Lists oframps</p>
+<p><em>Description:</em></p>
+<p>Returns a list of identifiers for each offramp stored in the repository</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>find_offramps</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="post-offramp"><strong>POST</strong> /offramp<a class="headerlink" href="#post-offramp" title="Permanent link">&para;</a></h3>
+<p>Publish a new offramp to the tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Publishes a new offramp to the tremor artefact repository if the artefact id
+is unique.</p>
+<p>Returns artefact data, on success.</p>
+<p>If an arterfact of the same name already exists, a conflict error is returned.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>publish_offramp</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>201</td>
+<td>application/json</td>
+<td>#/components/schemas/offramp</td>
+</tr>
+<tr>
+<td>201</td>
+<td>application/yaml</td>
+<td>#/components/schemas/offramp</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="delete-offrampartefact-id"><strong>DELETE</strong> /offramp/{artefact-id}<a class="headerlink" href="#delete-offrampartefact-id" title="Permanent link">&para;</a></h3>
+<p>Remove artefact from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns old artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>delete_offramp_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/offramp</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/offramp</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-offrampartefact-id"><strong>GET</strong> /offramp/{artefact-id}<a class="headerlink" href="#get-offrampartefact-id" title="Permanent link">&para;</a></h3>
+<p>Get offramp data from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>get_offramp_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/offramp_state</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/offramp_state</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-onramp"><strong>GET</strong> /onramp<a class="headerlink" href="#get-onramp" title="Permanent link">&para;</a></h3>
+<p>Lists onramps</p>
+<p><em>Description:</em></p>
+<p>Returns a list of identifiers for each onramp stored in the repository</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>find_onramps</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="post-onramp"><strong>POST</strong> /onramp<a class="headerlink" href="#post-onramp" title="Permanent link">&para;</a></h3>
+<p>Publish a new onramp to the tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Publishes a new onramp to the tremor artefact repository if the artefact id
+is unique.</p>
+<p>Returns artefact data, on success.</p>
+<p>If an onramp of the same name already exists, a conflict error is returned.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>publish_onramp</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>201</td>
+<td>application/json</td>
+<td>#/components/schemas/onramp</td>
+</tr>
+<tr>
+<td>201</td>
+<td>application/yaml</td>
+<td>#/components/schemas/onramp</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="delete-onrampartefact-id"><strong>DELETE</strong> /onramp/{artefact-id}<a class="headerlink" href="#delete-onrampartefact-id" title="Permanent link">&para;</a></h3>
+<p>Remove an onramp from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns old artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>delete_onramp_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/onramp</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/onramp</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-onrampartefact-id"><strong>GET</strong> /onramp/{artefact-id}<a class="headerlink" href="#get-onrampartefact-id" title="Permanent link">&para;</a></h3>
+<p>Finds onramp data from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>get_onramp_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/onramp_state</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/onramp_state</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-pipeline"><strong>GET</strong> /pipeline<a class="headerlink" href="#get-pipeline" title="Permanent link">&para;</a></h3>
+<p>Lists pipelines</p>
+<p><em>Description:</em></p>
+<p>Returns a list of identifiers for each pipeline stored in the repository</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>find_pipelines</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/registry_set</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="post-pipeline"><strong>POST</strong> /pipeline<a class="headerlink" href="#post-pipeline" title="Permanent link">&para;</a></h3>
+<p>Publish a new pipeline to the tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Publishes a new pipeline to the tremor artefact repository if the artefact id
+is unique.</p>
+<p>Returns artefact data, on success.</p>
+<p>If an pipeline of the same name already exists, a conflict error is returned.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>publish_pipeline</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>201</td>
+<td>application/json</td>
+<td>#/components/schemas/pipeline</td>
+</tr>
+<tr>
+<td>201</td>
+<td>application/yaml</td>
+<td>#/components/schemas/pipeline</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="delete-pipelineartefact-id"><strong>DELETE</strong> /pipeline/{artefact-id}<a class="headerlink" href="#delete-pipelineartefact-id" title="Permanent link">&para;</a></h3>
+<p>Remove pipeline from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns old artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>delete_pipeline_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/pipeline</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/pipeline</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+<tr>
+<td>409</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-pipelineartefact-id"><strong>GET</strong> /pipeline/{artefact-id}<a class="headerlink" href="#get-pipelineartefact-id" title="Permanent link">&para;</a></h3>
+<p>Get pipeline data from tremor artefact repository</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Returns artefact data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>get_pipeline_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/pipeline_state</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/pipeline_state</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-version"><strong>GET</strong> /version<a class="headerlink" href="#get-version" title="Permanent link">&para;</a></h3>
+<p>Get's the current version</p>
+<p><em>Description:</em></p>
+<p>This endpoint returns version information for the current
+version of tremor. Versioning policy follows <a href="https://semver.org/">Semantic Versioning</a></p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>get_version</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/version</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="delete-artefact-kindartefact-idinstance-id"><strong>DELETE</strong> /{artefact-kind}/{artefact-id}/{instance-id}<a class="headerlink" href="#delete-artefact-kindartefact-idinstance-id" title="Permanent link">&para;</a></h3>
+<p>Deactivate and unpublish deployed instances</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact kind parameter of:</p>
+<ul>
+<li>pipeline</li>
+<li>onramp</li>
+<li>offramp</li>
+<li>binding</li>
+</ul>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Given a valid instance identifier for a deployed and running instance of the artefact deployed
+and accesible via the tremor instance registry</p>
+<p>Deactivates, stops and unpublishes the target instances and any
+dependant instances that are no longer referenced by the runtime.</p>
+<p>Returns old instance data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>deactivate</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/artefact</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/artefact</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="get-artefact-kindartefact-idinstance-id"><strong>GET</strong> /{artefact-kind}/{artefact-id}/{instance-id}<a class="headerlink" href="#get-artefact-kindartefact-idinstance-id" title="Permanent link">&para;</a></h3>
+<p>Get deployed artefact servant data from tremor artefact registry</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact kind parameter of:</p>
+<ul>
+<li>pipeline</li>
+<li>onramp</li>
+<li>offramp</li>
+<li>binding</li>
+</ul>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Given a valid instance identifier for a deployed and running instance of the artefact deployed
+and accesible via the tremor instance registry</p>
+<p>Returns instance data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>get_artefact_instance_by_id</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>application/json</td>
+<td>#/components/schemas/artefact</td>
+</tr>
+<tr>
+<td>200</td>
+<td>application/yaml</td>
+<td>#/components/schemas/artefact</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="post-artefact-kindartefact-idinstance-id"><strong>POST</strong> /{artefact-kind}/{artefact-id}/{instance-id}<a class="headerlink" href="#post-artefact-kindartefact-idinstance-id" title="Permanent link">&para;</a></h3>
+<p>Publish, deploy and activate instances</p>
+<p><em>Description:</em></p>
+<p>Given a valid artefact kind parameter of:</p>
+<ul>
+<li>pipeline</li>
+<li>onramp</li>
+<li>offramp</li>
+<li>binding</li>
+</ul>
+<p>Given a valid artefact identifier of an artefact stored in the tremor artefact repository</p>
+<p>Given a valid instance identifier for a deployed and running instance of the artefact deployed
+and accesible via the tremor instance registry</p>
+<p>Creates new instances of artefacts ( if required ), publishes instances
+to the tremor instance registry. If instances are onramps, offramps or
+pipelines new registry values will be created. In the case of onramps
+and offramps these are deployed <em>after</em> any dependant pipeline instances
+and then they are interaconnected.</p>
+<p>Returns instance data, on success.</p>
+<p>Response data may be either JSON or YAML formatted ( defaults to JSON ).</p>
+<p><em>OperationId:</em></p>
+<blockquote>
+<p>activate</p>
+</blockquote>
+<p><em>Returns:</em></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Content Type</th>
+<th>Schema Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>201</td>
+<td>application/json</td>
+<td>#/components/schemas/artefact</td>
+</tr>
+<tr>
+<td>201</td>
+<td>application/yaml</td>
+<td>#/components/schemas/artefact</td>
+</tr>
+<tr>
+<td>404</td>
+<td>empty</td>
+<td>no content</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h2 id="schemas">Schemas<a class="headerlink" href="#schemas" title="Permanent link">&para;</a></h2>
+<p>JSON Schema for types defined in the Tremor REST API</p>
+<h3 id="schema-for-type-artefact">Schema for type: <strong>artefact</strong><a class="headerlink" href="#schema-for-type-artefact" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;oneOf&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/pipeline&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/onramp&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/offramp&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/binding&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-artefact_id">Schema for type: <strong>artefact_id</strong><a class="headerlink" href="#schema-for-type-artefact_id" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;^[a-z][a-zA-Z_:]*$&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-binding">Schema for type: <strong>binding</strong><a class="headerlink" href="#schema-for-type-binding" title="Permanent link">&para;</a></h3>
+<p>"A tremor binding specification"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A tremor binding specification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/binding_map&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;links&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-binding_dst">Schema for type: <strong>binding_dst</strong><a class="headerlink" href="#schema-for-type-binding_dst" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;^(tremor://)?/(pipeline|offramp)/[a-zA-Z][A-Za-z0-9_]*/[a-zA-Z][A-Za-z0-9_]*$&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-binding_map">Schema for type: <strong>binding_map</strong><a class="headerlink" href="#schema-for-type-binding_map" title="Permanent link">&para;</a></h3>
+<p>"A map of binding specification links"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A map of binding specification links&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;patternProperties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;^(tremor://)?/(onramp|pipeline)/[a-zA-Z][A-Za-z0-9_]*/[a-zA-Z][A-Za-z0-9_]*$&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;additionalItems&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/binding_dst&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-binding_state">Schema for type: <strong>binding_state</strong><a class="headerlink" href="#schema-for-type-binding_state" title="Permanent link">&para;</a></h3>
+<p>"State of an binding, including specification and instances"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;State of an binding, including specification and instances&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;artefact&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/binding&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/instance_set&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-codec">Schema for type: <strong>codec</strong><a class="headerlink" href="#schema-for-type-codec" title="Permanent link">&para;</a></h3>
+<p>"The data format supported for encoding/decoding to/from tremor types"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The data format supported for encoding/decoding to/from tremor types&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;json&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;msgpack&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;null&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;influx&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-instance">Schema for type: <strong>instance</strong><a class="headerlink" href="#schema-for-type-instance" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;oneOf&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/mapping&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-instance_id">Schema for type: <strong>instance_id</strong><a class="headerlink" href="#schema-for-type-instance_id" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-instance_set">Schema for type: <strong>instance_set</strong><a class="headerlink" href="#schema-for-type-instance_set" title="Permanent link">&para;</a></h3>
+<p>"A list of artefact instances"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A list of artefact instances&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/instance_id&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-interface">Schema for type: <strong>interface</strong><a class="headerlink" href="#schema-for-type-interface" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/stream_names&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/stream_names&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-links">Schema for type: <strong>links</strong><a class="headerlink" href="#schema-for-type-links" title="Permanent link">&para;</a></h3>
+<p>"The set of connections between nodes/vertices/operators in a pipeline DAG"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The set of connections between nodes/vertices/operators in a pipeline DAG&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;patternProperties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;^[a-zA-Z][A-Za-z0-9_/]*$&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;additionalItems&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;^[a-zA-Z][A-Za-z0-9_/]*$&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-mapping">Schema for type: <strong>mapping</strong><a class="headerlink" href="#schema-for-type-mapping" title="Permanent link">&para;</a></h3>
+<p>"A tremor mapping specification"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A tremor mapping specification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-nodes">Schema for type: <strong>nodes</strong><a class="headerlink" href="#schema-for-type-nodes" title="Permanent link">&para;</a></h3>
+<p>"The set of operator nodes this pipeline DAG is formed from"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalItems&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The set of operator nodes this pipeline DAG is formed from&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/operator&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-offramp">Schema for type: <strong>offramp</strong><a class="headerlink" href="#schema-for-type-offramp" title="Permanent link">&para;</a></h3>
+<p>"A tremor offramp specification"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A tremor offramp specification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;codec&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/codec&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A map of key/value pairs used to configure this onramp&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Documentation for this type&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;id&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-offramp_state">Schema for type: <strong>offramp_state</strong><a class="headerlink" href="#schema-for-type-offramp_state" title="Permanent link">&para;</a></h3>
+<p>"State of an offramp, including specification and instances"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;State of an offramp, including specification and instances&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;artefact&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/offramp&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/instance_set&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-onramp">Schema for type: <strong>onramp</strong><a class="headerlink" href="#schema-for-type-onramp" title="Permanent link">&para;</a></h3>
+<p>"A tremor onramp specification"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A tremor onramp specification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;codec&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/codec&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A map of key/value pairs used to configure this onramp&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Documentation for this type&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;preprocessors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;additionalItems&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/preprocessor&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Rust native type for this onramp specification&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;id&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-onramp_state">Schema for type: <strong>onramp_state</strong><a class="headerlink" href="#schema-for-type-onramp_state" title="Permanent link">&para;</a></h3>
+<p>"State of an onramp, including specification and instances"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;State of an onramp, including specification and instances&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;artefact&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/onramp&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/instance_set&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-operator">Schema for type: <strong>operator</strong><a class="headerlink" href="#schema-for-type-operator" title="Permanent link">&para;</a></h3>
+<p>"An operator node in a pipeline or vertex in the pipeline DAG"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An operator node in a pipeline or vertex in the pipeline DAG&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;config&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A map of key/value pairs used to configure this operator&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Documentation for this type&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A pipeline unique identifier for this operator&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Rust native type for this operator specification&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-pipeline">Schema for type: <strong>pipeline</strong><a class="headerlink" href="#schema-for-type-pipeline" title="Permanent link">&para;</a></h3>
+<p>"A tremor pipeline specification"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A tremor pipeline specification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;interface&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/interface&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/links&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;metrics_interval_s&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;minimum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/nodes&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;interface&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;nodes&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;links&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-pipeline_state">Schema for type: <strong>pipeline_state</strong><a class="headerlink" href="#schema-for-type-pipeline_state" title="Permanent link">&para;</a></h3>
+<p>"State of an pipeline, including specification and instances"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;State of an pipeline, including specification and instances&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;artefact&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/pipeline&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/instance_set&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-port_id">Schema for type: <strong>port_id</strong><a class="headerlink" href="#schema-for-type-port_id" title="Permanent link">&para;</a></h3>
+<p>null</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-preprocessor">Schema for type: <strong>preprocessor</strong><a class="headerlink" href="#schema-for-type-preprocessor" title="Permanent link">&para;</a></h3>
+<p>"Supported preprocessors"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Supported preprocessors&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;base64&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;decompress&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;gelf-chunking&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-publish_ok">Schema for type: <strong>publish_ok</strong><a class="headerlink" href="#schema-for-type-publish_ok" title="Permanent link">&para;</a></h3>
+<p>"Response when a registry publish was succesful"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Response when a registry publish was succesful&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The id of the pubished artefact&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;id&quot;</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-registry_set">Schema for type: <strong>registry_set</strong><a class="headerlink" href="#schema-for-type-registry_set" title="Permanent link">&para;</a></h3>
+<p>"A list of registry artefacts"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A list of registry artefacts&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/artefact_id&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-stream_names">Schema for type: <strong>stream_names</strong><a class="headerlink" href="#schema-for-type-stream_names" title="Permanent link">&para;</a></h3>
+<p>"The set of input or output stream names"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;additionalItems&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The set of input or output stream names&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/components/schemas/port_id&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="schema-for-type-version">Schema for type: <strong>version</strong><a class="headerlink" href="#schema-for-type-version" title="Permanent link">&para;</a></h3>
+<p>"Version information"</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Version information&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The semantic version code&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;version&quot;</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../development/issue-investigation/" title="Investigation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Investigation
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../history/" title="History" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                History
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

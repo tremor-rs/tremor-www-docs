@@ -1,0 +1,1926 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Walkthrough - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#trickle-walkthough" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Walkthrough
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/" title="Architecture Overview" class="md-nav__link">
+      Architecture Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Walkthrough
+      </label>
+    
+    <a href="./" title="Walkthrough" class="md-nav__link md-nav__link--active">
+      Walkthrough
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scripts-and-operators" class="md-nav__link">
+    Scripts and Operators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-query-graph-algorithms" class="md-nav__link">
+    Building Query Graph Algorithms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#branching" class="md-nav__link">
+    Branching
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combining" class="md-nav__link">
+    Combining
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregations" class="md-nav__link">
+    Aggregations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-mechanics" class="md-nav__link">
+    Aggregation Mechanics
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windowing" class="md-nav__link">
+    Windowing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tilt-frames" class="md-nav__link">
+    Tilt Frames
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-mechanics" class="md-nav__link">
+    Group Mechanics
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-based-grouping" class="md-nav__link">
+    Set based grouping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#each-based-grouping" class="md-nav__link">
+    Each based grouping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    Limitations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/cli/" title="Tremor Tool" class="md-nav__link">
+      Tremor Tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/operators/" title="Operators" class="md-nav__link">
+      Operators
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/benchmarks/LogstashBenchmark/" title="Logstash" class="md-nav__link">
+      Logstash
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/issue-investigation/" title="Investigation" class="md-nav__link">
+      Investigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scripts-and-operators" class="md-nav__link">
+    Scripts and Operators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-query-graph-algorithms" class="md-nav__link">
+    Building Query Graph Algorithms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#branching" class="md-nav__link">
+    Branching
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combining" class="md-nav__link">
+    Combining
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregations" class="md-nav__link">
+    Aggregations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-mechanics" class="md-nav__link">
+    Aggregation Mechanics
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windowing" class="md-nav__link">
+    Windowing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tilt-frames" class="md-nav__link">
+    Tilt Frames
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-mechanics" class="md-nav__link">
+    Group Mechanics
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-based-grouping" class="md-nav__link">
+    Set based grouping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#each-based-grouping" class="md-nav__link">
+    Each based grouping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    Limitations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/tremor-query/walkthrough.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="trickle-walkthough">Trickle Walkthough<a class="headerlink" href="#trickle-walkthough" title="Permanent link">&para;</a></h1>
+<hr />
+<p>In this section we walk through increasingly complex tremor query language ( trickle )
+programming examples, introducing key concepts as we progress.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Trickle is a near real-time stream-based structured query language that
+builds on the tremor scripting language.</p>
+<p>Trickle queries are compiled in pipeline DAGs and replace the yaml pipeline
+format used in previous versions to describe event processing graphs in
+the tremor runtime.</p>
+<p>The simplest possible query in trickle is</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span> <span class="o">#</span> <span class="n">A</span> <span class="k">simple</span> <span class="n">passthrough</span> <span class="n">query</span> <span class="n">pipeline</span>
+</code></pre></div>
+
+
+<p>This would be configured/programmed as follows in the more verbose
+pipeline yaml format:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">pipeline</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">main</span>
+    <span class="nt">interface</span><span class="p">:</span>
+      <span class="nt">inputs</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">in</span>
+      <span class="nt">outputs</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">out</span>
+    <span class="nt">links</span><span class="p">:</span>
+      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+</code></pre></div>
+
+
+<p>The <code>event</code> keyword selected the event from the standard input stream <code>in</code>
+and passes it through unchanged to the standard output stream <code>out</code>.</p>
+<p>In tremor's trickle query langauge queries are compiled and optimised and
+data is streamed though the query. Data can be passed through, transformed,
+filtered, aggregated, branched or combined to form continuous stream processing
+algorithms.</p>
+<p>Like other event processing languages, trickle <em>inverts</em> the relationship between
+query and data when compared to normal RDBMS SQL langauges. Instead of running a
+dynamic query against static in memory or disk persisted data, we compilse and
+optimise queries and stream near real-time data through each query.</p>
+<p>Data can be ingested from the outside world via the 'in' standard stream.
+Data can be produced to the outside world via the 'out' standard stream.
+Errors can be processed through a standard 'err' standard stream.</p>
+<p>These three primitives are analgous to the <code>stdin</code>, <code>stdout</code> and <code>stderr</code> streams
+in UNIX-like systems. These can be chained or interconnected via connecting multiple
+statements together to form a directed acyclic graph.</p>
+<p>We can branch inputs using <code>where</code> and <code>having</code> clauses as filters to logically
+partition streams into independent processing streams.</p>
+<p>In the below example we pratition events by their <code>seq_num</code> field. If the number
+is even, we branch the corresponding events into a stream named <code>evens</code>. If the
+number is odd, we branch to a stream named <code>odds</code>.</p>
+<p>The logical inverse of branching is to unify or union streams together, this operation
+is also supported via the select operation and is demonstrated below. We combine
+the <code>evens</code> and <code>odds</code> streams into the standard output stream</p>
+<div class="codehilite"><pre><span></span><code><span class="o">#</span> <span class="k">create</span> <span class="n">private</span> <span class="n">intermediate</span> <span class="n">internal</span> <span class="n">streams</span>
+<span class="k">create</span> <span class="n">stream</span> <span class="n">evens</span><span class="p">;</span>
+<span class="k">create</span> <span class="n">stream</span> <span class="n">odds</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="n">branch</span> <span class="k">input</span> <span class="k">into</span> <span class="n">even</span><span class="o">/</span><span class="n">odd</span> <span class="n">sequenced</span> <span class="n">events</span> <span class="k">using</span> <span class="k">where</span> <span class="n">clause</span>
+<span class="k">select</span> <span class="err">{</span> <span class="ss">&quot;even&quot;</span><span class="p">:</span> <span class="n">event</span> <span class="err">}</span> <span class="k">from</span> <span class="k">in</span> <span class="k">where</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">seq_num</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">into</span> <span class="n">evens</span><span class="p">;</span>
+<span class="k">select</span> <span class="err">{</span> <span class="ss">&quot;odd&quot;</span><span class="p">:</span> <span class="n">event</span> <span class="err">}</span> <span class="k">from</span> <span class="k">in</span> <span class="k">where</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">seq_num</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">into</span> <span class="n">odds</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="n">combine</span> <span class="o">/</span> <span class="k">union</span> <span class="n">evens</span> <span class="k">and</span> <span class="n">odds</span> <span class="k">into</span> <span class="n">standard</span> <span class="k">out</span> <span class="n">stream</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">evens</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">odds</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>We can test this with a simple json event using the <code>tremor-query</code> command line tool</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;seq_num&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;horse&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Assuming the trickle query is stored in a file called <code>evenodd.tricle</code> with the sample event
+in a file called <code>data.json</code></p>
+<div class="codehilite"><pre><span></span><code>$ tremor-query evenodd.trickle -e data.json
+</code></pre></div>
+
+
+<p>The command line tool will repeatedly inject the event <code>-e</code> argument document and we would
+expect to see output from the tool as follows:</p>
+<div class="codehilite"><pre><span></span><code>out&gt;&gt;
+    <span class="m">1</span> <span class="p">|</span> <span class="o">{</span>
+    <span class="m">2</span> <span class="p">|</span>   <span class="s2">&quot;odd&quot;</span>: <span class="o">{</span>
+    <span class="m">3</span> <span class="p">|</span>     <span class="s2">&quot;seq_num&quot;</span>: <span class="m">4</span>,
+    <span class="m">4</span> <span class="p">|</span>     <span class="s2">&quot;value&quot;</span>: <span class="m">10</span>,
+    <span class="m">5</span> <span class="p">|</span>     <span class="s2">&quot;group&quot;</span>: <span class="s2">&quot;horse&quot;</span>
+    <span class="m">6</span> <span class="p">|</span>   <span class="o">}</span>
+    <span class="m">7</span> <span class="p">|</span> <span class="o">}</span>
+</code></pre></div>
+
+
+<h2 id="scripts-and-operators">Scripts and Operators<a class="headerlink" href="#scripts-and-operators" title="Permanent link">&para;</a></h2>
+<p>The query language is <em>backwards compatible</em> with the legacy pipeline format in that the same
+operations are available in the old and new syntax. The new structured query syntax is more
+flexible and powerful, however.</p>
+<p>For example, here's the logic for an entire backpressure algorithm that could be introduced as
+a proxy between two systems:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">define</span> <span class="n">generic</span><span class="p">::</span><span class="n">backpressure</span> <span class="k">operator</span> <span class="n">bp</span>
+<span class="k">with</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">750</span> <span class="p">],</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">create</span> <span class="k">operator</span> <span class="n">bp</span> <span class="k">from</span> <span class="n">bp</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="n">bp</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">bp</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>A slightly more complex example that uses both operators and the tremor scripting langauge
+with the query langauge all together:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">define</span> <span class="n">grouper</span><span class="p">::</span><span class="n">bucket</span> <span class="k">operator</span> <span class="n">kfc</span><span class="p">;</span>
+
+<span class="n">define</span> <span class="n">script</span> <span class="n">categorize</span>
+<span class="n">script</span>
+  <span class="n">let</span> <span class="err">$</span><span class="n">rate</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">let</span> <span class="err">$</span><span class="k">class</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="o">`</span><span class="k">group</span><span class="o">`</span><span class="p">;</span>
+  <span class="err">{</span> <span class="ss">&quot;event&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">,</span> <span class="ss">&quot;rate&quot;</span><span class="p">:</span> <span class="err">$</span><span class="n">rate</span><span class="p">,</span> <span class="ss">&quot;class&quot;</span><span class="p">:</span> <span class="err">$</span><span class="k">class</span> <span class="err">}</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">create</span> <span class="k">operator</span> <span class="n">kfc</span> <span class="k">from</span> <span class="n">kfc</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="k">where</span> <span class="n">script</span> <span class="n">definition</span> <span class="k">and</span> <span class="n">instance</span> <span class="n">name</span> <span class="k">are</span> <span class="n">the</span> <span class="n">same</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span>
+<span class="o">#</span> <span class="n">omit</span> <span class="n">the</span> <span class="k">from</span> <span class="n">clause</span> <span class="k">in</span> <span class="k">operator</span> <span class="k">and</span> <span class="n">script</span> <span class="s1">&#39;create&#39;</span> <span class="n">statements</span>
+<span class="k">create</span> <span class="n">script</span> <span class="n">categorize</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="n">Stream</span> <span class="n">ingested</span> <span class="k">data</span> <span class="k">into</span> <span class="n">categorize</span> <span class="n">script</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="n">categorize</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="n">Stream</span> <span class="n">scripted</span> <span class="n">events</span> <span class="k">into</span> <span class="n">kfc</span> <span class="n">bucket</span> <span class="k">operator</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">categorize</span> <span class="k">into</span> <span class="n">kfc</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="n">Stream</span> <span class="n">bucketed</span> <span class="n">events</span> <span class="k">into</span> <span class="k">out</span> <span class="n">stream</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">kfc</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>Operators, in the query langauge as in the pipeline format are defined as <code>&lt;module&gt;::&lt;name&gt;</code> in the
+context of an operator definition clause. Operators, like script definitions can take arguments.</p>
+<p>Definitions in tremor are non-executing. They should be considered as templates or specifications.</p>
+<p>In the query langauge, any <code>define</code> clause creates specifications, possibly with arguments for
+specialization. They are typically incarnated via the <code>create</code> clause. Anything that is <code>create</code>ed
+will form a stream or node in the query graph - these <em>do</em> consume memory and participate in a
+pipeline query algorithm.</p>
+<p>So in the above example, the <code>categorize</code> script and the <code>categorize</code> node have both a definition
+or specification <strong>and</strong> an instance node that participates in the graph at runtime. It is often
+convenient to use the same name where there is only one instance of an operator of a given type.</p>
+<h2 id="building-query-graph-algorithms">Building Query Graph Algorithms<a class="headerlink" href="#building-query-graph-algorithms" title="Permanent link">&para;</a></h2>
+<p>Data streams can be branched and combined in the trickle query language via
+the select statement. The resulting graphs must be acyclic with no direct or
+indirect looping cycles.</p>
+<h3 id="branching">Branching<a class="headerlink" href="#branching" title="Permanent link">&para;</a></h3>
+<p>Branching data streams to multiple streams is performed via select operations</p>
+<p>Branch data into 3 different output stream ports</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="k">out</span><span class="o">/</span><span class="n">a</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="k">out</span><span class="o">/</span><span class="n">b</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">inout</span> <span class="k">out</span><span class="o">/</span><span class="k">c</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>Branch data into 3 different intermediate streams</p>
+<div class="codehilite"><pre><span></span><code><span class="k">create</span> <span class="n">stream</span> <span class="n">a</span><span class="p">;</span>
+<span class="k">create</span> <span class="n">stream</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">create</span> <span class="n">stream</span> <span class="k">c</span><span class="p">;</span>
+
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="n">a</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="k">c</span><span class="p">;</span>
+</code></pre></div>
+
+
+<h2 id="combining">Combining<a class="headerlink" href="#combining" title="Permanent link">&para;</a></h2>
+<p>Multiple data streams can also be combined via select operations.</p>
+<p>Combine 3 data streams into a single output stream</p>
+<div class="codehilite"><pre><span></span><code><span class="p">...</span>
+
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">a</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">b</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">c</span> <span class="k">inout</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>Combine 3 data stream ports from 1 or many streams into a single output stream</p>
+<div class="codehilite"><pre><span></span><code><span class="p">...</span>
+
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">a</span><span class="o">/</span><span class="mi">1</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">a</span><span class="o">/</span><span class="mi">2</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+<span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="n">b</span> <span class="k">inout</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<h2 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h2>
+<p>A key feature of the tremor query langauge are aggregations. These are supported with:</p>
+<ul>
+<li>Aggregate functions - An aggregate function is a function that runs in the context of a temporal window of events, emitting results intermittently</li>
+<li>Windows - A window is a range of event, clock or data time. There can be many different types of window</li>
+<li>Tilt Frames - A tilt frame is a chain of compatible windows with <strong>decreasing</strong> resolution used to reduce memory pressure and preserve relative accuracy of windowed aggregate functions</li>
+</ul>
+<p>An example clock-driven tumbling window:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">define</span> <span class="n">tumbling</span> <span class="n">window</span> <span class="o">`</span><span class="mi">15</span><span class="n">secs</span><span class="o">`</span>
+ <span class="k">with</span>
+   <span class="nb">interval</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">::</span><span class="n">with_seconds</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">select</span> <span class="err">{</span>
+    <span class="ss">&quot;count&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">count</span><span class="p">(),</span> <span class="o">#</span> <span class="k">Aggregate</span> <span class="s1">&#39;count&#39;</span> <span class="k">function</span>
+    <span class="ss">&quot;min&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">min</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="ss">&quot;max&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">max</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="ss">&quot;mean&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">mean</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="ss">&quot;stdev&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">stdev</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="ss">&quot;var&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">var</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
+<span class="err">}</span>
+<span class="k">from</span> <span class="k">in</span><span class="p">[</span><span class="o">`</span><span class="mi">15</span><span class="n">secs</span><span class="o">`</span><span class="p">]</span> <span class="o">#</span> <span class="n">We</span> <span class="n">apply</span> <span class="n">the</span> <span class="n">window</span> <span class="n">nominally</span> <span class="k">to</span> <span class="n">streams</span>
+<span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>Using windows is simple. We need to define the window specifications, such as a 15 second clock-based
+tumbling window called <code>15secs</code> as above. We can then create instances of these windows at runtime by
+applying those windows to streams. This is done in the <code>from</code> clause in <code>select</code> expressions.</p>
+<p>Wherever windows are applied, aggregate functions can be used. In the abvove example, we are calculating
+the minimum, maximum, average, standard deviation and variance of a <code>value</code> numeric field in data streaming
+into the query via the standard input stream.</p>
+<p>The query language is not constrained to to clock-driven window definitions. Windows can also be
+data-drive or fully programmatic.</p>
+<p>A more complete example:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="err">{</span>
+    <span class="ss">&quot;measurement&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">.</span><span class="n">measurement</span><span class="p">,</span>
+    <span class="ss">&quot;tags&quot;</span><span class="p">:</span> <span class="n">patch</span> <span class="n">event</span><span class="p">.</span><span class="n">tags</span> <span class="k">of</span> <span class="k">insert</span> <span class="ss">&quot;window&quot;</span> <span class="o">=&gt;</span> <span class="n">window</span> <span class="k">end</span><span class="p">,</span>
+    <span class="ss">&quot;stats&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">hdr</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">fields</span><span class="p">[</span><span class="k">group</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="p">[</span> <span class="ss">&quot;0.5&quot;</span><span class="p">,</span> <span class="ss">&quot;0.9&quot;</span><span class="p">,</span> <span class="ss">&quot;0.99&quot;</span><span class="p">,</span> <span class="ss">&quot;0.999&quot;</span> <span class="p">]),</span>
+    <span class="ss">&quot;class&quot;</span><span class="p">:</span> <span class="k">group</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="ss">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">win</span><span class="p">::</span><span class="k">first</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="k">timestamp</span><span class="p">),</span>
+<span class="err">}</span>
+<span class="k">from</span> <span class="k">in</span><span class="p">[</span><span class="o">`</span><span class="mi">10</span><span class="n">secs</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="mi">1</span><span class="k">min</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="mi">10</span><span class="k">min</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="mi">1</span><span class="n">h</span><span class="o">`</span><span class="p">]</span>
+<span class="k">where</span> <span class="n">event</span><span class="p">.</span><span class="n">measurement</span> <span class="o">==</span> <span class="ss">&quot;udp_lb_test&quot;</span>
+   <span class="k">or</span> <span class="n">event</span><span class="p">.</span><span class="n">measurement</span> <span class="o">==</span> <span class="ss">&quot;kafka-proxy.endpoints&quot;</span>
+   <span class="k">or</span> <span class="n">event</span><span class="p">.</span><span class="n">measurement</span> <span class="o">==</span> <span class="ss">&quot;burrow_group&quot;</span>
+   <span class="k">or</span> <span class="n">event</span><span class="p">.</span><span class="n">measurement</span> <span class="o">==</span> <span class="ss">&quot;burrow_partition&quot;</span>
+   <span class="k">or</span> <span class="n">event</span><span class="p">.</span><span class="n">measurement</span> <span class="o">==</span> <span class="ss">&quot;burrow_topic&quot;</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">set</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">measurement</span><span class="p">,</span> <span class="n">event</span><span class="p">.</span><span class="n">tags</span><span class="p">,</span> <span class="k">each</span><span class="p">(</span><span class="n">record</span><span class="p">::</span><span class="n">keys</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">fields</span><span class="p">)))</span>
+<span class="k">into</span> <span class="n">normalize</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>In the above example we use a single aggregate function called <code>stats::hdr</code> which uses a high dynamic range
+or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
+set by the <code>group</code> clause. A group clause effectively partitions our operation by the group expressions provided
+by the trickle query programmer. In the example, we're using the field names  of the nested 'fields' record on inbound
+events to compose a component of a group that is also qualified by tags and a measurement name. The field component
+is used as a numeric input to the histogram aggregate function.</p>
+<p>In the <code>from</code> clause, we are using a tilt frame, or a succession of window resolutions over which this aggregate
+function is producing results. So a <code>10secs</code> window is emitting on a 10-second repeating basis into a <code>1min</code> frame.
+So 6 times per second the state of the 10 second window is merged into the <code>1min</code> frame. This merge process is
+performed for each frame in the tilt frame.</p>
+<p>The advantage of tilt-frames is that as the target expression is <strong>the same</strong> for each frame, we can <em>merge</em> across
+each frame without amplifying error - in short, we get the <strong>effect</strong> of summarisation without loss of accuracy.</p>
+<h2 id="aggregation-mechanics">Aggregation Mechanics<a class="headerlink" href="#aggregation-mechanics" title="Permanent link">&para;</a></h2>
+<p>The mechanics of aggregation in the query langauge are non-trivial.</p>
+<p>A high level non-normative summary follows.</p>
+<h3 id="windowing">Windowing<a class="headerlink" href="#windowing" title="Permanent link">&para;</a></h3>
+<p>Assuming a periodic event delivered every 2 seconds into tremor.</p>
+<p><img alt="tumbling-event-windows.png" src="../tumbling-event-windows.png" /></p>
+<p>A size based window of size 2 would emit a synthetic output event every 2 events.
+So the lifespan of a size based window is 2 events, repeated and non-overlapping for tumbling style windows.
+In the illustration above events <code>1</code> and <code>2</code> in the first window <code>w0</code> produce a single synthetic or derivate event <code>a</code>
+Events <code>3</code> and <code>4</code> in the second window <code>w1</code> produce a single synthetic or derivate event <code>b</code>
+As there is no 6th event in the example illustration, we will <em>never</em> get another synthetic output event</p>
+<p>Contrast this with the 10 second or clock-based tumbling window. In tfirst window <code>w0</code>s lifetime we capture
+all events in the illustration.</p>
+<h3 id="tilt-frames">Tilt Frames<a class="headerlink" href="#tilt-frames" title="Permanent link">&para;</a></h3>
+<p>Assuming a continuous flow of events into tremor...</p>
+<p><img alt="tilt-frame-mechanics.png" src="../tilt-frame-mechanics.png" /></p>
+<p>All the synthetic outputs of successive 5 minute windows that fit into a 15 minute period are <strong>merged</strong>
+into the 15 minute window. All the outputs of successive 15 minute periods that fit into a 1 hour period
+are <strong>merged</strong> into the 1 hour window. By chaining and merging, tremor can optimise ( reduce ) the amount
+of memory required across the chain when compared to multiple independent windows <code>select</code> expressions.
+In the case of aggregate functions like <code>stats::hdr`` or</code>stats::dds``` the savings are significant.</p>
+<p>If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15,  3.6B every hour.</p>
+<p>By using tilt frames we can maximally minimize internal memory consumption, whilst reducing the volume of
+incremental computation ( per event, per frame ), and further whilst preserving relative accuracy for
+merge-capable aggregate functions.</p>
+<p>The converged statistics under merge exhibit the same relative accuracy at a fraction of the computational
+and memory overhead without the using the tilt-frame mechanism. </p>
+<h2 id="group-mechanics">Group Mechanics<a class="headerlink" href="#group-mechanics" title="Permanent link">&para;</a></h2>
+<p>The group clause in the query language partitions streams before windows and tilt frames
+are applied. Groups can be set-based,  each-based or composites thereof.</p>
+<h3 id="set-based-grouping">Set based grouping<a class="headerlink" href="#set-based-grouping" title="Permanent link">&para;</a></h3>
+<p>Grouping by set partitions streams by a concatenation of expressions.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">set</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">country</span><span class="p">,</span> <span class="n">event</span><span class="p">.</span><span class="n">region</span><span class="p">)</span>
+<span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>In the example expression we are partitioning into a composite group that is
+composed of the country and  region of each inbound event.</p>
+<p>So we expect data of the following form</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span> <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="nt">&quot;az&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="err">...</span> <span class="p">}</span>
+<span class="p">{</span> <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span> <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="nt">&quot;az&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="err">...</span> <span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="each-based-grouping">Each based grouping<a class="headerlink" href="#each-based-grouping" title="Permanent link">&para;</a></h3>
+<p>Given that our data can be nested, however, our data could be structured differently:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+  <span class="err">regions:</span> <span class="err">{</span>
+    <span class="nt">&quot;east&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">],</span>
+  <span class="p">}</span>
+  <span class="err">...</span>
+<span class="err">}</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">each</span><span class="p">(</span><span class="n">record</span><span class="p">::</span><span class="n">keys</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">regions</span><span class="p">))</span>
+<span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>Each field in the nested <code>locations</code> field becomes a component of our
+set and qualified by country ...</p>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<p>There are cases however that are not currently easily partitionable with a
+single sql expression due to limitations with the grouping clause. For example
+what is we wanted to make availability zones a component of our group partitions?</p>
+<p>How would we structure such a query?</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+  <span class="err">regions:</span> <span class="err">{</span>
+    <span class="nt">&quot;east&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">],</span> <span class="err">#</span> <span class="err">AZs</span> <span class="err">by</span> <span class="err">region</span>
+  <span class="p">}</span>
+  <span class="err">...</span>
+<span class="err">}</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">create</span> <span class="n">stream</span> <span class="n">by_country_region</span><span class="p">;</span>
+
+<span class="k">select</span> <span class="err">{</span> <span class="ss">&quot;country&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">.</span><span class="n">country</span><span class="p">,</span> <span class="ss">&quot;region&quot;</span><span class="p">:</span> <span class="k">group</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="ss">&quot;azs&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">.</span><span class="n">regions</span><span class="p">[</span><span class="k">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="err">}</span>
+<span class="k">from</span> <span class="k">in</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">each</span><span class="p">(</span><span class="n">record</span><span class="p">::</span><span class="n">keys</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">regions</span><span class="p">))</span>
+<span class="k">into</span> <span class="n">by_country_region</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>We can preprocess our inbound stream and collapse our locations
+sub-record a single level by hoisting the <code>region</code> field to the
+top level of a synthetic intermediate outbound stream <code>by_country_region</code>.</p>
+<p>We can postprocess the intermediate stream <code>by_country_region</code> into a
+single outbound stream that further extracts and hoists the 'az' dimension</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="err">{</span> <span class="ss">&quot;country&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">.</span><span class="n">country</span><span class="p">,</span> <span class="ss">&quot;region&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">.</span><span class="n">region</span><span class="p">,</span> <span class="ss">&quot;az&quot;</span><span class="p">:</span> <span class="k">group</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="err">}</span>
+<span class="k">from</span> <span class="n">by_country_region</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">each</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">azs</span><span class="p">)</span>
+<span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>So, we need 2 select statements to compose a solution where there are multiple
+nesting levels via successive extraction of group components. The same principle
+works with more complex grouping requirements.</p>
+<p>Once the grouping mechanics are resolved, windowing, aggregation and tilt-frames
+can be applied to further refine queries.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Overview
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../functions/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Overview
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

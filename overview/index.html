@@ -1,0 +1,1791 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Architecture Overview - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#architecture-overview" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Architecture Overview
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Architecture Overview
+      </label>
+    
+    <a href="./" title="Architecture Overview" class="md-nav__link md-nav__link--active">
+      Architecture Overview
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    Scope
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goodness-of-fit" class="md-nav__link">
+    Goodness of fit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tremor-urls" class="md-nav__link">
+    Tremor URLs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-model" class="md-nav__link">
+    Runtime model
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#threading-model" class="md-nav__link">
+    Threading model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actor-model" class="md-nav__link">
+    Actor model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-ordering" class="md-nav__link">
+    Event ordering
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-model" class="md-nav__link">
+    Pipeline Model
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataflow" class="md-nav__link">
+    Dataflow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signalflow" class="md-nav__link">
+    SignalFlow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contraflow" class="md-nav__link">
+    Contraflow
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-facilities" class="md-nav__link">
+    Runtime facilities
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conductor" class="md-nav__link">
+    Conductor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    Metrics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-model" class="md-nav__link">
+    Data model
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distribution-model" class="md-nav__link">
+    Distribution model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clientserver" class="md-nav__link">
+    Client/Server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+      Walkthrough
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/cli/" title="Tremor Tool" class="md-nav__link">
+      Tremor Tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../operations/configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../artefacts/operators/" title="Operators" class="md-nav__link">
+      Operators
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/benchmarks/LogstashBenchmark/" title="Logstash" class="md-nav__link">
+      Logstash
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../development/issue-investigation/" title="Investigation" class="md-nav__link">
+      Investigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    Scope
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goodness-of-fit" class="md-nav__link">
+    Goodness of fit
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tremor-urls" class="md-nav__link">
+    Tremor URLs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-model" class="md-nav__link">
+    Runtime model
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#threading-model" class="md-nav__link">
+    Threading model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actor-model" class="md-nav__link">
+    Actor model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-ordering" class="md-nav__link">
+    Event ordering
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-model" class="md-nav__link">
+    Pipeline Model
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataflow" class="md-nav__link">
+    Dataflow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signalflow" class="md-nav__link">
+    SignalFlow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contraflow" class="md-nav__link">
+    Contraflow
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-facilities" class="md-nav__link">
+    Runtime facilities
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conductor" class="md-nav__link">
+    Conductor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    Metrics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-model" class="md-nav__link">
+    Data model
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distribution-model" class="md-nav__link">
+    Distribution model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clientserver" class="md-nav__link">
+    Client/Server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/overview.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h1>
+<p>This is a short architectural overview of tremor</p>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>We cover the runtime, data and distribution model of tremor from 50,000 feet.</p>
+<h2 id="goodness-of-fit">Goodness of fit<a class="headerlink" href="#goodness-of-fit" title="Permanent link">&para;</a></h2>
+<p>Tremor is designed for high volume messaging environments and is good for:</p>
+<ul>
+<li>Man in the middle bridging - Tremor is designed to bridge asynchronous upstream sources with synchronous downstream sinks. More generally, tremor excels at intelligently bridging from sync/async to async/sync so that message flows can be classified, dimensioned, segmented, routed using user defined logic whilst providing facilities to handle back-pressure and other hard distributed systems problems on behalf of its operators.</li>
+<li>For example - Log data distributed from Kafka to ElasticSearch via Logstash can introduce significant lag or delays as logstash becomes a publication bottleneck. Untimely, late delivery of log data to the network operations centre under severity zero or at/over capacity conditions reduces our ability to respond to major outage and other byzantine events in a timely fashion.</li>
+<li>In-flight redeployment - Tremor can be reconfigured via it's API allowing workloads to be migrated to/from new systems and logic to be retuned, reconfigured, or reconditioned without redeployment.</li>
+<li>Simple event processing - Tremor adopts many principles from DEBS ( Distributed Event Based Systems ), ESP ( Event Stream Processor ) and the CEP ( Complex Event Processing ) communities. However in its current state of evolution tremor has an incomplete feature set in this regard. Over time tremor MAY evolve as an ESP or CEP solution but this is an explicit non-goal of the project.</li>
+</ul>
+<h2 id="tremor-urls">Tremor URLs<a class="headerlink" href="#tremor-urls" title="Permanent link">&para;</a></h2>
+<p>Since tremor v0.4, all internal artefacts and running instances of <strong>onramps</strong>, <strong>offramps</strong> and <strong>pipelines</strong> are dynamically configurable. The introduction of a dynamically configurable deployment model has resulted in the introduction of Tremor URLs.</p>
+<p>The tremor API is built around this URL and the configuration space it enshrines:</p>
+<table>
+<thead>
+<tr>
+<th>Example URL</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tremor://localhost:9898/</code></td>
+<td>A local tremor instance<br /><em> Accessible on the local host<br /></em> REST API on port 9898 of the local host</td>
+</tr>
+<tr>
+<td><code>tremor:///</code></td>
+<td>The current tremor instance or 'self'</td>
+</tr>
+<tr>
+<td><code>tremor:///pipeline</code></td>
+<td>A list of pipelines</td>
+</tr>
+<tr>
+<td><code>tremor:///pipeline/bob</code></td>
+<td>The pipeline identified as bob</td>
+</tr>
+<tr>
+<td><code>tremor:///onramp/alice</code></td>
+<td>The onramp identified as Alice</td>
+</tr>
+<tr>
+<td><code>tremor:///binding/talk</code></td>
+<td>A binding that allows alice and bob to connect</td>
+</tr>
+<tr>
+<td><code>tremor:///binding/talk/tls</code></td>
+<td>An active conversation or instance of a talk between alice and bob</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The tremor REST API and configuration file formats also follow the same URL format.</p>
+<p>In the case of configuration, a shorthand URL form is often used. In the configuration model, we discriminate artefacts by type, so it is often sufficient to infer the <code>tremor:///{artefact-kind}</code> component when specifying ( configuring ) artefacts.</p>
+<p>In bindings, however, we minimally need to use the full URL path component  ( for example:<code>/pipeline/01</code> ).</p>
+<p>At this time, the full URL form is not used in the configuration model.</p>
+<h2 id="runtime-model">Runtime model<a class="headerlink" href="#runtime-model" title="Permanent link">&para;</a></h2>
+<p>The tremor runtime is composed of multiple internal components that communicate via queues across multiple threads of control managed/coordinated by a set of control plane actors driven by the tremor REST API.</p>
+<h3 id="threading-model">Threading model<a class="headerlink" href="#threading-model" title="Permanent link">&para;</a></h3>
+<p>Tremor is a multi-threaded client-server system.</p>
+<p>Currently, the threading model is simplistic:</p>
+<ul>
+<li>A thread is spawned per onramp</li>
+<li>A thread is spawned per offramp</li>
+<li>A thread is spawned per pipeline</li>
+<li>Threads communicate via queues</li>
+</ul>
+<p>This is sufficient for tremor's primary use case as a log and metrics event processing system. In this and similar cases there are, and will only ever be, a small number of live onramps, pipelines and offramps.</p>
+<p>The threading model is very likely to evolve over time as concurrency, threading and other primitives available in the rust ecosystem mature and evolve.</p>
+<h3 id="actor-model">Actor model<a class="headerlink" href="#actor-model" title="Permanent link">&para;</a></h3>
+<p>Tremor exploits the Actor model for supervision, management and providing essential control plane services such as supporting the tremor API and lifecycle management of onramps, pipelines and offramps.</p>
+<p>As tremor is Rust-based, we have adopted the <code>actix</code> and <code>actix-web</code> projects which provide tremor with a good enough actor based system to supervise and manage facilities within tremor that are off the performance critical path.</p>
+<h2 id="event-ordering">Event ordering<a class="headerlink" href="#event-ordering" title="Permanent link">&para;</a></h2>
+<p>Events generally flow from onramps, where they are ingested into the system, through pipelines, into offramps where they are pushed to external systems.</p>
+<p>Tremor imposes causal event ordering over ingested events and processes events deterministically. This does not mean that tremor imposes a total ordering over all ingested events, however ( ugh, because that is not tractable in a distributed system ).</p>
+<p>Events flowing into tremor from multiple onramps are considered independant. Events flowing from multiple clients into tremor are also considered independant.</p>
+<p>However, events sent by a <em>specific</em> client through a <em>specific</em> onramp into a <em>passthrough</em> pipeline would flow through tremor in their origin order and be passed to offramps in the same <em>origin</em> order.</p>
+<p>Requests from multiple independent sources over the same pipeline may arbitrarily interleave, but should not re-order.</p>
+<p>In pipelines, events are processed in depth first order. Where tremor operators have no intrinsic ordering ( such as a branch split ), tremor internally <em>imposes</em> an order.</p>
+<p>Operator's may <em>arbitrarily</em> reorder messages. For example, a windowed operator might batch multiple events into a single batch. An iteration operator could reverse the batch and forward individual unbatched events in an order that is the reverse of the original ingest order for that batch of events.</p>
+<p>However, the engine itself does not re-order events. Events are handled and processed in a strictly deterministic order by design.</p>
+<h2 id="pipeline-model">Pipeline Model<a class="headerlink" href="#pipeline-model" title="Permanent link">&para;</a></h2>
+<p>The core processing model of tremor is based on a directed-acyclic-graph based dataflow model.</p>
+<p>Tremor pipelines are a graph of vertices ( nodes, or operators ) with directed edges ( or connections, or links ) between operators in the graph.</p>
+<p>Events from the outside world in a tremor pipeline can only flow in one direction from inputs ( special operators that connect pipeline operators to onramps ) via operators to outputs ( special operators that connect pipeline operators to offramps).</p>
+<p>Operators process events and may produce <strong>zero or many</strong> output events for each event processed by the operator. As operators are the primary building block of tremor processing logic they are designed for extension.</p>
+<p>Tremor pipelines understand three different types of events:</p>
+<ul>
+<li>Data events - these are data events delivered via onramps into a pipeline or to offramps from a pipeline. Most events that flow through a tremor pipeline are of this type.</li>
+<li>Signal events - these are synthetic events delivered by the tremor runtime into a pipeline under certain conditions.</li>
+<li>Contraflow events - these are synthetic events delivered the tremor runtime into a pipeline under certain conditions that are caused by the processing of events already in a tremor system. Back-pressure events exploit contraflow.</li>
+</ul>
+<h3 id="dataflow">Dataflow<a class="headerlink" href="#dataflow" title="Permanent link">&para;</a></h3>
+<p>Data-flow events are the bread and butter of tremor.</p>
+<p>These are line of business data events ingested via onramps from external upstream systems, processed through pipelines and published downstream via offramps to downstream external systems.</p>
+<h3 id="signalflow">SignalFlow<a class="headerlink" href="#signalflow" title="Permanent link">&para;</a></h3>
+<p>Transparent to pipeline authors, but visible to onramp, offramp and operator developers are signal events. Signal events are synthetic events generated by the tremor-runtime and system that can be exploited by operators for advanced event handling purposes.</p>
+<h3 id="contraflow">Contraflow<a class="headerlink" href="#contraflow" title="Permanent link">&para;</a></h3>
+<p>A core conceit with distributed event-based systems arrizes due to their typically asynchronous nature. Tremor employs a relatively novel algorithm to handle back-pressure or other events that propagate <em>backwards</em> through a pipeline.</p>
+<p>But pipelines are directed-acyclic-graphs ( DAGs ), so how do we back-propagate events without introducing cycles?</p>
+<p>The answer is simple:</p>
+<ul>
+<li>There can be no cycles in a DAG</li>
+<li>DAGS are traversed in depth-first-search ( DFS ) order</li>
+<li>There can be no cycles in a DAG traversed in reverse-DFS order.</li>
+<li>If we join a DAG d, with its mirrored ( reversed ) DAG d'</li>
+<li>We get another DAG where<ul>
+<li>Every output in the DAG d, can continue propagating events in its reverse DAG d', without cycles though its d' mirrored input</li>
+<li>Branches in DAG d, become Combinators in DAG d'</li>
+<li>Combinators in DAG d, become Branches in DAG d'</li>
+<li>Any back-pressure or other events detected in the processing of existing events can result in a synthetic signalling event being injected into the reverse-DAG.</li>
+</ul>
+</li>
+<li>We call the injected events 'contraflow' events because they move <em>backwards</em> against the primary data flow.</li>
+<li>The cost or overhead of not injecting a contraflow event is zero</li>
+<li>The cost or overhead of an injected contraflow event ( in tremor ) is minimised through pruning - for example - operators that are not contraflow aware do not need to receive or process contraflow events - tremor optimises for this case.</li>
+<li>We call the output-input pairs at the heart of contraflow the 'pivot point'</li>
+</ul>
+<p>Contraflow has been used in other event processing systems and was designed /inventedby one of the members of the tremor core team ( in a previous life ).</p>
+<p>There are many other ways to handle back-pressure ( for example: those used by Spark, Storm, Hazelcast Jet, … ) but they stink in practice, so down with that sort of thing. Contraflow is far simpler to reason about and develop verifiable systems and code against.</p>
+<p>Although the contraflow mechanism <em>may</em> seem complex, its far simpler than back-pressure handling by almost all other reasonable mechanisms and with far fewer negative side-effects and tradeoffs.</p>
+<h2 id="runtime-facilities">Runtime facilities<a class="headerlink" href="#runtime-facilities" title="Permanent link">&para;</a></h2>
+<p>Tremor's runtime is composed of a number of facilities that work together to provide service.</p>
+<h3 id="conductor">Conductor<a class="headerlink" href="#conductor" title="Permanent link">&para;</a></h3>
+<p>The tremor API is a REST based API that allows tremor operators to manage the lifecycle of onramps, offramps and pipelines deployed into a tremor based system.</p>
+<p>The set of facilities in the runtime that are related to service lifecycle, activation and management are often referred to collectively as the tremor conductor or tremor control plane.</p>
+<p>These terms can be used interchangeably.</p>
+<p>Operators CAN conduct or orchestrate one or many tremor servers through its REST based API. The REST API is implemented as an actor in the tremor runtime.</p>
+<p>The API actor in turn interfaces with registry and repository facilities. Tremor distinguishes between artefacts and instances. Artefacts in tremor have no runtime overhead.</p>
+<p>Artefacts in tremor are declarative specifications of:</p>
+<ul>
+<li>Onramps - An onramp specification is a specific configuration of a supported onramp kind</li>
+<li>Offramps - An offramp specification is a specific configuration of a supported offramp kind</li>
+<li>Pipelines - A pipeline specification is a specific configuration of a pipeline graph</li>
+<li>Bindings - A binding specification describes how onramps, pipelines and offramps should be interconnected</li>
+</ul>
+<p>Artefacts can be though of analagously to code. They are a set of instructions, rules or configurations. As such they are registered with tremor via its API and stored in tremor's artefact repository.</p>
+<p>Deployment in tremor, is achieved through a mapping artefact. The mapping artefact specifies how artefacts should be deployed into one or many runtime instances, activated, and connected to live instances of onramps or offramps.</p>
+<p>In tremor, publishing a mapping results in instances being deployed as a side-effect. By unpublishing or deleting a mapping instances are undeployed as a side-effect.</p>
+<h3 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h3>
+<p>Metrics in tremor are implemented as a pipeline and deployed during startup.</p>
+<p>Metrics are builtin and can not be undeployed.</p>
+<p>Operators <strong>MAY</strong> attach offramps to the metrics service to distribute metrics to external systems, such as InfluxDB or Kafka.</p>
+<h2 id="data-model">Data model<a class="headerlink" href="#data-model" title="Permanent link">&para;</a></h2>
+<p>Tremor supports unstructured data.</p>
+<p>Data can be raw binary, JSON, MsgPack, Influx or other structures.</p>
+<p>When data is ingested into a tremor pipeline it can be any <strong>supported</strong> format.</p>
+<p>Tremor pipeline operators however, often assume <em>some</em> structure. For heirarchic or nested formats such as JSON and MsgPack, tremor uses the <code>serde</code> serialisation and deserialisation capabilities.</p>
+<p>Therefore, the <em>in-memory</em> format for <em>JSON-like</em> data in tremor is effectively a <code>simd_json::Value</code>. This has the advantage of allowing tremor-script to work against YAML, JSON or MsgPack data with no changes or considerations in the tremor-script based on the origin data format.</p>
+<p>For line oriented formats such as the Influx Line Protocol, or GELF these are typically transformed to tremor's in-memory format ( currently based on <code>serde</code>).</p>
+<p>For raw binary or other data formats, tremor provides a growing set of codecs that convert external data to tremor in-memory form or that convert tremor in-memory form to an external data format.</p>
+<p>In general, operators and developers should <em>minimize</em> the number of encoding and decoding steps required in the transit of data through tremor or between tremor instances.</p>
+<p>The major overhead in most tremor systems is encoding and decoding overhead. To compensate that, as as JSON is the most dominent format, we <a href="https://github.com/simd-lite/simdjson-rs">ported</a> <a href="https://github.com/lemire/simdjson">sims-json</a> this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.</p>
+<h3 id="distribution-model">Distribution model<a class="headerlink" href="#distribution-model" title="Permanent link">&para;</a></h3>
+<p>Tremor does not ( yet ) have an out-of-the-box network protocol. A native tremor protocol is planned in the immediate / medium term.</p>
+<p>As such, the distribution model for tremor is currently limited to the set of available onramp and offramp connectors.</p>
+<p>However the[websocket <a href="../artefacts/onramps/#ws">on</a> and <a href="../artefacts/offramps/#ws">offramp</a> can be used for tremor to tremor communication.</p>
+<h3 id="clientserver">Client/Server<a class="headerlink" href="#clientserver" title="Permanent link">&para;</a></h3>
+<p>Tremor, in its current form, is a client-server system. Tremor exposes a synchronous blocking RESTful API over HTTP for conducting operations related to its high throughput and relatively high performance pipeline-oriented data plane.</p>
+<p>Tremor, in the near future, will add a clustering capability making it a distributed system. Tremor will still support client-server deployments through a 'standalone' mode of clustered operation.</p>
+<p>Tremor in 'standalone' mode can be though of as client-server or a 'cluster of one' depending on your own bias or preferences, dear reader.</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../tremor-query/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Overview
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

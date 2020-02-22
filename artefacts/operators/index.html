@@ -1,0 +1,1589 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Operators - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#operators" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Operators
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/" title="Architecture Overview" class="md-nav__link">
+      Architecture Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+      Walkthrough
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/cli/" title="Tremor Tool" class="md-nav__link">
+      Tremor Tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Operators
+      </label>
+    
+    <a href="./" title="Operators" class="md-nav__link md-nav__link--active">
+      Operators
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runtimetremor" class="md-nav__link">
+    runtime::tremor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grouperbucket" class="md-nav__link">
+    grouper::bucket
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericbackpressure" class="md-nav__link">
+    generic::backpressure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericbatch" class="md-nav__link">
+    generic::batch
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passthrough" class="md-nav__link">
+    passthrough
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debughistory" class="md-nav__link">
+    debug::history
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/benchmarks/LogstashBenchmark/" title="Logstash" class="md-nav__link">
+      Logstash
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/issue-investigation/" title="Investigation" class="md-nav__link">
+      Investigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runtimetremor" class="md-nav__link">
+    runtime::tremor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grouperbucket" class="md-nav__link">
+    grouper::bucket
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericbackpressure" class="md-nav__link">
+    generic::backpressure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericbatch" class="md-nav__link">
+    generic::batch
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passthrough" class="md-nav__link">
+    passthrough
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debughistory" class="md-nav__link">
+    debug::history
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/artefacts/operators.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="operators">Operators<a class="headerlink" href="#operators" title="Permanent link">&para;</a></h1>
+<p>Operators are part of the pipeline configuration.</p>
+<p>Operators process events and signals in the context of a pipeline. An operator, upon receiving an event from an upstream operator or stream, MAY produce one or many events to one or many downstream directly connected operators. An operator MAY drop events which halts any further processing.</p>
+<p>Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behaviour, concurrency, event ordering or other aspects of a running tremor systems.</p>
+<p>Operators are created in the context of a pipeline and configured in the <code>nodes</code> section of each pipeline. An operator MUST have an identifier that is unique for its owning pipeline.</p>
+<p>Configuration is of the general form:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">pipeline</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example-pipeline</span>
+    <span class="nt">nodes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;pipeline unique node id&gt;</span>
+        <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;namespace&gt;::&lt;opertor&gt;</span>
+        <span class="nt">config</span><span class="p">:</span>
+          <span class="nt">&lt;config key&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;config value&gt;</span>
+</code></pre></div>
+
+
+<p>The <code>config</code> object is optional and only required for some operators. Configuration consists of key / value pairs.</p>
+<h2 id="runtimetremor">runtime::tremor<a class="headerlink" href="#runtimetremor" title="Permanent link">&para;</a></h2>
+<p>The tremor script runtime that allows to modify events or their metadata. To learn more about Tremor Script please see the <a href="../../tremor-script/">related section</a>.</p>
+<p><strong>Configuration options</strong>:</p>
+<ul>
+<li><code>script</code> - The script to execute.</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code> (default output used with <code>emit</code>)</li>
+<li><code>error</code> - special channel for runtime errors</li>
+<li><code>&lt;anything else&gt;</code> used when <code>emit event =&gt; "&lt;anything else&gt;"</code></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rt</span>
+    <span class="l l-Scalar l-Scalar-Plain">op</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runtime::tremor</span>
+    <span class="l l-Scalar l-Scalar-Plain">config</span><span class="p p-Indicator">:</span>
+      <span class="nt">script</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">emit</span>
+</code></pre></div>
+
+
+<h2 id="grouperbucket">grouper::bucket<a class="headerlink" href="#grouperbucket" title="Permanent link">&para;</a></h2>
+<p>Bucket will perform a sliding window rate limiting based on event metadata. Limits are applied for every <code>$class</code>. In a <code>$class</code> each <code>$dimensions</code>  is allowed to pass <code>$rate</code> messages per second.</p>
+<p>This operator does not support configuration.</p>
+<p><strong>Metadata Variables</strong>:</p>
+<ul>
+<li><code>$class</code> - The class of an event. (String)</li>
+<li><code>$rate</code> - Allowed events per second per class/dimension (Number)</li>
+<li>(Optional) <code>$dimensions</code> - The dimensions of the event. (Any)</li>
+<li>(Optional)<code>$cardinality</code> - the maximum number of dimensions kept track of at the same time (Number, default: <code>1000</code>)</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+<li><code>error</code> - Unprocessable events for example if <code>$class</code> or <code>$rate</code> are not set.</li>
+<li><code>overflow</code> - Events that exceed the rate defined for them</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">group</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grouper::bucket</span>
+</code></pre></div>
+
+
+<p><strong>Metrics</strong>:</p>
+<p>The bucket operator generates additional metrics. For each class the following two statistics are generated (as an example):</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;measurement&quot;</span><span class="p">:</span><span class="s2">&quot;bucketing&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;tags&quot;</span><span class="p">:{</span>
+   <span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="s2">&quot;pass&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="s2">&quot;output&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;node&quot;</span><span class="p">:</span><span class="s2">&quot;bucketing&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span>
+ <span class="p">},</span>
+ <span class="nt">&quot;fields&quot;</span><span class="p">:{</span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="mi">93</span><span class="p">},</span>
+ <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1553012903452340000</span>
+<span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;measurement&quot;</span><span class="p">:</span><span class="s2">&quot;bucketing&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;tags&quot;</span><span class="p">:{</span>
+   <span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="s2">&quot;overflow&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="s2">&quot;output&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;node&quot;</span><span class="p">:</span><span class="s2">&quot;bucketing&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="s2">&quot;main&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span>
+ <span class="p">},</span>
+ <span class="nt">&quot;fields&quot;</span><span class="p">:{</span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="mi">127</span><span class="p">},</span>
+ <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1553012903452340000</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>This tells us the following, up until this measurement was published in the class <code>test</code>:</p>
+<ul>
+<li>(<code>pass</code>) Passed 93 events</li>
+<li>(<code>overflow</code>) Marked 127 events as overflow due to not fitting in the limit</li>
+</ul>
+<h2 id="genericbackpressure">generic::backpressure<a class="headerlink" href="#genericbackpressure" title="Permanent link">&para;</a></h2>
+<p>The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached <code>timeout</code>, or an error occurs. On an successful transmission within the timeout limit, the delay is reset.</p>
+<p><strong>Configuration options</strong>:</p>
+<ul>
+<li><code>timeout</code> - Maximum allowed 'write' time in milliseconds.</li>
+<li><code>steps</code> - Array of values to delay when a we detect backpressure. (default: <code>[50, 100, 250, 500, 1000, 5000, 10000]</code>)</li>
+<li><code>outputs</code> - Array of outputs, data will be round robined between outputs and backpressure kept track of on a per output basis. (Default: <code>["out"]</code>)</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+<li><code>overflow</code> - Events that are not let past due to active backpressure</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bp</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::backpressure</span>
+  <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+</code></pre></div>
+
+
+<h2 id="genericbatch">generic::batch<a class="headerlink" href="#genericbatch" title="Permanent link">&para;</a></h2>
+<p>The batch operator is used to batch multiple events and send them in a bulk fashion. It also allows to set a timeout of how long the operator should wait for a batch to be filled.</p>
+<p>Supported configuration options are:</p>
+<ul>
+<li><code>count</code> - Elements per batch</li>
+<li><code>timeout</code> - Maximum delay between the first element of a batch and the last element of a batch.</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">batch</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::batch</span>
+  <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
+</code></pre></div>
+
+
+<h2 id="passthrough">passthrough<a class="headerlink" href="#passthrough" title="Permanent link">&para;</a></h2>
+<p>Passes through the event without modifying it, used for debugging.</p>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>
+</code></pre></div>
+
+
+<h2 id="debughistory">debug::history<a class="headerlink" href="#debughistory" title="Permanent link">&para;</a></h2>
+<p>Generates a history entry in the event. Data is written to an array with the key provided in <code>name</code>, tagged with <code>"event: &lt;op&gt;(&lt;event_id&gt;)"</code>.</p>
+<p><strong>Configuration options</strong>:</p>
+<ul>
+<li><code>op</code> - The operation name of this operator</li>
+<li><code>name</code> - The field to store the history on</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">history</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">debug::history</span>
+  <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-checkpoint</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">event_history</span>
+</code></pre></div>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../offramps/" title="Offramps" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Offramps
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../development/quick-start/" title="Quick Start Guide" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Quick Start Guide
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

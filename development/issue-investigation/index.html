@@ -1,0 +1,2061 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Investigation - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#investigations" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Investigation
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/" title="Architecture Overview" class="md-nav__link">
+      Architecture Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+      Walkthrough
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/cli/" title="Tremor Tool" class="md-nav__link">
+      Tremor Tool
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../operations/configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/operators/" title="Operators" class="md-nav__link">
+      Operators
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../benchmarks/LogstashBenchmark/" title="Logstash" class="md-nav__link">
+      Logstash
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Investigation
+      </label>
+    
+    <a href="./" title="Investigation" class="md-nav__link md-nav__link--active">
+      Investigation
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logs-metrics-prod" class="md-nav__link">
+    Logs &amp; Metrics (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htop-prod" class="md-nav__link">
+    htop (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perf-prod-linux" class="md-nav__link">
+    perf (prod: Linux)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat-prod" class="md-nav__link">
+    netstat (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ping-prod" class="md-nav__link">
+    ping (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lldb-lldb-rust-prod" class="md-nav__link">
+    lldb / lldb-rust  (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valgrind-dev-linux" class="md-nav__link">
+    valgrind (dev: Linux)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dtrace-dev-os-x-windows-bsd" class="md-nav__link">
+    dtrace (dev: OS X / Windows / BSD)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instruments-dev-os-x" class="md-nav__link">
+    Instruments (dev: OS X)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strace-prod-linux" class="md-nav__link">
+    strace (prod: Linux)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#websocat-prod-nay" class="md-nav__link">
+    websocat (prod: nay)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    Methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    Logs
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory-issue-01" class="md-nav__link">
+    Out of memory 'issue' 01
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-observationsource-metrics-logs" class="md-nav__link">
+    Initial observation(source: Metrics &amp; logs)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1st-theory-a-memory-leak-in-tremor-script" class="md-nav__link">
+    1st theory: a memory leak in tremor-script
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-1st-theory-oom" class="md-nav__link">
+    disprove of 1st theory (oom)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2nd-theory-misconfigured-librdkafka-operations" class="md-nav__link">
+    2nd theory: Misconfigured librdkafka operations
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prove-of-2nd-theory" class="md-nav__link">
+    prove of 2nd theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinite-loop-in-librdkafka" class="md-nav__link">
+    Infinite loop in librdkafka
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-observation-source-metrics-logs" class="md-nav__link">
+    Initial observation (source: Metrics &amp; logs)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1st-theory-network-problems-on-gcp" class="md-nav__link">
+    1st theory:  network problems on GCP
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-1st-theory-lib-kafka" class="md-nav__link">
+    disprove of 1st theory (lib kafka)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2nd-theory-a-bug-in-our-kafka-onramp" class="md-nav__link">
+    2nd theory: a bug in our Kafka onramp
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-2nd-theory" class="md-nav__link">
+    disprove of 2nd theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3rd-theory-incompatible-versions-of-librdkafka-and-kafka" class="md-nav__link">
+    3rd theory: incompatible versions of librdkafka and kafka
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-3rd-theory" class="md-nav__link">
+    disprove of 3rd theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4th-theory-unhandled-mutex-locks-in-librdkafka" class="md-nav__link">
+    4th theory: unhandled mutex locks in librdkafka
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-4th-theory" class="md-nav__link">
+    disprove of 4th theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5th-theory-a-different-rdkafka-bug" class="md-nav__link">
+    5th theory: a different rdkafka bug
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proving-5th-theory" class="md-nav__link">
+    proving 5th theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp-gelf-messages-failed" class="md-nav__link">
+    UDP GELF messages failed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logs-metrics-prod" class="md-nav__link">
+    Logs &amp; Metrics (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htop-prod" class="md-nav__link">
+    htop (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perf-prod-linux" class="md-nav__link">
+    perf (prod: Linux)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat-prod" class="md-nav__link">
+    netstat (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ping-prod" class="md-nav__link">
+    ping (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lldb-lldb-rust-prod" class="md-nav__link">
+    lldb / lldb-rust  (prod)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valgrind-dev-linux" class="md-nav__link">
+    valgrind (dev: Linux)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dtrace-dev-os-x-windows-bsd" class="md-nav__link">
+    dtrace (dev: OS X / Windows / BSD)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instruments-dev-os-x" class="md-nav__link">
+    Instruments (dev: OS X)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strace-prod-linux" class="md-nav__link">
+    strace (prod: Linux)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#websocat-prod-nay" class="md-nav__link">
+    websocat (prod: nay)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methodology" class="md-nav__link">
+    Methodology
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs" class="md-nav__link">
+    Logs
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory-issue-01" class="md-nav__link">
+    Out of memory 'issue' 01
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-observationsource-metrics-logs" class="md-nav__link">
+    Initial observation(source: Metrics &amp; logs)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1st-theory-a-memory-leak-in-tremor-script" class="md-nav__link">
+    1st theory: a memory leak in tremor-script
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-1st-theory-oom" class="md-nav__link">
+    disprove of 1st theory (oom)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2nd-theory-misconfigured-librdkafka-operations" class="md-nav__link">
+    2nd theory: Misconfigured librdkafka operations
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prove-of-2nd-theory" class="md-nav__link">
+    prove of 2nd theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinite-loop-in-librdkafka" class="md-nav__link">
+    Infinite loop in librdkafka
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-observation-source-metrics-logs" class="md-nav__link">
+    Initial observation (source: Metrics &amp; logs)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1st-theory-network-problems-on-gcp" class="md-nav__link">
+    1st theory:  network problems on GCP
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-1st-theory-lib-kafka" class="md-nav__link">
+    disprove of 1st theory (lib kafka)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2nd-theory-a-bug-in-our-kafka-onramp" class="md-nav__link">
+    2nd theory: a bug in our Kafka onramp
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-2nd-theory" class="md-nav__link">
+    disprove of 2nd theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3rd-theory-incompatible-versions-of-librdkafka-and-kafka" class="md-nav__link">
+    3rd theory: incompatible versions of librdkafka and kafka
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-3rd-theory" class="md-nav__link">
+    disprove of 3rd theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4th-theory-unhandled-mutex-locks-in-librdkafka" class="md-nav__link">
+    4th theory: unhandled mutex locks in librdkafka
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disprove-of-4th-theory" class="md-nav__link">
+    disprove of 4th theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5th-theory-a-different-rdkafka-bug" class="md-nav__link">
+    5th theory: a different rdkafka bug
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proving-5th-theory" class="md-nav__link">
+    proving 5th theory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp-gelf-messages-failed" class="md-nav__link">
+    UDP GELF messages failed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/development/issue-investigation.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="investigations">Investigations<a class="headerlink" href="#investigations" title="Permanent link">&para;</a></h1>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
+<p>Tools for investigating issues in a production environment.</p>
+<h3 id="logs-metrics-prod">Logs &amp; Metrics (prod)<a class="headerlink" href="#logs-metrics-prod" title="Permanent link">&para;</a></h3>
+<p>Logs and metrics are the first and most fundamental tool when starting to investigate an issue. While they do not provide a deep insight they allow correlating events from a the system under investigation and it is dependants and dependencies.</p>
+<h3 id="htop-prod"><code>htop</code> (prod)<a class="headerlink" href="#htop-prod" title="Permanent link">&para;</a></h3>
+<p>Not really a debugging tool but a nice starting point to see values like memory consumption, cpu load both per process and per thread. Things to look out for are:</p>
+<ul>
+<li>Memory consumption</li>
+<li>CPU load</li>
+<li>Number of processes</li>
+<li>System Load (<a href="http://www.brendangregg.com/blog/2017-08-08/linux-load-averages.html">careful this can be misleading</a>!)</li>
+</ul>
+<p>To a degree <code>top</code> can be used in its place if <code>htop</code> isn't available.</p>
+<h3 id="perf-prod-linux"><code>perf</code> (prod: Linux)<a class="headerlink" href="#perf-prod-linux" title="Permanent link">&para;</a></h3>
+<p>Perf is a tool that is used to profile processes, it gives an overview over functions that cpu time is spend on. While it doesn't give a full trace but it is quite handy in situations where we have a hot function to find where a program is spending it time.</p>
+<p>It can be run to find where a program spends time:</p>
+<div class="codehilite"><pre><span></span><code>perf record -p &lt;pid&gt; <span class="c1"># ctrl-c after a while to stop recording</span>
+perf report <span class="c1"># will pick up the data that record generated</span>
+</code></pre></div>
+
+
+<p>It can do <strong>a lot more</strong> than this. A full tutorial on perf can be found <a href="https://perf.wiki.kernel.org/index.php/Tutorial">here</a>.</p>
+<h3 id="netstat-prod"><code>netstat</code> (prod)<a class="headerlink" href="#netstat-prod" title="Permanent link">&para;</a></h3>
+<p><code>netstat</code> can be helpful to investigate networking state of connections and identify connection issues. Again it can be limited in the scope of docker unless executed inside of the container. Please look at the man pages (<a href="https://linux.die.net/man/8/netstat"><code>man netstat</code></a>) for details, <a href="https://linuxtechlab.com/learn-use-netstat-with-examples/">this tutorial</a> also covers the basics and useful commands.</p>
+<p>It also allows to investigate routing tables which can be very handy for connection issues.</p>
+<h3 id="ping-prod"><code>ping</code> (prod)<a class="headerlink" href="#ping-prod" title="Permanent link">&para;</a></h3>
+<p>This isn't exciting but if network related issues are suspected "can I ping this address" can cover a lot of ground and is always worth to check.</p>
+<p>This can also be used to investigate MTU</p>
+<h3 id="lldb-lldb-rust-prod"><code>lldb</code> / <code>lldb-rust</code>  (prod)<a class="headerlink" href="#lldb-lldb-rust-prod" title="Permanent link">&para;</a></h3>
+<p>Both <code>lldb</code> and for rust more specifically <code>lldb-rust</code> are debuggers. They can attach to a program and step through the application step by step. A good starting guide can be found <a href="https://lldb.llvm.org/use/map.html">here</a>. It needs to be said that using lldb should be done with care, it will stop the program and has the potential to crash or terminate it. So far running lldb against a docker contained often lead to the process hanging or crashing.</p>
+<h3 id="valgrind-dev-linux"><code>valgrind</code> (dev: Linux)<a class="headerlink" href="#valgrind-dev-linux" title="Permanent link">&para;</a></h3>
+<p><code>valgrind</code> is used to debug and analyse memory leaks. While originally developed for C/C++ it mostly works with rust code as well - however on OS X it has shown to crash code and as the time of writing this is not a usable tool. More information can be found in the <a href="http://www.valgrind.org/docs/manual/quick-start.html">quick start</a>.</p>
+<h3 id="dtrace-dev-os-x-windows-bsd"><code>dtrace</code> (dev: OS X / Windows / BSD)<a class="headerlink" href="#dtrace-dev-os-x-windows-bsd" title="Permanent link">&para;</a></h3>
+<p><code>dtrace</code>is a tool that allows low impact introspection of running systems. It allows putting probes on specific points in either kernel or user land code and perform analytics on the results. It is a very powerful tool but it requires learning to use efficiently. The <a href="http://www.brendangregg.com/dtrace.html">dtrace toolkit</a> is a good starting point.</p>
+<h3 id="instruments-dev-os-x">Instruments (dev: OS X)<a class="headerlink" href="#instruments-dev-os-x" title="Permanent link">&para;</a></h3>
+<p>OS X comes with a user interface around dtrace that abstracts a lot of the complication away and presents some of core functionality in bite sized portions that are easy to use without requiring to understand the whole functionality of dtrace. It is installed alongside with XCode.</p>
+<p>Some of the more interesting profiling templates are:</p>
+<ul>
+<li>Leaks - for finding memory leaks</li>
+<li>Time Profiler - for finding 'hot' functions</li>
+<li>System Usage (I/O) - for finding I/O bottle necks</li>
+</ul>
+<h3 id="strace-prod-linux"><code>strace</code> (prod: Linux)<a class="headerlink" href="#strace-prod-linux" title="Permanent link">&para;</a></h3>
+<p><code>strace</code> is a tool that allows tracing sys calls in linux, it can be helpful to determine what system calls do occur during a observed issue. For example this can rule in our out specific kernel calls such as IO, muteness, threading, networking and so on.</p>
+<h3 id="websocat-prod-nay"><code>websocat</code> (prod: nay)<a class="headerlink" href="#websocat-prod-nay" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/vi/websocat"><code>websocat</code></a> is a websocket client that can be used to interact with trmeors websocket onramp and offramp for testing.</p>
+<h2 id="methodology">Methodology<a class="headerlink" href="#methodology" title="Permanent link">&para;</a></h2>
+<p>There is no 'one way' to investigate an issue as what you find during the process will guide the next steps. Having seen and investigated other problems will help as it gives you a set of heuristics to go "oh I've seen this before last time it was X" but it is not required.</p>
+<p>However there are general methods that have shown to be efficient in trying to investigate an issue. The mot basic approach consists of three steps:</p>
+<ol>
+<li>Look at the current state, the indicators that have made the issue visible such as logs or <code>htop</code>.</li>
+<li>Formulate a theory what caused the issue - ideally write it down along with the factors of what promoted you to form this theory.</li>
+<li>Decide on what would prove your theory - this is where you decide what the next debugging step is, it should ideally either completely confirm, or rule out your theory, that however isn't always possible.</li>
+<li>If the steps decided on in step 3 fully confirm the issue you're done. If they fully disprove the theory go back to step 1 with the new information. If you neither have prove or disprove for your theory return to 3 and re-formulate what is required to prove it.</li>
+</ol>
+<p>Especially initially it helps to document each step as you progress along with any changes you made. This helps to prevent double checking the same theory but also serves as a good learning exercise.</p>
+<p><strong>Note</strong>: Don't be shy to re-visit a theory if you found new evidence for it that were not visible in the first attempt.</p>
+<p><strong>Note</strong>: It is a very helpful to talk to someone, formulating the thoughts in sentences and words often springs new ideas and a second perspective helps with.</p>
+<h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">&para;</a></h2>
+<h3 id="out-of-memory-issue-01">Out of memory 'issue' 01<a class="headerlink" href="#out-of-memory-issue-01" title="Permanent link">&para;</a></h3>
+<h4 id="initial-observationsource-metrics-logs">Initial observation(source: Metrics &amp; logs)<a class="headerlink" href="#initial-observationsource-metrics-logs" title="Permanent link">&para;</a></h4>
+<p>On one of the busier boxes the memory of the process kept growing until the system started swapping. This happened repeatedly, after restarting the process the memory would slowly grow again.</p>
+<h4 id="1st-theory-a-memory-leak-in-tremor-script">1st theory: a memory leak in tremor-script<a class="headerlink" href="#1st-theory-a-memory-leak-in-tremor-script" title="Permanent link">&para;</a></h4>
+<p>Most of tremor was written in rust which makes it very hard to create memory leaks, however we integrated two pices of C code: tremor script and librdkafka those two pices could either directly or by interfacing with rust introduce memory leaks.</p>
+<h5 id="disprove-of-1st-theory-oom">disprove of 1st theory (oom)<a class="headerlink" href="#disprove-of-1st-theory-oom" title="Permanent link">&para;</a></h5>
+<p>We ran tremor extensively using the Leak profiler of Instruments to see if it could spot a memory leak. Any amount of memory profiling we did would not show any unusual allocations and missing deallocations. That made the 1st theory unlikely. However this did show a lot of allocation happening inside librdkafka.</p>
+<h4 id="2nd-theory-misconfigured-librdkafka-operations">2nd theory: Misconfigured librdkafka operations<a class="headerlink" href="#2nd-theory-misconfigured-librdkafka-operations" title="Permanent link">&para;</a></h4>
+<p>With the hint gained from the last investigation we looked at the configuration of the system. It showed that a number instances of Kafka onramps were used and the hosts it running un were under spaced regarding to what was communicated to us. Looking at the manual for librdkafka showed that by default each librdkafka instance would allocate up to 1GB of memory as a buffer. Running 4 instances at a 4GB of memory box with additional processes this would eventually lead to running out of memory.</p>
+<h5 id="prove-of-2nd-theory">prove of 2nd theory<a class="headerlink" href="#prove-of-2nd-theory" title="Permanent link">&para;</a></h5>
+<p>Re-deploying tremor with the librdkafka settings set to only use 100MB of memory for buffers we saw the growth disappear after the expected 400MB proving our theory.</p>
+<h3 id="infinite-loop-in-librdkafka">Infinite loop in librdkafka<a class="headerlink" href="#infinite-loop-in-librdkafka" title="Permanent link">&para;</a></h3>
+<h4 id="initial-observation-source-metrics-logs">Initial observation (source: Metrics &amp; logs)<a class="headerlink" href="#initial-observation-source-metrics-logs" title="Permanent link">&para;</a></h4>
+<p>On GCP a node jumped to 75% (100% on a single core) and stopped processing data. No Kafka partitions were assigned to that node until it was restarted.</p>
+<p>This bug hunt carries some complications. We have not been able to replicate the bug outside of a production environment. The  environment runs on a outdated linux, has no internet access to download tools and does not have  many of the usual debugging tools available. The bug is rare enough that it take between one and two weeks to reproduce it.</p>
+<h4 id="1st-theory-network-problems-on-gcp">1st theory:  network problems on GCP<a class="headerlink" href="#1st-theory-network-problems-on-gcp" title="Permanent link">&para;</a></h4>
+<p>Since this was first and only observed directly after  the migration to GCP the initial theory was that networking issues on GCP cause this problem.</p>
+<h5 id="disprove-of-1st-theory-lib-kafka">disprove of 1st theory (lib kafka)<a class="headerlink" href="#disprove-of-1st-theory-lib-kafka" title="Permanent link">&para;</a></h5>
+<p>To validate the theory we installed the same version of tremor on premises - and in parallel to working installations and observed if the issue would surface outside of GCP. If it wouldn't we could have reduced it to a GCP related issue.</p>
+<p><strong>Result</strong>: After two weeks of on-prem load we were able to recreate the issue locally, this invalidated our 1st theory.</p>
+<h4 id="2nd-theory-a-bug-in-our-kafka-onramp">2nd theory: a bug in our Kafka onramp<a class="headerlink" href="#2nd-theory-a-bug-in-our-kafka-onramp" title="Permanent link">&para;</a></h4>
+<p>Inspecting the code that run Kafka we identified a possible issue that we didn't abort on a bad return value to force a reconnect as we suspected the librdkafak wrapper to handle this situations.</p>
+<h5 id="disprove-of-2nd-theory">disprove of 2nd theory<a class="headerlink" href="#disprove-of-2nd-theory" title="Permanent link">&para;</a></h5>
+<p>We patched our Kafka onramp to explicitly handle this bad returns and provide logs in that case (as it should be rare). We updated to see if this would resolve the issue.</p>
+<p><strong>Result</strong>: After a week the issue re-surfaced without the related logs printed.</p>
+<h4 id="3rd-theory-incompatible-versions-of-librdkafka-and-kafka">3rd theory: incompatible versions of librdkafka and kafka<a class="headerlink" href="#3rd-theory-incompatible-versions-of-librdkafka-and-kafka" title="Permanent link">&para;</a></h4>
+<p>During the update of tremor we also updated the version of librdkakfa - the Kafka version however remained quite old. We theorised that a incompatibility of the newer librdkafka and the old Kafka could cause undefined behaviour such as the busy loop.</p>
+<h5 id="disprove-of-3rd-theory">disprove of 3rd theory<a class="headerlink" href="#disprove-of-3rd-theory" title="Permanent link">&para;</a></h5>
+<p>We prepared a build of tremor with the same version of librdkafka we have been using in the past and updated the boxes in question to see if the bug would re-produce.</p>
+<p><strong>Result</strong>: After a week and a half the bug re-surfaced, making a version conflict between Kafka and librdkafka unlikely.</p>
+<h4 id="4th-theory-unhandled-mutex-locks-in-librdkafka">4th theory: unhandled mutex locks in librdkafka<a class="headerlink" href="#4th-theory-unhandled-mutex-locks-in-librdkafka" title="Permanent link">&para;</a></h4>
+<p>Inspecting a broken process with <code>perf</code> we would observe heavy load in pthread related code and the function <code>rd_kafka_q_pop_serve</code></p>
+<div class="codehilite"><pre><span></span><code>  36.35%  poll          libpthread-2.17.so  [.] pthread_cond_timedwait@@GLIBC_2.3.2
+  19.88%  poll          tremor-server       [.] cnd_timedwait
+  19.14%  poll          tremor-server       [.] rd_kafka_q_pop_serve
+  15.09%  poll          tremor-server       [.] cnd_timedwait_abs
+   8.37%  poll          tremor-server       [.] 0x000000000009fcc0
+   0.27%  poll          [kernel.kallsyms]   [k] __do_softirq
+</code></pre></div>
+
+
+<p>After inspecting <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L336">the code</a> we noticed that <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L346">the lock obtained</a> in the function did not check if the lock was successful. The <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L402-L407">else condition</a> in the function could lead to an infinite loop calling the function over and over again.</p>
+<h5 id="disprove-of-4th-theory">disprove of 4th theory<a class="headerlink" href="#disprove-of-4th-theory" title="Permanent link">&para;</a></h5>
+<p>We isolated the hot thread using <code>stop</code> - looking for the tremor thread that was using 100% CPU. We then traced system calls using <code>strace</code>. If librdkafka would attempt to fetch a mutex lock we should see related system calls in the <code>strace</code> output.</p>
+<p>However observing the process for an hour didn't show a single system call to be made on the hot thread - this ruled out any mutex/kernel related code to be executed in the hot loop.</p>
+<h4 id="5th-theory-a-different-rdkafka-bug">5th theory: a different rdkafka bug<a class="headerlink" href="#5th-theory-a-different-rdkafka-bug" title="Permanent link">&para;</a></h4>
+<p>Inspecting the code and the <code>perf</code> output further we noticed that <code>cnd_timedwait_abs</code> was part of the <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L390">last condition</a> in a <code>while (1)</code> loop. It is reasonable to assume that if we spend time in <code>cnd_timedwait_abs</code> that we hit that part of the loop - if this call would fail the loop would re run possibly creating an infinite loop.</p>
+<p>In addition we found a related <a href="https://github.com/edenhill/librdkafka/issues/2208">kafka issue</a> that pointed to this particular location.</p>
+<h5 id="proving-5th-theory">proving 5th theory<a class="headerlink" href="#proving-5th-theory" title="Permanent link">&para;</a></h5>
+<p>We deployed half the nodes with a version of tremor that the newest version of librdkafka (1.0.0) that includes a fix for the issue mentioned above while. We expect the patched nodes to keep stable and the unpatched nodes to eventually fail with the bug.</p>
+<p>This never failed again.</p>
+<h3 id="udp-gelf-messages-failed">UDP GELF messages failed<a class="headerlink" href="#udp-gelf-messages-failed" title="Permanent link">&para;</a></h3>
+<p>Issues:</p>
+<ul>
+<li>Undocumented and non standard conform use of Decompress after chunking, this messages were discarded, this was falsly attributed to tremor</li>
+<li>Setup was spanning the WAN using local Logstas and WAN connected Tremor causing MTU issues that was not documented and falsly attributed to tremor</li>
+<li>Using a non standard conform GELF header for 'uncompressed' caused those datapoints to be discarded, this was falsly attributed to tremor</li>
+<li>the UDP buffer on the Tremor and logstash hosts were configured differently causing the tremor host to have signifiantly less buffer causing some messages to be discarded in the OS UDP stack, this was falsly attributed to tremor</li>
+<li>A tool called udp_replay was used to copy data from a logstash host to a tremor host, this tool truncated the udp payload, this paylopad could no longer be decompressed making this packages fail, this was falsy attributed to trmeor</li>
+<li>Some clients send a empty tailing message with a bad segment index (n+1) causing error messages to apear in the logs, this is valid behaviour but were flagged as a 'bug' in tremor because logstash does silently drop those.</li>
+<li>Some clients reuse the sequence number - this can lead to bad messages when UDP packages interleave, tremor reports those incidents and will likely be flagged as buggy because of it.</li>
+<li>MIO's UDP with edge-poll stops receiving data <a href="https://github.com/tokio-rs/mio/issues/1076">ticket</a> we switched to level poll which solves this.</li>
+<li>PCAP files seem to include lots of invlaid gelfs when replaying</li>
+<li>When replaying the pacap the tool shows the following error.
+  thread 'main' panicked at 'called <code>Result::unwrap()</code> on an <code>Err</code> value: Error(WrongField("PacketHeader.incl_len (288) &gt; PacketHeader.orig_len (272)"), State { next_error: None, backtrace: None })', src/libcore/result.rs:999:5</li>
+</ul>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../testing/" title="Testing" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Testing
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../api/" title="API" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                API
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

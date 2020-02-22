@@ -1,0 +1,2796 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Tremor Tool - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#tremor-tool" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Tremor Documentation" aria-label="Tremor Documentation" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../img/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Tremor Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Tremor Tool
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Tremor Documentation" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../img/logo.png" width="48" height="48">
+      
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/wayfair-tremor/tremor-www-docs/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wayfair-tremor/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/" title="Architecture Overview" class="md-nav__link">
+      Architecture Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Tremor Query
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Tremor Query
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+      Walkthrough
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Aggregate Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Aggregate Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+      stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/functions/win/" title="win" class="md-nav__link">
+      win
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Tremor Script
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tremor Script
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Function Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Function Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/array/" title="array" class="md-nav__link">
+      array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/chash/" title="chash" class="md-nav__link">
+      chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/datetime/" title="datetime" class="md-nav__link">
+      datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/integer/" title="integer" class="md-nav__link">
+      integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/float/" title="float" class="md-nav__link">
+      float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/json/" title="json" class="md-nav__link">
+      json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/math/" title="math" class="md-nav__link">
+      math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/origin/" title="origin" class="md-nav__link">
+      origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/range/" title="range" class="md-nav__link">
+      range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/random/" title="random" class="md-nav__link">
+      random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/record/" title="record" class="md-nav__link">
+      record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/re/" title="re" class="md-nav__link">
+      re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/string/" title="string" class="md-nav__link">
+      string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/system/" title="system" class="md-nav__link">
+      system
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/functions/type/" title="type" class="md-nav__link">
+      type
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Extractor Reference
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Extractor Reference
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/base64/" title="Base64" class="md-nav__link">
+      Base64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/cidr/" title="CIDR" class="md-nav__link">
+      CIDR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/datetime/" title="Datetime" class="md-nav__link">
+      Datetime
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/dissect/" title="Dissect" class="md-nav__link">
+      Dissect
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/glob/" title="Glob" class="md-nav__link">
+      Glob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/grok/" title="Grok" class="md-nav__link">
+      Grok
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/influx/" title="Influx" class="md-nav__link">
+      Influx
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/json/" title="JSON" class="md-nav__link">
+      JSON
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/kv/" title="KV" class="md-nav__link">
+      KV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/extractors/regex/" title="Regex" class="md-nav__link">
+      Regex
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/recipes/" title="Recipes" class="md-nav__link">
+      Recipes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Operations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Operations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../monitoring/" title="Monitoring" class="md-nav__link">
+      Monitoring
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tremor Tool
+      </label>
+    
+    <a href="./" title="Tremor Tool" class="md-nav__link md-nav__link--active">
+      Tremor Tool
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    Scope
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    Audience
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-flags-and-switches" class="md-nav__link">
+    General flags and switches
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    Commands
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-details" class="md-nav__link">
+    Command Details
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-script" class="md-nav__link">
+    Command: script
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-run" class="md-nav__link">
+    Subcommand: run
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-grok" class="md-nav__link">
+    Command: grok
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-run_1" class="md-nav__link">
+    Subcommand: run
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-pipe" class="md-nav__link">
+    Command: pipe
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-run_2" class="md-nav__link">
+    Subcommand: run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-dot" class="md-nav__link">
+    Subcommand: dot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-api" class="md-nav__link">
+    Command: api
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-version" class="md-nav__link">
+    Subcommand: version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-target" class="md-nav__link">
+    Subcommand: target
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#target-list" class="md-nav__link">
+    target list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-create" class="md-nav__link">
+    target create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-delete" class="md-nav__link">
+    target delete
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-binding" class="md-nav__link">
+    Subcommand: binding
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binding-list" class="md-nav__link">
+    binding list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-fetch" class="md-nav__link">
+    binding fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-delete" class="md-nav__link">
+    binding delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-create" class="md-nav__link">
+    binding create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-instance" class="md-nav__link">
+    binding instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-activate" class="md-nav__link">
+    binding activate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-deactivate" class="md-nav__link">
+    binding deactivate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-pipeline" class="md-nav__link">
+    Subcommand: pipeline
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-list" class="md-nav__link">
+    pipeline list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-fetch" class="md-nav__link">
+    pipeline fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-delete" class="md-nav__link">
+    pipeline delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-create" class="md-nav__link">
+    pipeline create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-instance" class="md-nav__link">
+    pipeline instance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-onramp" class="md-nav__link">
+    Subcommand: onramp
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onramp-list" class="md-nav__link">
+    onramp list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-fetch" class="md-nav__link">
+    onramp fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-delete" class="md-nav__link">
+    onramp delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-create" class="md-nav__link">
+    onramp create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-instance" class="md-nav__link">
+    onramp instance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-offramp" class="md-nav__link">
+    Subcommand: offramp
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#offramp-list" class="md-nav__link">
+    offramp list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-fetch" class="md-nav__link">
+    offramp fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-delete" class="md-nav__link">
+    offramp delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-create" class="md-nav__link">
+    offramp create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-instance" class="md-nav__link">
+    offramp instance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuration-walkthrough/" title="Configuration Walkthrough" class="md-nav__link">
+      Configuration Walkthrough
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Artefacts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Artefacts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
+      Preprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
+      Postprocessors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/codecs/" title="Codecs" class="md-nav__link">
+      Codecs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/onramps/" title="Onramps" class="md-nav__link">
+      Onramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/offramps/" title="Offramps" class="md-nav__link">
+      Offramps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../artefacts/operators/" title="Operators" class="md-nav__link">
+      Operators
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/quick-start/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/profiling/" title="Profiling" class="md-nav__link">
+      Profiling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/debugging/" title="Debugging with LLDB" class="md-nav__link">
+      Debugging with LLDB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-4" type="checkbox" id="nav-7-4">
+    
+    <label class="md-nav__link" for="nav-7-4">
+      Benchmarking
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-7-4">
+        Benchmarking
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/benchmarking/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/benchmarks/LogstashBenchmark/" title="Logstash" class="md-nav__link">
+      Logstash
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/testing/" title="Testing" class="md-nav__link">
+      Testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../development/issue-investigation/" title="Investigation" class="md-nav__link">
+      Investigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Governance
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Governance
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CodeOfConduct/" title="Code of Conduct" class="md-nav__link">
+      Code of Conduct
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CII/" title="Core Infrastructure Initiative" class="md-nav__link">
+      Core Infrastructure Initiative
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../policies/security/" title="Security" class="md-nav__link">
+      Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    Scope
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    Audience
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-flags-and-switches" class="md-nav__link">
+    General flags and switches
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    Commands
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-details" class="md-nav__link">
+    Command Details
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-script" class="md-nav__link">
+    Command: script
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-run" class="md-nav__link">
+    Subcommand: run
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-grok" class="md-nav__link">
+    Command: grok
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-run_1" class="md-nav__link">
+    Subcommand: run
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-pipe" class="md-nav__link">
+    Command: pipe
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-run_2" class="md-nav__link">
+    Subcommand: run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-dot" class="md-nav__link">
+    Subcommand: dot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-api" class="md-nav__link">
+    Command: api
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-version" class="md-nav__link">
+    Subcommand: version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-target" class="md-nav__link">
+    Subcommand: target
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#target-list" class="md-nav__link">
+    target list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-create" class="md-nav__link">
+    target create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-delete" class="md-nav__link">
+    target delete
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-binding" class="md-nav__link">
+    Subcommand: binding
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binding-list" class="md-nav__link">
+    binding list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-fetch" class="md-nav__link">
+    binding fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-delete" class="md-nav__link">
+    binding delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-create" class="md-nav__link">
+    binding create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-instance" class="md-nav__link">
+    binding instance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-activate" class="md-nav__link">
+    binding activate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binding-deactivate" class="md-nav__link">
+    binding deactivate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-pipeline" class="md-nav__link">
+    Subcommand: pipeline
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-list" class="md-nav__link">
+    pipeline list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-fetch" class="md-nav__link">
+    pipeline fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-delete" class="md-nav__link">
+    pipeline delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-create" class="md-nav__link">
+    pipeline create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-instance" class="md-nav__link">
+    pipeline instance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-onramp" class="md-nav__link">
+    Subcommand: onramp
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onramp-list" class="md-nav__link">
+    onramp list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-fetch" class="md-nav__link">
+    onramp fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-delete" class="md-nav__link">
+    onramp delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-create" class="md-nav__link">
+    onramp create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onramp-instance" class="md-nav__link">
+    onramp instance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subcommand-offramp" class="md-nav__link">
+    Subcommand: offramp
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#offramp-list" class="md-nav__link">
+    offramp list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-fetch" class="md-nav__link">
+    offramp fetch
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-delete" class="md-nav__link">
+    offramp delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-create" class="md-nav__link">
+    offramp create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offramp-instance" class="md-nav__link">
+    offramp instance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/wayfair-tremor/tremor-www-docs/edit/master/docs/operations/cli.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="tremor-tool">Tremor tool<a class="headerlink" href="#tremor-tool" title="Permanent link">&para;</a></h1>
+<p>Tremor command line interface tool</p>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>This document summarises tremor tool commands</p>
+<h2 id="audience">Audience<a class="headerlink" href="#audience" title="Permanent link">&para;</a></h2>
+<p>Tremor operators and developers</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<h3 id="general-flags-and-switches">General flags and switches<a class="headerlink" href="#general-flags-and-switches" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Switch</th>
+<th>Kind</th>
+<th>Multiple</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config</td>
+<td>c</td>
+<td>takes value</td>
+<td>yes</td>
+<td>Sets a custom config file</td>
+</tr>
+<tr>
+<td>verbose</td>
+<td>v</td>
+<td>switch/flag</td>
+<td>yes</td>
+<td>Sets the level of verbosity</td>
+</tr>
+<tr>
+<td>format</td>
+<td>f</td>
+<td>takes value</td>
+<td>yes</td>
+<td>Sets the output format ( json</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h3>
+<p>Top level command summary</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>script</td>
+<td>Tremor scripting language tool</td>
+</tr>
+<tr>
+<td>grok</td>
+<td>Tremor support for logstash grok patterns</td>
+</tr>
+<tr>
+<td>pipe</td>
+<td>Tremor pipeline tool</td>
+</tr>
+<tr>
+<td>api</td>
+<td>Tremor API client</td>
+</tr>
+</tbody>
+</table>
+<h2 id="command-details">Command Details<a class="headerlink" href="#command-details" title="Permanent link">&para;</a></h2>
+<p>Details for each supported command</p>
+<h3 id="command-script">Command: <strong>script</strong><a class="headerlink" href="#command-script" title="Permanent link">&para;</a></h3>
+<p>Tremor scripting language tool</p>
+<h4 id="subcommand-run">Subcommand: run<a class="headerlink" href="#subcommand-run" title="Permanent link">&para;</a></h4>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCRIPT</td>
+<td>yes</td>
+<td>tremor script filename</td>
+</tr>
+<tr>
+<td>DATA</td>
+<td>no</td>
+<td>JSON-per-line data log to replay</td>
+</tr>
+</tbody>
+</table>
+<h3 id="command-grok">Command: <strong>grok</strong><a class="headerlink" href="#command-grok" title="Permanent link">&para;</a></h3>
+<p>Tremor support for logstash grok patterns</p>
+<h4 id="subcommand-run_1">Subcommand: run<a class="headerlink" href="#subcommand-run_1" title="Permanent link">&para;</a></h4>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>patterns</td>
+<td>no</td>
+<td>Extra patterns ( or alternative builtins if ignoring builtin patterns )</td>
+</tr>
+<tr>
+<td>TEST_PATTERN</td>
+<td>yes</td>
+<td>The grok pattern under test for this run</td>
+</tr>
+<tr>
+<td>DATA</td>
+<td>no</td>
+<td>line by line data log to replay, or stdin otherwise</td>
+</tr>
+</tbody>
+</table>
+<h3 id="command-pipe">Command: <strong>pipe</strong><a class="headerlink" href="#command-pipe" title="Permanent link">&para;</a></h3>
+<p>Tremor pipeline tool</p>
+<h4 id="subcommand-run_2">Subcommand: run<a class="headerlink" href="#subcommand-run_2" title="Permanent link">&para;</a></h4>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONFIG</td>
+<td>yes</td>
+<td>tremor pipeline configuration</td>
+</tr>
+<tr>
+<td>DATA</td>
+<td>no</td>
+<td>JSON-per-line data log to replay</td>
+</tr>
+</tbody>
+</table>
+<h4 id="subcommand-dot">Subcommand: dot<a class="headerlink" href="#subcommand-dot" title="Permanent link">&para;</a></h4>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONFIG</td>
+<td>yes</td>
+<td>tremor pipeline configuration</td>
+</tr>
+</tbody>
+</table>
+<h3 id="command-api">Command: <strong>api</strong><a class="headerlink" href="#command-api" title="Permanent link">&para;</a></h3>
+<p>Tremor API client</p>
+<h4 id="subcommand-version">Subcommand: version<a class="headerlink" href="#subcommand-version" title="Permanent link">&para;</a></h4>
+<h4 id="subcommand-target">Subcommand: target<a class="headerlink" href="#subcommand-target" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>List registered targets</td>
+</tr>
+<tr>
+<td>create</td>
+<td>Create a new API target</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>Delete an existing API target</td>
+</tr>
+</tbody>
+</table>
+<h5 id="target-list">target list<a class="headerlink" href="#target-list" title="Permanent link">&para;</a></h5>
+<h5 id="target-create">target create<a class="headerlink" href="#target-create" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TARGET_ID</td>
+<td>yes</td>
+<td>The unique target id for the targetted tremor servers</td>
+</tr>
+</tbody>
+</table>
+<h5 id="target-delete">target delete<a class="headerlink" href="#target-delete" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TARGET_ID</td>
+<td>yes</td>
+<td>The unique target id for the targetted tremor servers</td>
+</tr>
+</tbody>
+</table>
+<h4 id="subcommand-binding">Subcommand: binding<a class="headerlink" href="#subcommand-binding" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>List registered binding specifications</td>
+</tr>
+<tr>
+<td>fetch</td>
+<td>Fetch a binding by artefact id</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>Delete a binding by artefact id</td>
+</tr>
+<tr>
+<td>create</td>
+<td>Create and register a binding specification</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>Fetch an binding instance by artefact id and instance id</td>
+</tr>
+<tr>
+<td>activate</td>
+<td>Activate a binding by artefact id and servant instance id</td>
+</tr>
+<tr>
+<td>deactivate</td>
+<td>Activate a binding by artefact id and servant instance id</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binding-list">binding list<a class="headerlink" href="#binding-list" title="Permanent link">&para;</a></h5>
+<h5 id="binding-fetch">binding fetch<a class="headerlink" href="#binding-fetch" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the binding specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binding-delete">binding delete<a class="headerlink" href="#binding-delete" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the binding specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binding-create">binding create<a class="headerlink" href="#binding-create" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOURCE</td>
+<td>yes</td>
+<td>JSON or YAML file request body</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binding-instance">binding instance<a class="headerlink" href="#binding-instance" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the binding specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binding-activate">binding activate<a class="headerlink" href="#binding-activate" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the binding specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="binding-deactivate">binding deactivate<a class="headerlink" href="#binding-deactivate" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the binding specification</td>
+</tr>
+</tbody>
+</table>
+<h4 id="subcommand-pipeline">Subcommand: pipeline<a class="headerlink" href="#subcommand-pipeline" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>List registered pipeline specifications</td>
+</tr>
+<tr>
+<td>fetch</td>
+<td>Fetch a pipeline by artefact id</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>Delete a pipeline by artefact id</td>
+</tr>
+<tr>
+<td>create</td>
+<td>Create and register a pipeline specification</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>Fetch an pipeline instance by artefact id and instance id</td>
+</tr>
+</tbody>
+</table>
+<h5 id="pipeline-list">pipeline list<a class="headerlink" href="#pipeline-list" title="Permanent link">&para;</a></h5>
+<h5 id="pipeline-fetch">pipeline fetch<a class="headerlink" href="#pipeline-fetch" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the pipeline specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="pipeline-delete">pipeline delete<a class="headerlink" href="#pipeline-delete" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the pipeline specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="pipeline-create">pipeline create<a class="headerlink" href="#pipeline-create" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOURCE</td>
+<td>no</td>
+<td>JSON or YAML file request body</td>
+</tr>
+</tbody>
+</table>
+<h5 id="pipeline-instance">pipeline instance<a class="headerlink" href="#pipeline-instance" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the pipeline specification</td>
+</tr>
+</tbody>
+</table>
+<h4 id="subcommand-onramp">Subcommand: onramp<a class="headerlink" href="#subcommand-onramp" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>List registered onramp specifications</td>
+</tr>
+<tr>
+<td>fetch</td>
+<td>Fetch an onramp by artefact id</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>Delete an onramp by artefact id</td>
+</tr>
+<tr>
+<td>create</td>
+<td>Create and register an onramp specification</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>Fetch an onramp instance by artefact id and instance id</td>
+</tr>
+</tbody>
+</table>
+<h5 id="onramp-list">onramp list<a class="headerlink" href="#onramp-list" title="Permanent link">&para;</a></h5>
+<h5 id="onramp-fetch">onramp fetch<a class="headerlink" href="#onramp-fetch" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the onramp specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="onramp-delete">onramp delete<a class="headerlink" href="#onramp-delete" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the onramp specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="onramp-create">onramp create<a class="headerlink" href="#onramp-create" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOURCE</td>
+<td>no</td>
+<td>JSON or YAML file request body</td>
+</tr>
+</tbody>
+</table>
+<h5 id="onramp-instance">onramp instance<a class="headerlink" href="#onramp-instance" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the onramp specification</td>
+</tr>
+</tbody>
+</table>
+<h4 id="subcommand-offramp">Subcommand: offramp<a class="headerlink" href="#subcommand-offramp" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list</td>
+<td>List registered offramp specifications</td>
+</tr>
+<tr>
+<td>fetch</td>
+<td>Fetch an offramp by artefact id</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>Delete an offramp by artefact id</td>
+</tr>
+<tr>
+<td>create</td>
+<td>Create and register an offramp specification</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>Fetch an offramp instance by artefact id and instance id</td>
+</tr>
+</tbody>
+</table>
+<h5 id="offramp-list">offramp list<a class="headerlink" href="#offramp-list" title="Permanent link">&para;</a></h5>
+<h5 id="offramp-fetch">offramp fetch<a class="headerlink" href="#offramp-fetch" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the offramp specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="offramp-delete">offramp delete<a class="headerlink" href="#offramp-delete" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the offramp specification</td>
+</tr>
+</tbody>
+</table>
+<h5 id="offramp-create">offramp create<a class="headerlink" href="#offramp-create" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOURCE</td>
+<td>no</td>
+<td>JSON or YAML file request body</td>
+</tr>
+</tbody>
+</table>
+<h5 id="offramp-instance">offramp instance<a class="headerlink" href="#offramp-instance" title="Permanent link">&para;</a></h5>
+<p><strong>Arguments:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARTEFACT_ID</td>
+<td>yes</td>
+<td>The unique artefact id for the offramp specification</td>
+</tr>
+</tbody>
+</table>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../monitoring/" title="Monitoring" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Monitoring
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../configuration-walkthrough/" title="Configuration Walkthrough" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Configuration Walkthrough
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

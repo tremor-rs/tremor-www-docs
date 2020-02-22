@@ -3,6 +3,8 @@
 This section documents how to setup logstash for benchmarking to
 compare against tremor-script.
 
+**The following benchmarks were taken with tremor `v0.5.0` on June 2019.**
+
 ## Logstash
 
 Assert that JDK 8 or higher is on your system path

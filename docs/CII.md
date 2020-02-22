@@ -154,7 +154,7 @@ Met. It is up to contributors to submit enhancement requests via the RFC process
 
 __The project MUST have a publicly available archive for reports and responses for later searching.__
 
-Met. All requests, reports and responses are gated via the issue tracking system. https://github.com/wayfair-incubator/tremor-runtime/issues
+Met. All requests, reports and responses are gated via the issue tracking system. https://github.com/wayfair-tremor/tremor-runtime/issues
 
 ### Vulnerability report process
 

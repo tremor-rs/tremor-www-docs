@@ -158,7 +158,7 @@ Once your merge request is approved it will enter the merge queue
 [darach]: https://github.com/darach
 
 Speaking of tests, Rust has a comprehensive test suite. More information about
-it can be found [here][https://github.com/wayfair-incubator/tremor-runtime/blob/master/docs/development/testing.md].
+it can be found [here][https://github.com/wayfair-tremor/tremor-runtime/blob/master/docs/development/testing.md].
 
 ### External Dependencies
 

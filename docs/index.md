@@ -34,7 +34,3 @@ Other interesting topics are:
   * Nots about [Testing](development/testing.md) and [Debugging](development/debugging.md)
 
 This is not an exhaustve list and for the curious it might be worth to explore the `docs` forlder on their own.
-
-## Contact
-
-The tremor team is available on slack at __#tremor__  or __#tremor-forum__ ordinarily during Berlin business hours.

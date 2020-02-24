@@ -33,4 +33,4 @@ Other interesting topics are:
   * [A Quickstart Guide](development/quick-start.md)
   * Nots about [Testing](development/testing.md) and [Debugging](development/debugging.md)
 
-This is not an exhaustve list and for the curious it might be worth to explore the `docs` forlder on their own.
+This is not an exhaustive list and for the curious it might be worth to explore the `docs` forlder on their own.

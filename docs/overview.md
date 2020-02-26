@@ -133,7 +133,8 @@ The answer is simple:
 
 Contraflow has been used in other event processing systems and was designed /inventedby one of the members of the tremor core team ( in a previous life ).
 
-There are many other ways to handle back-pressure ( for example: those used by Spark, Storm, Hazelcast Jet, … ) but they stink in practice, so down with that sort of thing. Contraflow is far simpler to reason about and develop verifiable systems and code against.
+There are many other ways to handle back-pressure ( for example: those used by Spark, Storm, Hazelcast Jet, … ) but they are biasing for other nuances and tradeoffs than tremor. Contraflow is far simpler to reason about and develop verifiable systems and code against as a user and puts a lot of the pressure for a good solution onto the tremor project itself. Only time will tell
+which philosophy results in less pager duty!
 
 Although the contraflow mechanism *may* seem complex, its far simpler than back-pressure handling by almost all other reasonable mechanisms and with far fewer negative side-effects and tradeoffs.
 
@@ -160,7 +161,7 @@ Artefacts in tremor are declarative specifications of:
 - Pipelines - A pipeline specification is a specific configuration of a pipeline graph
 - Bindings - A binding specification describes how onramps, pipelines and offramps should be interconnected
 
-Artefacts can be though of analagously to code. They are a set of instructions, rules or configurations. As such they are registered with tremor via its API and stored in tremor's artefact repository.
+Artefacts can be thought of analagously to code. They are a set of instructions, rules or configurations. As such they are registered with tremor via its API and stored in tremor's artefact repository.
 
 Deployment in tremor, is achieved through a mapping artefact. The mapping artefact specifies how artefacts should be deployed into one or many runtime instances, activated, and connected to live instances of onramps or offramps.
 
@@ -208,4 +209,4 @@ Tremor, in its current form, is a client-server system. Tremor exposes a synchro
 
 Tremor, in the near future, will add a clustering capability making it a distributed system. Tremor will still support client-server deployments through a 'standalone' mode of clustered operation.
 
-Tremor in 'standalone' mode can be though of as client-server or a 'cluster of one' depending on your own bias or preferences, dear reader.
+Tremor in 'standalone' mode can be thought of as client-server or a 'cluster of one' depending on your own bias or preferences, dear reader.

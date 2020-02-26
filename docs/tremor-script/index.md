@@ -651,6 +651,8 @@ This will work as part of the [runtime::tremor](../artefacts/operators.md#runtim
 
 A key thing to note is that by design, state is not shared across operator nodes in the pipeline. Therefore, if we have scripts across multiple nodes in the pipeline, the `state` keyword in each script allows access only to the local node-specific state storage, and not the state from any other operator nodes or something global to all the nodes.
 
+Since the state storage lives for the lifetime of a pipeline, state will not be persisted when the pipeline is undeployed or the host process is shut down.
+
 ## Extractors
 
 > ![test expression grammar](grammar/diagram/TestExpr.png)

@@ -1,5 +1,5 @@
 
-# Recepies
+# Recipes
 
 This document provides a few recipes for common patterns in tremor script. Please note however that it neither is exhaustive nor should those patterns considered the 'only way' to perform certain tasks.
 

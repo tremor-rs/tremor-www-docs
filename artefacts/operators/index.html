@@ -996,6 +996,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#genericcounter" class="md-nav__link">
+    generic::counter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#passthrough" class="md-nav__link">
     passthrough
   </a>
@@ -1314,6 +1321,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#genericcounter" class="md-nav__link">
+    generic::counter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#passthrough" class="md-nav__link">
     passthrough
   </a>
@@ -1477,6 +1491,19 @@
   <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::batch</span>
   <span class="nt">config</span><span class="p">:</span>
     <span class="nt">count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
+</code></pre></div>
+
+
+<h2 id="genericcounter">generic::counter<a class="headerlink" href="#genericcounter" title="Permanent link">&para;</a></h2>
+<p>Keeps track of the number of events as they come and emits the current count out alongside the event. The output is a record of the form <code>{"count": n, "event": event}</code>, where <code>n</code> is the current count and <code>event</code> is the original event.</p>
+<p>The counter starts when the first event comes through and begins from 1.</p>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">counter</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::counter</span>
 </code></pre></div>
 
 

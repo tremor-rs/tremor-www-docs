@@ -169,7 +169,12 @@ ForCaseClause ::= 'case' '(' Id ',' Id ')' Expr | 'case' '(' Id ',' Id ')' 'when
 FnCall ::= Id '::' Id '(' FnArgs ')' | Id '::' '(' ')'
 FnArgs ::= FnArgs ',' Expr | Expr
 
-Path ::= '$' QualifiedSegments | '$' | 'event' '.' QualifiedSegments | 'event' '[' ArraySegment ']'   | 'event' | 'group' '[' ArraySegment ']' | 'group' | 'args' '.' QualifiedSegments  | 'args' '[' ArraySegment ']'  | 'args' | Id LocalSegments 
+Path ::= '$' QualifiedSegments | '$'
+    | 'event' '.' QualifiedSegments | 'event' '[' ArraySegment ']' | 'event'
+    | 'state' '.' QualifiedSegments | 'state' '[' ArraySegment ']' | 'state'
+    | 'group' '[' ArraySegment ']' | 'group'
+    | 'args' '.' QualifiedSegments  | 'args' '[' ArraySegment ']'  | 'args'
+    | Id LocalSegments
 
 QualifiedSegments ::= QualifiedSegments '.' PathSegment
     | QualifiedSegments '[' ArraySegment ']'

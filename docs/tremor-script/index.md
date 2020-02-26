@@ -625,6 +625,32 @@ let wishlist = for store.book of
 end
 ```
 
+### State
+
+As part of the tremor `pipeline` processing, there are times when it's necessary to track state across events over time (eg: in order to exploit stateful algorithms for session tracking, or building and maintaining application state). For this purpose, a tremor `pipeline` is equipped with operator node-level state management and storage capabilities that persists for the running lifetime of a pipeline deployed into the tremor runtime.
+
+From tremor-script, this shared storage is accessbile via the `state` keyword, which allows for accessing the storage contents via [path](#paths) expressions, akin to how the `event` keyword works (with the key difference being that the state storage is shared across events). On pipeline initialization, the state is initialized as `null` and users are free to set it to arbitrary value over the course of processing.
+
+Here's a tremor-script example demonstrating the usage of the `state` keyword -- it maintains a counter for the events coming in and emits the count alongside the event:
+
+```tremor
+  match type::is_null(state) of
+    case true =>
+      let state = {"count": 1}
+    default =>
+      let state.count = state.count + 1
+  end;
+
+  {
+    "count": state.count,
+    "event": event
+  }
+```
+
+This will work as part of the [runtime::tremor](../artefacts/operators.md#runtimetremor) operator confguration in the legacy pipeline yaml setup, and also as an embedded script in the [trickle definition](../tremor-query/walkthrough.md#scripts-and-operators) of the pipeline.
+
+A key thing to note is that by design, state is not shared across operator nodes in the pipeline. Therefore, if we have scripts across multiple nodes in the pipeline, the `state` keyword in each script allows access only to the local node-specific state storage, and not the state from any other operator nodes or something global to all the nodes.
+
 ## Extractors
 
 > ![test expression grammar](grammar/diagram/TestExpr.png)

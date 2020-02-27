@@ -111,7 +111,7 @@ binding:
       '/pipeline/main/{instance}/out': [ '/offramp/blackhole/{instance}/in' ]  
 ```
 
-Static deployements support multip[le configurations. You can specify multiple configurations by using a list in the config instead of specifying one item as illustrated below:
+Static deployments support multiple configurations. You can specify multiple configurations by using a list in the config instead of specifying one item as illustrated below:
 
 ```yaml
 onramp:

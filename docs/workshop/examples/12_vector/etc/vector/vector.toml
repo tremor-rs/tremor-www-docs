@@ -1,0 +1,32 @@
+data_dir = "/tmp"
+
+# [sources.journald]
+#   # REQUIRED
+#   type = "journald" # must be: "journald"
+#   # OPTIONAL
+#   current_boot_only = false # default
+
+[sources.file]
+  # REQUIRED - General
+  type = "file" # must be: "file"
+  include = ["/var/log/*.log", "/var/log/*/*.log"] # example
+
+  # OPTIONAL - General
+  glob_minimum_cooldown = 1000 # default, milliseconds
+  start_at_beginning = false # default
+  ignore_older = 86400 # example, no default, seconds
+
+  # OPTIONAL - Context
+  file_key = "demo" # default
+  host_key = "demo-host" # default
+
+  # OPTIONAL - Priority
+  oldest_first = false # default
+
+# Output data
+[sinks.out]
+  type = "socket"
+  inputs   = ["file"]
+  address = "tremor:5000"
+  mode = "tcp" 
+  encoding = "text"

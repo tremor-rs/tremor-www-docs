@@ -1016,11 +1016,24 @@
     Install Rust
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macoslinux" class="md-nav__link">
+    macOS/Linux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#install-xcode" class="md-nav__link">
-    Install XCode
+  <a href="#windows" class="md-nav__link">
+    Windows
   </a>
   
 </li>
@@ -1029,6 +1042,33 @@
   <a href="#additional-libraries" class="md-nav__link">
     Additional Libraries
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    macOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ubuntu" class="md-nav__link">
+    Ubuntu
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1352,11 +1392,24 @@
     Install Rust
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macoslinux" class="md-nav__link">
+    macOS/Linux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#install-xcode" class="md-nav__link">
-    Install XCode
+  <a href="#windows" class="md-nav__link">
+    Windows
   </a>
   
 </li>
@@ -1365,6 +1418,33 @@
   <a href="#additional-libraries" class="md-nav__link">
     Additional Libraries
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    macOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ubuntu" class="md-nav__link">
+    Ubuntu
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1460,20 +1540,22 @@
 2) Using docker</p>
 <h2 id="without-docker">Without Docker<a class="headerlink" href="#without-docker" title="Permanent link">&para;</a></h2>
 <h3 id="install-rust">Install Rust<a class="headerlink" href="#install-rust" title="Permanent link">&para;</a></h3>
-<p>Tremor can be run on any platform without using docker by installing the rust ecosystem. To install the rust ecosystem you can use <code>rustup</code> which is a toolchain installer.</p>
-<p>To install <a href="https://www.rust-lang.org/tools/install">rustup</a>, you run the following command on *nix systems and follow the on-screen instructions:</p>
+<p>Tremor can be run on any platform without using docker by installing the rust ecosystem. To install the rust ecosystem, you can use <a href="https://www.rust-lang.org/tools/install">rustup</a> which is a toolchain installer.</p>
+<p>Rustup will install all the necessary tools required for rust, which includes <code>rustc</code> (the compiler) and cargo (package manager).</p>
+<p>Tremor is built using the latest stable toolchain, so when asked to select the toolchain during installation, select stable.</p>
+<h4 id="macoslinux">macOS/Linux<a class="headerlink" href="#macoslinux" title="Permanent link">&para;</a></h4>
+<p>Run the following command and follow the on-screen instructions:</p>
 <div class="codehilite"><pre><span></span><code>curl --proto <span class="s1">&#39;=https&#39;</span> --tlsv1.2 -sSf https://sh.rustup.rs <span class="p">|</span> sh
 </code></pre></div>
 
 
-<p>For Windows (64-bit) you can download the rustup installer by clicking <a href="https://win.rustup.rs/x86_64">here</a></p>
-<p>Rustup will install all the necessary tools required for rust which includes the compiler and cargo which is the package management tool for rust.</p>
-<p>Tremor is built using the latest stable toolchain, so when asked to select the toolchain during installation, select stable.</p>
 <p>Now activate it by adding <code>source $HOME/.cargo/env</code> to your <code>.rc file</code> and open a new console.</p>
-<h3 id="install-xcode">Install XCode<a class="headerlink" href="#install-xcode" title="Permanent link">&para;</a></h3>
-<p>You need to install xcode and the commandline tools.</p>
+<p>For building tremor on macOS, you also need to install xcode and the commandline tools.</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<p>Pre-requisite: Rust requires the Microsoft C++ build tools for Visual Studio 2013 or later. You can get those from: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019. During installation, make sure Windows 10 SDK is selected (should be on by default).</p>
+<p>Now download the rustup installer by clicking <a href="https://win.rustup.rs/x86_64">here</a>, run it and follow the on-screen instructions.</p>
 <h3 id="additional-libraries">Additional Libraries<a class="headerlink" href="#additional-libraries" title="Permanent link">&para;</a></h3>
-<p>For macOS:</p>
+<h4 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code>brew install openssl
 brew install autoconf
 brew install re2c
@@ -1481,11 +1563,37 @@ brew install bison <span class="c1">#make sure to follow the printed instruction
 </code></pre></div>
 
 
-<p>For ubuntu:</p>
+<h4 id="ubuntu">Ubuntu<a class="headerlink" href="#ubuntu" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code>sudo apt install libssl-dev libclang-dev cmake
 </code></pre></div>
 
 
+<h4 id="windows_1">Windows<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://cmake.org/download/">cmake</a>: choose the latest stable release (3.16 at the time of writing)</li>
+<li><a href="https://releases.llvm.org/download.html">clang</a>: choose windows pre-built binaries for the latest release that has it (9.0.0 at the time of writing)</li>
+</ul>
+<p>Make sure the cmake and llvm binaries are added to the system path for at least the current user (if not all), as part of the installation process.</p>
+<p>Since openssl does not provided official builds, you can get it via <a href="https://github.com/microsoft/vcpkg">vcpkg</a>.</p>
+<p>First, set up vcpkg:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">git clone https://github.com/Microsoft/vcpkg.git</span>
+<span class="err">cd vcpkg</span>
+<span class="err">.\bootstrap-vcpkg.bat</span>
+<span class="err">.\vcpkg integrate install # hook up user-wide integration</span>
+</code></pre></div>
+
+
+<p>Now install openssl with:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">.\vcpkg install openssl:x64-windows-static</span>
+</code></pre></div>
+
+
+<p>To pick up the openssl libs during tremor build, you also have to set the <code>OPENSSL_DIR</code> environment variable right now. Example:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">set OPENSSL_DIR=C:\Users\juju\TREMOR\vcpkg\installed\x64-windows-static</span>
+</code></pre></div>
+
+
+<p>Technically, the rust <a href="https://docs.rs/openssl">openssl</a> crate will try to discover the openssl libs via vcpkg (as long as env var <code>VCPKGRS_DYNAMIC</code> is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a <a href="https://github.com/sfackler/rust-openssl/pull/1238">fix</a> for it and once that lands in a release for <code>rust-openssl</code> (and also starts getting used by tremor depenencies), we won't have to rely on the <code>OPENSSL_DIR</code> var.</p>
 <h3 id="running-tremor">Running Tremor<a class="headerlink" href="#running-tremor" title="Permanent link">&para;</a></h3>
 <p>After installing rust and cloning the repository, you can start tremor server by changing to <code>tremor-server</code> directory in tremor and running:</p>
 <div class="codehilite"><pre><span></span><code>cargo run

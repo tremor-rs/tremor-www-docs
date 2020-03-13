@@ -9,29 +9,34 @@ This page explains how to get tremor running on a local system for development o
 
 ### Install Rust
 
-Tremor can be run on any platform without using docker by installing the rust ecosystem. To install the rust ecosystem you can use `rustup` which is a toolchain installer.
+Tremor can be run on any platform without using docker by installing the rust ecosystem. To install the rust ecosystem, you can use [rustup](https://www.rust-lang.org/tools/install) which is a toolchain installer.
 
-To install [rustup](https://www.rust-lang.org/tools/install), you run the following command on *nix systems and follow the on-screen instructions:
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-For Windows (64-bit) you can download the rustup installer by clicking [here](https://win.rustup.rs/x86_64)
-
-Rustup will install all the necessary tools required for rust which includes the compiler and cargo which is the package management tool for rust.
+Rustup will install all the necessary tools required for rust, which includes `rustc` (the compiler) and cargo (package manager).
 
 Tremor is built using the latest stable toolchain, so when asked to select the toolchain during installation, select stable.
 
+#### macOS/Linux
+
+Run the following command and follow the on-screen instructions:
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
 Now activate it by adding `source $HOME/.cargo/env` to your `.rc file` and open a new console.
 
-### Install XCode
+For building tremor on macOS, you also need to install xcode and the commandline tools.
 
-You need to install xcode and the commandline tools.
+### Windows
+
+Pre-requisite: Rust requires the Microsoft C++ build tools for Visual Studio 2013 or later. You can get those from: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019. During installation, make sure Windows 10 SDK is selected (should be on by default).
+
+Now download the rustup installer by clicking [here](https://win.rustup.rs/x86_64), run it and follow the on-screen instructions.
 
 ### Additional Libraries
 
-For macOS:
+#### macOS
+
 ```bash
 brew install openssl
 brew install autoconf
@@ -39,10 +44,40 @@ brew install re2c
 brew install bison #make sure to follow the printed instructions!
 ```
 
-For ubuntu:
+#### Ubuntu
+
 ```bash
 sudo apt install libssl-dev libclang-dev cmake
 ```
+
+#### Windows
+
+* [cmake](https://cmake.org/download/): choose the latest stable release (3.16 at the time of writing)
+* [clang](https://releases.llvm.org/download.html): choose windows pre-built binaries for the latest release that has it (9.0.0 at the time of writing)
+
+Make sure the cmake and llvm binaries are added to the system path for at least the current user (if not all), as part of the installation process.
+
+Since openssl does not provided official builds, you can get it via [vcpkg](https://github.com/microsoft/vcpkg).
+
+First, set up vcpkg:
+```
+git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+.\bootstrap-vcpkg.bat
+.\vcpkg integrate install # hook up user-wide integration
+```
+
+Now install openssl with:
+```
+.\vcpkg install openssl:x64-windows-static
+```
+
+To pick up the openssl libs during tremor build, you also have to set the `OPENSSL_DIR` environment variable right now. Example:
+```
+set OPENSSL_DIR=C:\Users\juju\TREMOR\vcpkg\installed\x64-windows-static
+```
+
+Technically, the rust [openssl](https://docs.rs/openssl) crate will try to discover the openssl libs via vcpkg (as long as env var `VCPKGRS_DYNAMIC` is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a [fix](https://github.com/sfackler/rust-openssl/pull/1238) for it and once that lands in a release for `rust-openssl` (and also starts getting used by tremor depenencies), we won't have to rely on the `OPENSSL_DIR` var.
 
 ### Running Tremor
 

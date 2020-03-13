@@ -27,7 +27,7 @@ Now activate it by adding `source $HOME/.cargo/env` to your `.rc file` and open 
 
 For building tremor on macOS, you also need to install xcode and the commandline tools.
 
-### Windows
+#### Windows
 
 Pre-requisite: Rust requires the Microsoft C++ build tools for Visual Studio 2013 or later. You can get those from: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019. During installation, make sure Windows 10 SDK is selected (should be on by default).
 

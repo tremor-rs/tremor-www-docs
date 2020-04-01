@@ -92,7 +92,7 @@ links:
 ### Publish onramp specification
 
 ```bash
-curl -vs -stderr -X POST --data-binary @metronome-onramp.yaml http://localhost:9898/onramp
+curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-onramp.yaml http://localhost:9898/onramp
 ```
 
 Check that it published ok:
@@ -105,7 +105,7 @@ $ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/onramp
 ### Publish offramp specification
 
 ```bash
-curl -vs -stderr -X POST --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
+curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
 ```
 
 Check that it published ok:
@@ -118,7 +118,7 @@ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/offramp
 ### Publish pipeline specification
 
 ```bash
-curl -vs -stderr -X POST --data-binary @metronome-pipeline.yaml http://localhost:9898/pipeline
+curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-pipeline.yaml http://localhost:9898/pipeline
 ```
 
 Check that it published ok:
@@ -131,7 +131,7 @@ $ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/pipeli
 ### Publish binding specification
 
 ```bash
-curl -vs -stderr -X POST --data-binary @metronome-binding.yaml http://localhost:9898/binding
+curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-binding.yaml http://localhost:9898/binding
 ```
 
 ```bash
@@ -142,7 +142,7 @@ $ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/bindin
 ### Publish metronome offramp specification
 
 ```bash
-curl -vs -stderr -X POST --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
+curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
 ```
 
 Check that it published ok:
@@ -188,7 +188,7 @@ Once all artefacts are published into the tremor repository we are ready to depl
 
 In all steps to this point, we have been populating the tremor repository. Like a git repository the tremor repository stores artefacts, like git stores code.
 
-When we publish a mapping we are deploying live instances of onramps, offramps and pipelines, in our case, we want to:
+When we publish a mapping we are deploying live instances of onramps, offramps, and pipelines, in our case, we want to:
 
 * Deploy a single metronome onramp instance
 * Deploy a single stdout offramp instance
@@ -208,7 +208,7 @@ instance: 'walkthrough'
 Deploy via curl:
 
 ```bash
-curl -vs -stderr -X POST --data-binary @metronome-mapping.yaml -H "Content-type: application/yaml" http://localhost:9898/binding/default/walkthrough
+curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-mapping.yaml http://localhost:9898/binding/default/walkthrough
 ```
 
 Deploy via tremor-tool:

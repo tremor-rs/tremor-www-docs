@@ -1598,7 +1598,7 @@
 
 <h2 id="publish-via-the-rest-api-curl">Publish via the REST API / curl<a class="headerlink" href="#publish-via-the-rest-api-curl" title="Permanent link">&para;</a></h2>
 <h3 id="publish-onramp-specification">Publish onramp specification<a class="headerlink" href="#publish-onramp-specification" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST --data-binary @metronome-onramp.yaml http://localhost:9898/onramp
+<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-onramp.yaml http://localhost:9898/onramp
 </code></pre></div>
 
 
@@ -1609,7 +1609,7 @@
 
 
 <h3 id="publish-offramp-specification">Publish offramp specification<a class="headerlink" href="#publish-offramp-specification" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
+<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
 </code></pre></div>
 
 
@@ -1620,7 +1620,7 @@
 
 
 <h3 id="publish-pipeline-specification">Publish pipeline specification<a class="headerlink" href="#publish-pipeline-specification" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST --data-binary @metronome-pipeline.yaml http://localhost:9898/pipeline
+<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-pipeline.yaml http://localhost:9898/pipeline
 </code></pre></div>
 
 
@@ -1631,7 +1631,7 @@
 
 
 <h3 id="publish-binding-specification">Publish binding specification<a class="headerlink" href="#publish-binding-specification" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST --data-binary @metronome-binding.yaml http://localhost:9898/binding
+<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-binding.yaml http://localhost:9898/binding
 </code></pre></div>
 
 
@@ -1641,7 +1641,7 @@
 
 
 <h3 id="publish-metronome-offramp-specification">Publish metronome offramp specification<a class="headerlink" href="#publish-metronome-offramp-specification" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
+<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-offramp.yaml http://localhost:9898/offramp
 </code></pre></div>
 
 
@@ -1676,7 +1676,7 @@ tremor-tool api binding list metronome-binding.yaml
 <h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h2>
 <p>Once all artefacts are published into the tremor repository we are ready to deploy. We deploy instances, via bindings, through mapping specifications.</p>
 <p>In all steps to this point, we have been populating the tremor repository. Like a git repository the tremor repository stores artefacts, like git stores code.</p>
-<p>When we publish a mapping we are deploying live instances of onramps, offramps and pipelines, in our case, we want to:</p>
+<p>When we publish a mapping we are deploying live instances of onramps, offramps, and pipelines, in our case, we want to:</p>
 <ul>
 <li>Deploy a single metronome onramp instance</li>
 <li>Deploy a single stdout offramp instance</li>
@@ -1694,7 +1694,7 @@ tremor-tool api binding list metronome-binding.yaml
 
 
 <p>Deploy via curl:</p>
-<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST --data-binary @metronome-mapping.yaml -H <span class="s2">&quot;Content-type: application/yaml&quot;</span> http://localhost:9898/binding/default/walkthrough
+<div class="codehilite"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-mapping.yaml http://localhost:9898/binding/default/walkthrough
 </code></pre></div>
 
 

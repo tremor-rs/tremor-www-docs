@@ -1,3 +1,5 @@
 tremor-mkdocs-lexer
 html
 .gitconfig
+*.log
+cache.json

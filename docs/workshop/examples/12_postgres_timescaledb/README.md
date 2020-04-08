@@ -3,94 +3,35 @@
 This example demonstrates extracting data from a Postgres database and inserting
 data to TimescaleDB.
 
-The demo starts up said databases, Tremor and `pgweb`...
+The demo starts up said PostgreSQL, TimescaleDB, Tremor and `pgweb`.
 
 ## Environment
 
-In the [`example.trickle`](etc/tremor/config/example.trickle) we process the data in multiple steps, since this is somewhat more complex then the prior examples we'll discuss each step in the Business Logic section.
+In [`00_ramps.yaml`](etc/tremor/config/00_ramps.yaml) we pass in a
+configuration for an onramp of type `postgres` along with typical connection
+string requirements.
 
+Additionally, we are required to specify `interval_ms` which stands for
+frequency of polling that Tremor is performing on Postgres database with the
+given `query`. Query will be passed two parameters:
+* `$1` is the `TIMESTAMPTZ` that indicates the start time and date for the
+  range
+* `$2` is the `TIMESTAMPTZ` that indicates the ending time and date for the
+  range
+
+The initial range is formed by taking `consume_from` configuration setting and
+the current time and date. This will effectivelly backfill data. From then on,
+Tremor will poll in regular `interval_ms`.
+
+In addition to a `postgres` onramp, we also utilize a `crononome` onramp. The
+intention is to demonstrate intermediate record format which is accepted by
+`postgres` offramp.
 
 ## Business Logic
 
-### Grouping
-
-```trickle
-select {
-    "measurement": event.measurement,
-    "tags": event.tags,
-    "field": group[2],
-    "value": event.fields[group[2]],
-    "timestamp": event.timestamp,
-}
-from in
-group by set(event.measurement, event.tags, each(record::keys(event.fields)))
-into aggregate
-having type::is_number(event.value);
-```
-
-This step groups the data for aggregation. This is required since the [Influx Line protocol](https://docs.influxdata.com/influxdb/v1.7/write_protocols/line_protocol_tutorial/) allows for multiple values within one message. The grouping step ensures that we do not aggregate `cpu_idle` and `cpu_user` into the same value despite them being in the same result.
-
-In other words we normalise an event like this
-
-```influx
-measurement tag1=value1,tag2=value2 field1=42,field2="snot",field3=0.2 123587512345513
-```
-
-into the three distinct series it represents, namely:
-
-```influx
-measurement tag1=value1,tag2=value2 field1=42 123587512345513
-measurement tag1=value1,tag2=value2 field2="snot" 123587512345513
-measurement tag1=value1,tag2=value2 field3=0.2 123587512345513
-```
-
-The second part that happens in this query is removing non numeric values from our aggregated series since they are not able to be aggregated.
-
-### Aggregation
-
-```trickle
-select 
-{
-    "measurement": event.measurement,
-    "tags": patch event.tags of insert "window" => window end,
-    "stats": stats::hdr(event.value, [ "0.5", "0.9", "0.99", "0.999" ]),
-    "field": event.field,
-    "timestamp": win::first(event.timestamp), # we can't use min since it's a float
-}
-from aggregate[`10secs`, `1min`, ]
-group by set(event.measurement, event.tags, event.field)
-into normalize;
-```
-
-In this section we aggregate the different serieses we created in the previous section.
-
-Most notably are the `stats::hdr` and `win::first` functions which do the aggregation. `stats::hdr` uses a optimized [HDR Histogram](http://hdrhistogram.org/) algorithm to generate the values requested of it. `win::first` gives the timestamp of the first event in the window.
-
-### Normalisation to Influx Line Protocol
-
-```tremor
-select {
-  "measurement":  event.measurement,
-  "tags":  event.tags,
-  "fields":  {
-    "count_{event.field}":  event.stats.count,
-    "min_{event.field}":  event.stats.min,
-    "max_{event.field}":  event.stats.max,
-    "mean_{event.field}":  event.stats.mean,
-    "stdev_{event.field}":  event.stats.stdev,
-    "var_{event.field}":  event.stats.var,
-    "p50_{event.field}":  event.stats.percentiles["0.5"],
-    "p90_{event.field}":  event.stats.percentiles["0.9"],
-    "p99_{event.field}":  event.stats.percentiles["0.99"],
-    "p99.9_{event.field}":  event.stats.percentiles["0.999"]
-  },
-  "timestamp": event.timestamp,
-}
-from normalize
-into batch;
-```
-
-The last part normalises the data to a format that can be encoded into influx line protocol. And name the fields accordingly. This uses string interpolation for the recortd fields and simle value access for their values.
+In [`01_pipeline.yaml`](etc/tremor/config/01_pipeline.yaml) we register two
+pipelines: `postgres-things` for data coming from a PostgreSQL database and
+`crononome-things` coming from `crononome` at regular interval of `5s`.
 
 ## Command line testing during logic development
 
@@ -99,15 +40,7 @@ $ docker-compose up
   ... lots of logs ...
 ```
 
-Open the [Chronograf](http://localhost:8888) and connect the database.
+Open the [pgweb](http://localhost:8081) to browse through received rows in
+TimescaleDB.
 
 ### Discussion
-
-It is noteworthy that in the aggregation context only `stats::hdr` and `win::first` are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.
-
-We are using `having` in the goruping step, however this could also be done with a `where` clause on the aggregation step. In this example we choose `having` over were as it is worth discarding events as early as possible. If the requirement were to handle non numeric fields in a different manner routing the output of the grouping step to two different select statements we would have used `where` instead.
-
-### Attention
-
-Using `win::first` over `stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `win::first` being cheaper to execute. In addition stats functions are currently implemented to return floating point numbers so `stats::min` could
-lead incorrect timestamps we'd rather avoid.

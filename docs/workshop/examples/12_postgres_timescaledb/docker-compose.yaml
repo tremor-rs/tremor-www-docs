@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   tremor:
-    image: wayfair/tremor/tremor-runtime:5948de571d90b9d0b4b73102e0d27eaae691eff7-2995fa9-PR-5
+    image: tremorproject/tremor:latest
     depends_on:
       - postgres
       - timescaledb

@@ -6,7 +6,7 @@ The `range` module contains functions for common range generator operations.
 
 ### range::range(a, b) -> int
 
-Returns an array from a min-inclusive to b max-inclusive.
+Returns an array from a min-inclusive to b max-exclusive.
 
 ```tremor
 range::range(0,3) # [0, 1, 2]

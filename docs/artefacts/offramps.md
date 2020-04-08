@@ -157,6 +157,41 @@ offramp:
         'Client': 'Tremor'
 ```
 
+### PostgreSQL
+
+PostgreSQL offramp.
+
+Supported configuration options are:
+* `host` - PostgreSQL database hostname
+* `port` - PostgresSQL database port
+* `user` - Username for authentication
+* `password` - Password for authentication
+* `dbname` - Database name
+* `table` - Database table name
+
+Data that comes in will be used to execute an `INSERT` statement. It is required
+that data comes in objects representing columns. Object key must represent field
+name in database and must contain following fields:
+* `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
+  etc.)
+* `name` - field name as represented by database table schema
+* `value` - value of the field
+
+Example:
+
+```yml
+id: db
+type: postgres
+codec: json
+config:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: example
+  dbname: sales
+  table: transactions
+```
+
 ### file
 
 The file offramp writes events to a file, one event per line. The file is overwritten if it exists.

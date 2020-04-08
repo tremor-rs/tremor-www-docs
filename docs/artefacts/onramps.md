@@ -1,6 +1,6 @@
 # Onramps
 
-Specify how tremor connects to the outside world in order to receive from external systems.
+Specify how Tremor connects to the outside world in order to receive from external systems.
 
 For example, the Kafka onramp receives data from a Kafka cluster by creating a local record
 consumer, connecting to a set of topics and ingesting Kafka record data.
@@ -304,6 +304,58 @@ Known limitations:
 Currently paths and path parameters are neither checked nor validated, nor are required parameters.
 Response status code configuration is also not currently respected. It is currently not possible to
 configure rest onramps via swagger, raml or openapi configuration files.
+
+### PostgreSQL
+
+PostgreSQL onramp.
+
+Supported configuration options are:
+* `host` - PostgreSQL database hostname
+* `port` - PostgresSQL database port
+* `user` - Username for authentication
+* `password` - Password for authentication
+* `dbname` - Database name
+* `query` - Query executed to retrieve data
+* `interval_ms` - Query execution interval in milliseconds
+* `cache` - Location (`path`) and size (`size`) for caching of latest successful query execution interval
+
+`query` must include two arguments to be filled with start and end interval timestamps.
+
+Data will come out of onramp in objects representing columns. If schema
+specifies there are two fields, `username` (`VARCHAR`) and `created_at`
+(`TIMESTAMPTZ`) then the actual JSON coming out of onramp looks like:
+
+```
+"username": {
+  "fieldType": "VARCHAR",
+  "name": "username",
+  "value": "actual\_username"
+},
+"created\_at": {
+  "fieldType": "TIMESTAMPTZ",
+  "name": "created\_at",
+  "value": "2020-04-04 00:00:00.000000 +00:00"
+}
+```
+
+Example:
+
+```yml
+id: db
+type: postgres
+codec: json
+config:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: example
+  dbname: sales
+  query: "SELECT id, name from events WHERE produced_at <= $1 AND produced_at > $2"
+  interval_ms: 1000
+  cache:
+    path: "/path/to/cache.json"
+    size: 4096
+```
 
 ### ws
 

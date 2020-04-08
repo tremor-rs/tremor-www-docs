@@ -1,0 +1,7 @@
+binding:
+  - id: thinger
+    links:
+      '/onramp/postgres-input/{instance}/out': [ '/pipeline/postgres-things/{instance}/in' ]
+      '/onramp/crononome-input/{instance}/out': [ '/pipeline/crononome-things/{instance}/in' ]
+      '/pipeline/postgres-things/{instance}/out': [ '/offramp/timescaledb-output/{instance}/in', '/offramp/system::stdout/{instance}/in' ]
+      '/pipeline/crononome-things/{instance}/out': [ '/offramp/timescaledb-output/{instance}/in', '/offramp/system::stdout/{instance}/in' ]

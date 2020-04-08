@@ -1,0 +1,54 @@
+onramp:
+  - id: postgres-input
+    type: postgres
+    codec: json
+    config:
+      host: postgres
+      port: 5432
+      user: postgres
+      password: example
+      dbname: products
+      interval_ms: 10000
+      query: "SELECT * FROM transactions WHERE created_at >= $1 AND created_at < $2;"
+      consume_from: "2019-12-01 00:00:00.000000 +00:00"
+      cache:
+        path: "/etc/tremor/cache.json"
+        size: 4096
+  - id: crononome-input
+    type: crononome
+    codec: json
+    config:
+      entries:
+        - name: 5s
+          expr: "0/5 * * * * *"
+          payload:
+            user_id:
+              fieldType: "INT4"
+              name: "user_id"
+              value: 12345
+            product_id:
+              fieldType: "VARCHAR"
+              name: "product_id"
+              value: jdwa2djh2
+            quantity:
+              fieldType: "INT4"
+              name: "quantity"
+              value: 2
+            created_at:
+              fieldType: "TIMESTAMPTZ"
+              name: "created_at"
+              value: "2020-04-08 00:00:00.000000 +00:00"
+offramp:
+  - id: timescaledb-output
+    type: postgres
+    codec: json
+    config:
+      host: timescaledb
+      port: 5432
+      user: postgres
+      password: example
+      dbname: measurements
+      table: events
+  - id: debug
+    type: stdout
+    codec: json

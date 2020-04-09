@@ -1043,6 +1043,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    PostgreSQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#file" class="md-nav__link">
     file
   </a>
@@ -1467,6 +1474,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    PostgreSQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#file" class="md-nav__link">
     file
   </a>
@@ -1651,6 +1665,36 @@
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://influx/write?db=metrics</span>
       <span class="nt">headers</span><span class="p">:</span>
         <span class="s">&#39;Client&#39;</span><span class="p p-Indicator">:</span> <span class="s">&#39;Tremor&#39;</span>
+</code></pre></div>
+
+
+<h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+<p>PostgreSQL offramp.</p>
+<p>Supported configuration options are:
+* <code>host</code> - PostgreSQL database hostname
+* <code>port</code> - PostgresSQL database port
+* <code>user</code> - Username for authentication
+* <code>password</code> - Password for authentication
+* <code>dbname</code> - Database name
+* <code>table</code> - Database table name</p>
+<p>Data that comes in will be used to execute an <code>INSERT</code> statement. It is required
+that data comes in objects representing columns. Object key must represent field
+name in database and must contain following fields:
+* <code>fieldType</code> - a PostgreSQL field type (e.g. <code>VARCHAR</code>, <code>INT4</code>, <code>TIMESTAMPTZ</code>,
+  etc.)
+* <code>name</code> - field name as represented by database table schema
+* <code>value</code> - value of the field</p>
+<p>Example:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">id</span><span class="o">:</span> <span class="n">db</span>
+<span class="n">type</span><span class="o">:</span> <span class="n">postgres</span>
+<span class="n">codec</span><span class="o">:</span> <span class="n">json</span>
+<span class="n">config</span><span class="o">:</span>
+  <span class="n">host</span><span class="o">:</span> <span class="n">localhost</span>
+  <span class="n">port</span><span class="o">:</span> <span class="mi">5432</span>
+  <span class="n">user</span><span class="o">:</span> <span class="n">postgres</span>
+  <span class="n">password</span><span class="o">:</span> <span class="n">example</span>
+  <span class="n">dbname</span><span class="o">:</span> <span class="n">sales</span>
+  <span class="n">table</span><span class="o">:</span> <span class="n">transactions</span>
 </code></pre></div>
 
 

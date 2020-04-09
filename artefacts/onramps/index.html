@@ -1018,6 +1018,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    PostgreSQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ws" class="md-nav__link">
     ws
   </a>
@@ -1413,6 +1420,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    PostgreSQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ws" class="md-nav__link">
     ws
   </a>
@@ -1445,7 +1459,7 @@
                 
                 
                 <h1 id="onramps">Onramps<a class="headerlink" href="#onramps" title="Permanent link">&para;</a></h1>
-<p>Specify how tremor connects to the outside world in order to receive from external systems.</p>
+<p>Specify how Tremor connects to the outside world in order to receive from external systems.</p>
 <p>For example, the Kafka onramp receives data from a Kafka cluster by creating a local record
 consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <p>All onramps are of the form:</p>
@@ -1724,6 +1738,52 @@ support codecs. Body content is presumed to be UTF-8 encoded.</p>
 <p>Currently paths and path parameters are neither checked nor validated, nor are required parameters.
 Response status code configuration is also not currently respected. It is currently not possible to
 configure rest onramps via swagger, raml or openapi configuration files.</p>
+<h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+<p>PostgreSQL onramp.</p>
+<p>Supported configuration options are:
+* <code>host</code> - PostgreSQL database hostname
+* <code>port</code> - PostgresSQL database port
+* <code>user</code> - Username for authentication
+* <code>password</code> - Password for authentication
+* <code>dbname</code> - Database name
+* <code>query</code> - Query executed to retrieve data
+* <code>interval_ms</code> - Query execution interval in milliseconds
+* <code>cache</code> - Location (<code>path</code>) and size (<code>size</code>) for caching of latest successful query execution interval</p>
+<p><code>query</code> must include two arguments to be filled with start and end interval timestamps.</p>
+<p>Data will come out of onramp in objects representing columns. If schema
+specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and <code>created_at</code>
+(<code>TIMESTAMPTZ</code>) then the actual JSON coming out of onramp looks like:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">&quot;username&quot;: {</span>
+<span class="err">  &quot;fieldType&quot;: &quot;VARCHAR&quot;,</span>
+<span class="err">  &quot;name&quot;: &quot;username&quot;,</span>
+<span class="err">  &quot;value&quot;: &quot;actual\_username&quot;</span>
+<span class="err">},</span>
+<span class="err">&quot;created\_at&quot;: {</span>
+<span class="err">  &quot;fieldType&quot;: &quot;TIMESTAMPTZ&quot;,</span>
+<span class="err">  &quot;name&quot;: &quot;created\_at&quot;,</span>
+<span class="err">  &quot;value&quot;: &quot;2020-04-04 00:00:00.000000 +00:00&quot;</span>
+<span class="err">}</span>
+</code></pre></div>
+
+
+<p>Example:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">id</span><span class="o">:</span> <span class="n">db</span>
+<span class="n">type</span><span class="o">:</span> <span class="n">postgres</span>
+<span class="n">codec</span><span class="o">:</span> <span class="n">json</span>
+<span class="n">config</span><span class="o">:</span>
+  <span class="n">host</span><span class="o">:</span> <span class="n">localhost</span>
+  <span class="n">port</span><span class="o">:</span> <span class="mi">5432</span>
+  <span class="n">user</span><span class="o">:</span> <span class="n">postgres</span>
+  <span class="n">password</span><span class="o">:</span> <span class="n">example</span>
+  <span class="n">dbname</span><span class="o">:</span> <span class="n">sales</span>
+  <span class="n">query</span><span class="o">:</span> <span class="s2">&quot;SELECT id, name from events WHERE produced_at &lt;= $1 AND produced_at &gt; $2&quot;</span>
+  <span class="n">interval_ms</span><span class="o">:</span> <span class="mi">1000</span>
+  <span class="n">cache</span><span class="o">:</span>
+    <span class="n">path</span><span class="o">:</span> <span class="s2">&quot;/path/to/cache.json&quot;</span>
+    <span class="n">size</span><span class="o">:</span> <span class="mi">4096</span>
+</code></pre></div>
+
+
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
 <p>Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
 <p>The event <a href="../../tremor-script/functions/origin/">origin URI</a> set by the onramp is of the form:</p>

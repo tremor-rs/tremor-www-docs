@@ -3,3 +3,6 @@ html
 .gitconfig
 *.log
 cache.json
+mkdocs.yml
+docs/tremor-script/stdlib
+tremor-runtime

@@ -47,7 +47,7 @@ In this release in particular we introduce some quality of life improvements on 
 
 Along with that we fixed a bug on the influx line protocol renderer that caused integers to be re-rendered as floats and multi field items to be rendered in-correctly.
 
-Last but not least we introduced the [`chash` module](tremor-script/functions/chash.md) that currently houses an implementation of googles [jump consistent hashing](https://arxiv.org/abs/1406.2294) this allows partitioning a data flow near evenly over more then out output with minimal cost and no need or synchronisation.
+Last but not least we introduced the [`chash` module](tremor-script/stdlib/tremor/chash.md) that currently houses an implementation of googles [jump consistent hashing](https://arxiv.org/abs/1406.2294) this allows partitioning a data flow near evenly over more then out output with minimal cost and no need or synchronisation.
 
 ## tremor-0.5 (stable)
 

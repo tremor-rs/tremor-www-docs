@@ -150,7 +150,7 @@ pipeline:
 
 ## Percentage drops of events
 
-To drop a percentage of all events, functions in the [random](functions/random.md) module can be used.
+To drop a percentage of all events, functions in the [random](stdlib/std/random.md) module can be used.
 
 We generate a random number in a range and based on the outcome, we decide whether we want to drop an event or not. Example:
 

@@ -15,5 +15,5 @@ docs/tremor-script/stdlib:
 	cd tremor-runtime &&\
 	git checkout $(TREMOR_VSN) &&\
 	make stdlib-doc;
-	- rm -r docs/tremor-script/stdlib
+	-rm -r docs/tremor-script/stdlib
 	cp -r tremor-runtime/docs docs/tremor-script/stdlib

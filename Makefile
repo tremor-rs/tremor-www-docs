@@ -1,6 +1,6 @@
 TREMOR_VSN=spike-modularity-combined
 
-mkdocs.yml: mkdocs.yml.in
+mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib
 	files=`find docs/tremor-script/stdlib -type f`;\
 	idx=$$(for f in $$files; do \
 		name=`echo $$f | sed -e 's;docs/tremor-script/stdlib/\(.*\).md;\1;' | sed -e 's;/;::;'`;\

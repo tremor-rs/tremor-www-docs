@@ -1,30 +1,28 @@
 # Functions
 
-Tremor script provides access to a growing number of functions that allow
+Tremor-script provides access to a growing number of functions that allow
 advanced data manipulation or access to additional information.
 
 Functions are namespaced to make identification easier.
 
-In addition tremor allows you to define your own functions. There are a few 
+Tremor also supports user defined functions. There are a few 
 noteworthy restrictions:
 
 1. Functions are pure / side effect free - you can not mutate `event`, `state`,
    or `$` inside of a function.
-2. Functions have to return a value, this is a result of 1. since otherwise they
-   would serve no purpose.
-3. Functions can only be define once, even if they take different forms or
-   arguments.
-4. In matching functions, a default case is required.
-5. Functions can call other functions but they have to be defined already.
-6. Recursion is limited to tail recursion and a maximum recursion depth and is
-   only allowed in normal and matching functions.
+2. Functions have to return a value, as tremor-script is expression oriented.
+3. Functions can only be defined once, even if they take different forms or
+   arguments. Function overloading is not supported.
+4. In matching functions, a `default` case is required.
+5. Functions can call other functions but they have to be a priori defined. The order of definitions is significant.
+6. Tail recursion is supported, and constrained to a maximum recursion depth. A recursion depth is imposed as tremor-script is designed to operate on infinite streams of data so indefinite blocking/recursion is not supportable by design.
 
 Lets look at the three types of functions we have.
 
-## Normal functions
+## Ordinary functions
 
-Normal functions are functions that take a given number of arguments, each with
-a name. This function can be recursive. An example would be:
+Ordinary functions are functions that take a given number of arguments, each with
+a name. This function can be tail- recursive. An example would be:
 
 
 ```tremor

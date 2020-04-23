@@ -408,6 +408,210 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/" title="std" class="md-nav__link">
+      std
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/array/" title="std::array" class="md-nav__link">
+      std::array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/float/" title="std::float" class="md-nav__link">
+      std::float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/integer/" title="std::integer" class="md-nav__link">
+      std::integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/json/" title="std::json" class="md-nav__link">
+      std::json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/math/" title="std::math" class="md-nav__link">
+      std::math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/random/" title="std::random" class="md-nav__link">
+      std::random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/range/" title="std::range" class="md-nav__link">
+      std::range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/re/" title="std::re" class="md-nav__link">
+      std::re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/record/" title="std::record" class="md-nav__link">
+      std::record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/string/" title="std::string" class="md-nav__link">
+      std::string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/test/" title="std::test" class="md-nav__link">
+      std::test
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/std/type/" title="std::type" class="md-nav__link">
+      std::type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/tremor/" title="tremor" class="md-nav__link">
+      tremor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/tremor/chash/" title="tremor::chash" class="md-nav__link">
+      tremor::chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/tremor/origin/" title="tremor::origin" class="md-nav__link">
+      tremor::origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-script/stdlib/tremor/system/" title="tremor::system" class="md-nav__link">
+      tremor::system
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1302,7 +1506,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
 <p>The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">librdkaka configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-kafka://&lt;config_first_broker_host&gt;[:&lt;config_first_broker_port&gt;]/&lt;topic&gt;/&lt;partition&gt;/&lt;offset&gt;</span>
 </code></pre></div>
 
@@ -1332,7 +1536,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <h3 id="udp">udp<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h3>
 <p>The udp onramp allows receiving data via UDP datagrams.</p>
 <p>The default <a href="../codecs/#string">codec</a> is <code>string</code>.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-udp://&lt;sender_ip&gt;:&lt;sender_port&gt;/&lt;config_receive_port&gt;</span>
 </code></pre></div>
 
@@ -1360,7 +1564,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <h3 id="file">file<a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
 <p>The file onramp reads the content of a file, line by line. And sends each line as an event. It has the ability to shut down the system upon completion. Files can be <code>xz</code> compressed.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-file://&lt;tremor-host.local&gt;/&lt;config_source_file&gt;</span>
 </code></pre></div>
 
@@ -1382,7 +1586,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <h3 id="metronome">metronome<a class="headerlink" href="#metronome" title="Permanent link">&para;</a></h3>
 <p>This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.</p>
 <p>The default <a href="../codecs/#pass">codec</a> is <code>pass</code>. (since we already output decoded JSON)</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-metronome://&lt;tremor-host.local&gt;/&lt;config_interval&gt;</span>
 </code></pre></div>
 
@@ -1403,7 +1607,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <h3 id="crononome">crononome<a class="headerlink" href="#crononome" title="Permanent link">&para;</a></h3>
 <p>This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.</p>
 <p>Multiple cron entries can be configured, each with a symbolic name and an optional JSON payload in addition to the cron expression.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-crononome://&lt;tremor-host.local&gt;</span>
 </code></pre></div>
 
@@ -1440,7 +1644,7 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 <p>NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.</p>
 <p>The blaster onramp is built for performance testing, but it can be used for spaced out replays of events as well. Files to replay can be <code>xz</code> compressed. It will keep looping over the file.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-blaster://&lt;tremor-host.local&gt;/&lt;config_source_file&gt;</span>
 </code></pre></div>
 
@@ -1466,7 +1670,7 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 <p>The onramp can leverage preprocessors to segment data before codecs are applied and events are forwarded
 to pipelines.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-tcp://&lt;client_ip&gt;:&lt;client_port&gt;/&lt;config_server_port&gt;</span>
 </code></pre></div>
 
@@ -1494,7 +1698,7 @@ to pipelines.</p>
 <p>The rest onramp listens on a specified port for inbound RESTful ( http ) data.</p>
 <p>The onramp can leverage preprocessors to segment rest body content but does not currently
 support codecs. Body content is presumed to be UTF-8 encoded.</p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-rest://&lt;tremor-rest-client-host.remote&gt;</span>
 </code></pre></div>
 
@@ -1606,7 +1810,7 @@ specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and
 
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
 <p>Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
-<p>The event <a href="../tremor-script/stdlib/tremor/origin.md">origin URI</a> set by the onramp is of the form:</p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-ws://&lt;tremor-ws-client-host.remote&gt;</span>
 </code></pre></div>
 

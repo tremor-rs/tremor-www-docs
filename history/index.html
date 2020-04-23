@@ -408,6 +408,210 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/" title="std" class="md-nav__link">
+      std
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/array/" title="std::array" class="md-nav__link">
+      std::array
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/float/" title="std::float" class="md-nav__link">
+      std::float
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/integer/" title="std::integer" class="md-nav__link">
+      std::integer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/json/" title="std::json" class="md-nav__link">
+      std::json
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/math/" title="std::math" class="md-nav__link">
+      std::math
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/random/" title="std::random" class="md-nav__link">
+      std::random
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/range/" title="std::range" class="md-nav__link">
+      std::range
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/re/" title="std::re" class="md-nav__link">
+      std::re
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/record/" title="std::record" class="md-nav__link">
+      std::record
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/string/" title="std::string" class="md-nav__link">
+      std::string
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/test/" title="std::test" class="md-nav__link">
+      std::test
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/std/type/" title="std::type" class="md-nav__link">
+      std::type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/tremor/" title="tremor" class="md-nav__link">
+      tremor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/tremor/chash/" title="tremor::chash" class="md-nav__link">
+      tremor::chash
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/tremor/origin/" title="tremor::origin" class="md-nav__link">
+      tremor::origin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tremor-script/stdlib/tremor/system/" title="tremor::system" class="md-nav__link">
+      tremor::system
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1265,7 +1469,7 @@ expressions. A cron-based onramp for scheduled/periodic one-shot or repeated eve
 <p>With this release we are experimenting with a shorter release cycle. While both 0.4 and 0.5 introduced major changes they lay a stable foundation that makes it easier to ship small features and wins to our users much more frequently.</p>
 <p>In this release in particular we introduce some quality of life improvements on extractors by improving error reporting on bad patterns and moving it to compile time with the same good errors we provide for language level errors.</p>
 <p>Along with that we fixed a bug on the influx line protocol renderer that caused integers to be re-rendered as floats and multi field items to be rendered in-correctly.</p>
-<p>We introduced the <a href="tremor-script/stdlib/tremor/chash.md"><code>chash</code> module</a> that currently houses an implementation of Google's <a href="https://arxiv.org/abs/1406.2294">jump consistent hashing</a>. This enables partitioning a data flow uniformly over multiple outputs with minimal cost and no need for synchronisation.</p>
+<p>We introduced the <a href="../tremor-script/stdlib/tremor/chash/"><code>chash</code> module</a> that currently houses an implementation of Google's <a href="https://arxiv.org/abs/1406.2294">jump consistent hashing</a>. This enables partitioning a data flow uniformly over multiple outputs with minimal cost and no need for synchronisation.</p>
 <h2 id="tremor-05-stable">tremor-0.5 (stable)<a class="headerlink" href="#tremor-05-stable" title="Permanent link">&para;</a></h2>
 <p>Version 0.5 we introduced a completely overhauled scripting language. We moved from a simple rule to action based system to something that can best be described as a ETL focused language now with powerful constructs such as <a href="../tremor-script/#match"><code>match</code> statements</a> with <code>record-</code> and <code>array patterns</code> and an extensive <a href="../tremor-script/functions/">function library</a>.</p>
 <p>It introduces the concept of <a href="../tremor-script/extractors/">extractors</a>, part of tremor script they allow matching against complex patterns and extracting information from them. This work covers common things like regular expressions or globs, as well as grok and dissect patterns. But also allows decoding embedded influx, json, or even base64 data without much extra work.</p>

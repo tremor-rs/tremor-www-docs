@@ -1,12 +1,12 @@
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html style="">
+<html>
    
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       
       
-      <meta name="generator" content="Railroad Diagram Generator 1.60">
+      <meta name="generator" content="Railroad Diagram Generator 1.62">
       
       <style type="text/css">
     ::-moz-selection
@@ -18,7 +18,7 @@
     {
       color: #F0FAFF;
       background: #000A0F;
-    }      
+    }
     .ebnf a, .grammar a
     {
       text-decoration: none;
@@ -27,7 +27,7 @@
     {
       color: #000305;
       text-decoration: underline;
-    }    
+    }
     .signature
     {
       color: #005580;
@@ -61,15 +61,15 @@
     {
       color: #000305;
       background: #D1F0FF;
-      border-color: #000305;       
-    }     
+      border-color: #000305;
+    }
     #tabs
     {
       padding: 3px 10px;
       margin-left: 0;
       margin-top: 58px;
       border-bottom: 1px solid #000A0F;
-    }  
+    }
     #tabs li
     {
       list-style: none;
@@ -77,7 +77,7 @@
       display: inline;
     }
     #tabs li a
-    {     
+    {
       border-bottom: 1px solid #000A0F;
     }
     #tabs li a.active
@@ -119,7 +119,7 @@
     {
       visibility: hidden;
     }
-    td:hover .hidden 
+    td:hover .hidden
     {
       visibility: visible;
     }
@@ -198,20 +198,90 @@
    
    <body>
       
-      <p style="font-size: 14px; font-weight:bold"><a name="Script">Script:</a></p><img border="0" src="diagram/Script.png" height="97" width="231" usemap="#Script.map"><map name="Script.map"><area shape="rect" coords="69,17,117,49" href="#Expr" title="Expr"><area shape="rect" coords="49,61,97,93" href="#Expr" title="Expr"></map><p>
+      <p style="font-size: 14px; font-weight:bold"><a name="ModComment">ModComment:</a></p><img border="0" src="diagram/ModComment.png" height="37" width="163" usemap="#ModComment.map"><map name="ModComment.map"><area shape="rect" coords="29,1,133,33" href="#DocComment" title="DocComment"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Script" title="Script">Script</a>&nbsp;&nbsp;&nbsp;::= ( <a href="#Expr" title="Expr">Expr</a> ';' )+</div>
+               <div><a href="#ModComment" title="ModComment">ModComment</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Expr" title="Expr">Expr</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a></div></code></div>
          </p>
       
-      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Expr">Expr:</a></p><img border="0" src="diagram/Expr.png" height="81" width="171" usemap="#Expr.map"><map name="Expr.map"><area shape="rect" coords="49,45,121,77" href="#AndExpr" title="AndExpr"></map><p>
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Script" title="Script">Script</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="DocComment">DocComment:</a></p><img border="0" src="diagram/DocComment.png" height="53" width="229" usemap="#DocComment.map"><map name="DocComment.map"><area shape="rect" coords="49,17,179,49" href="#DocCommentLine" title="DocCommentLine"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Expr" title="Expr">Expr</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#AndExpr" title="AndExpr">AndExpr</a> ( 'or' <a href="#AndExpr" title="AndExpr">AndExpr</a> )*</div></code></div>
+               <div><a href="#DocComment" title="DocComment">DocComment</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocCommentLine" title="DocCommentLine">DocCommentLine</a>+</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Const" title="Const">Const</a></li>
+            
+            <li><a href="#IntrinsicFnDecl" title="IntrinsicFnDecl">IntrinsicFnDecl</a></li>
+            
+            <li><a href="#Let" title="Let">Let</a></li>
+            
+            <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
+            
+            <li><a href="#ModComment" title="ModComment">ModComment</a></li>
+            
+            <li><a href="#Module" title="Module">Module</a></li>
+            
+            <li><a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="DocCommentLine">DocCommentLine:</a></p><img border="0" src="diagram/DocCommentLine.png" height="69" width="319"><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#DocCommentLine" title="DocCommentLine">DocCommentLine</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '##' [^\n]* '\n'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#DocComment" title="DocComment">DocComment</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Script">Script:</a></p><img border="0" src="diagram/Script.png" height="81" width="319" usemap="#Script.map"><map name="Script.map"><area shape="rect" coords="49,33,155,65" href="#ModComment" title="ModComment"><area shape="rect" coords="215,1,269,33" href="#Exprs" title="Exprs"><area shape="rect" coords="215,45,263,77" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Script" title="Script">Script</a>&nbsp;&nbsp;&nbsp;::= <a href="#ModComment" title="ModComment">ModComment</a>? ( <a href="#Exprs" title="Exprs">Exprs</a> | <a href="#Expr" title="Expr">Expr</a> )</div></code></div>
+         </p>
+      
+      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Exprs">Exprs:</a></p><img border="0" src="diagram/Exprs.png" height="53" width="191" usemap="#Exprs.map"><map name="Exprs.map"><area shape="rect" coords="49,17,97,49" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Exprs" title="Exprs">Exprs</a>&nbsp;&nbsp;&nbsp;&nbsp;::= ( <a href="#Expr" title="Expr">Expr</a> ';' )+</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#FnDeclBody" title="FnDeclBody">FnDeclBody</a></li>
+            
+            <li><a href="#Script" title="Script">Script</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Expr">Expr:</a></p><img border="0" src="diagram/Expr.png" height="81" width="169" usemap="#Expr.map"><map name="Expr.map"><area shape="rect" coords="49,45,119,77" href="#XorExpr" title="XorExpr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Expr" title="Expr">Expr</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#XorExpr" title="XorExpr">XorExpr</a> ( 'or' <a href="#XorExpr" title="XorExpr">XorExpr</a> )*</div></code></div>
          </p>
       
       <p>referenced by:
@@ -224,11 +294,13 @@
             
             <li><a href="#ArraySegment" title="ArraySegment">ArraySegment</a></li>
             
-            <li><a href="#Effectors" title="Effectors">Effectors</a></li>
+            <li><a href="#Block" title="Block">Block</a></li>
             
             <li><a href="#Emit" title="Emit">Emit</a></li>
             
             <li><a href="#ExprCase" title="ExprCase">ExprCase</a></li>
+            
+            <li><a href="#Exprs" title="Exprs">Exprs</a></li>
             
             <li><a href="#Field" title="Field">Field</a></li>
             
@@ -252,13 +324,11 @@
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="AndExpr">AndExpr:</a></p><img border="0" src="diagram/AndExpr.png" height="81" width="311" usemap="#AndExpr.map"><map name="AndExpr.map"><area shape="rect" coords="49,1,113,33" href="#EqExpr" title="EqExpr"><area shape="rect" coords="197,1,261,33" href="#EqExpr" title="EqExpr"><area shape="rect" coords="49,45,117,77" href="#BinExpr" title="BinExpr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="XorExpr">XorExpr:</a></p><img border="0" src="diagram/XorExpr.png" height="81" width="171" usemap="#XorExpr.map"><map name="XorExpr.map"><area shape="rect" coords="49,45,121,77" href="#AndExpr" title="AndExpr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#AndExpr" title="AndExpr">AndExpr</a>&nbsp;&nbsp;::= <a href="#EqExpr" title="EqExpr">EqExpr</a> 'and' <a href="#EqExpr" title="EqExpr">EqExpr</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#BinExpr" title="BinExpr">BinExpr</a></div></code></div>
+               <div><a href="#XorExpr" title="XorExpr">XorExpr</a>&nbsp;&nbsp;::= <a href="#AndExpr" title="AndExpr">AndExpr</a> ( 'xor' <a href="#AndExpr" title="AndExpr">AndExpr</a> )*</div></code></div>
          </p>
       
       <p>referenced by:
@@ -266,6 +336,64 @@
          <ul>
             
             <li><a href="#Expr" title="Expr">Expr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="AndExpr">AndExpr:</a></p><img border="0" src="diagram/AndExpr.png" height="81" width="177" usemap="#AndExpr.map"><map name="AndExpr.map"><area shape="rect" coords="49,45,127,77" href="#BitOrExpr" title="BitOrExpr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#AndExpr" title="AndExpr">AndExpr</a>&nbsp;&nbsp;::= <a href="#BitOrExpr" title="BitOrExpr">BitOrExpr</a> ( 'and' <a href="#BitOrExpr" title="BitOrExpr">BitOrExpr</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#XorExpr" title="XorExpr">XorExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BitOrExpr">BitOrExpr:</a></p><img border="0" src="diagram/BitOrExpr.png" height="81" width="185" usemap="#BitOrExpr.map"><map name="BitOrExpr.map"><area shape="rect" coords="49,45,135,77" href="#BitXorExpr" title="BitXorExpr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#BitOrExpr" title="BitOrExpr">BitOrExpr</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#BitXorExpr" title="BitXorExpr">BitXorExpr</a> ( '|' <a href="#BitXorExpr" title="BitXorExpr">BitXorExpr</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#AndExpr" title="AndExpr">AndExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BitXorExpr">BitXorExpr:</a></p><img border="0" src="diagram/BitXorExpr.png" height="81" width="187" usemap="#BitXorExpr.map"><map name="BitXorExpr.map"><area shape="rect" coords="49,45,137,77" href="#BitAndExpr" title="BitAndExpr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#BitXorExpr" title="BitXorExpr">BitXorExpr</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#BitAndExpr" title="BitAndExpr">BitAndExpr</a> ( '^' <a href="#BitAndExpr" title="BitAndExpr">BitAndExpr</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#BitOrExpr" title="BitOrExpr">BitOrExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BitAndExpr">BitAndExpr:</a></p><img border="0" src="diagram/BitAndExpr.png" height="81" width="167" usemap="#BitAndExpr.map"><map name="BitAndExpr.map"><area shape="rect" coords="49,45,117,77" href="#BinExpr" title="BinExpr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#BitAndExpr" title="BitAndExpr">BitAndExpr</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#BinExpr" title="BinExpr">BinExpr</a> ( '&amp;' <a href="#BinExpr" title="BinExpr">BinExpr</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#BitXorExpr" title="BitXorExpr">BitXorExpr</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinExpr">BinExpr:</a></p><img border="0" src="diagram/BinExpr.png" height="113" width="347" usemap="#BinExpr.map"><map name="BinExpr.map"><area shape="rect" coords="29,1,93,33" href="#EqExpr" title="EqExpr"><area shape="rect" coords="233,33,297,65" href="#EqExpr" title="EqExpr"></map><p>
          
@@ -278,7 +406,7 @@
          
          <ul>
             
-            <li><a href="#AndExpr" title="AndExpr">AndExpr</a></li>
+            <li><a href="#BitAndExpr" title="BitAndExpr">BitAndExpr</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="EqExpr">EqExpr:</a></p><img border="0" src="diagram/EqExpr.png" height="113" width="371" usemap="#EqExpr.map"><map name="EqExpr.map"><area shape="rect" coords="29,1,105,33" href="#CmpExpr" title="CmpExpr"><area shape="rect" coords="245,33,321,65" href="#CmpExpr" title="CmpExpr"></map><p>
          
@@ -291,15 +419,13 @@
          
          <ul>
             
-            <li><a href="#AndExpr" title="AndExpr">AndExpr</a></li>
-            
             <li><a href="#BinExpr" title="BinExpr">BinExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="CmpExpr">CmpExpr:</a></p><img border="0" src="diagram/CmpExpr.png" height="201" width="363" usemap="#CmpExpr.map"><map name="CmpExpr.map"><area shape="rect" coords="29,1,101,33" href="#AddExpr" title="AddExpr"><area shape="rect" coords="241,33,313,65" href="#AddExpr" title="AddExpr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="CmpExpr">CmpExpr:</a></p><img border="0" src="diagram/CmpExpr.png" height="217" width="645" usemap="#CmpExpr.map"><map name="CmpExpr.map"><area shape="rect" coords="29,17,101,49" href="#AddExpr" title="AddExpr"><area shape="rect" coords="241,49,313,81" href="#AddExpr" title="AddExpr"><area shape="rect" coords="503,17,575,49" href="#AddExpr" title="AddExpr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#CmpExpr" title="CmpExpr">CmpExpr</a>&nbsp;&nbsp;::= <a href="#AddExpr" title="AddExpr">AddExpr</a> ( ( '&gt;=' | '&gt;' | '&lt;=' | '&lt;' ) <a href="#AddExpr" title="AddExpr">AddExpr</a> )?</div></code></div>
+               <div><a href="#CmpExpr" title="CmpExpr">CmpExpr</a>&nbsp;&nbsp;::= <a href="#AddExpr" title="AddExpr">AddExpr</a> ( ( '&gt;=' | '&gt;' | '&lt;=' | '&lt;' ) <a href="#AddExpr" title="AddExpr">AddExpr</a> )? ( ( '&gt;&gt;' | '&lt;&lt;&lt;' | '&lt;&lt;' ) <a href="#AddExpr" title="AddExpr">AddExpr</a> )*</div></code></div>
          </p>
       
       <p>referenced by:
@@ -377,7 +503,7 @@
             
             <li><a href="#NotExpr" title="NotExpr">NotExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="SimpleExpr">SimpleExpr:</a></p><img border="0" src="diagram/SimpleExpr.png" height="565" width="239" usemap="#SimpleExpr.map"><map name="SimpleExpr.map"><area shape="rect" coords="49,1,109,33" href="#Literal" title="Literal"><area shape="rect" coords="95,45,143,77" href="#Expr" title="Expr"><area shape="rect" coords="49,89,97,121" href="#Path" title="Path"><area shape="rect" coords="49,133,113,165" href="#Record" title="Record"><area shape="rect" coords="49,177,105,209" href="#Match" title="Match"><area shape="rect" coords="49,221,103,253" href="#Patch" title="Patch"><area shape="rect" coords="49,265,107,297" href="#Merge" title="Merge"><area shape="rect" coords="49,309,107,341" href="#FnCall" title="FnCall"><area shape="rect" coords="49,353,89,385" href="#For" title="For"><area shape="rect" coords="49,397,89,429" href="#Let" title="Let"><area shape="rect" coords="49,441,105,473" href="#Const" title="Const"><area shape="rect" coords="49,529,97,561" href="#Emit" title="Emit"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="SimpleExpr">SimpleExpr:</a></p><img border="0" src="diagram/SimpleExpr.png" height="653" width="239" usemap="#SimpleExpr.map"><map name="SimpleExpr.map"><area shape="rect" coords="49,1,109,33" href="#Literal" title="Literal"><area shape="rect" coords="95,45,143,77" href="#Expr" title="Expr"><area shape="rect" coords="49,89,97,121" href="#Path" title="Path"><area shape="rect" coords="49,133,113,165" href="#Record" title="Record"><area shape="rect" coords="49,177,105,209" href="#Match" title="Match"><area shape="rect" coords="49,221,103,253" href="#Patch" title="Patch"><area shape="rect" coords="49,265,107,297" href="#Merge" title="Merge"><area shape="rect" coords="49,309,107,341" href="#FnCall" title="FnCall"><area shape="rect" coords="49,353,89,385" href="#For" title="For"><area shape="rect" coords="49,397,89,429" href="#Let" title="Let"><area shape="rect" coords="49,441,105,473" href="#Const" title="Const"><area shape="rect" coords="49,485,111,517" href="#FnDecl" title="FnDecl"><area shape="rect" coords="49,529,143,561" href="#ModuleExpr" title="ModuleExpr"><area shape="rect" coords="49,617,97,649" href="#Emit" title="Emit"></map><p>
          
          <div class="ebnf"><code>
                
@@ -404,6 +530,10 @@
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Let" title="Let">Let</a></div>
                
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Const" title="Const">Const</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#FnDecl" title="FnDecl">FnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#ModuleExpr" title="ModuleExpr">ModuleExpr</a></div>
                
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 'drop'</div>
                
@@ -499,11 +629,11 @@
             
             <li><a href="#Literal" title="Literal">Literal</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Let">Let:</a></p><img border="0" src="diagram/Let.png" height="37" width="325" usemap="#Let.map"><map name="Let.map"><area shape="rect" coords="87,1,135,33" href="#Path" title="Path"><area shape="rect" coords="205,1,295,33" href="#SimpleExpr" title="SimpleExpr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Let">Let:</a></p><img border="0" src="diagram/Let.png" height="69" width="489" usemap="#Let.map"><map name="Let.map"><area shape="rect" coords="49,33,153,65" href="#DocComment" title="DocComment"><area shape="rect" coords="251,1,299,33" href="#Path" title="Path"><area shape="rect" coords="369,1,459,33" href="#SimpleExpr" title="SimpleExpr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Let" title="Let">Let</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'let' <a href="#Path" title="Path">Path</a> '=' <a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></div></code></div>
+               <div><a href="#Let" title="Let">Let</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a>? 'let' <a href="#Path" title="Path">Path</a> '=' <a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -512,18 +642,176 @@
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Const">Const:</a></p><img border="0" src="diagram/Const.png" height="37" width="343" usemap="#Const.map"><map name="Const.map"><area shape="rect" coords="105,1,153,33" href="#Path" title="Path"><area shape="rect" coords="223,1,313,33" href="#SimpleExpr" title="SimpleExpr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Const">Const:</a></p><img border="0" src="diagram/Const.png" height="69" width="507" usemap="#Const.map"><map name="Const.map"><area shape="rect" coords="49,33,153,65" href="#DocComment" title="DocComment"><area shape="rect" coords="269,1,317,33" href="#Path" title="Path"><area shape="rect" coords="387,1,477,33" href="#SimpleExpr" title="SimpleExpr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Const" title="Const">Const</a>&nbsp;&nbsp;&nbsp;&nbsp;::= 'const' <a href="#Path" title="Path">Path</a> '=' <a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></div></code></div>
+               <div><a href="#Const" title="Const">Const</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a>? 'const' <a href="#Path" title="Path">Path</a> '=' <a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></div></code></div>
          </p>
       
       <p>referenced by:
          
          <ul>
             
+            <li><a href="#ModuleExpr" title="ModuleExpr">ModuleExpr</a></li>
+            
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Module">Module:</a></p><img border="0" src="diagram/Module.png" height="85" width="655" usemap="#Module.map"><map name="Module.map"><area shape="rect" coords="97,17,129,49" href="#Id" title="Id"><area shape="rect" coords="239,49,343,81" href="#DocComment" title="DocComment"><area shape="rect" coords="403,17,497,49" href="#ModuleExpr" title="ModuleExpr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Module" title="Module">Module</a>&nbsp;&nbsp;&nbsp;::= 'mod' <a href="#Id" title="Id">Id</a> 'with' <a href="#DocComment" title="DocComment">DocComment</a>? ( <a href="#ModuleExpr" title="ModuleExpr">ModuleExpr</a> ';' )+ 'end'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleExpr" title="ModuleExpr">ModuleExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="ModuleExpr">ModuleExpr:</a></p><img border="0" src="diagram/ModuleExpr.png" height="125" width="163" usemap="#ModuleExpr.map"><map name="ModuleExpr.map"><area shape="rect" coords="49,1,105,33" href="#Const" title="Const"><area shape="rect" coords="49,45,111,77" href="#FnDecl" title="FnDecl"><area shape="rect" coords="49,89,113,121" href="#Module" title="Module"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#ModuleExpr" title="ModuleExpr">ModuleExpr</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Const" title="Const">Const</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#FnDecl" title="FnDecl">FnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Module" title="Module">Module</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Module" title="Module">Module</a></li>
+            
+            <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FnDecl">FnDecl:</a></p><img border="0" src="diagram/FnDecl.png" height="125" width="217" usemap="#FnDecl.map"><map name="FnDecl.map"><area shape="rect" coords="49,1,161,33" href="#IntrinsicFnDecl" title="IntrinsicFnDecl"><area shape="rect" coords="49,45,153,77" href="#SimpleFnDecl" title="SimpleFnDecl"><area shape="rect" coords="49,89,167,121" href="#MatchingFnDecl" title="MatchingFnDecl"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#FnDecl" title="FnDecl">FnDecl</a>&nbsp;&nbsp;&nbsp;::= <a href="#IntrinsicFnDecl" title="IntrinsicFnDecl">IntrinsicFnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleExpr" title="ModuleExpr">ModuleExpr</a></li>
+            
+            <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="IntrinsicFnDecl">IntrinsicFnDecl:</a></p><img border="0" src="diagram/IntrinsicFnDecl.png" height="211" width="931" usemap="#IntrinsicFnDecl.map"><map name="IntrinsicFnDecl.map"><area shape="rect" coords="49,33,153,65" href="#DocComment" title="DocComment"><area shape="rect" coords="341,1,373,33" href="#Id" title="Id"><area shape="rect" coords="459,77,549,109" href="#FnDeclArgs" title="FnDeclArgs"><area shape="rect" coords="825,1,857,33" href="#Id" title="Id"><area shape="rect" coords="869,175,901,207" href="#Id" title="Id"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#IntrinsicFnDecl" title="IntrinsicFnDecl">IntrinsicFnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a>? 'intrinsic' 'fn' <a href="#Id" title="Id">Id</a> '(' ( '...' | <a href="#FnDeclArgs" title="FnDeclArgs">FnDeclArgs</a> ( ',' '...' )? )? ')' 'as' <a href="#Id" title="Id">Id</a> '::' <a href="#Id" title="Id">Id</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#FnDecl" title="FnDecl">FnDecl</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="SimpleFnDecl">SimpleFnDecl:</a></p><img border="0" src="diagram/SimpleFnDecl.png" height="145" width="933" usemap="#SimpleFnDecl.map"><map name="SimpleFnDecl.map"><area shape="rect" coords="49,33,153,65" href="#DocComment" title="DocComment"><area shape="rect" coords="247,1,279,33" href="#Id" title="Id"><area shape="rect" coords="365,77,455,109" href="#FnDeclArgs" title="FnDeclArgs"><area shape="rect" coords="747,1,839,33" href="#FnDeclBody" title="FnDeclBody"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a>? 'fn' <a href="#Id" title="Id">Id</a> '(' ( '...' | <a href="#FnDeclArgs" title="FnDeclArgs">FnDeclArgs</a> ( ',' '...' )? )? ')' 'with' <a href="#FnDeclBody" title="FnDeclBody">FnDeclBody</a> 'end'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#FnDecl" title="FnDecl">FnDecl</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="MatchingFnDecl">MatchingFnDecl:</a></p><img border="0" src="diagram/MatchingFnDecl.png" height="113" width="865" usemap="#MatchingFnDecl.map"><map name="MatchingFnDecl.map"><area shape="rect" coords="49,77,153,109" href="#DocComment" title="DocComment"><area shape="rect" coords="247,45,279,77" href="#Id" title="Id"><area shape="rect" coords="365,77,455,109" href="#FnDeclArgs" title="FnDeclArgs"><area shape="rect" coords="613,45,751,77" href="#FnDeclCaseDefault" title="FnDeclCaseDefault"><area shape="rect" coords="613,1,723,33" href="#FnCaseClause" title="FnCaseClause"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a>? 'fn' <a href="#Id" title="Id">Id</a> '(' <a href="#FnDeclArgs" title="FnDeclArgs">FnDeclArgs</a>? ')' 'of' <a href="#FnDeclCaseDefault" title="FnDeclCaseDefault">FnDeclCaseDefault</a> ( <a href="#FnCaseClause" title="FnCaseClause">FnCaseClause</a> <a href="#FnDeclCaseDefault" title="FnDeclCaseDefault">FnDeclCaseDefault</a> )* 'end'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#FnDecl" title="FnDecl">FnDecl</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FnDeclArgs">FnDeclArgs:</a></p><img border="0" src="diagram/FnDeclArgs.png" height="81" width="131" usemap="#FnDeclArgs.map"><map name="FnDeclArgs.map"><area shape="rect" coords="49,45,81,77" href="#Id" title="Id"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#FnDeclArgs" title="FnDeclArgs">FnDeclArgs</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Id" title="Id">Id</a> ( ',' <a href="#Id" title="Id">Id</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#IntrinsicFnDecl" title="IntrinsicFnDecl">IntrinsicFnDecl</a></li>
+            
+            <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
+            
+            <li><a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FnDeclBody">FnDeclBody:</a></p><img border="0" src="diagram/FnDeclBody.png" height="37" width="113" usemap="#FnDeclBody.map"><map name="FnDeclBody.map"><area shape="rect" coords="29,1,83,33" href="#Exprs" title="Exprs"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#FnDeclBody" title="FnDeclBody">FnDeclBody</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Exprs" title="Exprs">Exprs</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FnDeclCaseClause">FnDeclCaseClause:</a></p><img border="0" src="diagram/FnDeclCaseClause.png" height="37" width="495" usemap="#FnDeclCaseClause.map"><map name="FnDeclCaseClause.map"><area shape="rect" coords="145,1,245,33" href="#ArrayPattern" title="ArrayPattern"><area shape="rect" coords="311,1,369,33" href="#Guard" title="Guard"><area shape="rect" coords="389,1,465,33" href="#Effectors" title="Effectors"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#FnDeclCaseClause" title="FnDeclCaseClause">FnDeclCaseClause</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'case' '(' <a href="#ArrayPattern" title="ArrayPattern">ArrayPattern</a> ')' <a href="#Guard" title="Guard">Guard</a> <a href="#Effectors" title="Effectors">Effectors</a></div></code></div>
+         </p>
+      
+      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="FnDeclCaseDefault">FnDeclCaseDefault:</a></p><img border="0" src="diagram/FnDeclCaseDefault.png" height="37" width="223" usemap="#FnDeclCaseDefault.map"><map name="FnDeclCaseDefault.map"><area shape="rect" coords="117,1,193,33" href="#Effectors" title="Effectors"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#FnDeclCaseDefault" title="FnDeclCaseDefault">FnDeclCaseDefault</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'default' <a href="#Effectors" title="Effectors">Effectors</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="Emit">Emit:</a></p><img border="0" src="diagram/Emit.png" height="69" width="421" usemap="#Emit.map"><map name="Emit.map"><area shape="rect" coords="99,1,147,33" href="#Expr" title="Expr"><area shape="rect" coords="247,33,371,65" href="#STRING_LITERAL" title="STRING_LITERAL"></map><p>
          
@@ -551,13 +839,13 @@
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="MatchCaseClause">MatchCaseClause:</a></p><img border="0" src="diagram/MatchCaseClause.png" height="125" width="479" usemap="#MatchCaseClause.map"><map name="MatchCaseClause.map"><area shape="rect" coords="119,1,215,33" href="#RecordCase" title="RecordCase"><area shape="rect" coords="119,45,205,77" href="#ArrayCase" title="ArrayCase"><area shape="rect" coords="119,89,199,121" href="#ExprCase" title="ExprCase"><area shape="rect" coords="275,33,333,65" href="#Guard" title="Guard"><area shape="rect" coords="373,1,449,33" href="#Effectors" title="Effectors"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="MatchCaseClause">MatchCaseClause:</a></p><img border="0" src="diagram/MatchCaseClause.png" height="169" width="479" usemap="#MatchCaseClause.map"><map name="MatchCaseClause.map"><area shape="rect" coords="119,1,215,33" href="#RecordCase" title="RecordCase"><area shape="rect" coords="119,45,205,77" href="#ArrayCase" title="ArrayCase"><area shape="rect" coords="119,89,205,121" href="#TupleCase" title="TupleCase"><area shape="rect" coords="119,133,199,165" href="#ExprCase" title="ExprCase"><area shape="rect" coords="275,33,333,65" href="#Guard" title="Guard"><area shape="rect" coords="373,1,449,33" href="#Effectors" title="Effectors"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#MatchCaseClause" title="MatchCaseClause">MatchCaseClause</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'case' ( <a href="#RecordCase" title="RecordCase">RecordCase</a> | <a href="#ArrayCase" title="ArrayCase">ArrayCase</a> | <a href="#ExprCase" title="ExprCase">ExprCase</a> ) <a href="#Guard" title="Guard">Guard</a>? <a href="#Effectors" title="Effectors">Effectors</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'case' ( <a href="#RecordCase" title="RecordCase">RecordCase</a> | <a href="#ArrayCase" title="ArrayCase">ArrayCase</a> | <a href="#TupleCase" title="TupleCase">TupleCase</a> | <a href="#ExprCase" title="ExprCase">ExprCase</a> ) <a href="#Guard" title="Guard">Guard</a>? <a href="#Effectors" title="Effectors">Effectors</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -660,6 +948,8 @@
             
             <li><a href="#ArrayCase" title="ArrayCase">ArrayCase</a></li>
             
+            <li><a href="#FnDeclCaseClause" title="FnDeclCaseClause">FnDeclCaseClause</a></li>
+            
             <li><a href="#RecordPatternFields" title="RecordPatternFields">RecordPatternFields</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="ArrayPatternFilter">ArrayPatternFilter:</a></p><img border="0" src="diagram/ArrayPatternFilter.png" height="125" width="223" usemap="#ArrayPatternFilter.map"><map name="ArrayPatternFilter.map"><area shape="rect" coords="99,1,173,33" href="#TestExpr" title="TestExpr"><area shape="rect" coords="49,45,97,77" href="#Expr" title="Expr"><area shape="rect" coords="49,89,159,121" href="#RecordPattern" title="RecordPattern"></map><p>
@@ -680,6 +970,70 @@
          <ul>
             
             <li><a href="#ArrayPattern" title="ArrayPattern">ArrayPattern</a></li>
+            
+            <li><a href="#TuplePatternFilter" title="TuplePatternFilter">TuplePatternFilter</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="TupleCase">TupleCase:</a></p><img border="0" src="diagram/TupleCase.png" height="69" width="301" usemap="#TupleCase.map"><map name="TupleCase.map"><area shape="rect" coords="49,33,81,65" href="#Id" title="Id"><area shape="rect" coords="171,1,271,33" href="#TuplePattern" title="TuplePattern"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#TupleCase" title="TupleCase">TupleCase</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( <a href="#Id" title="Id">Id</a> '=' )? <a href="#TuplePattern" title="TuplePattern">TuplePattern</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#MatchCaseClause" title="MatchCaseClause">MatchCaseClause</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="TuplePattern">TuplePattern:</a></p><img border="0" src="diagram/TuplePattern.png" height="157" width="487" usemap="#TuplePattern.map"><map name="TuplePattern.map"><area shape="rect" coords="131,121,263,153" href="#TuplePatternFilter" title="TuplePatternFilter"><area shape="rect" coords="303,121,391,153" href="#OpenTuple" title="OpenTuple"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#TuplePattern" title="TuplePattern">TuplePattern</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '%(' ( '...' | <a href="#TuplePatternFilter" title="TuplePatternFilter">TuplePatternFilter</a> ( ',' <a href="#TuplePatternFilter" title="TuplePatternFilter">TuplePatternFilter</a> )* <a href="#OpenTuple" title="OpenTuple">OpenTuple</a> )? ')'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#TupleCase" title="TupleCase">TupleCase</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="OpenTuple">OpenTuple:</a></p><img border="0" src="diagram/OpenTuple.png" height="57" width="175"><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#OpenTuple" title="OpenTuple">OpenTuple</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( ',' '...' )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#TuplePattern" title="TuplePattern">TuplePattern</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="TuplePatternFilter">TuplePatternFilter:</a></p><img border="0" src="diagram/TuplePatternFilter.png" height="81" width="231" usemap="#TuplePatternFilter.map"><map name="TuplePatternFilter.map"><area shape="rect" coords="49,1,181,33" href="#ArrayPatternFilter" title="ArrayPatternFilter"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#TuplePatternFilter" title="TuplePatternFilter">TuplePatternFilter</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#ArrayPatternFilter" title="ArrayPatternFilter">ArrayPatternFilter</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| '_'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#TuplePattern" title="TuplePattern">TuplePattern</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="ExprCase">ExprCase:</a></p><img border="0" src="diagram/ExprCase.png" height="69" width="249" usemap="#ExprCase.map"><map name="ExprCase.map"><area shape="rect" coords="49,33,81,65" href="#Id" title="Id"><area shape="rect" coords="171,1,219,33" href="#Expr" title="Expr"></map><p>
          
@@ -705,22 +1059,43 @@
          
          <ul>
             
+            <li><a href="#FnDeclCaseClause" title="FnDeclCaseClause">FnDeclCaseClause</a></li>
+            
             <li><a href="#MatchCaseClause" title="MatchCaseClause">MatchCaseClause</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Effectors">Effectors:</a></p><img border="0" src="diagram/Effectors.png" height="85" width="331" usemap="#Effectors.map"><map name="Effectors.map"><area shape="rect" coords="193,33,241,65" href="#Expr" title="Expr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Effectors">Effectors:</a></p><img border="0" src="diagram/Effectors.png" height="37" width="171" usemap="#Effectors.map"><map name="Effectors.map"><area shape="rect" coords="89,1,141,33" href="#Block" title="Block"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#Effectors" title="Effectors">Effectors</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '=&gt;' ( ',' <a href="#Expr" title="Expr">Expr</a> )?*</div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '=&gt;' <a href="#Block" title="Block">Block</a></div></code></div>
          </p>
       
       <p>referenced by:
          
          <ul>
             
+            <li><a href="#FnDeclCaseClause" title="FnDeclCaseClause">FnDeclCaseClause</a></li>
+            
+            <li><a href="#FnDeclCaseDefault" title="FnDeclCaseDefault">FnDeclCaseDefault</a></li>
+            
             <li><a href="#MatchCaseClause" title="MatchCaseClause">MatchCaseClause</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Block">Block:</a></p><img border="0" src="diagram/Block.png" height="69" width="263" usemap="#Block.map"><map name="Block.map"><area shape="rect" coords="29,1,81,33" href="#Block" title="Block"><area shape="rect" coords="165,33,213,65" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Block" title="Block">Block</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Block" title="Block">Block</a> ( ',' <a href="#Expr" title="Expr">Expr</a> )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Block" title="Block">Block</a></li>
+            
+            <li><a href="#Effectors" title="Effectors">Effectors</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="Patch">Patch:</a></p><img border="0" src="diagram/Patch.png" height="81" width="477" usemap="#Patch.map"><map name="Patch.map"><area shape="rect" coords="105,45,153,77" href="#Expr" title="Expr"><area shape="rect" coords="245,45,363,77" href="#PatchOperation" title="PatchOperation"></map><p>
          
@@ -793,11 +1168,11 @@
             
             <li><a href="#For" title="For">For</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FnCall">FnCall:</a></p><img border="0" src="diagram/FnCall.png" height="125" width="433" usemap="#FnCall.map"><map name="FnCall.map"><area shape="rect" coords="29,45,61,77" href="#Id" title="Id"><area shape="rect" coords="151,45,183,77" href="#Id" title="Id"><area shape="rect" coords="269,45,317,77" href="#Expr" title="Expr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FnCall">FnCall:</a></p><img border="0" src="diagram/FnCall.png" height="147" width="513" usemap="#FnCall.map"><map name="FnCall.map"><area shape="rect" coords="29,45,61,77" href="#Id" title="Id"><area shape="rect" coords="191,45,223,77" href="#Id" title="Id"><area shape="rect" coords="349,45,397,77" href="#Expr" title="Expr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#FnCall" title="FnCall">FnCall</a>&nbsp;&nbsp;&nbsp;::= <a href="#Id" title="Id">Id</a> '::' ( <a href="#Id" title="Id">Id</a> '(' <a href="#Expr" title="Expr">Expr</a> ( ',' <a href="#Expr" title="Expr">Expr</a> )* | '(' ) ')'</div></code></div>
+               <div><a href="#FnCall" title="FnCall">FnCall</a>&nbsp;&nbsp;&nbsp;::= <a href="#Id" title="Id">Id</a> ( ( '::' <a href="#Id" title="Id">Id</a> )* '(' <a href="#Expr" title="Expr">Expr</a> ( ',' <a href="#Expr" title="Expr">Expr</a> )* | '::' '(' ) ')'</div></code></div>
          </p>
       
       <p>referenced by:
@@ -957,7 +1332,15 @@
             
             <li><a href="#FnCall" title="FnCall">FnCall</a></li>
             
+            <li><a href="#FnDeclArgs" title="FnDeclArgs">FnDeclArgs</a></li>
+            
             <li><a href="#ForCaseClause" title="ForCaseClause">ForCaseClause</a></li>
+            
+            <li><a href="#IntrinsicFnDecl" title="IntrinsicFnDecl">IntrinsicFnDecl</a></li>
+            
+            <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
+            
+            <li><a href="#Module" title="Module">Module</a></li>
             
             <li><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></li>
             
@@ -969,7 +1352,11 @@
             
             <li><a href="#RecordPatternFields" title="RecordPatternFields">RecordPatternFields</a></li>
             
+            <li><a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></li>
+            
             <li><a href="#TestExpr" title="TestExpr">TestExpr</a></li>
+            
+            <li><a href="#TupleCase" title="TupleCase">TupleCase</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="INTEGER">INTEGER:</a></p><img border="0" src="diagram/INTEGER.png" height="53" width="161"><p>
          
@@ -1021,7 +1408,7 @@
       
       <p>
          
-         <table class="signature" border="0">
+         <table border="0" class="signature">
             
             <tr>
                
@@ -1029,10 +1416,10 @@
                
                <td valign="top">
                   
-                  <nobr class="signature">... generated by <a name="Railroad-Diagram-Generator" class="signature" title="https://bottlecaps.de/rr/ui" href="https://bottlecaps.de/rr/ui" target="_blank">Railroad Diagram Generator</a></nobr>
+                  <nobr class="signature">... generated by <a name="Railroad-Diagram-Generator" class="signature" title="https://www.bottlecaps.de/rr/ui" href="https://www.bottlecaps.de/rr/ui" target="_blank">RR - Railroad Diagram Generator</a></nobr>
                   </td>
                
-               <td><a name="Railroad-Diagram-Generator" title="https://bottlecaps.de/rr/ui" href="https://bottlecaps.de/rr/ui" target="_blank"><img border="0" src="diagram/rr-1.60.png" height="16" width="16"></a></td>
+               <td><a name="Railroad-Diagram-Generator" title="https://www.bottlecaps.de/rr/ui" href="https://www.bottlecaps.de/rr/ui" target="_blank"><img border="0" src="diagram/rr-1.62.png" height="16" width="16"></a></td>
                </tr>
             </table>
          </p>

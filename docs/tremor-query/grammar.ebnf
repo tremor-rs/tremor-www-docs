@@ -1,5 +1,18 @@
 /*
- * Tremor Query language
+ * Literal documentation support
+ */
+
+ModComment ::= DocComment
+
+DocComment ::=
+    DocComment DocCommentLine |
+    DocCommentLine
+
+DocCommentLine ::=
+    '##' ( [^\n] )* '\n'
+
+/*
+ * Tremor Query language v0.8
  */
 Query ::= ( Stmts | Stmt )
 
@@ -7,13 +20,28 @@ Stmts ::=
     Stmt ';' Stmts
     | Stmt ';'
 
-Stmt ::= DefineWindowDefn
+Stmt ::= 
+    ModuleStmt
+    | DefineWindowDefn
     | CreateStreamDefn
     | DefineOperatorDefn
     | CreateOperatorDefn
     | DefineScriptDefn
     | CreateScriptDefn
     | SelectStmt
+
+ModuleStmt ::=
+    'mod' Id 'with' ModComment? ModuleStmts 'end'
+
+ModuleStmts ::=
+    ModuleStmtInner ';' ModuleStmts |
+    ModuleStmtInner ';'
+
+ModuleStmtInner ::=
+    ModuleStmt
+    | DefineWindowDefn
+    | DefineOperatorDefn
+    | DefineScriptDefn
 
 CreateStreamDefn ::= 'create' 'stream' Id
 
@@ -38,24 +66,32 @@ DefineOperatorDefn ::= 'define' Id '::' Id 'operator' Id
 
 CreateOperatorDefn ::= 'create' 'operator' Id
     | 'create' 'operator' Id WithParams
-    | 'create' 'operator' Id as Id
-    | 'create' 'operator' Id as Id WithParams
+    | 'create' 'operator' Id 'from' ModularId
+    | 'create' 'operator' Id 'from' ModularId WithParams
 
 DefineScriptDefn ::= 'define' 'script' Id EmbeddedScript
     | 'define' 'script' Id WithPartialParams EmbeddedScript
 
 CreateScriptDefn ::= 'create' 'script' Id
     | 'create' 'script' Id WithPartialParams
-    | 'create' 'script' Id 'as' Id
-    | 'create' 'script' Id 'as' Id WithPartialParams 
+    | 'create' 'script' Id 'from' ModularId
+    | 'create' 'script' Id 'from' ModularId WithPartialParams 
 
 EmbeddedScript ::= 'script' Script 'end'
 
 SelectStmt ::= 'select' Expr FromClause WhereClause GroupByClause IntoClause HavingClause
 
+ModularId ::=
+    ModularId '::' Id |
+    Id
+
 FromClause ::= 'from' Id
-    | 'from' Id '[' Id ']'
+    | 'from' Id '[' TiltFrames']'
     |
+
+TiltFrames ::=
+    ModularId ',' ModularId |
+    ModularId
 
 WhereClause ::= 'where' Expr |
 
@@ -79,24 +115,37 @@ IntoClause ::= 'into' Id |
 HavingClause ::= 'having' Expr |
 
 /**
-  * Tremor-script v0.5 grammar
+  * Tremor Script Language v0.8
   */
 
-Script ::= ( Exprs | Expr )
+Script ::=
+    ModComment? ( Exprs | Expr ) |
+    ( Exprs | Expr )
+
 
 Exprs ::=
     Expr  ';' Exprs
     | Expr ';'
 
-Expr ::= Expr 'or' AndExpr | AndExpr
+Expr ::= Expr 'or' XorExpr | XorExpr
 
-AndExpr ::= EqExpr 'and' EqExpr | BinExpr
+XorExpr ::= XorExpr 'xor' AndExpr  | AndExpr
+
+AndExpr ::= AndExpr 'and' BitOrExpr | BitOrExpr
+
+BitOrExpr ::= BitOrExpr '|' BitXorExpr  | BitXorExpr
+
+BitXorExpr ::= BitXorExpr '^' BitAndExpr  | BitAndExpr
+
+BitAndExpr ::= BitAndExpr '&' BinExpr | BinExpr
 
 BinExpr ::= EqExpr ( '&&' | '||' ) EqExpr | EqExpr
 
 EqExpr ::= CmpExpr ( '==' | '!=' ) CmpExpr | CmpExpr
 
-CmpExpr ::= AddExpr ( '>=' | '>' | '<=' | '<' ) AddExpr | AddExpr
+CmpExpr ::= AddExpr ( '>=' | '>' | '<=' | '<' ) BitShiftExpr | BitShiftExpr
+
+BitShiftExpr ::= BitShiftExpr ( '>>' | '<<<' | '<<' ) AddExpr | AddExpr
 
 AddExpr ::= MulExpr ( '+' | '-' ) MulExpr | MulExpr
 
@@ -108,7 +157,9 @@ NotExpr ::= 'not' PresenceExpr
 
 PresenceExpr ::= ( 'present' | 'absent' ) SimpleExpr
 
-SimpleExpr ::= Literal | '(' Expr ')' | Path | Record | Match | Patch | Merge | FnCall | For | Let | Const | Drop | Emit
+SimpleExpr ::= Literal | '(' Expr ')' | Path | Record | Match | Patch | 
+    Merge | FnCall | For | Let | Const | FnDecl |
+    ModuleExpr | Drop | Emit
 
 Literal ::=
     'null' | Bool | INTEGER | FLOAT | String | Array
@@ -126,9 +177,58 @@ ArrayElements ::= Expr ',' ArrayElements | Expr
 Bool ::=
     'true' | 'false'
 
-Let ::= 'let' Path '=' SimpleExpr
+Let ::=
+    'let' Path '=' SimpleExpr |
+    DocComment 'let' Path '=' SimpleExpr
 
-Const ::= 'const' Path '=' SimpleExpr
+Const ::=
+    'const' Path '=' SimpleExpr |
+    DocComment 'const' Path '=' SimpleExpr
+
+Module ::=
+    'mod' Id 'with' DocComment? ModuleExprs 'end'
+
+ModuleExprs ::=
+    ModuleExpr ';' ModuleExprs |
+    ModuleExpr ';'
+
+ModuleExpr ::=
+    Const | FnDecl | Module
+
+FnDecl ::= IntrinsicFnDecl | SimpleFnDecl | MatchingFnDecl
+
+IntrinsicFnDecl ::=
+    DocComment? 'intrinsic' 'fn' Id '(' ')' 'as' Id '::' Id |
+    DocComment? 'intrinsic' 'fn' Id '(' FnDeclArgs ')' 'as' Id '::' Id |
+    DocComment? 'intrinsic' 'fn' Id '(' FnDeclArgs ',' '...' ')' 'as' Id '::' Id |
+    DocComment? 'intrinsic' 'fn' Id '(' '...' ')' 'as' Id '::' Id
+
+SimpleFnDecl ::=
+    DocComment? 'fn' Id '(' ')' 'with' FnDeclBody 'end' |
+    DocComment? 'fn' Id '(' '...' ')' 'with' FnDeclBody 'end' |
+    DocComment? 'fn' Id '(' FnDeclArgs ')' 'with' FnDeclBody 'end' |
+    DocComment? 'fn' Id '(' FnDeclArgs ',' '...' ')' 'with' FnDeclBody 'end'
+
+MatchingFnDecl ::=
+    DocComment? 'fn' Id '(' ')' 'of' FnDeclCases 'end' |
+    DocComment? 'fn' Id '(' FnDeclArgs ')' 'of' FnDeclCases 'end' |
+    DocComment? 'fn' Id '(' ')' 'of' FnDeclCases 'end'
+
+FnDeclArgs ::=
+    Id |
+    FnDeclArgs ',' Id
+
+FnDeclBody ::= Exprs
+
+FnDeclCaseClause ::=
+    'case' '(' ArrayPattern ')' Guard Effectors
+
+FnDeclCaseDefault ::=
+    'default' Effectors
+
+FnDeclCases ::=
+    FnDeclCases FnCaseClause FnDeclCaseDefault |
+    FnDeclCaseDefault
 
 Emit ::= 'emit' Expr ( '=>' STRING_LITERAL )?
 
@@ -136,7 +236,7 @@ Drop ::= 'drop'
 
 Match ::= 'match' Expr 'of' MatchCaseClauses 'end'
 MatchCaseClauses ::= MatchCaseClause ',' MatchCaseClauses | MatchCaseClause
-MatchCaseClause ::= 'case' ( RecordCase | ArrayCase | ExprCase ) Guard? Effectors
+MatchCaseClause ::= 'case' ( RecordCase | ArrayCase | TupleCase | ExprCase ) Guard? Effectors
 
 RecordCase ::= ( Id '=' )? RecordPattern
 RecordPattern ::= '%{' RecordPatternFields '}'
@@ -148,6 +248,15 @@ ArrayCase ::= ( Id '=' )? ArrayPattern
 ArrayPattern ::= '%[' ArrayPatternFilters ']'
 ArrayPatternFilters ::= ArrayPatternFilters ',' ArrayPatternFilter | ArrayPatternFilter
 ArrayPatternFilter ::= '~' TestExpr | Expr | RecordPattern
+
+TupleCase ::=  ( Id '=' )? TuplePattern
+TuplePattern ::=
+    '%(' ')' |
+    '%(' '...' ')' |
+    '%(' TuplePatternFilters OpenTuple ')'
+OpenTuple ::= ( ',' '...' )?
+TuplePatternFilters ::= TuplePatternFilters ',' TuplePatternFilter | TuplePatternFilter
+TuplePatternFilter ::= ArrayPatternFilter | '_'
 
 ExprCase ::= ( Id '=' )? Expr
 
@@ -164,16 +273,18 @@ PatchOperation ::= ( 'insert' | 'upsert' | 'update' | 'merge' ) Expr '=>' Expr |
 Merge ::= 'merge' Expr 'of' Expr 'end'
 
 For ::= 'for' Expr 'of' ForCaseClause 'end'
-ForCaseClause ::= 'case' '(' Id ',' Id ')' Expr | 'case' '(' Id ',' Id ')' 'when' Expr '=>' Expr
 
-FnCall ::= Id '::' Id '(' FnArgs ')' | Id '::' '(' ')'
+ForCaseClause ::=
+    'case' '(' Id ',' Id ')' Expr |
+    'case' '(' Id ',' Id ')' 'when' Expr '=>' Expr
+
+FnCall ::= ( Id '::' )* Id '(' FnArgs ')' | Id '::' '(' ')'
 FnArgs ::= FnArgs ',' Expr | Expr
 
 Path ::= '$' QualifiedSegments | '$'
     | 'event' '.' QualifiedSegments | 'event' '[' ArraySegment ']' | 'event'
     | 'state' '.' QualifiedSegments | 'state' '[' ArraySegment ']' | 'state'
-    | 'group' '[' ArraySegment ']' | 'group'
-    | 'args' '.' QualifiedSegments  | 'args' '[' ArraySegment ']'  | 'args'
+    | 'args' '.' QualifiedSegments  | 'args' '[' ArraySegment ']' | 'args'
     | Id LocalSegments
 
 QualifiedSegments ::= QualifiedSegments '.' PathSegment

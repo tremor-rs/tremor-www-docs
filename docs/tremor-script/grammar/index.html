@@ -198,13 +198,13 @@
    
    <body>
       
-      <p style="font-size: 14px; font-weight:bold"><a name="ModComment">ModComment:</a></p><img border="0" src="diagram/ModComment.png" height="37" width="163" usemap="#ModComment.map"><map name="ModComment.map"><area shape="rect" coords="29,1,133,33" href="#DocComment" title="DocComment"></map><p>
+      <p style="font-size: 14px; font-weight:bold"><a name="ModCommentLine">ModCommentLine:</a></p><img border="0" src="diagram/ModCommentLine.png" height="69" width="329"><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#ModComment" title="ModComment">ModComment</a></div>
+               <div><a href="#ModCommentLine" title="ModCommentLine">ModCommentLine</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '###' [^\n]* '\n'</div></code></div>
          </p>
       
       <p>referenced by:
@@ -234,8 +234,6 @@
             
             <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
             
-            <li><a href="#ModComment" title="ModComment">ModComment</a></li>
-            
             <li><a href="#Module" title="Module">Module</a></li>
             
             <li><a href="#SimpleFnDecl" title="SimpleFnDecl">SimpleFnDecl</a></li>
@@ -255,11 +253,11 @@
             
             <li><a href="#DocComment" title="DocComment">DocComment</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Script">Script:</a></p><img border="0" src="diagram/Script.png" height="81" width="319" usemap="#Script.map"><map name="Script.map"><area shape="rect" coords="49,33,155,65" href="#ModComment" title="ModComment"><area shape="rect" coords="215,1,269,33" href="#Exprs" title="Exprs"><area shape="rect" coords="215,45,263,77" href="#Expr" title="Expr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Script">Script:</a></p><img border="0" src="diagram/Script.png" height="115" width="347" usemap="#Script.map"><map name="Script.map"><area shape="rect" coords="49,1,183,33" href="#ModCommentLine" title="ModCommentLine"><area shape="rect" coords="243,35,297,67" href="#Exprs" title="Exprs"><area shape="rect" coords="243,79,291,111" href="#Expr" title="Expr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Script" title="Script">Script</a>&nbsp;&nbsp;&nbsp;::= <a href="#ModComment" title="ModComment">ModComment</a>? ( <a href="#Exprs" title="Exprs">Exprs</a> | <a href="#Expr" title="Expr">Expr</a> )</div></code></div>
+               <div><a href="#Script" title="Script">Script</a>&nbsp;&nbsp;&nbsp;::= <a href="#ModCommentLine" title="ModCommentLine">ModCommentLine</a>* ( <a href="#Exprs" title="Exprs">Exprs</a> | <a href="#Expr" title="Expr">Expr</a> )</div></code></div>
          </p>
       
       <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Exprs">Exprs:</a></p><img border="0" src="diagram/Exprs.png" height="53" width="191" usemap="#Exprs.map"><map name="Exprs.map"><area shape="rect" coords="49,17,97,49" href="#Expr" title="Expr"></map><p>

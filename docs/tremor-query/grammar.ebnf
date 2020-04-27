@@ -1,8 +1,13 @@
-/*
+/**
  * Literal documentation support
  */
 
-ModComment ::= DocComment
+ModComment ::=
+    ModComment ModCommentLine |
+    ModCommentLine
+
+ModCommentLine ::=
+    '###' ( [^\n] )* '\n'
 
 DocComment ::=
     DocComment DocCommentLine |

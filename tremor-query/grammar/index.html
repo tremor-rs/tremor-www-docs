@@ -198,13 +198,13 @@
    
    <body>
       
-      <p style="font-size: 14px; font-weight:bold"><a name="ModComment">ModComment:</a></p><img border="0" src="diagram/ModComment.png" height="37" width="163" usemap="#ModComment.map"><map name="ModComment.map"><area shape="rect" coords="29,1,133,33" href="#DocComment" title="DocComment"></map><p>
+      <p style="font-size: 14px; font-weight:bold"><a name="ModComment">ModComment:</a></p><img border="0" src="diagram/ModComment.png" height="53" width="233" usemap="#ModComment.map"><map name="ModComment.map"><area shape="rect" coords="49,17,183,49" href="#ModCommentLine" title="ModCommentLine"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#ModComment" title="ModComment">ModComment</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#DocComment" title="DocComment">DocComment</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#ModCommentLine" title="ModCommentLine">ModCommentLine</a>+</div></code></div>
          </p>
       
       <p>referenced by:
@@ -214,6 +214,21 @@
             <li><a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></li>
             
             <li><a href="#Script" title="Script">Script</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="ModCommentLine">ModCommentLine:</a></p><img border="0" src="diagram/ModCommentLine.png" height="69" width="329"><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#ModCommentLine" title="ModCommentLine">ModCommentLine</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '###' [^\n]* '\n'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModComment" title="ModComment">ModComment</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="DocComment">DocComment:</a></p><img border="0" src="diagram/DocComment.png" height="53" width="229" usemap="#DocComment.map"><map name="DocComment.map"><area shape="rect" coords="49,17,179,49" href="#DocCommentLine" title="DocCommentLine"></map><p>
          
@@ -235,8 +250,6 @@
             <li><a href="#Let" title="Let">Let</a></li>
             
             <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
-            
-            <li><a href="#ModComment" title="ModComment">ModComment</a></li>
             
             <li><a href="#Module" title="Module">Module</a></li>
             

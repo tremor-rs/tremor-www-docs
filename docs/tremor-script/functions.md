@@ -17,22 +17,79 @@ noteworthy restrictions:
 5. Functions can call other functions but they have to be a priori defined. The order of definitions is significant.
 6. Tail recursion is supported, and constrained to a maximum recursion depth. A recursion depth is imposed as tremor-script is designed to operate on infinite streams of data so indefinite blocking/recursion is not supportable by design.
 
-Lets look at the three types of functions we have.
+![function clause](grammar/diagram/FnDecl.png)
 
-## Ordinary functions
+Lets look at the types of functions we have.
 
-Ordinary functions are functions that take a given number of arguments, each with
-a name. This function can be tail- recursive. An example would be:
+## Intrinsic Functions
+
+![intrinsic fn](grammar/diagram/IntrinsicFnDecl.png)
+
+![fn args](grammar/diagram/FnDeclArgs.png)
+
+Intrinsic functions represent builtin or pre-defined functions implemented in the rust programming
+language that are a builtin component of the tremor project and are provided ab initio.
+
+The function reference in this documentation set, for example, is generated from the documentation
+provided in the standard library. The standard library is primarily composed of intrinsic or bulitin
+functions.
+
+## Simple functions
+
+![simple fn](grammar/diagram/SimpleFnDecl.png)
+
+![fn args](grammar/diagram/FnDeclArgs.png)
+
+![fn body](grammar/diagram/FnDeclBody.png)
+
+Simple functions are functions that take a given number of arguments, each with
+a name. This function can be tail-recursive. An example would be:
 
 
 ```tremor
-## This function addds two values together
+## This function adds two values together
 fn add(a, b) with
   a + b
 end
 ```
 
+### Variable arguments
+
+It is possible to use variable arguments by appending a final `...` ellipsis in a simple
+function definition. The anonymous arguments will be provided via the `args` keyword.
+
+### Recursion
+
+Tail-recursion is provided for fixed arity ( number of arguments ) simple functions.
+
+Tremor imposes a restriction in recursion depth. As tremor is an event processing system
+it is not desireable to have long running functions that block events from being processed
+through the system.
+
+```tremor
+use std::array;
+
+fn sum_(e, es) with
+  let l = array::len(es);
+  match l of    
+    case l when l > 0 => let a = es[0], recur(e + es[0], es[1:l])
+    default => e
+  end
+end;
+
+fn sum(...) with
+  sum_(0, args)
+end
+```
 ## Match functions
+
+![match fn](grammar/diagram/MatchingFnDecl.png)
+
+![fn args](grammar/diagram/FnDeclArgs.png)
+
+![fn case](grammar/diagram/FnDeclCaseClause.png)
+
+![fn default](grammar/diagram/FnDeclCaseDefault.png)
 
 Since matching and extracting are a core functionality for tremor matching on
 function arguments is directly supported.
@@ -55,26 +112,3 @@ fn fib(n) with
 end;
 ```
 
-## Var-arg functions
-
-It is possible to use var-args for functions that do not have a simple arity. 
-The variable part of the arguments is accessible via `args`. Var-arg function
-can also have a set of initial known arguments.
-
-Recursion is not possible from within var-arg functions.
-
-```tremor
-use std::array;
-
-fn sum_(e, es) with
-  let l = array::len(es);
-  match l of    
-    case l when l > 0 => let a = es[0], recur(e + es[0], es[1:l])
-    default => e
-  end
-end;
-
-fn sum(...) with
-  sum_(0, args)
-end
-```

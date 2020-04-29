@@ -25,10 +25,8 @@ Lets look at the types of functions we have.
 
 ![intrinsic fn](grammar/diagram/IntrinsicFnDecl.png)
 
-![fn args](grammar/diagram/FnDeclArgs.png)
-
 Intrinsic functions represent builtin or pre-defined functions implemented in the rust programming
-language that are a builtin component of the tremor project and are provided ab initio.
+language that are a builtin component of the tremor project and are provided out of the box.
 
 The function reference in this documentation set, for example, is generated from the documentation
 provided in the standard library. The standard library is primarily composed of intrinsic or bulitin

@@ -377,21 +377,45 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../modules/" title="Modules" class="md-nav__link">
+      Modules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pp/" title="Lexical Preprocessor" class="md-nav__link">
+      Lexical Preprocessor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4" checked>
     
-    <label class="md-nav__link" for="nav-4-2">
+    <label class="md-nav__link" for="nav-4-4">
       Function Reference
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
       </span>
     </label>
     <nav class="md-nav" aria-label="Function Reference" data-md-level="2">
-      <label class="md-nav__title" for="nav-4-2">
+      <label class="md-nav__title" for="nav-4-4">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
         </span>
@@ -441,22 +465,42 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ordinary-functions" class="md-nav__link">
-    Ordinary functions
+  <a href="#intrinsic-functions" class="md-nav__link">
+    Intrinsic Functions
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-functions" class="md-nav__link">
+    Simple functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable-arguments" class="md-nav__link">
+    Variable arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recursion" class="md-nav__link">
+    Recursion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#match-functions" class="md-nav__link">
     Match functions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#var-arg-functions" class="md-nav__link">
-    Var-arg functions
   </a>
   
 </li>
@@ -684,16 +728,16 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
     
-    <label class="md-nav__link" for="nav-4-3">
+    <label class="md-nav__link" for="nav-4-5">
       Extractor Reference
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
       </span>
     </label>
     <nav class="md-nav" aria-label="Extractor Reference" data-md-level="2">
-      <label class="md-nav__title" for="nav-4-3">
+      <label class="md-nav__title" for="nav-4-5">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
         </span>
@@ -1320,22 +1364,42 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ordinary-functions" class="md-nav__link">
-    Ordinary functions
+  <a href="#intrinsic-functions" class="md-nav__link">
+    Intrinsic Functions
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-functions" class="md-nav__link">
+    Simple functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variable-arguments" class="md-nav__link">
+    Variable arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recursion" class="md-nav__link">
+    Recursion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#match-functions" class="md-nav__link">
     Match functions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#var-arg-functions" class="md-nav__link">
-    Var-arg functions
   </a>
   
 </li>
@@ -1376,18 +1440,58 @@ noteworthy restrictions:</p>
 <li>Functions can call other functions but they have to be a priori defined. The order of definitions is significant.</li>
 <li>Tail recursion is supported, and constrained to a maximum recursion depth. A recursion depth is imposed as tremor-script is designed to operate on infinite streams of data so indefinite blocking/recursion is not supportable by design.</li>
 </ol>
-<p>Lets look at the three types of functions we have.</p>
-<h2 id="ordinary-functions">Ordinary functions<a class="headerlink" href="#ordinary-functions" title="Permanent link">&para;</a></h2>
-<p>Ordinary functions are functions that take a given number of arguments, each with
-a name. This function can be tail- recursive. An example would be:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">## This function addds two values together</span>
+<p><img alt="function clause" src="../grammar/diagram/FnDecl.png" /></p>
+<p>Lets look at the types of functions we have.</p>
+<h2 id="intrinsic-functions">Intrinsic Functions<a class="headerlink" href="#intrinsic-functions" title="Permanent link">&para;</a></h2>
+<p><img alt="intrinsic fn" src="../grammar/diagram/IntrinsicFnDecl.png" /></p>
+<p><img alt="fn args" src="../grammar/diagram/FnDeclArgs.png" /></p>
+<p>Intrinsic functions represent builtin or pre-defined functions implemented in the rust programming
+language that are a builtin component of the tremor project and are provided ab initio.</p>
+<p>The function reference in this documentation set, for example, is generated from the documentation
+provided in the standard library. The standard library is primarily composed of intrinsic or bulitin
+functions.</p>
+<h2 id="simple-functions">Simple functions<a class="headerlink" href="#simple-functions" title="Permanent link">&para;</a></h2>
+<p><img alt="simple fn" src="../grammar/diagram/SimpleFnDecl.png" /></p>
+<p><img alt="fn args" src="../grammar/diagram/FnDeclArgs.png" /></p>
+<p><img alt="fn body" src="../grammar/diagram/FnDeclBody.png" /></p>
+<p>Simple functions are functions that take a given number of arguments, each with
+a name. This function can be tail-recursive. An example would be:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">## This function adds two values together</span>
 <span class="kd">fn</span><span class="w"> </span><span class="nx">add</span><span class="err">(</span><span class="nx">a</span><span class="err">,</span><span class="w"> </span><span class="nx">b</span><span class="err">)</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
 <span class="w">  </span><span class="nx">a</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="nx">b</span><span class="w"></span>
 <span class="kd">end</span><span class="w"></span>
 </code></pre></div>
 
 
+<h3 id="variable-arguments">Variable arguments<a class="headerlink" href="#variable-arguments" title="Permanent link">&para;</a></h3>
+<p>It is possible to use variable arguments by appending a final <code>...</code> ellipsis in a simple
+function definition. The anonymous arguments will be provided via the <code>args</code> keyword.</p>
+<h3 id="recursion">Recursion<a class="headerlink" href="#recursion" title="Permanent link">&para;</a></h3>
+<p>Tail-recursion is provided for fixed arity ( number of arguments ) simple functions.</p>
+<p>Tremor imposes a restriction in recursion depth. As tremor is an event processing system
+it is not desireable to have long running functions that block events from being processed
+through the system.</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">use</span><span class="w"> </span><span class="nx">std</span><span class="err">::</span><span class="nx">array</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">fn</span><span class="w"> </span><span class="nx">sum_</span><span class="err">(</span><span class="nx">e</span><span class="err">,</span><span class="w"> </span><span class="nx">es</span><span class="err">)</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">array</span><span class="err">::</span><span class="nx">len</span><span class="err">(</span><span class="nx">es</span><span class="err">);</span><span class="w"></span>
+<span class="w">  </span><span class="kd">match</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kd">of</span><span class="w">    </span>
+<span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kd">when</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="err">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">es</span><span class="err">[</span><span class="mi">0</span><span class="err">],</span><span class="w"> </span><span class="kd">recur</span><span class="err">(</span><span class="nx">e</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="nx">es</span><span class="err">[</span><span class="mi">0</span><span class="err">],</span><span class="w"> </span><span class="nx">es</span><span class="err">[</span><span class="mi">1</span><span class="err">:</span><span class="nx">l</span><span class="err">])</span><span class="w"></span>
+<span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">e</span><span class="w"></span>
+<span class="w">  </span><span class="kd">end</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">fn</span><span class="w"> </span><span class="nx">sum</span><span class="err">(...)</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">sum_</span><span class="err">(</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="kc">args</span><span class="err">)</span><span class="w"></span>
+<span class="kd">end</span><span class="w"></span>
+</code></pre></div>
+
+
 <h2 id="match-functions">Match functions<a class="headerlink" href="#match-functions" title="Permanent link">&para;</a></h2>
+<p><img alt="match fn" src="../grammar/diagram/MatchingFnDecl.png" /></p>
+<p><img alt="fn args" src="../grammar/diagram/FnDeclArgs.png" /></p>
+<p><img alt="fn case" src="../grammar/diagram/FnDeclCaseClause.png" /></p>
+<p><img alt="fn default" src="../grammar/diagram/FnDeclCaseDefault.png" /></p>
 <p>Since matching and extracting are a core functionality for tremor matching on
 function arguments is directly supported.</p>
 <p>The same patterns that are used in <code>match</code> can be used in function cases
@@ -1403,27 +1507,6 @@ argument will be replaced by the result of the extraction.</p>
 <span class="kd">fn</span><span class="w"> </span><span class="nx">fib</span><span class="err">(</span><span class="nx">n</span><span class="err">)</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
 <span class="w">  </span><span class="nx">fib_</span><span class="err">(</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="nx">n</span><span class="err">)</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
-</code></pre></div>
-
-
-<h2 id="var-arg-functions">Var-arg functions<a class="headerlink" href="#var-arg-functions" title="Permanent link">&para;</a></h2>
-<p>It is possible to use var-args for functions that do not have a simple arity. 
-The variable part of the arguments is accessible via <code>args</code>. Var-arg function
-can also have a set of initial known arguments.</p>
-<p>Recursion is not possible from within var-arg functions.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">use</span><span class="w"> </span><span class="nx">std</span><span class="err">::</span><span class="nx">array</span><span class="err">;</span><span class="w"></span>
-
-<span class="kd">fn</span><span class="w"> </span><span class="nx">sum_</span><span class="err">(</span><span class="nx">e</span><span class="err">,</span><span class="w"> </span><span class="nx">es</span><span class="err">)</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">array</span><span class="err">::</span><span class="nx">len</span><span class="err">(</span><span class="nx">es</span><span class="err">);</span><span class="w"></span>
-<span class="w">  </span><span class="kd">match</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kd">of</span><span class="w">    </span>
-<span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kd">when</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="err">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">es</span><span class="err">[</span><span class="mi">0</span><span class="err">],</span><span class="w"> </span><span class="kd">recur</span><span class="err">(</span><span class="nx">e</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="nx">es</span><span class="err">[</span><span class="mi">0</span><span class="err">],</span><span class="w"> </span><span class="nx">es</span><span class="err">[</span><span class="mi">1</span><span class="err">:</span><span class="nx">l</span><span class="err">])</span><span class="w"></span>
-<span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">e</span><span class="w"></span>
-<span class="w">  </span><span class="kd">end</span><span class="w"></span>
-<span class="kd">end</span><span class="err">;</span><span class="w"></span>
-
-<span class="kd">fn</span><span class="w"> </span><span class="nx">sum</span><span class="err">(...)</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
-<span class="w">  </span><span class="nx">sum_</span><span class="err">(</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="kc">args</span><span class="err">)</span><span class="w"></span>
-<span class="kd">end</span><span class="w"></span>
 </code></pre></div>
                 
               
@@ -1443,7 +1526,7 @@ can also have a set of initial known arguments.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../" title="Overview" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../pp/" title="Lexical Preprocessor" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
             </div>
@@ -1452,7 +1535,7 @@ can also have a set of initial known arguments.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Overview
+                Lexical Preprocessor
               </div>
             </div>
           </a>

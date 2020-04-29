@@ -1337,11 +1337,11 @@ by setting the <code>TREMOR_PATH</code> environment variable</p>
 <span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">baz</span><span class="err">::</span><span class="nx">badger</span><span class="err">;</span><span class="w"> </span><span class="c1"># badger is a ref to &#39;foo/bar/badger.tremor&#39;</span>
 
 <span class="s">&quot;{snot::snot}{badger::badger}&quot;</span><span class="err">;</span><span class="w"> </span><span class="c1"># emits an interpolated string</span>
+</code></pre></div>
 
-<span class="nx">The</span><span class="w"> </span><span class="nx">same</span><span class="w"> </span><span class="nx">modular</span><span class="w"> </span><span class="nx">hierarchy</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="kd">as</span><span class="w"> </span><span class="nx">nested</span><span class="w"> </span><span class="nx">module</span><span class="w"> </span><span class="nx">declarations</span><span class="w"> </span><span class="kd">as</span><span class="w"> </span><span class="nx">follows</span><span class="err">:</span><span class="w"></span>
 
-<span class="err">```</span><span class="nx">tremor</span><span class="w"></span>
-<span class="kd">mod</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
+<p>The same modular hierarchy can be defined as nested module declarations as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">mod</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
 <span class="w">  </span><span class="kd">mod</span><span class="w"> </span><span class="nx">bar</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">snot</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s">&quot;beep&quot;</span><span class="err">;</span><span class="w"></span>
 <span class="w">  </span><span class="kd">end</span><span class="err">;</span><span class="w"></span>
@@ -1357,7 +1357,7 @@ by setting the <code>TREMOR_PATH</code> environment variable</p>
 </code></pre></div>
 
 
-<p>Modules can be loaded via the use clause which in turn loads a module from the physical file system via the module path.</p>
+<p>Modules can be loaded via the <code>use</code> clause which in turn loads a module from the physical file system via the module path.</p>
 <p>Inline and externalized modules can be used separately or together as appropriate.</p>
 <p>Where there are existing references a module can be aliased to avoid clashes in the local scope:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">bar</span><span class="w"> </span><span class="kd">as</span><span class="w"> </span><span class="nx">fleek</span><span class="err">;</span><span class="w"></span>

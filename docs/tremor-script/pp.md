@@ -25,8 +25,7 @@ This directive tells the preprocessor that it is now in a logically different po
 
 For each folder/directory that an included source traverses a module statement is injected into the consolidated source.
 
-The #!line macro is a implementation detail mentioned here for the same of completeness and not meant to be used or relied
-on by end users. It may, without prior warning, be removed in the future.
+The `#!line` directive is a implementation detail mentioned here for the same of completeness and not meant to be used or relied on by end users. It may, without prior warning, be removed in the future.
 
 ## Config directive
 

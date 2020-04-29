@@ -1221,6 +1221,20 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tremor-08-develop" class="md-nav__link">
+    tremor-0.8 (develop)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tremor-07-develop" class="md-nav__link">
+    tremor-0.7 (develop)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tremor-06-develop" class="md-nav__link">
     tremor-0.6 (develop)
   </a>
@@ -1406,6 +1420,20 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tremor-08-develop" class="md-nav__link">
+    tremor-0.8 (develop)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tremor-07-develop" class="md-nav__link">
+    tremor-0.7 (develop)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tremor-06-develop" class="md-nav__link">
     tremor-0.6 (develop)
   </a>
@@ -1491,6 +1519,23 @@
                 <h1 id="history">History<a class="headerlink" href="#history" title="Permanent link">&para;</a></h1>
 <p>Tremor started with a straight forward problem statement:</p>
 <p><strong>During peak events logs and metrics going to Elastic Search and InfluxDB back up in Kafka queues  removing visibility from the system.</strong></p>
+<h2 id="tremor-08-develop">tremor-0.8 (develop)<a class="headerlink" href="#tremor-08-develop" title="Permanent link">&para;</a></h2>
+<p>In this release, the embedded script and query languages have been extended with
+support for modular development. Tremor scripts and queries can now be organised
+into nested module namespaces.</p>
+<p>In tremor-script - functions, constants and modules can be reused and organized into modules.</p>
+<p>In tremor-query - window, operator and script definitions can be reused into modules.</p>
+<p>Tremor-script has been extended to support fixed arity functions, with optional variable arguments.
+This form of function can be use a constrained form of tail-recursion. Match functions allow
+pattern matching and support partial functions. Intrinsic functions wrap builtin functions.</p>
+<p>Tremor-script's pattern matching syntax has been extended with tuple-based positional matching.</p>
+<p>A new <code>TREMOR_PATH</code> allows modules to be referenced from the file system. Tremor preprocesses
+source and computes a singular preprocessed query or script source.</p>
+<p>This release was primarily focused on enabling teams to modularise, reuse and support more complex
+scripts and queries as the complexity and size of user defined logic deployed into tremor continues
+to grow.</p>
+<h2 id="tremor-07-develop">tremor-0.7 (develop)<a class="headerlink" href="#tremor-07-develop" title="Permanent link">&para;</a></h2>
+<p>First open source release of tremor.</p>
 <h2 id="tremor-06-develop">tremor-0.6 (develop)<a class="headerlink" href="#tremor-06-develop" title="Permanent link">&para;</a></h2>
 <p>In this release the event by event scripting language is used as the basis for a structured query language
 that supports time-series windowing, aggregate functions and expressive composition grouping functions via

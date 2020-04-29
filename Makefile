@@ -1,4 +1,4 @@
-TREMOR_VSN=spike-modularity-combined
+TREMOR_VSN=master
 
 mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib
 	files=`find docs/tremor-script/stdlib -type f`;\

@@ -25,6 +25,8 @@ nav:
   - 'Architecture Overview': overview.md
   - Tremor Query:
     - Overview: tremor-query/index.md
+    - Modules: tremor-query/modules.md
+    - Lexical Preprocessor: tremor-query/pp.md
     - Walkthrough: tremor-query/walkthrough.md
     - Aggregate Function Reference:
       - Overview: tremor-query/functions.md

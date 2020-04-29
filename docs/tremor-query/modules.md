@@ -1,6 +1,6 @@
 # Modules
 
-Tremor-script supports nested namespaces or modules.
+Tremor-query supports nested namespaces or modules.
 
 Modules in tremor are the lowest unit of compilation available to developers
 to modularise tremor logic across multiple logical namespaces. On the filesystem,
@@ -10,8 +10,8 @@ Within a file, nesting is via the `mod` clause.
 
 ![module grammar](./grammar/diagram/Module.png)
 
-Modules can define `const` constants, `fn` functions, or
-nested `mod` sub-modules.
+Modules can use trickle definitions via the `define` clause variants to define
+windows, operators or scripts for reuse, or nested `mod` sub-modules.
 
 ![module grammar](./grammar/diagram/ModuleExpr.png)
 
@@ -23,9 +23,9 @@ on the file system, relative to a root module path: Nested modules can be define
 ```text
   +-- foo
     +-- bar
-      +-- snot.tremor
+      +-- snot.trickle
     +-- baz
-      +-- badger.tremor
+      +-- badger.trickle
 ```
 
 Assuming this module hierarchy is rooted at `/opt/my-project/lib` they can be registered with tremor
@@ -39,29 +39,34 @@ The `TREMOR_PATH` uses ':' on linux/unix to separate multiple module paths.
 
 The modules can be used using the `use` clause as follows:
 
-```tremor
-use foo::bar::snot; # snot is a ref to 'foo/bar/snot.tremor'
-use foo::baz::badger; # badger is a ref to 'foo/bar/badger.tremor'
+```trickle
+use foo::bar::snot; # snot is a ref to 'foo/bar/snot.trickle'
+use foo::baz::badger; # badger is a ref to 'foo/bar/badger.trickle'
 
-"{snot::snot}{badger::badger}"; # emits an interpolated string
+select event
+from in[snot::second, badger::minute] # use our imported window definitions
+into out;
 ```
 
 The same modular hierarchy can be defined as nested module declarations as follows:
 
-```tremor
+```trickle
 mod foo with
   mod bar with
-    const snot = "beep";
+    define tumbling window second with
+      interval = 1000
+    end;
   end;
   mod baz with
-    const badger = "boop";
+    define tumbling window minute with
+      interval = 60000
+    end;
   end;
 end;
 
-let snot = foo::bar::snot;
-let badger = foo::baz::badger;
-
-"{snot}-{badger}";
+select event
+from in[snot::second, badger::minute] # use our imported window definitions
+into out;
 ```
 
 Modules can be loaded via the `use` clause which in turn loads a module from the physical file system via the module path.
@@ -70,12 +75,14 @@ Inline and externalized modules can be used separately or together as appropriat
 
 Where there are existing references a module can be aliased to avoid clashes in the local scope:
 
-```tremor
+```trickle
 use foo::bar as fleek;
 
-"Hello {fleek::snot}"
+select event
+from in[fleek::second] # use our imported window definitions
+into out;
 ```
 
-It is to be noted that inclusion via use will prevent circular inclusion as in file `a.tremor` can use `b.tremor` but beyond
-that point `b.tremor` can no longer use `a.tremor` as this would create a dependency cycle. This is a restriction of the
+It is to be noted that inclusion via use will prevent circular inclusion as in file `a.trickle` can use `b.trickle` but beyond
+that point `b.trickle` can no longer use `a.trickle` as this would create a dependency cycle. This is a restriction of the
 current implementation and may or may not be relaxed in the future.

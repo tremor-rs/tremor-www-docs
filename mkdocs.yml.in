@@ -33,6 +33,8 @@ nav:
     - Recipes: tremor-query/recipes.md
   - Tremor Script:
     - Overview: tremor-script/index.md
+    - Modules: tremor-script/modules.md
+    - Lexical Preprocessor: tremor-script/pp.md
     - Function Reference:
       - Overview: tremor-script/functions.md
       - STDLIB

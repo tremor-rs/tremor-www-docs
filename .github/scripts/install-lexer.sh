@@ -1,7 +1,6 @@
 
 fetch() {
-    # To replace with a clone once the repo is open source!
-    cp -r .github/vendor/lexer tremor-mkdocs-lexer
+    git clone git@github.com:wayfair-tremor/tremor-mkdocs-lexer
 }
 
 install() {

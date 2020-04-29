@@ -245,6 +245,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../tremor-query/modules/" title="Modules" class="md-nav__link">
+      Modules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tremor-query/pp/" title="Lexical Preprocessor" class="md-nav__link">
+      Lexical Preprocessor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
       Walkthrough
     </a>
@@ -258,16 +282,16 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-5" type="checkbox" id="nav-3-5">
     
-    <label class="md-nav__link" for="nav-3-3">
+    <label class="md-nav__link" for="nav-3-5">
       Aggregate Function Reference
       <span class="md-nav__icon md-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
       </span>
     </label>
     <nav class="md-nav" aria-label="Aggregate Function Reference" data-md-level="2">
-      <label class="md-nav__title" for="nav-3-3">
+      <label class="md-nav__title" for="nav-3-5">
         <span class="md-nav__icon md-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
         </span>
@@ -1323,8 +1347,7 @@ of modular logic changing at runtime.</p>
 <h2 id="line-directive">Line directive<a class="headerlink" href="#line-directive" title="Permanent link">&para;</a></h2>
 <p>This directive tells the preprocessor that it is now in a logically different position of the file.</p>
 <p>For each folder/directory that an included source traverses a module statement is injected into the consolidated source.</p>
-<p>The #!line macro is a implementation detail mentioned here for the same of completeness and not meant to be used or relied
-on by end users. It may, without prior warning, be removed in the future.</p>
+<p>The <code>#!line</code> directive is a implementation detail mentioned here for the same of completeness and not meant to be used or relied on by end users. It may, without prior warning, be removed in the future.</p>
 <h2 id="config-directive">Config directive<a class="headerlink" href="#config-directive" title="Permanent link">&para;</a></h2>
 <p>This directive allows compile-time configuration paraemters to be passed into tremor</p>
 <h2 id="example-preprocessed-tremor-script">Example preprocessed tremor-script<a class="headerlink" href="#example-preprocessed-tremor-script" title="Permanent link">&para;</a></h2>

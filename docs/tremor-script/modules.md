@@ -44,6 +44,7 @@ use foo::bar::snot; # snot is a ref to 'foo/bar/snot.tremor'
 use foo::baz::badger; # badger is a ref to 'foo/bar/badger.tremor'
 
 "{snot::snot}{badger::badger}"; # emits an interpolated string
+```
 
 The same modular hierarchy can be defined as nested module declarations as follows:
 
@@ -63,7 +64,7 @@ let badger = foo::baz::badger;
 "{snot}-{badger}";
 ```
 
-Modules can be loaded via the use clause which in turn loads a module from the physical file system via the module path.
+Modules can be loaded via the `use` clause which in turn loads a module from the physical file system via the module path.
 
 Inline and externalized modules can be used separately or together as appropriate.
 

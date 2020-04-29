@@ -4,6 +4,33 @@ Tremor started with a straight forward problem statement:
 
 **During peak events logs and metrics going to Elastic Search and InfluxDB back up in Kafka queues  removing visibility from the system.**
 
+## tremor-0.8 (develop)
+
+In this release, the embedded script and query languages have been extended with
+support for modular development. Tremor scripts and queries can now be organised
+into nested module namespaces.
+
+In tremor-script - functions, constants and modules can be reused and organized into modules.
+
+In tremor-query - window, operator and script definitions can be reused into modules.
+
+Tremor-script has been extended to support fixed arity functions, with optional variable arguments.
+This form of function can be use a constrained form of tail-recursion. Match functions allow
+pattern matching and support partial functions. Intrinsic functions wrap builtin functions.
+
+Tremor-script's pattern matching syntax has been extended with tuple-based positional matching.
+
+A new `TREMOR_PATH` allows modules to be referenced from the file system. Tremor preprocesses
+source and computes a singular preprocessed query or script source.
+
+This release was primarily focused on enabling teams to modularise, reuse and support more complex
+scripts and queries as the complexity and size of user defined logic deployed into tremor continues
+to grow.
+
+## tremor-0.7 (develop)
+
+First open source release of tremor.
+
 ## tremor-0.6 (develop)
 
 In this release the event by event scripting language is used as the basis for a structured query language

@@ -297,3 +297,44 @@ offramp:
       host: "localhost"
       port: 9000
 ```
+
+### exit
+
+The exit offramp terminates the runtime with a system exit status.
+
+The offramp accepts events via its standard input port and responds
+to events with a record structure containing a numeric exit field.
+
+To indicate succesful termination, an exit status of zero may be used:
+
+```json
+{ "exit": 0 }
+```
+
+To indicate non-succesful termination, a non-zero exit status may be used:
+
+```json
+{ "exit": 1 }
+```
+
+Exit codes should follow standard UNIX/Linux guidelines when being integrated
+with `bash` or other shell-based environments, as follows:
+
+|Code|Meaning|
+|0|Success|
+|1|General errors|
+|2|Misuse of builtins|
+|126|Command invoked cannot execute due to credentials/auth constraints|
+|127|Command not understood, not well formed or illegal|
+
+Example:
+
+```yaml
+offramp:
+  - id: terminate
+    type: exit
+```
+
+
+
+

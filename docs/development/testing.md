@@ -49,8 +49,6 @@ EQC or 'QuickCheck' is a specification-based testing tool for Erlang supporting 
 
 Further to this, QuickCheck can reduce a set of failing testcases to the minimal testcase that forces any failing test to fail its specification. This drastically reduces the amount of QA and developer time required to verify or prove a piece of code works given a suitably defined specification.
 
-Follow the installation steps outlined [here](https://docs.csnzoo.com/tremor/eqc-api-testing/installation/)
-
 ### Start tremor
 
 You need to start the tremor to run the tests:

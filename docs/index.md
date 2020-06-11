@@ -1,6 +1,6 @@
 # Tremor
 
-Tremor is an event processing originally system designed primarily for the needs of platform engineering and infrastructure.
+Tremor is an event processing system originally designed for the needs of platform engineering and infrastructure.
 
 Tremor has been running in production since October 2018, processes 10 terabytes of data per day, or 10 billion messages per minute and 10 million metrics per second. Tremor achieves this with 10x footprint reduction in bare metal infrastructure and cloud based deployments in 6 ( and counting ) systems at Wayfair, whilst reducing memory usage by 10x and delivering better quality of service under conditions when our network is saturated at peak eCommerce trading lifecycles.
 

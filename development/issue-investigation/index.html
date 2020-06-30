@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1251,7 +1252,7 @@
         
           <li class="md-nav__item">
   <a href="#lldb-lldb-rust-prod" class="md-nav__link">
-    lldb / lldb-rust  (prod)
+    lldb / lldb-rust (prod)
   </a>
   
 </li>
@@ -1388,10 +1389,10 @@
         
           <li class="md-nav__item">
   <a href="#1st-theory-network-problems-on-gcp" class="md-nav__link">
-    1st theory:  network problems on GCP
+    1st theory: network problems on GCP
   </a>
   
-    <nav class="md-nav" aria-label="1st theory:  network problems on GCP">
+    <nav class="md-nav" aria-label="1st theory: network problems on GCP">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1492,8 +1493,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#udp-gelf-messages-failed" class="md-nav__link">
-    UDP GELF messages failed
+  <a href="#udp-gelf-messages-issue" class="md-nav__link">
+    UDP GELF messages issue
   </a>
   
 </li>
@@ -1699,7 +1700,7 @@
         
           <li class="md-nav__item">
   <a href="#lldb-lldb-rust-prod" class="md-nav__link">
-    lldb / lldb-rust  (prod)
+    lldb / lldb-rust (prod)
   </a>
   
 </li>
@@ -1836,10 +1837,10 @@
         
           <li class="md-nav__item">
   <a href="#1st-theory-network-problems-on-gcp" class="md-nav__link">
-    1st theory:  network problems on GCP
+    1st theory: network problems on GCP
   </a>
   
-    <nav class="md-nav" aria-label="1st theory:  network problems on GCP">
+    <nav class="md-nav" aria-label="1st theory: network problems on GCP">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1940,8 +1941,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#udp-gelf-messages-failed" class="md-nav__link">
-    UDP GELF messages failed
+  <a href="#udp-gelf-messages-issue" class="md-nav__link">
+    UDP GELF messages issue
   </a>
   
 </li>
@@ -1995,19 +1996,19 @@ perf report <span class="c1"># will pick up the data that record generated</span
 
 <p>It can do <strong>a lot more</strong> than this. A full tutorial on perf can be found <a href="https://perf.wiki.kernel.org/index.php/Tutorial">here</a>.</p>
 <h3 id="netstat-prod"><code>netstat</code> (prod)<a class="headerlink" href="#netstat-prod" title="Permanent link">&para;</a></h3>
-<p><code>netstat</code> can be helpful to investigate networking state of connections and identify connection issues. Again it can be limited in the scope of docker unless executed inside of the container. Please look at the man pages (<a href="https://linux.die.net/man/8/netstat"><code>man netstat</code></a>) for details, <a href="https://linuxtechlab.com/learn-use-netstat-with-examples/">this tutorial</a> also covers the basics and useful commands.</p>
+<p><code>netstat</code> can be helpful to investigate networking state of connections and identify connection issues. Again it can be limited in the scope of docker unless run inside of the container. Please look at the man pages (<a href="https://linux.die.net/man/8/netstat"><code>man netstat</code></a>) for details, <a href="https://linuxtechlab.com/learn-use-netstat-with-examples/">this tutorial</a> also covers the basics and useful commands.</p>
 <p>It also allows to investigate routing tables which can be very handy for connection issues.</p>
 <h3 id="ping-prod"><code>ping</code> (prod)<a class="headerlink" href="#ping-prod" title="Permanent link">&para;</a></h3>
 <p>This isn't exciting but if network related issues are suspected "can I ping this address" can cover a lot of ground and is always worth to check.</p>
 <p>This can also be used to investigate MTU</p>
-<h3 id="lldb-lldb-rust-prod"><code>lldb</code> / <code>lldb-rust</code>  (prod)<a class="headerlink" href="#lldb-lldb-rust-prod" title="Permanent link">&para;</a></h3>
+<h3 id="lldb-lldb-rust-prod"><code>lldb</code> / <code>lldb-rust</code> (prod)<a class="headerlink" href="#lldb-lldb-rust-prod" title="Permanent link">&para;</a></h3>
 <p>Both <code>lldb</code> and for rust more specifically <code>lldb-rust</code> are debuggers. They can attach to a program and step through the application step by step. A good starting guide can be found <a href="https://lldb.llvm.org/use/map.html">here</a>. It needs to be said that using lldb should be done with care, it will stop the program and has the potential to crash or terminate it. So far running lldb against a docker contained often lead to the process hanging or crashing.</p>
 <h3 id="valgrind-dev-linux"><code>valgrind</code> (dev: Linux)<a class="headerlink" href="#valgrind-dev-linux" title="Permanent link">&para;</a></h3>
 <p><code>valgrind</code> is used to debug and analyse memory leaks. While originally developed for C/C++ it mostly works with rust code as well - however on OS X it has shown to crash code and as the time of writing this is not a usable tool. More information can be found in the <a href="http://www.valgrind.org/docs/manual/quick-start.html">quick start</a>.</p>
 <h3 id="dtrace-dev-os-x-windows-bsd"><code>dtrace</code> (dev: OS X / Windows / BSD)<a class="headerlink" href="#dtrace-dev-os-x-windows-bsd" title="Permanent link">&para;</a></h3>
 <p><code>dtrace</code>is a tool that allows low impact introspection of running systems. It allows putting probes on specific points in either kernel or user land code and perform analytics on the results. It is a very powerful tool but it requires learning to use efficiently. The <a href="http://www.brendangregg.com/dtrace.html">dtrace toolkit</a> is a good starting point.</p>
 <h3 id="instruments-dev-os-x">Instruments (dev: OS X)<a class="headerlink" href="#instruments-dev-os-x" title="Permanent link">&para;</a></h3>
-<p>OS X comes with a user interface around dtrace that abstracts a lot of the complication away and presents some of core functionality in bite sized portions that are easy to use without requiring to understand the whole functionality of dtrace. It is installed alongside with XCode.</p>
+<p>OS X comes with a user interface around dtrace that abstracts a lot of the complication away and presents some of core functionality in bite sized portions that can be used without requiring to understand the whole functionality of dtrace. It is installed alongside with XCode.</p>
 <p>Some of the more interesting profiling templates are:</p>
 <ul>
 <li>Leaks - for finding memory leaks</li>
@@ -2045,9 +2046,9 @@ perf report <span class="c1"># will pick up the data that record generated</span
 <h3 id="infinite-loop-in-librdkafka">Infinite loop in librdkafka<a class="headerlink" href="#infinite-loop-in-librdkafka" title="Permanent link">&para;</a></h3>
 <h4 id="initial-observation-source-metrics-logs">Initial observation (source: Metrics &amp; logs)<a class="headerlink" href="#initial-observation-source-metrics-logs" title="Permanent link">&para;</a></h4>
 <p>On GCP a node jumped to 75% (100% on a single core) and stopped processing data. No Kafka partitions were assigned to that node until it was restarted.</p>
-<p>This bug hunt carries some complications. We have not been able to replicate the bug outside of a production environment. The  environment runs on a outdated linux, has no internet access to download tools and does not have  many of the usual debugging tools available. The bug is rare enough that it take between one and two weeks to reproduce it.</p>
-<h4 id="1st-theory-network-problems-on-gcp">1st theory:  network problems on GCP<a class="headerlink" href="#1st-theory-network-problems-on-gcp" title="Permanent link">&para;</a></h4>
-<p>Since this was first and only observed directly after  the migration to GCP the initial theory was that networking issues on GCP cause this problem.</p>
+<p>This bug hunt carries some complications. We have not been able to replicate the bug outside of a production environment. The environment runs on a outdated linux, has no internet access to download tools and does not have many of the usual debugging tools available. The bug is rare enough that it take between one and two weeks to reproduce it.</p>
+<h4 id="1st-theory-network-problems-on-gcp">1st theory: network problems on GCP<a class="headerlink" href="#1st-theory-network-problems-on-gcp" title="Permanent link">&para;</a></h4>
+<p>Since this was first and only observed directly after the migration to GCP the initial theory was that networking issues on GCP cause this problem.</p>
 <h5 id="disprove-of-1st-theory-lib-kafka">disprove of 1st theory (lib kafka)<a class="headerlink" href="#disprove-of-1st-theory-lib-kafka" title="Permanent link">&para;</a></h5>
 <p>To validate the theory we installed the same version of tremor on premises - and in parallel to working installations and observed if the issue would surface outside of GCP. If it wouldn't we could have reduced it to a GCP related issue.</p>
 <p><strong>Result</strong>: After two weeks of on-prem load we were able to recreate the issue locally, this invalidated our 1st theory.</p>
@@ -2075,14 +2076,14 @@ perf report <span class="c1"># will pick up the data that record generated</span
 <p>After inspecting <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L336">the code</a> we noticed that <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L346">the lock obtained</a> in the function did not check if the lock was successful. The <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L402-L407">else condition</a> in the function could lead to an infinite loop calling the function over and over again.</p>
 <h5 id="disprove-of-4th-theory">disprove of 4th theory<a class="headerlink" href="#disprove-of-4th-theory" title="Permanent link">&para;</a></h5>
 <p>We isolated the hot thread using <code>stop</code> - looking for the tremor thread that was using 100% CPU. We then traced system calls using <code>strace</code>. If librdkafka would attempt to fetch a mutex lock we should see related system calls in the <code>strace</code> output.</p>
-<p>However observing the process for an hour didn't show a single system call to be made on the hot thread - this ruled out any mutex/kernel related code to be executed in the hot loop.</p>
+<p>However observing the process for an hour didn't show a single system call to be made on the hot thread - this ruled out any mutex/kernel related code to be run in the hot loop.</p>
 <h4 id="5th-theory-a-different-rdkafka-bug">5th theory: a different rdkafka bug<a class="headerlink" href="#5th-theory-a-different-rdkafka-bug" title="Permanent link">&para;</a></h4>
 <p>Inspecting the code and the <code>perf</code> output further we noticed that <code>cnd_timedwait_abs</code> was part of the <a href="https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L390">last condition</a> in a <code>while (1)</code> loop. It is reasonable to assume that if we spend time in <code>cnd_timedwait_abs</code> that we hit that part of the loop - if this call would fail the loop would re run possibly creating an infinite loop.</p>
 <p>In addition we found a related <a href="https://github.com/edenhill/librdkafka/issues/2208">kafka issue</a> that pointed to this particular location.</p>
 <h5 id="proving-5th-theory">proving 5th theory<a class="headerlink" href="#proving-5th-theory" title="Permanent link">&para;</a></h5>
 <p>We deployed half the nodes with a version of tremor that the newest version of librdkafka (1.0.0) that includes a fix for the issue mentioned above while. We expect the patched nodes to keep stable and the unpatched nodes to eventually fail with the bug.</p>
-<p>This never failed again.</p>
-<h3 id="udp-gelf-messages-failed">UDP GELF messages failed<a class="headerlink" href="#udp-gelf-messages-failed" title="Permanent link">&para;</a></h3>
+<p>This never happend again.</p>
+<h3 id="udp-gelf-messages-issue">UDP GELF messages issue<a class="headerlink" href="#udp-gelf-messages-issue" title="Permanent link">&para;</a></h3>
 <p>Issues:</p>
 <ul>
 <li>Undocumented and non standard conform use of Decompress after chunking, this messages were discarded, this was falsly attributed to tremor</li>
@@ -2164,14 +2165,14 @@ perf report <span class="c1"># will pick up the data that record generated</span
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

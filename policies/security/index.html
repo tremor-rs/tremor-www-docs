@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1346,24 +1347,18 @@
 surface and likelihood of direct or indirect security risks to users of the software.</p>
 <p>Specifically:</p>
 <ul>
-<li>Tremor favors safe over unsafe rust code.<ul>
+<li>Tremor favors safe over unsafe rust code.</li>
 <li>Safe code is generally considered the better option</li>
 <li>Unless, performance critical concerns on the hot path suggest otherwise</li>
 <li>Over time, unsafe code should be displaced with safe code</li>
-</ul>
-</li>
-<li>Tremor is conservative on matters of code health.<ul>
+<li>Tremor is careful on matters of code health.</li>
 <li>Clippy is pedantic mode is mandated for all rust code</li>
 <li>Property based testing, model-based testing and fuzz-testing are used</li>
 <li>Additional audits for code quality are in force</li>
-</ul>
-</li>
-<li>Static analysis<ul>
+<li>Static analysis</li>
 <li>Tremor analyses external library dependencies for all direct and indirect dependencies</li>
 <li>Tremor logs and reports all LICENSE, CVE and other violations both in our CI code and using other tools</li>
 <li>Additional dynamic and static analysis methods can be added to broaden/deepen coverage</li>
-</ul>
-</li>
 </ul>
 <h1 id="non-recommendation">Non Recommendation<a class="headerlink" href="#non-recommendation" title="Permanent link">&para;</a></h1>
 <p>We do <em>not</em> recommend running tremor outside of corporate firewalls at this time.</p>
@@ -1386,7 +1381,7 @@ delighted to accept contributions that move our security roadmap priority.</p>
 Rust Programming language to write Tremor. To that end, we would like to ensure that
 Tremor has a secure implementation with no inherent security issues.</p>
 <p>Thank you for taking the time to responsibly disclose any issues you find.</p>
-<p>All security bugs in the tremor project should be reported by email to <a href="mailto:opensource@wayfair.com">opensource@wayfair.com</a>. This list is delivered to a small team. Your email will be acknowledged within 24 hours, and you’ll receive a more detailed response to your email within 48 hours indicating the next steps in handling your report. </p>
+<p>All security bugs in the tremor project should be reported by email to <a href="mailto:opensource@wayfair.com">opensource@wayfair.com</a>. This list is delivered to a small team. Your email will be acknowledged within 24 hours, and you’ll receive a more detailed response to your email within 48 hours indicating the next steps in handling your report.</p>
 <p>If you would like, you can encrypt your report using a public key. This key can be requested from the security
 team via direct email, or through contacting us on our slack community and requesting same.</p>
 <p>Be sure to use a descriptive subject line in email to avoid having your report missed. After the initial reply
@@ -1398,7 +1393,7 @@ and full announcement.</p>
 Contact the back-up contact (Heinz Gies) directly <a href="https://keys.openpgp.org/vks/v1/by-fingerprint/71C9D7794FCEAC9D77AC4F6FE21BB9BD3F38481E">pgp key</a>.</p>
 <p>Post a friendly reminder on the community slack.</p>
 <p>Please note that discussion forums are public areas. When escalating in these venues, please do not
-discuss your issue. Simply say that you’re trying to get a hold of someone from the security team.</p>
+discuss your issue. Say that you’re trying to get a hold of someone from the security team.</p>
                 
               
               
@@ -1452,14 +1447,14 @@ discuss your issue. Simply say that you’re trying to get a hold of someone fro
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

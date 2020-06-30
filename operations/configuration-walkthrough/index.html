@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1641,11 +1642,11 @@
 <p>A short canned synopsis of configuration tremor.</p>
 <p>This guide walks through configuring tremor via its API directly and via its command line tool 'tremor-tool'. For the API, we use 'curl' on the command line.</p>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>In this walkthrough we will deploy a simple tremor pipeline that generates a periodic sequence of messages or heartbeats every second. The solution is composed of the following tremor artefacts:</p>
+<p>In this walkthrough we will deploy a tremor pipeline that generates a periodic sequence of messages or heartbeats every second. The solution is composed of the following tremor artefacts:</p>
 <ul>
 <li>A metronome onramp - our periodic message generator</li>
 <li>A stdout offramp - an offramp that serializes to standard output useful for debugging</li>
-<li>A simple pipeline - we simply pass the input ( metronome events ) to our output</li>
+<li>A pipeline - we pass the input ( metronome events ) to our output</li>
 </ul>
 <p>In this walkthrough we configure a single onramp, offramp and pipeline but many other configurations are possible.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
@@ -1681,16 +1682,16 @@
 <span class="nn">---</span>
 <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">main</span>
 <span class="nt">interface</span><span class="p">:</span>
-  <span class="nt">inputs</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">in</span> <span class="p p-Indicator">]</span>
-  <span class="nt">outputs</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+  <span class="nt">inputs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">in</span><span class="p p-Indicator">]</span>
+  <span class="nt">outputs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 <span class="nt">links</span><span class="p">:</span>
-  <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+  <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
 <h3 id="write-a-binding-specification">Write a binding specification<a class="headerlink" href="#write-a-binding-specification" title="Permanent link">&para;</a></h3>
 <p>In tremor pipelines have no non-deterministic side-effects.</p>
-<p>By design, tremor does not allow onramps or offramps to be specified as a part of a pipeline. This would couple running pipelines to external connections. For example, to an external kafka broker and topic. This isn't bad per se, but it would allow a configuration or programming style that allows pipelines that are not easily distributable, clusterable or scalable.</p>
+<p>By design, tremor does not allow onramps or offramps to be specified as a part of a pipeline. This would couple running pipelines to external connections. For example, to an external kafka broker and topic. This isn't bad per se, but it would allow a configuration or programming style that allows pipelines that are hard to distribute, clusterable or scalable.</p>
 <p>To be clear, therefore:</p>
 <ul>
 <li>All data processed by a tremor pipeline is always ingested via an event</li>
@@ -1702,12 +1703,12 @@
 <li>All in-flight events in a pipeline are processed to completion before queued events are processed.</li>
 </ul>
 <p>As a result, in order to connect onramps, offramps and pipelines , we need to link them together. We call this set of ( required ) links a 'binding specification'. It is ok <em>not</em> to connect a pipeline input stream or output stream. But it is not ok to not connect the subset exposed in a binding specification.</p>
-<p>For our simple scenario, the following will suffice:</p>
+<p>For our scenario, the following will suffice:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># File: metronome-binding.yaml</span>
 <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="nt">links</span><span class="p">:</span>
-  <span class="s">&#39;/onramp/metronome/{instance}/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/pipeline/main/{instance}/in&#39;</span> <span class="p p-Indicator">]</span>
-  <span class="s">&#39;/pipeline/main/{instance}/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/offramp/stdout/{instance}/in&#39;</span> <span class="p p-Indicator">]</span>
+  <span class="s">&quot;/onramp/metronome/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/main/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+  <span class="s">&quot;/pipeline/main/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/offramp/stdout/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
@@ -1804,7 +1805,7 @@ tremor-tool api binding list metronome-binding.yaml
 <li>We want to call our instance 'walkthrough'</li>
 </ul>
 <div class="codehilite"><pre><span></span><code><span class="c1"># File: metronome-mapping.yaml</span>
-<span class="nt">instance</span><span class="p">:</span> <span class="s">&#39;walkthrough&#39;</span>
+<span class="nt">instance</span><span class="p">:</span> <span class="s">&quot;walkthrough&quot;</span>
 </code></pre></div>
 
 
@@ -1883,14 +1884,14 @@ tremor-tool api binding list metronome-binding.yaml
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

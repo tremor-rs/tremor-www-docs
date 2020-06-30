@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1456,15 +1457,15 @@
 <h2 id="pipeline-metrics">Pipeline metrics<a class="headerlink" href="#pipeline-metrics" title="Permanent link">&para;</a></h2>
 <p>Example:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;measurement&quot;</span><span class="p">:</span><span class="s2">&quot;events&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;tags&quot;</span><span class="p">:{</span>
-    <span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="s2">&quot;output&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node&quot;</span><span class="p">:</span><span class="s2">&quot;in&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;pipeline&quot;</span><span class="p">:</span><span class="s2">&quot;tremor:///pipeline/main/01&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span>
+  <span class="nt">&quot;measurement&quot;</span><span class="p">:</span> <span class="s2">&quot;events&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;output&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pipeline&quot;</span><span class="p">:</span> <span class="s2">&quot;tremor:///pipeline/main/01&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span>
   <span class="p">},</span>
-  <span class="nt">&quot;fields&quot;</span><span class="p">:{</span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="mi">20</span><span class="p">},</span>
-  <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1553077007898214000</span>
+  <span class="nt">&quot;fields&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;count&quot;</span><span class="p">:</span> <span class="mi">20</span> <span class="p">},</span>
+  <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mi">1553077007898214000</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -1486,13 +1487,13 @@
 <p>In addition to the general pipeline metrics, some operators do generate their own metrics, for details please check on the documentation for the operator in question.</p>
 <h2 id="ramp-metrics">Ramp metrics<a class="headerlink" href="#ramp-metrics" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-   <span class="nt">&quot;measurement&quot;</span><span class="p">:</span><span class="s2">&quot;ramp_events&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;tags&quot;</span><span class="p">:{</span>
-      <span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="s2">&quot;out&quot;</span><span class="p">,</span>
-      <span class="nt">&quot;ramp&quot;</span><span class="p">:</span><span class="s2">&quot;tremor:///offramp/main/01/in&quot;</span>
-   <span class="p">},</span>
-   <span class="nt">&quot;fields&quot;</span><span class="p">:{</span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="mi">42</span><span class="p">},</span>
-   <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1576215344378248634</span>
+  <span class="nt">&quot;measurement&quot;</span><span class="p">:</span> <span class="s2">&quot;ramp_events&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ramp&quot;</span><span class="p">:</span> <span class="s2">&quot;tremor:///offramp/main/01/in&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;fields&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;count&quot;</span><span class="p">:</span> <span class="mi">42</span> <span class="p">},</span>
+  <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mi">1576215344378248634</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -1511,12 +1512,12 @@
 <p>The example above measures all events that were emitted out by the offramp <code>main</code>.</p>
 <p>Notes:</p>
 <ul>
-<li>Preprocessor and codec level failures count as errors for onramp metrics.</li>
+<li>Preprocessor and codec level errors count as errors for onramp metrics.</li>
 <li>For onramps, count for <code>in</code> port is always zero since an event in tremor is something concrete only after the initial onramp processing. Furthermore, for stream-based onramps like tcp, the idea of counting <code>in</code> events does not make sense.</li>
 <li>If your pipeline is using the <a href="../../artefacts/operators/#genericbatch">batch operator</a> and offramp is receiving events from it, no of events tracked at offramp is going to be dictated by the batching config.</li>
 </ul>
 <h2 id="operator-level-metrics">Operator level metrics<a class="headerlink" href="#operator-level-metrics" title="Permanent link">&para;</a></h2>
-<p>In addition to the metrics provided by the pipeline itself, some operators can  generate additional metrics.</p>
+<p>In addition to the metrics provided by the pipeline itself, some operators can generate additional metrics.</p>
 <p>The details are documented on a per operator level. Currently the following operators provide custom metrics:</p>
 <ul>
 <li><a href="../../artefacts/operators/#grouperbucket">grouper::bucket</a></li>
@@ -1538,18 +1539,18 @@
             <span class="no">let event.tags.host = system::hostname();</span>
             <span class="no">event;</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">enrich</span> <span class="p p-Indicator">]</span>
-      <span class="nt">enrich</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">enrich</span><span class="p p-Indicator">]</span>
+      <span class="nt">enrich</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 
 <span class="nt">binding</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">enrich</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="s">&#39;/pipeline/system::metrics/system/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/pipeline/enrich/system/in&#39;</span> <span class="p p-Indicator">]</span>
-      <span class="s">&#39;/pipeline/enrich/system/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/offramp/system::stdout/system/in&#39;</span> <span class="p p-Indicator">]</span>
+      <span class="s">&quot;/pipeline/system::metrics/system/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/enrich/system/in&quot;</span><span class="p p-Indicator">]</span>
+      <span class="s">&quot;/pipeline/enrich/system/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/offramp/system::stdout/system/in&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
-<p>This will take the metrics from the metrics pipeline and execute a tremor script to add the <code>host</code> tag to each event.</p>
+<p>This will take the metrics from the metrics pipeline and run a tremor script to add the <code>host</code> tag to each event.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <p>Lets walk through a example to see how where and why metrics are generated. Lets configure the following configuration:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
@@ -1593,17 +1594,18 @@
         <span class="nt">config</span><span class="p">:</span>
           <span class="nt">count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">runtime</span> <span class="p p-Indicator">]</span>
-      <span class="nt">runtime</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">bucket</span> <span class="p p-Indicator">]</span>
-      <span class="nt">bucket</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">bp</span> <span class="p p-Indicator">]</span>
-      <span class="nt">bp</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">batch</span> <span class="p p-Indicator">]</span>
-      <span class="nt">batch</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">runtime</span><span class="p p-Indicator">]</span>
+      <span class="nt">runtime</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">bucket</span><span class="p p-Indicator">]</span>
+      <span class="nt">bucket</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">bp</span><span class="p p-Indicator">]</span>
+      <span class="nt">bp</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">batch</span><span class="p p-Indicator">]</span>
+      <span class="nt">batch</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 
 <span class="nt">binding</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stores-test</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="s">&#39;/onramp/kafka-in-stores/{instance}/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/pipeline/main/{instance}/in&#39;</span> <span class="p p-Indicator">]</span>
-      <span class="s">&#39;/pipeline/main/{instance}/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/offramp/elastic-out-stores/{instance}/in&#39;</span>  <span class="p p-Indicator">]</span>
+      <span class="s">&quot;/onramp/kafka-in-stores/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/main/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+      <span class="s">&quot;/pipeline/main/{instance}/out&quot;</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">[</span><span class="s">&quot;/offramp/elastic-out-stores/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
@@ -1634,7 +1636,7 @@
 <li><code>d</code> as <code>events,node=bucket,port=in,direction=input,pipeline=tremor:///pipeline/main/01 count=40 …</code> as the events that make it to the bucketer (should be equal to <code>c</code>)</li>
 <li><code>e</code> as <code>events,node=bucket,port=overflow,direction=output,pipeline=tremor:///pipeline/main/01 count=10 …</code> as the events that the overflowed from the bucketer (aka they exceeded the limits in <code>$rate</code>) - we assume 10 of the 40 messages hit this criteria</li>
 <li><code>f</code> as <code>events,node=bucket,port=out,direction=output,pipeline=tremor:///pipeline/main/01 count=30 …</code> as the events that make it out of the bucketer (we assume 30 here since in <code>e</code> we had 10 events overflow)</li>
-<li><code>d</code> as <code>events,node=bp,port=in,direction=input,pipeline=tremor:///pipeline/main/01 count=30 …</code> as the events that make it to the  back-pressure (<code>bp</code>) step  (should be equal to <code>f</code>)</li>
+<li><code>d</code> as <code>events,node=bp,port=in,direction=input,pipeline=tremor:///pipeline/main/01 count=30 …</code> as the events that make it to the back-pressure (<code>bp</code>) step (should be equal to <code>f</code>)</li>
 <li><code>h</code> as <code>events,node=bp,port=overflow,direction=output,pipeline=tremor:///pipeline/main/01 count=5 …</code> as the events that the overflowed from the back-pressure step (aka the offramp asked is to back off a bit) - we assume 5 events fell into the back-pressure period.</li>
 <li><code>i</code> as <code>events,node=bp,port=out,direction=output,pipeline=tremor:///pipeline/main/01 count=25 …</code> as the events that make it out of the back pressure step (we assume 25 here since in <code>h</code> we had 5 events overflow)</li>
 <li><code>j</code> as <code>events,node=batch,port=in,direction=input,pipeline=tremor:///pipeline/main/01 count=25 …</code> as the events that make it to the batch step (should be equal to <code>i</code>)</li>
@@ -1708,14 +1710,14 @@
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

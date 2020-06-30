@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -2064,7 +2065,7 @@ scripts to simplify fixing such scripts.</p>
 
 
 <h5 id="heredocs">HereDocs<a class="headerlink" href="#heredocs" title="Permanent link">&para;</a></h5>
-<p>To deal with pre formatted strings in tremor script we allow for <strong>here docs</strong> they are started by using triple quotes <code>"""</code>  that terminate the line (aka <code>"""bla</code>  isn't legal) .</p>
+<p>To deal with pre formatted strings in tremor script we allow for <strong>here docs</strong> they are started by using triple quotes <code>"""</code> that terminate the line (aka <code>"""bla</code> isn't legal) .</p>
 <p>Here docs can in indented, the indentation will be truncated to the lowest number of spaces found in any of the lines.</p>
 <div class="codehilite"><pre><span></span><code><span class="s">&quot;&quot;&quot;</span>
 <span class="s">    I am</span>
@@ -2287,10 +2288,10 @@ scripts to simplify fixing such scripts.</p>
 
 
 <h3 id="drop">Drop<a class="headerlink" href="#drop" title="Permanent link">&para;</a></h3>
-<p>Drop expressions enable short-circuiting the execution of a <code>tremor-script</code> when badly formed data is discovered. If no argument is supplied, <code>drop</code> will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process dropped events or data using purpose-built error-handling.</p>
+<p>Drop expressions enable short-circuiting the evaluation of a <code>tremor-script</code> when badly formed data is discovered. If no argument is supplied, <code>drop</code> will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process dropped events or data using purpose-built error-handling.</p>
 <p>As the content of the dropped event is user-defined, operators can standardise the format of the error emitted on drop from <code>tremor-script</code></p>
 <div class="codehilite"><pre><span></span><code><span class="kd">drop</span><span class="err">;</span><span class="w"></span>
-<span class="kd">drop</span><span class="err">;</span><span class="w"> </span><span class="c1"># As the first emit always wins, this expression never executes</span>
+<span class="kd">drop</span><span class="err">;</span><span class="w"> </span><span class="c1"># As the first emit always wins, this expression never runs</span>
 </code></pre></div>
 
 
@@ -2299,9 +2300,9 @@ scripts to simplify fixing such scripts.</p>
 <blockquote>
 <p><img alt="emit grammar" src="grammar/diagram/Emit.png" /></p>
 </blockquote>
-<p>Emit expressions enable short-circuiting the execution of a <code>tremor-script</code> when processing is known to be complete and further processing can be avoided. If no argument is supplied, emit` will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process emitted events or data using their default flow-based or stream-based data processing pipelines.</p>
+<p>Emit expressions enable short-circuiting the evaluation of a <code>tremor-script</code> when processing is known to be complete and further processing can be avoided. If no argument is supplied, emit` will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process emitted events or data using their default flow-based or stream-based data processing pipelines.</p>
 <p>As the content of the emitted event is user-defined, oeprators can standardise the format of the event emitted on emit from <code>tremor-script</code></p>
-<p><em>NOTE</em> By default, if no <code>emit</code> or <code>drop</code> expressions are defined, all expressions in a correctly written tremor-script will be executed until completion and the value of the last expression evaluated will be returned as an <code>emit</code> message.</p>
+<p><em>NOTE</em> By default, if no <code>emit</code> or <code>drop</code> expressions are defined, all expressions in a correctly written tremor-script will be evaluated until completion and the value of the last expression evaluated will be returned as an <code>emit</code> message.</p>
 <p>Implicit emission:</p>
 <div class="codehilite"><pre><span></span><code><span class="s">&quot;badgers&quot;</span><span class="w"> </span><span class="c1"># implicit emit</span>
 </code></pre></div>
@@ -2314,7 +2315,7 @@ scripts to simplify fixing such scripts.</p>
 
 
 <div class="codehilite"><pre><span></span><code><span class="kd">emit</span><span class="w"> </span><span class="s">&quot;oh noes!&quot;</span><span class="w"></span>
-<span class="kd">emit</span><span class="w"> </span><span class="s">&quot;never happens&quot;</span><span class="err">;</span><span class="w"> </span><span class="c1"># As the first emit always wins, this expression never executes</span>
+<span class="kd">emit</span><span class="w"> </span><span class="s">&quot;never happens&quot;</span><span class="err">;</span><span class="w"> </span><span class="c1"># As the first emit always wins, this expression never runs</span>
 </code></pre></div>
 
 
@@ -2349,16 +2350,16 @@ scripts to simplify fixing such scripts.</p>
 <p>Where:</p>
 <ul>
 <li>target: An expression that is the target of case-based queries</li>
-<li>case-expr: A predicate test, literal  value or pattern to match against</li>
+<li>case-expr: A predicate test, literal value or pattern to match against</li>
 <li>guard: An optional predicate expression to gate whether or not an otherwise matching case-clause will in fact match</li>
 <li>block: The expression to be evaluated if the case matches, and any supplied guard evaluates to true</li>
 </ul>
 <p>Examples:</p>
-<p>Discover if the <code>store.book</code> path is an array, record or primitive structure:</p>
+<p>Discover if the <code>store.book</code> path is an array, record or scalar structure:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">match</span><span class="w"> </span><span class="nx">store</span><span class="err">.</span><span class="nx">book</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
 <span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">%[]</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;store.book is an array-like data-structure&quot;</span><span class="w"></span>
 <span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">%{}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;store.book is a record-like data-structure&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;store.book is a primitive data-type&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;store.book is a scalar data-type&quot;</span><span class="w"></span>
 <span class="kd">end</span><span class="w"></span>
 </code></pre></div>
 
@@ -2657,9 +2658,7 @@ scripts to simplify fixing such scripts.</p>
 <p>Since the state storage lives for the lifetime of a pipeline, state will not be persisted when the pipeline is undeployed or the host process is shut down.</p>
 <h2 id="extractors">Extractors<a class="headerlink" href="#extractors" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><img alt="test expression grammar" src="grammar/diagram/TestExpr.png" />
-<img alt="test literal grammar" src="grammar/diagram/TEST_LITERAL.png" />
-<img alt="test literal escape grammar" src="grammar/diagram/TEST_ESCAPE.png" /></p>
+<p><img alt="test expression grammar" src="grammar/diagram/TestExpr.png" /> &gt; <img alt="test literal grammar" src="grammar/diagram/TEST_LITERAL.png" /> &gt; <img alt="test literal escape grammar" src="grammar/diagram/TEST_ESCAPE.png" /></p>
 </blockquote>
 <p>The language has pluggable support for a number of microformats with two basic modes of operation that enable predicate tests ( does a particular value match the expected micro-format ) and elementization ( if a value does match a specific micro-format, then extract and elementize accordingly ).</p>
 <p>The general form of a supported micro-format is as follows:</p>
@@ -2818,14 +2817,14 @@ scripts to simplify fixing such scripts.</p>
     </div>
     
       <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

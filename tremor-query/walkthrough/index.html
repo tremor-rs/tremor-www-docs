@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1605,8 +1606,8 @@ builds on the tremor scripting language.</p>
 <p>Trickle queries are compiled in pipeline DAGs and replace the yaml pipeline
 format used in previous versions to describe event processing graphs in
 the tremor runtime.</p>
-<p>The simplest possible query in trickle is</p>
-<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span> <span class="o">#</span> <span class="n">A</span> <span class="k">simple</span> <span class="n">passthrough</span> <span class="n">query</span> <span class="n">pipeline</span>
+<p>The most basic query possible in trickle is</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span> <span class="k">into</span> <span class="k">out</span><span class="p">;</span> <span class="o">#</span> <span class="n">A</span> <span class="n">basic</span> <span class="n">passthrough</span> <span class="n">query</span> <span class="n">pipeline</span>
 </code></pre></div>
 
 
@@ -1620,7 +1621,7 @@ pipeline yaml format:</p>
       <span class="nt">outputs</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">out</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
@@ -1662,11 +1663,11 @@ the <code>evens</code> and <code>odds</code> streams into the standard output st
 </code></pre></div>
 
 
-<p>We can test this with a simple json event using the <code>tremor-query</code> command line tool</p>
+<p>We can test this with a json event using the <code>tremor-query</code> command line tool</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;seq_num&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;horse&quot;</span>
+  <span class="nt">&quot;seq_num&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;horse&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -1816,7 +1817,7 @@ indirect looping cycles.</p>
 </code></pre></div>
 
 
-<p>Using windows is simple. We need to define the window specifications, such as a 15 second clock-based
+<p>To use a window we need to define the window specifications, such as a 15 second clock-based
 tumbling window called <code>15secs</code> as above. We can then create instances of these windows at runtime by
 applying those windows to streams. This is done in the <code>from</code> clause in <code>select</code> expressions.</p>
 <p>Wherever windows are applied, aggregate functions can be used. In the abvove example, we are calculating
@@ -1846,7 +1847,7 @@ data-drive or fully programmatic.</p>
 <p>In the above example we use a single aggregate function called <code>stats::hdr</code> which uses a high dynamic range
 or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
 set by the <code>group</code> clause. A group clause effectively partitions our operation by the group expressions provided
-by the trickle query programmer. In the example, we're using the field names  of the nested 'fields' record on inbound
+by the trickle query programmer. In the example, we're using the field names of the nested 'fields' record on inbound
 events to compose a component of a group that is also qualified by tags and a measurement name. The field component
 is used as a numeric input to the histogram aggregate function.</p>
 <p>In the <code>from</code> clause, we are using a tilt frame, or a succession of window resolutions over which this aggregate
@@ -1871,20 +1872,20 @@ all events in the illustration.</p>
 <h3 id="tilt-frames">Tilt Frames<a class="headerlink" href="#tilt-frames" title="Permanent link">&para;</a></h3>
 <p>Assuming a continuous flow of events into tremor...</p>
 <p><img alt="tilt-frame-mechanics.png" src="../tilt-frame-mechanics.png" /></p>
-<p>All the synthetic outputs of successive 5 minute windows that fit into a 15 minute period are <strong>merged</strong>
-into the 15 minute window. All the outputs of successive 15 minute periods that fit into a 1 hour period
+<p>All the synthetic outputs of successive 5 minute windows that fit into a 15 minute interval are <strong>merged</strong>
+into the 15 minute window. All the outputs of successive 15 minute intervals that fit into a 1 hour interval
 are <strong>merged</strong> into the 1 hour window. By chaining and merging, tremor can optimise ( reduce ) the amount
 of memory required across the chain when compared to multiple independent windows <code>select</code> expressions.
 In the case of aggregate functions like <code>stats::hdr`` or</code>stats::dds``` the savings are significant.</p>
-<p>If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15,  3.6B every hour.</p>
+<p>If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15, 3.6B every hour.</p>
 <p>By using tilt frames we can maximally minimize internal memory consumption, whilst reducing the volume of
 incremental computation ( per event, per frame ), and further whilst preserving relative accuracy for
 merge-capable aggregate functions.</p>
 <p>The converged statistics under merge exhibit the same relative accuracy at a fraction of the computational
-and memory overhead without the using the tilt-frame mechanism. </p>
+and memory overhead without the using the tilt-frame mechanism.</p>
 <h2 id="group-mechanics">Group Mechanics<a class="headerlink" href="#group-mechanics" title="Permanent link">&para;</a></h2>
 <p>The group clause in the query language partitions streams before windows and tilt frames
-are applied. Groups can be set-based,  each-based or composites thereof.</p>
+are applied. Groups can be set-based, each-based or composites thereof.</p>
 <h3 id="set-based-grouping">Set based grouping<a class="headerlink" href="#set-based-grouping" title="Permanent link">&para;</a></h3>
 <p>Grouping by set partitions streams by a concatenation of expressions.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="n">event</span> <span class="k">from</span> <span class="k">in</span>
@@ -1894,7 +1895,7 @@ are applied. Groups can be set-based,  each-based or composites thereof.</p>
 
 
 <p>In the example expression we are partitioning into a composite group that is
-composed of the country and  region of each inbound event.</p>
+composed of the country and region of each inbound event.</p>
 <p>So we expect data of the following form</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span> <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="nt">&quot;az&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="err">...</span> <span class="p">}</span>
 <span class="p">{</span> <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span> <span class="nt">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;east&quot;</span><span class="p">,</span> <span class="nt">&quot;az&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="err">...</span> <span class="p">}</span>
@@ -1922,7 +1923,7 @@ composed of the country and  region of each inbound event.</p>
 <p>Each field in the nested <code>locations</code> field becomes a component of our
 set and qualified by country ...</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<p>There are cases however that are not currently easily partitionable with a
+<p>There are cases however that currently complex to partitionable with a
 single sql expression due to limitations with the grouping clause. For example
 what is we wanted to make availability zones a component of our group partitions?</p>
 <p>How would we structure such a query?</p>
@@ -2029,14 +2030,14 @@ can be applied to further refine queries.</p>
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

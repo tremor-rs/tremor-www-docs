@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1409,8 +1410,8 @@
                 
                 
                 <h1 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h1>
-<p>This example demonstrates using Tremor as a proxy and aggregator for InfluxDB data. As such it coveres three topics. Ingesting and decoding influx data as the simple part. Then grouping this data and aggregating over it.</p>
-<p>The demo starts up a <a href="http://localhost:8888">local Capacitor instance</a>. This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the <em>8Connection URL</em>* to <code>ihttp://influxdb:8086</code>. For all other questions just select <code>Skip</code> as we do not need to configure those.</p>
+<p>This example demonstrates using Tremor as a proxy and aggregator for InfluxDB data. As such it coveres three topics. Ingesting and decoding influx data is the first part. Then grouping this data and aggregating over it.</p>
+<p>The demo starts up a <a href="http://localhost:8888">local Capacitor instance</a>. This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the *8Connection URL** to <code>ihttp://influxdb:8086</code>. For all other questions select <code>Skip</code> as we do not need to configure those.</p>
 <p>Once in capacitor look at the <code>tremor</code> database to see the metrics and rollups. Since rollups do roll up over time you might have to wait a few minutes untill aggregated data propagates.</p>
 <p>Depending on the performance of the system the demo is run on metrics may be shed due to tremors over load protection.</p>
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
@@ -1446,7 +1447,7 @@
 
 <p>The second part that happens in this query is removing non numeric values from our aggregated series since they are not able to be aggregated.</p>
 <h3 id="aggregation">Aggregation<a class="headerlink" href="#aggregation" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">select</span><span class="w"> </span>
+<div class="codehilite"><pre><span></span><code><span class="kd">select</span><span class="w"></span>
 <span class="err">{</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;measurement&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">measurement</span><span class="err">,</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;tags&quot;</span><span class="err">:</span><span class="w"> </span><span class="kd">patch</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">tags</span><span class="w"> </span><span class="kd">of</span><span class="w"> </span><span class="kd">insert</span><span class="w"> </span><span class="s">&quot;window&quot;</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="kd">end</span><span class="err">,</span><span class="w"></span>
@@ -1497,7 +1498,7 @@
 <p>It is noteworthy that in the aggregation context only <code>stats::hdr</code> and <code>win::first</code> are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.</p>
 <p>We are using <code>having</code> in the goruping step, however this could also be done with a <code>where</code> clause on the aggregation step. In this example we choose <code>having</code> over were as it is worth discarding events as early as possible. If the requirement were to handle non numeric fields in a different manner routing the output of the grouping step to two different select statements we would have used <code>where</code> instead.</p>
 <h3 id="attention">Attention<a class="headerlink" href="#attention" title="Permanent link">&para;</a></h3>
-<p>Using <code>win::first</code> over <code>stats::min</code> is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with <code>win::first</code> being cheaper to execute. In addition stats functions are currently implemented to return floating point numbers so <code>stats::min</code> could
+<p>Using <code>win::first</code> over <code>stats::min</code> is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with <code>win::first</code> being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so <code>stats::min</code> could
 lead incorrect timestamps we'd rather avoid.</p>
                 
               
@@ -1531,14 +1532,14 @@ lead incorrect timestamps we'd rather avoid.</p>
     </div>
     
       <script src="../../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../../..",
           features: [],
           search: Object.assign({
-            worker: "../../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1382,7 +1383,7 @@
                 
                 
                 <h1 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h1>
-<p>This example shows how handling apache logs with a tremor and elastic search could work. The example is a lot more complex than the simple showcases and combines three components.</p>
+<p>This example shows how handling apache logs with a tremor and elastic search could work. The example is a lot more complex than the initial showcases and combines three components.</p>
 <p>Kibana, which once started with docker-compose can be reached <a href="http://localhost:5601">locally</a>. It allows browsing through the logs. If you have never used Kibana before you can get started by clicking on <strong>Management</strong> then in the <strong>Elasticsearch</strong> section on <strong>Index Management</strong>.</p>
 <p>Elastic Search, which stores the logs submitted.</p>
 <p>Tremor, which takes the apache logs, parses and classifies them then submits them to indexes in elastic search.</p>
@@ -1397,7 +1398,7 @@
 <span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">%{</span><span class="w"> </span><span class="nx">raw</span><span class="w"> </span><span class="err">~=</span><span class="w"> </span><span class="nx">dissect</span><span class="err">|%{</span><span class="nx">ip</span><span class="err">}</span><span class="w"> </span><span class="err">%{}</span><span class="w"> </span><span class="err">%{}</span><span class="w"> </span><span class="err">[%{</span><span class="nx">timestamp</span><span class="err">}]</span><span class="w"> </span><span class="s">&quot;%{method} %{path} %{proto}&quot;</span><span class="w"> </span><span class="err">%{</span><span class="nx">code</span><span class="err">:</span><span class="nx">int</span><span class="err">}</span><span class="w"> </span><span class="err">%{</span><span class="nx">cost</span><span class="err">:</span><span class="nx">int</span><span class="err">}\\</span><span class="nx">n</span><span class="err">|</span><span class="w"> </span><span class="err">}</span><span class="w"></span>
 <span class="w">            </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="err">.</span><span class="nx">raw</span><span class="w">                                                           </span><span class="c1"># this first case is hit of the log includes an execution time (cost) for the request</span>
 <span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">%{</span><span class="w"> </span><span class="nx">raw</span><span class="w"> </span><span class="err">~=</span><span class="w"> </span><span class="nx">dissect</span><span class="err">|%{</span><span class="nx">ip</span><span class="err">}</span><span class="w"> </span><span class="err">%{}</span><span class="w"> </span><span class="err">%{}</span><span class="w"> </span><span class="err">[%{</span><span class="nx">timestamp</span><span class="err">}]</span><span class="w"> </span><span class="s">&quot;%{method} %{path} %{proto}&quot;</span><span class="w"> </span><span class="err">%{</span><span class="nx">code</span><span class="err">:</span><span class="nx">int</span><span class="err">}</span><span class="w"> </span><span class="err">%{}\\</span><span class="nx">n</span><span class="err">|</span><span class="w"> </span><span class="err">}</span><span class="w"></span>
-<span class="w">            </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="err">.</span><span class="nx">raw</span><span class="w">         </span>
+<span class="w">            </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="err">.</span><span class="nx">raw</span><span class="w"></span>
 <span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">emit</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;bad&quot;</span><span class="w"></span>
 <span class="w">  </span><span class="kd">end</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
@@ -1478,14 +1479,14 @@
     </div>
     
       <script src="../../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../../..",
           features: [],
           search: Object.assign({
-            worker: "../../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

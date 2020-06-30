@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1553,7 +1554,7 @@
 <p>Will run the 'real-workflow-througput-json' benchmark and publish a HDR histogram to standard output
 upon completion. it takes about 1 minute to run.</p>
 <h2 id="anatomy-of-a-benchmark">Anatomy of a benchmark<a class="headerlink" href="#anatomy-of-a-benchmark" title="Permanent link">&para;</a></h2>
-<p>Tremor benchmarks are simple in nature, they are composed of:</p>
+<p>Tremor benchmarks composed of:</p>
 <ul>
 <li>An impossibly fast source of data - using the blaster onramp</li>
 <li>An impossibly fast sink of data - using the blackhole offramp</li>
@@ -1627,15 +1628,15 @@ upon completion. it takes about 1 minute to run.</p>
       <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">group</span>
         <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grouper::bucket</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">runtime</span> <span class="p p-Indicator">]</span>
-      <span class="nt">runtime</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">group</span> <span class="p p-Indicator">]</span>
-      <span class="nt">group</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
-      <span class="nt">group/overflow</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">runtime</span><span class="p p-Indicator">]</span>
+      <span class="nt">runtime</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">group</span><span class="p p-Indicator">]</span>
+      <span class="nt">group</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
+      <span class="nt">group/overflow</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
-<p>All the above configuration are provided in a single yaml file and executed through the <code>run</code> script. The make target <code>bench</code> simply calls the run script for each known benchmark file and redirects test / benchmark output into a file.</p>
+<p>All the above configuration are provided in a single yaml file and evaluated through the <code>run</code> script. The make target <code>bench</code> calls the run script for each known benchmark file and redirects test / benchmark output into a file.</p>
 <h2 id="recommendations">Recommendations<a class="headerlink" href="#recommendations" title="Permanent link">&para;</a></h2>
 <p>To account for run-on-run variance ( difference in measured or recorded performance from one run to another ) we typically run benchmarks repeatedly on development machines with non-essential services such as docker or other services not engaged in the benchmark such as IDEs shut down during benchmarking.</p>
 <p>Even then, development laptops are not lab quality environments so results should be taken as indicative and with a grain of salt.</p>
@@ -1706,14 +1707,14 @@ upon completion. it takes about 1 minute to run.</p>
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

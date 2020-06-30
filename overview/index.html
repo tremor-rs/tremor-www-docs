@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1671,7 +1672,7 @@
 <li>Man in the middle bridging - Tremor is designed to bridge asynchronous upstream sources with synchronous downstream sinks. More generally, tremor excels at intelligently bridging from sync/async to async/sync so that message flows can be classified, dimensioned, segmented, routed using user defined logic whilst providing facilities to handle back-pressure and other hard distributed systems problems on behalf of its operators.</li>
 <li>For example - Log data distributed from Kafka to ElasticSearch via Logstash can introduce significant lag or delays as logstash becomes a publication bottleneck. Untimely, late delivery of log data to the network operations centre under severity zero or at/over capacity conditions reduces our ability to respond to major outage and other byzantine events in a timely fashion.</li>
 <li>In-flight redeployment - Tremor can be reconfigured via it's API allowing workloads to be migrated to/from new systems and logic to be retuned, reconfigured, or reconditioned without redeployment.</li>
-<li>Simple event processing - Tremor adopts many principles from DEBS ( Distributed Event Based Systems ), ESP ( Event Stream Processor ) and the CEP ( Complex Event Processing ) communities. However in its current state of evolution tremor has an incomplete feature set in this regard. Over time tremor MAY evolve as an ESP or CEP solution but this is an explicit non-goal of the project.</li>
+<li>event processing - Tremor adopts many principles from DEBS ( Distributed Event Based Systems ), ESP ( Event Stream Processor ) and the CEP ( Complex Event Processing ) communities. However in its current state of evolution tremor has an incomplete feature set in this regard. Over time tremor MAY evolve as an ESP or CEP solution but this is an explicit non-goal of the project.</li>
 </ul>
 <h2 id="tremor-urls">Tremor URLs<a class="headerlink" href="#tremor-urls" title="Permanent link">&para;</a></h2>
 <p>Since tremor v0.4, all internal artefacts and running instances of <strong>onramps</strong>, <strong>offramps</strong> and <strong>pipelines</strong> are dynamically configurable. The introduction of a dynamically configurable deployment model has resulted in the introduction of Tremor URLs.</p>
@@ -1720,7 +1721,7 @@
 </table>
 <p>The tremor REST API and configuration file formats also follow the same URL format.</p>
 <p>In the case of configuration, a shorthand URL form is often used. In the configuration model, we discriminate artefacts by type, so it is often sufficient to infer the <code>tremor:///{artefact-kind}</code> component when specifying ( configuring ) artefacts.</p>
-<p>In bindings, however, we minimally need to use the full URL path component  ( for example:<code>/pipeline/01</code> ).</p>
+<p>In bindings, however, we minimally need to use the full URL path component ( for example:<code>/pipeline/01</code> ).</p>
 <p>At this time, the full URL form is not used in the configuration model.</p>
 <h2 id="runtime-model">Runtime model<a class="headerlink" href="#runtime-model" title="Permanent link">&para;</a></h2>
 <p>The tremor runtime is composed of multiple internal components that communicate via queues across multiple threads of control managed/coordinated by a set of control plane actors driven by the tremor REST API.</p>
@@ -1750,7 +1751,7 @@
 <h2 id="pipeline-model">Pipeline Model<a class="headerlink" href="#pipeline-model" title="Permanent link">&para;</a></h2>
 <p>The core processing model of tremor is based on a directed-acyclic-graph based dataflow model.</p>
 <p>Tremor pipelines are a graph of vertices ( nodes, or operators ) with directed edges ( or connections, or links ) between operators in the graph.</p>
-<p>Events from the outside world in a tremor pipeline can only flow in one direction from inputs ( special operators that connect pipeline operators to onramps ) via operators to outputs ( special operators that connect pipeline operators to offramps).</p>
+<p>Events from the outside world in a tremor pipeline can only flow in one direction from inputs ( specific operators that connect pipeline operators to onramps ) via operators to outputs ( specific operators that connect pipeline operators to offramps).</p>
 <p>Operators process events and may produce <strong>zero or many</strong> output events for each event processed by the operator. As operators are the primary building block of tremor processing logic they are designed for extension.</p>
 <p>Tremor pipelines understand three different types of events:</p>
 <ul>
@@ -1766,7 +1767,7 @@
 <h3 id="contraflow">Contraflow<a class="headerlink" href="#contraflow" title="Permanent link">&para;</a></h3>
 <p>A core conceit with distributed event-based systems arrizes due to their typically asynchronous nature. Tremor employs a relatively novel algorithm to handle back-pressure or other events that propagate <em>backwards</em> through a pipeline.</p>
 <p>But pipelines are directed-acyclic-graphs ( DAGs ), so how do we back-propagate events without introducing cycles?</p>
-<p>The answer is simple:</p>
+<p>The answer is:</p>
 <ul>
 <li>There can be no cycles in a DAG</li>
 <li>DAGS are traversed in depth-first-search ( DFS ) order</li>
@@ -1895,14 +1896,14 @@ which philosophy results in less pager duty!</p>
     </div>
     
       <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

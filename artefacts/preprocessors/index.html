@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1586,7 +1587,7 @@
                 
                 
                 <h1 id="preprocessors">Preprocessors<a class="headerlink" href="#preprocessors" title="Permanent link">&para;</a></h1>
-<p>Preprocessors operate on the raw data stream and transform it. They are executed before data reaches the codec and do not know or care about tremors internal representation.</p>
+<p>Preprocessors operate on the raw data stream and transform it. They are run before data reaches the codec and do not know or care about tremors internal representation.</p>
 <p>Online codecs, preprocessors can be chained to perform multiple operations in succession.</p>
 <h2 id="supported-preprocessors">Supported Preprocessors<a class="headerlink" href="#supported-preprocessors" title="Permanent link">&para;</a></h2>
 <h3 id="lines">lines<a class="headerlink" href="#lines" title="Permanent link">&para;</a></h3>
@@ -1599,7 +1600,7 @@
 <p>Decodes base64 encoded data to the raw bytes.</p>
 <h3 id="decompress">decompress<a class="headerlink" href="#decompress" title="Permanent link">&para;</a></h3>
 <p>Decompresses a data stream, it is assumed that each message reaching the decompressor is a complete compressed entity.</p>
-<p>The compression algorithm is detected automatically from the supported formats, if it can't be detected the  assumption is that the data was decompressed and will be send on. Failure then can be transparently handled in the codec.</p>
+<p>The compression algorithm is detected automatically from the supported formats, if it can't be detected the assumption is that the data was decompressed and will be send on. Errors then can be transparently handled in the codec.</p>
 <p>Supported formats:</p>
 <ul>
 <li>gzip</li>
@@ -1691,14 +1692,14 @@
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

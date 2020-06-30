@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1422,8 +1423,8 @@
                 
                 
                 <h1 id="dissect">Dissect<a class="headerlink" href="#dissect" title="Permanent link">&para;</a></h1>
-<p>The Dissect extractor is loosely based on logstash's dissect plugin. It extracts data from strings in form of key-value pairs based on the pattern specified. It supports simple patterns which makes it lightweight compared to other extractors such as grok or regex.</p>
-<p>Tokens are enclosed within <code>%{ }</code> and any characters placed between tokens is considered as a delimiter. There should  be at least one delimiter in between 2 tokens except if one of them is a padding token.</p>
+<p>The Dissect extractor is loosely based on logstash's dissect plugin. It extracts data from strings in form of key-value pairs based on the pattern specified. It supports patterns which makes it lightweight compared to other extractors such as grok or regex.</p>
+<p>Tokens are enclosed within <code>%{ }</code> and any characters placed between tokens is considered as a delimiter. There should be at least one delimiter in between 2 tokens except if one of them is a padding token.</p>
 <h2 id="predicate">Predicate<a class="headerlink" href="#predicate" title="Permanent link">&para;</a></h2>
 <p>When used as a predicate test with <code>~</code>, it passes if and only if the referent target matches the pattern exhaustively.</p>
 <h2 id="extraction">Extraction<a class="headerlink" href="#extraction" title="Permanent link">&para;</a></h2>
@@ -1449,7 +1450,7 @@
 <td>Given field is used as the key for the pattern extracted</td>
 <td><code>%{name}</code></td>
 <td>John</td>
-<td><code>"name"  : "John"</code></td>
+<td><code>"name" : "John"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -1465,7 +1466,7 @@
 <td>Named keys</td>
 <td><code>%{&amp; field}</code></td>
 <td>Returns key value pair of the field. Takes the key from the previously matched field.</td>
-<td><code>%{ code }  % {country}</code></td>
+<td><code>%{ code } % {country}</code></td>
 <td>DE Germany</td>
 <td><code>"DE" : "Germany"</code></td>
 <td>Needs a field present earlier with the same name</td>
@@ -1474,7 +1475,7 @@
 <td>Empty field</td>
 <td><code>% { field }</code></td>
 <td>Will return an empty value if no data is present</td>
-<td><code>%{ code }     %{country}</code></td>
+<td><code>%{ code } %{country}</code></td>
 <td>Germany</td>
 <td><code>"code" : "",&lt;br /&gt;"country" : "Germany"</code></td>
 <td></td>
@@ -1483,7 +1484,7 @@
 <td>Skipped fields</td>
 <td><code>%{? field}</code></td>
 <td>Skips the extracted value</td>
-<td><code>%{ ? first_name}  {last_name}</code></td>
+<td><code>%{ ? first_name} {last_name}</code></td>
 <td>John Doe</td>
 <td><code>"name" : "Doe"</code></td>
 <td></td>
@@ -1502,7 +1503,7 @@
 <td><code>%{_}</code> or <code>%{_(chars)}</code></td>
 <td><code>Removes padding from the field in the output</code></td>
 <td><code>%{name} %{_} %{age}</code></td>
-<td>John       22</td>
+<td>John 22</td>
 <td><code>"name" : "John", "age":"22"</code></td>
 <td>The field being extracted may not contain the padding.<br />A custom padding can be specified by using the <code>%{_(custom)}</code> notation</td>
 </tr>
@@ -1514,7 +1515,7 @@
 <li>Skipped, Append or Named field with no name (e.g. <code>%{?}</code>).</li>
 <li>A delimiter specified in the pattern is missing.</li>
 <li>A named field is not found in the pattern.</li>
-<li>Invalid type specified.</li>
+<li>the type specified is not valid.</li>
 <li>Types used with the append token.</li>
 <li>Pattern isn't completely parsed (at end of input).</li>
 <li>Input isn't completely parsed.</li>
@@ -1618,14 +1619,14 @@
     </div>
     
       <script src="../../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../../..",
           features: [],
           search: Object.assign({
-            worker: "../../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

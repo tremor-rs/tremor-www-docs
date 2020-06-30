@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1485,7 +1486,7 @@
 
 <p>Tremor leverages the registry/repository and publish-find-bind Service Oriented Architecture patterns to drive its configuration model. Onramp, Offramp and Pipeline configurations can be published as template specifications along with how they should be interconnected as binding specifications.</p>
 <p>As all artefacts in tremor are named, when a mapping is published, it deploys all the required onramps, offramps and pipelines automatically. This also means that when a mapping is deleted, that the corresponding live instances are undeployed.</p>
-<p>All live or running artefacts have a corresponding state machine that manages its deployment lifecycle. The FSM is a simplified version of the POA servant activator lifecycle from CORBA and other Application Server Platforms.</p>
+<p>All live or running artefacts have a corresponding state machine that manages its deployment lifecycle. The FSM is a simplified version of the POA worker activator lifecycle from CORBA and other Application Server Platforms.</p>
 <h2 id="using-the-docker-image">Using the docker image<a class="headerlink" href="#using-the-docker-image" title="Permanent link">&para;</a></h2>
 <p>When using the tremor docker image configuration is loaded from the folder <code>/etc/tremor</code> this folder should be mounted into the docker container to propagate the data.</p>
 <p>The following files are looked for:</p>
@@ -1532,15 +1533,15 @@
       <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>
         <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">passthrough</span> <span class="p p-Indicator">]</span>
-      <span class="nt">passthrough</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">out</span> <span class="p p-Indicator">]</span>
+      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">passthrough</span><span class="p p-Indicator">]</span>
+      <span class="nt">passthrough</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
 
 <span class="c1"># define how blaster, the pipeline under test, and blackhole interconnect</span>
 <span class="nt">binding</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="s">&#39;/onramp/blaster/{instance}/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/pipeline/main/{instance}/in&#39;</span> <span class="p p-Indicator">]</span>
-      <span class="s">&#39;/pipeline/main/{instance}/out&#39;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;/offramp/blackhole/{instance}/in&#39;</span> <span class="p p-Indicator">]</span>  
+      <span class="s">&quot;/onramp/blaster/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/main/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+      <span class="s">&quot;/pipeline/main/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/offramp/blackhole/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 
@@ -1570,7 +1571,7 @@
 <p>This file 'loads' the repository on startup with various specifications or templates, but it doesn't do anything. For that, we need to define one or many instances for tremor to deploy. This is done in the reg.yaml file:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">mapping</span><span class="p">:</span>
   <span class="nt">/binding/default/01</span><span class="p">:</span> <span class="c1"># deployment &#39;01&#39;</span>
-    <span class="nt">instance</span><span class="p">:</span> <span class="s">&quot;01&quot;</span>     <span class="c1"># .. deploys, blaster/01, blackhole/01, pipeline/main/01</span>
+    <span class="nt">instance</span><span class="p">:</span> <span class="s">&quot;01&quot;</span> <span class="c1"># .. deploys, blaster/01, blackhole/01, pipeline/main/01</span>
 </code></pre></div>
 
 
@@ -1653,14 +1654,14 @@ tremor-cli api binding publish benchmark.yaml
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

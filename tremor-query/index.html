@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1674,7 +1675,7 @@
 <p>The SQL-like syntax enables a natural and familiar style whilst allowing the resulting statements to be compiled into a formal DAG for compile-time checks and to ensure correctness.</p>
 <p>Leveraging the tremor-query expression syntax allows rich filtering, transformation, patching, merging and object and array comprehensions to be programmed.</p>
 <p>The addition of aggregate functions, and windowing allows batches or a slice in time of events to be summarised or processed together to derive useful synthetic events.</p>
-<p>Like its sibling langauge <code>tremor-script</code>, <code>tremor-query</code> supports the same data-types is entirely event-driven. For existing tremor users it is relatively easy to learn, yet powerful and flexible.</p>
+<p>Like its sibling langauge <code>tremor-script</code>, <code>tremor-query</code> supports the same data-types is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet powerful and flexible.</p>
 <h3 id="extensibility">Extensibility<a class="headerlink" href="#extensibility" title="Permanent link">&para;</a></h3>
 <p>The SQL-based nature of <code>tremor-query</code> means that complex branching, combining or powerful constructs such as in-memory tables can be added following a familiar SQL-like syntax.</p>
 <p>The expression-based expression language derived from <code>tremor-script</code> allows computational forms to be extended.</p>
@@ -1721,13 +1722,10 @@ same as in <code>tremor-script</code>.</p>
 
 <h4 id="window-definitions">Window definitions<a class="headerlink" href="#window-definitions" title="Permanent link">&para;</a></h4>
 <p>Window definitions in <code>tremor-query</code> can be either tumbling or sliding.</p>
-<p>A tumbling window is a window configued with a fixed non-overlapping period of time. The aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.</p>
+<p>A tumbling window is a window configued with a fixed non-overlapping interval of time. The aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.</p>
 <p>Window definition grammar:</p>
 <blockquote>
-<p><img alt="window definition grammar" src="grammar/diagram/DefineWindowDefn.png" />
-<img alt="with params grammar" src="grammar/diagram/WithParams.png" />
-<img alt="with partial paraqms grammar" src="grammar/diagram/WithPartialParams.png" />
-<img alt="embedded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
+<p><img alt="window definition grammar" src="grammar/diagram/DefineWindowDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /> &gt; <img alt="with partial paraqms grammar" src="grammar/diagram/WithPartialParams.png" /> &gt; <img alt="embedded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
 </blockquote>
 <p>For example a 15 second tumbling window can be defined as follows</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">fifteen_secs</span><span class="w"></span>
@@ -1741,13 +1739,11 @@ same as in <code>tremor-script</code>.</p>
 <p>Custom operators allow legacy operators written before the query language was designed to be used with the query language. As the query langauge and legacy yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:</p>
 <p>Operator definition grammar:</p>
 <blockquote>
-<p><img alt="operator definition grammar" src="grammar/diagram/DefineOperatorDefn.png" />
-<img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
+<p><img alt="operator definition grammar" src="grammar/diagram/DefineOperatorDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
 </blockquote>
 <p>Creating an operator:</p>
 <blockquote>
-<p><img alt="create operator grammar" src="grammar/diagram/CreateOperatorDefn.png" />
-<img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
+<p><img alt="create operator grammar" src="grammar/diagram/CreateOperatorDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
 </blockquote>
 <div class="codehilite"><pre><span></span><code><span class="c1"># create a bucketing operator</span>
 <span class="kd">define</span><span class="w"> </span><span class="nx">grouper</span><span class="err">::</span><span class="nx">bucket</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">kfc</span><span class="err">;</span><span class="w"></span>
@@ -1765,14 +1761,11 @@ same as in <code>tremor-script</code>.</p>
 <p>The tremor-script language can be embedded in the query language natively and this mirrors legacy usage where it was embedded within yaml-based pipeline configuration. However, the tooling that ships with <code>tremor-query</code> understands both the query language and scripting language dialects with better syntax highlighting and error checking built in for ease of operator productivity over the legacy yaml syntax.</p>
 <p>Script definition grammar:</p>
 <blockquote>
-<p><img alt="script definition grammar" src="grammar/diagram/DefineScriptDefn.png" />
-<img alt="with partial params grammar" src="grammar/diagram/WithPartialParams.png" />
-<img alt="embeded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
+<p><img alt="script definition grammar" src="grammar/diagram/DefineScriptDefn.png" /> &gt; <img alt="with partial params grammar" src="grammar/diagram/WithPartialParams.png" /> &gt; <img alt="embeded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
 </blockquote>
 <p>Script an operator:</p>
 <blockquote>
-<p><img alt="create script grammar" src="grammar/diagram/CreateScriptDefn.png" />
-<img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
+<p><img alt="create script grammar" src="grammar/diagram/CreateScriptDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
 </blockquote>
 <div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">grouper</span><span class="err">::</span><span class="nx">bucket</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">kfc</span><span class="err">;</span><span class="w"></span>
 
@@ -1801,15 +1794,7 @@ same as in <code>tremor-script</code>.</p>
 <p>The select query is a builtin operation that is the workhorse of the tremor-query` language.</p>
 <p>The select operation is of the general form:</p>
 <blockquote>
-<p><img alt="select grammar" src="grammar/diagram/SelectStmt.png" />
-<img alt="from grammar" src="grammar/diagram/FromClause.png" />
-<img alt="where grammar" src="grammar/diagram/WhereClause.png" />
-<img alt="group by grammar" src="grammar/diagram/GroupByClause.png" />
-<img alt="group by dimensions grammar" src="grammar/diagram/GroupByDimension.png" />
-<img alt="set group grammar" src="grammar/diagram/SetBasedGroup.png" />
-<img alt="each group grammar" src="grammar/diagram/EachBasedGroup.png" />
-<img alt="into grammar" src="grammar/diagram/IntoClause.png" />
-<img alt="having grammar" src="grammar/diagram/HavingClause.png" /></p>
+<p><img alt="select grammar" src="grammar/diagram/SelectStmt.png" /> &gt; <img alt="from grammar" src="grammar/diagram/FromClause.png" /> &gt; <img alt="where grammar" src="grammar/diagram/WhereClause.png" /> &gt; <img alt="group by grammar" src="grammar/diagram/GroupByClause.png" /> &gt; <img alt="group by dimensions grammar" src="grammar/diagram/GroupByDimension.png" /> &gt; <img alt="set group grammar" src="grammar/diagram/SetBasedGroup.png" /> &gt; <img alt="each group grammar" src="grammar/diagram/EachBasedGroup.png" /> &gt; <img alt="into grammar" src="grammar/diagram/IntoClause.png" /> &gt; <img alt="having grammar" src="grammar/diagram/HavingClause.png" /></p>
 </blockquote>
 <p>A example select operation configured to pass through data from a pipelines default <code>in</code> stream to a pipelines default <code>out</code> stream:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
@@ -1920,14 +1905,14 @@ same as in <code>tremor-script</code>.</p>
     </div>
     
       <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

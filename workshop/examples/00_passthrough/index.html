@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1366,34 +1367,34 @@
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
 <p>The <a href="etc/tremor/config/00_ramps.yaml">onramp</a> we use is a websocket onramp listening on port 4242, it receives <code>JSON</code> formatted messages.</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ws-input</span>          <span class="c1"># A unique id for binding/mapping</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ws</span>              <span class="c1"># The unique type descriptor for the onramp ( websocket server here)</span>
-    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>           <span class="c1"># The underlying data format expected for application payload data</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ws-input</span> <span class="c1"># A unique id for binding/mapping</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ws</span> <span class="c1"># The unique type descriptor for the onramp ( websocket server here)</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span> <span class="c1"># The underlying data format expected for application payload data</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4242</span>          <span class="c1"># The TCP port to listen on</span>
-      <span class="nt">host</span><span class="p">:</span> <span class="s">&#39;0.0.0.0&#39;</span>     <span class="c1"># The IP address to bind on ( all interfaces in this case )</span>
+      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4242</span> <span class="c1"># The TCP port to listen on</span>
+      <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;0.0.0.0&quot;</span> <span class="c1"># The IP address to bind on ( all interfaces in this case )</span>
 </code></pre></div>
 
 
 <p>It connects to the pipeline <code>example</code> in the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a> file using the trickle query language to express its logic.</p>
 <p>The <a href="etc/tremor/config/00_ramps.yaml">offramp</a> we used is a console offramp producing to standard output. It receives <code>JSON</code> formatted messages.</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout-output</span>     <span class="c1"># The unique id for binding/mapping</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout</span>          <span class="c1"># The unique type descriptor for the offramp ( stdout here )</span>
-    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>           <span class="c1"># The underlying data format expected for application payload data</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout-output</span> <span class="c1"># The unique id for binding/mapping</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout</span> <span class="c1"># The unique type descriptor for the offramp ( stdout here )</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span> <span class="c1"># The underlying data format expected for application payload data</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">prefix</span><span class="p">:</span> <span class="s">&#39;&gt;&gt;</span><span class="nv"> </span><span class="s">&#39;</span>       <span class="c1"># A prefix for data emitted on standard output by this offramp</span>
+      <span class="nt">prefix</span><span class="p">:</span> <span class="s">&quot;&gt;&gt;</span><span class="nv"> </span><span class="s">&quot;</span> <span class="c1"># A prefix for data emitted on standard output by this offramp</span>
 </code></pre></div>
 
 
 <p>The <a href="etc/tremor/config/01_binding.yaml">binding</a> expresses those relations and gives the graph of onramp, pipeline and offramp.</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">binding</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>                                 <span class="c1"># The unique name of this binding template</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span> <span class="c1"># The unique name of this binding template</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="s">&#39;/onramp/ws-input/{instance}/out&#39;</span><span class="p p-Indicator">:</span>            <span class="c1"># Connect the inpunt to the pipeline</span>
-       <span class="p p-Indicator">-</span> <span class="s">&#39;/pipeline/example/{instance}/in&#39;</span>
-      <span class="s">&#39;/pipeline/example/{instance}/out&#39;</span><span class="p p-Indicator">:</span>           <span class="c1"># Connect the pipeline to the output</span>
-       <span class="p p-Indicator">-</span> <span class="s">&#39;/offramp/stdout-output/{instance}/in&#39;</span>
+      <span class="s">&quot;/onramp/ws-input/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="c1"># Connect the inpunt to the pipeline</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;/pipeline/example/{instance}/in&quot;</span>
+      <span class="s">&quot;/pipeline/example/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="c1"># Connect the pipeline to the output</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;/offramp/stdout-output/{instance}/in&quot;</span>
 </code></pre></div>
 
 
@@ -1404,7 +1405,7 @@
 
 
 <h2 id="command-line-testing-during-logic-development">Command line testing during logic development<a class="headerlink" href="#command-line-testing-during-logic-development" title="Permanent link">&para;</a></h2>
-<p>Execute a the passthrough query against a sample input.json</p>
+<p>Run a the passthrough query against a sample input.json</p>
 <div class="codehilite"><pre><span></span><code>$ tremor-query -e input.json example.trickle
 &gt;&gt; <span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;world&quot;</span><span class="o">}</span>
 </code></pre></div>
@@ -1456,14 +1457,14 @@
     </div>
     
       <script src="../../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../../..",
           features: [],
           search: Object.assign({
-            worker: "../../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

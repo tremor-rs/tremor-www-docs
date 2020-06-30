@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1618,7 +1619,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12201</span>
-      <span class="nt">host</span><span class="p">:</span> <span class="s">&#39;127.0.0.1&#39;</span>
+      <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;127.0.0.1&quot;</span>
 </code></pre></div>
 
 
@@ -1684,13 +1685,13 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">entries</span><span class="p">:</span>
-<span class="c1">## every second</span>
+        <span class="c1">## every second</span>
         <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1s</span>
           <span class="nt">expr</span><span class="p">:</span> <span class="s">&quot;*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
-<span class="c1">## every 5 seconds</span>
+        <span class="c1">## every 5 seconds</span>
         <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
           <span class="nt">expr</span><span class="p">:</span> <span class="s">&quot;0/5</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
-<span class="c1">## every minute</span>
+        <span class="c1">## every minute</span>
         <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1m</span>
           <span class="nt">expr</span><span class="p">:</span> <span class="s">&quot;0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
           <span class="nt">payload</span><span class="p">:</span>
@@ -1825,15 +1826,17 @@ Response status code configuration is also not currently respected. It is curren
 configure rest onramps via swagger, raml or openapi configuration files.</p>
 <h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
 <p>PostgreSQL onramp.</p>
-<p>Supported configuration options are:
-* <code>host</code> - PostgreSQL database hostname
-* <code>port</code> - PostgresSQL database port
-* <code>user</code> - Username for authentication
-* <code>password</code> - Password for authentication
-* <code>dbname</code> - Database name
-* <code>query</code> - Query executed to retrieve data
-* <code>interval_ms</code> - Query execution interval in milliseconds
-* <code>cache</code> - Location (<code>path</code>) and size (<code>size</code>) for caching of latest successful query execution interval</p>
+<p>Supported configuration options are:</p>
+<ul>
+<li><code>host</code> - PostgreSQL database hostname</li>
+<li><code>port</code> - PostgresSQL database port</li>
+<li><code>user</code> - Username for authentication</li>
+<li><code>password</code> - Password for authentication</li>
+<li><code>dbname</code> - Database name</li>
+<li><code>query</code> - Query run to retrieve data</li>
+<li><code>interval_ms</code> - Query interval in milliseconds</li>
+<li><code>cache</code> - Location (<code>path</code>) and size (<code>size</code>) for caching of latest successful query interval</li>
+</ul>
 <p><code>query</code> must include two arguments to be filled with start and end interval timestamps.</p>
 <p>Data will come out of onramp in objects representing columns. If schema
 specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and <code>created_at</code>
@@ -1888,7 +1891,7 @@ specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12201</span>
-      <span class="nt">host</span><span class="p">:</span> <span class="s">&#39;127.0.0.1&#39;</span>
+      <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;127.0.0.1&quot;</span>
 </code></pre></div>
                 
               
@@ -1957,14 +1960,14 @@ specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and
     </div>
     
       <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

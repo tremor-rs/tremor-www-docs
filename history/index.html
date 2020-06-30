@@ -13,7 +13,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6e35a1a6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
       
@@ -53,6 +53,7 @@
     
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -1531,7 +1532,7 @@
                 
                 <h1 id="history">History<a class="headerlink" href="#history" title="Permanent link">&para;</a></h1>
 <p>Tremor started with a straight forward problem statement:</p>
-<p><strong>During peak events logs and metrics going to Elastic Search and InfluxDB back up in Kafka queues  removing visibility from the system.</strong></p>
+<p><strong>During peak events logs and metrics going to Elastic Search and InfluxDB back up in Kafka queues removing visibility from the system.</strong></p>
 <h2 id="tremor-08-develop">tremor-0.8 (develop)<a class="headerlink" href="#tremor-08-develop" title="Permanent link">&para;</a></h2>
 <p>In this release, the embedded script and query languages have been extended with
 support for modular development. Tremor scripts and queries can now be organised
@@ -1577,13 +1578,13 @@ expressions. A cron-based onramp for scheduled/periodic one-shot or repeated eve
 <p>Along with that we fixed a bug on the influx line protocol renderer that caused integers to be re-rendered as floats and multi field items to be rendered in-correctly.</p>
 <p>We introduced the <a href="../tremor-script/stdlib/tremor/chash/"><code>chash</code> module</a> that currently houses an implementation of Google's <a href="https://arxiv.org/abs/1406.2294">jump consistent hashing</a>. This enables partitioning a data flow uniformly over multiple outputs with minimal cost and no need for synchronisation.</p>
 <h2 id="tremor-05-stable">tremor-0.5 (stable)<a class="headerlink" href="#tremor-05-stable" title="Permanent link">&para;</a></h2>
-<p>Version 0.5 we introduced a completely overhauled scripting language. We moved from a simple rule to action based system to something that can best be described as a ETL focused language now with powerful constructs such as <a href="../tremor-script/#match"><code>match</code> statements</a> with <code>record-</code> and <code>array patterns</code> and an extensive <a href="../tremor-script/functions/">function library</a>.</p>
+<p>Version 0.5 we introduced a completely overhauled scripting language. We moved from a rule to action based system to something that can best be described as a ETL focused language now with powerful constructs such as <a href="../tremor-script/#match"><code>match</code> statements</a> with <code>record-</code> and <code>array patterns</code> and an extensive <a href="../tremor-script/functions/">function library</a>.</p>
 <p>It introduces the concept of <a href="../tremor-script/extractors/">extractors</a>, part of tremor script they allow matching against complex patterns and extracting information from them. This work covers common things like regular expressions or globs, as well as grok and dissect patterns. But also allows decoding embedded influx, json, or even base64 data without much extra work.</p>
 <p>As always this release introduces some optimisations, since JSON is the main encoding used for data we introduced <a href="../tremor-script/#performant">SIMD optimized</a> decoding of this data base on <a href="https://arxiv.org/abs/1902.08318">Geoff Langdales, and Daniel Lemires work</a> into this area.</p>
 <h2 id="tremor-04-stable">tremor-0.4 (stable)<a class="headerlink" href="#tremor-04-stable" title="Permanent link">&para;</a></h2>
 <p>This release combined the lessons from the 0.3 and 0.2 looking at what worked in one and the other. The 0.4 release kept the dynamic pipelines but implemented them in a way closer to how they were implemented in 0.2 retaining the performance this way.</p>
 <p>Also, <a href="../overview/#contraflow">contraflow</a> introduced in 0.3 was extended with <a href="../overview/#signalflow">signals</a> to allow non-event carrying messages to move through the pipeline for operational purposes such periodic ticks.</p>
-<p>The matching language of the earlier releases got a complete overhaul becoming a more powerful scripting language - <a href="../tremor-script/">tremor-script</a>. Tremor script introduced features such as event metadata variables to drive operator behavior outside of the script itself, mutation of event values, support for functions, along with a return statement that allows early returns from a script to save execution time.</p>
+<p>The matching language of the earlier releases got a complete overhaul becoming a more powerful scripting language - <a href="../tremor-script/">tremor-script</a>. Tremor script introduced features such as event metadata variables to drive operator behavior outside of the script itself, mutation of event values, support for functions, along with a return statement that allows early returns from a script to save run time.</p>
 <p>The basic idea of a <code>yaml</code> file as configuration was carried over from 0.3 but the content dramatically altered to be more usable. Along with the new syntax also the ability to run multiple pipelines, onramps and offramp in the same tremor instance were introduced.</p>
 <p>With the new config tremor, 0.4 also introduced an API that allows adding, remove and alter the components running in an instance without requiring a restart. This feature came with the addition of <a href="../operations/cli/">tremor-cli</a> to expose this API to operators without requiring to remember the interface details.</p>
 <h2 id="tremor-03-develop">tremor-0.3 (develop)<a class="headerlink" href="#tremor-03-develop" title="Permanent link">&para;</a></h2>
@@ -1666,14 +1667,14 @@ expressions. A cron-based onramp for scheduled/periodic one-shot or repeated eve
     </div>
     
       <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
-      <script src="../assets/javascripts/bundle.a45f732b.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.c03f0417.min.js"
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

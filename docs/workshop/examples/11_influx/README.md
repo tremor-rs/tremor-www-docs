@@ -1,8 +1,8 @@
 # Transform
 
-This example demonstrates using Tremor as a proxy and aggregator for InfluxDB data. As such it coveres three topics. Ingesting and decoding influx data as the simple part. Then grouping this data and aggregating over it.
+This example demonstrates using Tremor as a proxy and aggregator for InfluxDB data. As such it coveres three topics. Ingesting and decoding influx data is the first part. Then grouping this data and aggregating over it.
 
-The demo starts up a [local Capacitor instance](http://localhost:8888). This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the *8Connection URL** to `ihttp://influxdb:8086`. For all other questions just select `Skip` as we do not need to configure those.
+The demo starts up a [local Capacitor instance](http://localhost:8888). This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the \*8Connection URL\*\* to `ihttp://influxdb:8086`. For all other questions select `Skip` as we do not need to configure those.
 
 Once in capacitor look at the `tremor` database to see the metrics and rollups. Since rollups do roll up over time you might have to wait a few minutes untill aggregated data propagates.
 
@@ -11,7 +11,6 @@ Depending on the performance of the system the demo is run on metrics may be she
 ## Environment
 
 In the [`example.trickle`](etc/tremor/config/example.trickle) we process the data in multiple steps, since this is somewhat more complex then the prior examples we'll discuss each step in the Business Logic section.
-
 
 ## Business Logic
 
@@ -52,7 +51,7 @@ The second part that happens in this query is removing non numeric values from o
 ### Aggregation
 
 ```trickle
-select 
+select
 {
     "measurement": event.measurement,
     "tags": patch event.tags of insert "window" => window end,
@@ -112,5 +111,5 @@ We are using `having` in the goruping step, however this could also be done with
 
 ### Attention
 
-Using `win::first` over `stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `win::first` being cheaper to execute. In addition stats functions are currently implemented to return floating point numbers so `stats::min` could
+Using `win::first` over `stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `win::first` being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so `stats::min` could
 lead incorrect timestamps we'd rather avoid.

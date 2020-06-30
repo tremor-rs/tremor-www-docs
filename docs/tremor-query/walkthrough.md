@@ -1,4 +1,5 @@
 # Trickle Walkthough
+
 ---
 
 In this section we walk through increasingly complex tremor query language ( trickle )
@@ -13,10 +14,10 @@ Trickle queries are compiled in pipeline DAGs and replace the yaml pipeline
 format used in previous versions to describe event processing graphs in
 the tremor runtime.
 
-The simplest possible query in trickle is
+The most basic query possible in trickle is
 
 ```sql
-select event from in into out; # A simple passthrough query pipeline
+select event from in into out; # A basic passthrough query pipeline
 ```
 
 This would be configured/programmed as follows in the more verbose
@@ -31,9 +32,8 @@ pipeline:
       outputs:
         - out
     links:
-      in: [ out ]
+      in: [out]
 ```
-
 
 The `event` keyword selected the event from the standard input stream `in`
 and passes it through unchanged to the standard output stream `out`.
@@ -81,13 +81,13 @@ select event from evens into out;
 select event from odds into out;
 ```
 
-We can test this with a simple json event using the `tremor-query` command line tool
+We can test this with a json event using the `tremor-query` command line tool
 
 ```json
 {
-    "seq_num": 4,
-    "value": 10,
-    "group": "horse"
+  "seq_num": 4,
+  "value": 10,
+  "group": "horse"
 }
 ```
 
@@ -113,7 +113,6 @@ out>>
 ```
 
 ## Scripts and Operators
-
 
 The query language is _backwards compatible_ with the legacy pipeline format in that the same
 operations are available in the old and new syntax. The new structured query syntax is more
@@ -170,11 +169,11 @@ Definitions in tremor are non-executing. They should be considered as templates 
 
 In the query langauge, any `define` clause creates specifications, possibly with arguments for
 specialization. They are typically incarnated via the `create` clause. Anything that is `create`ed
-will form a stream or node in the query graph - these *do* consume memory and participate in a
+will form a stream or node in the query graph - these _do_ consume memory and participate in a
 pipeline query algorithm.
 
 So in the above example, the `categorize` script and the `categorize` node have both a definition
-or specification __and__ an instance node that participates in the graph at runtime. It is often
+or specification **and** an instance node that participates in the graph at runtime. It is often
 convenient to use the same name where there is only one instance of an operator of a given type.
 
 ## Building Query Graph Algorithms
@@ -231,15 +230,13 @@ select event from a/2 into out;
 select event from b inout out;
 ```
 
-
 ## Aggregations
 
 A key feature of the tremor query langauge are aggregations. These are supported with:
 
-* Aggregate functions - An aggregate function is a function that runs in the context of a temporal window of events, emitting results intermittently
-* Windows - A window is a range of event, clock or data time. There can be many different types of window
-* Tilt Frames - A tilt frame is a chain of compatible windows with __decreasing__ resolution used to reduce memory pressure and preserve relative accuracy of windowed aggregate functions
-
+- Aggregate functions - An aggregate function is a function that runs in the context of a temporal window of events, emitting results intermittently
+- Windows - A window is a range of event, clock or data time. There can be many different types of window
+- Tilt Frames - A tilt frame is a chain of compatible windows with **decreasing** resolution used to reduce memory pressure and preserve relative accuracy of windowed aggregate functions
 
 An example clock-driven tumbling window:
 
@@ -261,7 +258,7 @@ from in[`15secs`] # We apply the window nominally to streams
 into out;
 ```
 
-Using windows is simple. We need to define the window specifications, such as a 15 second clock-based
+To use a window we need to define the window specifications, such as a 15 second clock-based
 tumbling window called `15secs` as above. We can then create instances of these windows at runtime by
 applying those windows to streams. This is done in the `from` clause in `select` expressions.
 
@@ -295,7 +292,7 @@ into normalize;
 In the above example we use a single aggregate function called `stats::hdr` which uses a high dynamic range
 or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
 set by the `group` clause. A group clause effectively partitions our operation by the group expressions provided
-by the trickle query programmer. In the example, we're using the field names  of the nested 'fields' record on inbound
+by the trickle query programmer. In the example, we're using the field names of the nested 'fields' record on inbound
 events to compose a component of a group that is also qualified by tags and a measurement name. The field component
 is used as a numeric input to the histogram aggregate function.
 
@@ -304,8 +301,8 @@ function is producing results. So a `10secs` window is emitting on a 10-second r
 So 6 times per second the state of the 10 second window is merged into the `1min` frame. This merge process is
 performed for each frame in the tilt frame.
 
-The advantage of tilt-frames is that as the target expression is __the same__ for each frame, we can _merge_ across
-each frame without amplifying error - in short, we get the __effect__ of summarisation without loss of accuracy.
+The advantage of tilt-frames is that as the target expression is **the same** for each frame, we can _merge_ across
+each frame without amplifying error - in short, we get the **effect** of summarisation without loss of accuracy.
 
 ## Aggregation Mechanics
 
@@ -323,8 +320,7 @@ A size based window of size 2 would emit a synthetic output event every 2 events
 So the lifespan of a size based window is 2 events, repeated and non-overlapping for tumbling style windows.
 In the illustration above events `1` and `2` in the first window `w0` produce a single synthetic or derivate event `a`
 Events `3` and `4` in the second window `w1` produce a single synthetic or derivate event `b`
-As there is no 6th event in the example illustration, we will *never* get another synthetic output event
-
+As there is no 6th event in the example illustration, we will _never_ get another synthetic output event
 
 Contrast this with the 10 second or clock-based tumbling window. In tfirst window `w0`s lifetime we capture
 all events in the illustration.
@@ -335,27 +331,25 @@ Assuming a continuous flow of events into tremor...
 
 ![tilt-frame-mechanics.png](tilt-frame-mechanics.png)
 
-
-All the synthetic outputs of successive 5 minute windows that fit into a 15 minute period are __merged__
-into the 15 minute window. All the outputs of successive 15 minute periods that fit into a 1 hour period
-are __merged__ into the 1 hour window. By chaining and merging, tremor can optimise ( reduce ) the amount
+All the synthetic outputs of successive 5 minute windows that fit into a 15 minute interval are **merged**
+into the 15 minute window. All the outputs of successive 15 minute intervals that fit into a 1 hour interval
+are **merged** into the 1 hour window. By chaining and merging, tremor can optimise ( reduce ) the amount
 of memory required across the chain when compared to multiple independent windows `select` expressions.
-In the case of aggregate functions like ```stats::hdr`` or ```stats::dds``` the savings are significant.
+In the case of aggregate functions like ` stats::hdr`` or `stats::dds``` the savings are significant.
 
-If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15,  3.6B every hour.
+If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15, 3.6B every hour.
 
 By using tilt frames we can maximally minimize internal memory consumption, whilst reducing the volume of
 incremental computation ( per event, per frame ), and further whilst preserving relative accuracy for
 merge-capable aggregate functions.
 
 The converged statistics under merge exhibit the same relative accuracy at a fraction of the computational
-and memory overhead without the using the tilt-frame mechanism. 
-
+and memory overhead without the using the tilt-frame mechanism.
 
 ## Group Mechanics
 
 The group clause in the query language partitions streams before windows and tilt frames
-are applied. Groups can be set-based,  each-based or composites thereof.
+are applied. Groups can be set-based, each-based or composites thereof.
 
 ### Set based grouping
 
@@ -368,7 +362,7 @@ into out;
 ```
 
 In the example expression we are partitioning into a composite group that is
-composed of the country and  region of each inbound event.
+composed of the country and region of each inbound event.
 
 So we expect data of the following form
 
@@ -402,7 +396,7 @@ set and qualified by country ...
 
 ### Limitations
 
-There are cases however that are not currently easily partitionable with a
+There are cases however that currently complex to partitionable with a
 single sql expression due to limitations with the grouping clause. For example
 what is we wanted to make availability zones a component of our group partitions?
 

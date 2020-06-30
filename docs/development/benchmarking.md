@@ -22,9 +22,9 @@ In order to run individual benchmarks, issue a command of the form:
 
 Where:
 
-|variable|value|
-|---|---|
-|name-of-benchmark|Should be replaced with the basename of the yaml file for that benchmark's pipeline|
+| variable          | value                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| name-of-benchmark | Should be replaced with the basename of the yaml file for that benchmark's pipeline |
 
 For example:
 
@@ -37,11 +37,11 @@ upon completion. it takes about 1 minute to run.
 
 ## Anatomy of a benchmark
 
-Tremor benchmarks are simple in nature, they are composed of:
+Tremor benchmarks composed of:
 
-* An impossibly fast source of data - using the blaster onramp
-* An impossibly fast sink of data - using the blackhole offramp
-* A pipeline that is representative of the workload under measurement
+- An impossibly fast source of data - using the blaster onramp
+- An impossibly fast sink of data - using the blackhole offramp
+- A pipeline that is representative of the workload under measurement
 
 ### Example blaster onramp configuration
 
@@ -119,15 +119,15 @@ pipeline:
       - id: group
         op: grouper::bucket
     links:
-      in: [ runtime ]
-      runtime: [ group ]
-      group: [ out ]
-      group/overflow: [ out ]
+      in: [runtime]
+      runtime: [group]
+      group: [out]
+      group/overflow: [out]
 ```
 
 ## Other
 
-All the above configuration are provided in a single yaml file and executed through the `run` script. The make target `bench` simply calls the run script for each known benchmark file and redirects test / benchmark output into a file.
+All the above configuration are provided in a single yaml file and evaluated through the `run` script. The make target `bench` calls the run script for each known benchmark file and redirects test / benchmark output into a file.
 
 ## Recommendations
 

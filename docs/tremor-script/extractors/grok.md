@@ -6,7 +6,7 @@ Grok pattern is of the form `%{SYNTAX : SEMANTIC}` where `SYNTAX` is the name of
 
 ## Predicate
 
-When used with `~`, the predicate passes if the target matches he pattern passed by the input (fetched from the grok pattern's file).
+When used with `~`, the predicate passes if the target matches the pattern passed by the input (fetched from the grok pattern's file).
 
 ## Extraction
 

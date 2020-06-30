@@ -1,6 +1,6 @@
 # Glob
 
-Glob is a simple extractor that checks if the input string matches the specified Unix shell style pattern. The extractor fails if an invalid pattern is specified or the string doesn't match the pattern.
+Glob is an extractor that checks if the input string matches the specified Unix shell-style pattern. The extractor fails if an pattern is specified that is not valid or the string doesn't match the pattern.
 
 ## Predicate
 
@@ -14,12 +14,12 @@ The extractor returns true if the predicate passes else returns an error
 
 Patterns can be of the following types:
 
-| Pattern | Matches                                                      |
-| ------- | ------------------------------------------------------------ |
-| `?`     | Single character                                             |
-| `*`     | any (0 or more) sequence or characters                       |
+| Pattern | Matches                                                                               |
+| ------- | ------------------------------------------------------------------------------------- |
+| `?`     | Single character                                                                      |
+| `*`     | any (0 or more) sequence or characters                                                |
 | `[…]`   | any character inside the bracket. Supports ranges (e,g. `[0-9]` will match any digit) |
-| `[!…]`  | negation of `[…]`                                            |
+| `[!…]`  | negation of `[…]`                                                                     |
 
 Meta characters (e..g `*`, `?` ) can be matched by using `[ ]`. (e.g. `[ * ]` will match a string that contains `*`).
 

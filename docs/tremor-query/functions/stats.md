@@ -63,7 +63,7 @@ stats::mean(event.value)
 
 ### stats::hdr(int|float) -> record
 
-Uses a High Dynamic Range ( HDR ) Histogram to calculate all primitive statistics against the event values sin the current windowed operation. The function additionally interpolates percentiles or quartiles based on a configuration specification passed in as an argument to the aggregater function.
+Uses a High Dynamic Range ( HDR ) Histogram to calculate all basic statistics against the event values sin the current windowed operation. The function additionally interpolates percentiles or quartiles based on a configuration specification passed in as an argument to the aggregater function.
 
 The HDR Histogram trades off memory utilisation for accuracy and is configured internally to limit accuracy to 2 significant decimal places.
 

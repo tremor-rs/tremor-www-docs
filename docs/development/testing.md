@@ -35,7 +35,7 @@ $GOPATH/bin/coyote -c tests/coyote.yml
 
 ### Viewing Coyote HTML reports
 
-Via a simple python server:
+Via a python server:
 
 ```bash
 python3 -m http.server 8000

@@ -1,6 +1,6 @@
 # Postprocessors
 
-Postprocessors operate on the raw data stream and transform it. They are executed after data reaches the codec and do not know or care about tremors internal representation.
+Postprocessors operate on the raw data stream and transform it. They are run after data reaches the codec and do not know or care about tremors internal representation.
 
 Online codecs, postprocessors can be chained to perform multiple operations in succession.
 
@@ -26,8 +26,8 @@ Unlike decompression processors, the compression algorithm must be selected. The
 
 Supported formats:
 
-* gzip      - GZip compression
-* zlib      - ZLib compression
-* xz        - Xz2 level 9 compression
-* snappy    - Snappy compression
-* lz4       - Lz level 4 compression
+- gzip - GZip compression
+- zlib - ZLib compression
+- xz - Xz2 level 9 compression
+- snappy - Snappy compression
+- lz4 - Lz level 4 compression

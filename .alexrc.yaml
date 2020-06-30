@@ -1,0 +1,8 @@
+# We allow a number of words in the hope the context makes their meaning clear
+# we are generally not against replacing them just have not found alternatives
+# that won't lead to confusion. Suggestions are very welcome!
+allow:
+  # Host here refers a system's host(name) this is a standardized word of the
+  # URI.
+  - host-hostess
+  - hostesses-hosts

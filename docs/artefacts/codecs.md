@@ -33,8 +33,8 @@ translates to:
 ```json
 {
   "measurement": "weather",
-  "tags": {"location": "us-midwest"},
-  "fields": {"temperature": 82.0},
+  "tags": { "location": "us-midwest" },
+  "fields": { "temperature": 82.0 },
   "timestamp": 1465839830100400200
 }
 ```
@@ -47,27 +47,27 @@ The format itself does not include framing but can be used with the `size-prefix
 
 For all numbers netwokr byte order is used (big endian). The data is represented as follows:
 
-1. *2 byte* (u16) length of the `measurement` in bytes
-2. *n byte* (utf8) the measurement (utf8 encoded string)
-3. *8 byte* (u64) the timestamp
-4. *2 byte* (u16) number of tags (key value pairs) repetitions of:
-   1. *2 byte* (u16) lenght of the tag name in bytes
-   2. *n byte* (utf8) tag name (utf8 encoded string)
-   3. *2 byte* (u16) lenght of tag value in bytes
-   4. *n byte* (utf8) tag value (utf8 encoded string)
-5. *2 byte* (u16) number of fiends (key value pairs) repetition of:
-   1. *2 byte* (u16) lenght of the tag name in bytes
-   2. *n byte* (utf8) tag name (utf8 encoded string)
-   3. *1 byte* (tag) type of the field value can be one of:
-   4. `TYPE_I64 = 0` followed by *8 byte* (i64)
-      1. `TYPE_F64 = 1` followed by *8 byte* (f64)
+1. _2 byte_ (u16) length of the `measurement` in bytes
+2. _n byte_ (utf8) the measurement (utf8 encoded string)
+3. _8 byte_ (u64) the timestamp
+4. _2 byte_ (u16) number of tags (key value pairs) repetitions of:
+   1. _2 byte_ (u16) lenght of the tag name in bytes
+   2. _n byte_ (utf8) tag name (utf8 encoded string)
+   3. _2 byte_ (u16) lenght of tag value in bytes
+   4. _n byte_ (utf8) tag value (utf8 encoded string)
+5. _2 byte_ (u16) number of fiends (key value pairs) repetition of:
+   1. _2 byte_ (u16) lenght of the tag name in bytes
+   2. _n byte_ (utf8) tag name (utf8 encoded string)
+   3. _1 byte_ (tag) type of the field value can be one of:
+   4. `TYPE_I64 = 0` followed by _8 byte_ (i64)
+      1. `TYPE_F64 = 1` followed by _8 byte_ (f64)
       2. `TYPE_TRUE = 2` no following data
       3. `TYPE_FALSE = 3` no following data
-      4. `TYPE_STRING = 4` followed by *2 byte* (u16) length of the string in bytes and *n byte* string value (utf8 encoded string)
+      4. `TYPE_STRING = 4` followed by _2 byte_ (u16) length of the string in bytes and _n byte_ string value (utf8 encoded string)
 
 ### statsd
 
-Just as the influx, the statsd codec translates a single statsd measurement into a structured format. The structure is as follows:
+The same as the influx, the statsd codec translates a single statsd measurement into a structured format. The structure is as follows:
 
 ```text
 sam:7|c|@0.1
@@ -86,11 +86,11 @@ Translates to:
 
 The following types are supported:
 
-* `c` for `counter`
-* `ms` for `timing`
-* `g` for `gauge`
-* `h`  for `histogram`
-* `s` for `sets`
+- `c` for `counter`
+- `ms` for `timing`
+- `g` for `gauge`
+- `h` for `histogram`
+- `s` for `sets`
 
 For **gauge** there is also the field `action` which might be `add` if the value was prefixed with a `+`, or `sub` if the value was prefixed with a `-`
 

@@ -17,7 +17,7 @@ select event from in into out where event.selected
 
 ## Command line testing during logic development
 
-Execute a the passthrough query against a sample input.json
+Run a the passthrough query against a sample input.json
 
 ```bash
 $ tremor-query -e input.json example.trickle

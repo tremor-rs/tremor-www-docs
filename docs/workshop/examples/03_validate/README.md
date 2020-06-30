@@ -17,14 +17,14 @@ script
     case %{ present hello, present selected }                                   # Record pattern, validating field presence
         when type::is_string(event.hello) and type::is_bool(event.selected)     # guards
             => emit event                                                       # propagate if valid
-    default => drop                                                             # discard or reroute 
+    default => drop                                                             # discard or reroute
   end
 end;
 ```
 
 ## Command line testing during logic development
 
-Execute a the query against a sample input.json
+Run a the query against a sample input.json
 
 ```bash
 $ tremor-query -e input.json example.trickle
@@ -47,7 +47,7 @@ $ cat inputs.txt | websocat ws://localhost:4242
 ...
 ```
 
-Injecting invalid messages to verify validation.
+Injecting bad messages to verify validation.
 
 ```bash
 $ cat invalids.txt | websocat ws://localhost:4242
@@ -56,7 +56,7 @@ $ cat invalids.txt | websocat ws://localhost:4242
 
 ### Discussion
 
-We introduce the `declare script` and `create script` query language features. `delcare script` lets declare a template for a script to be executed while `create script` instanciates it as a part of the graph. `create script` takes an additional `as <name>` argument if it is omitted the operator will have the same name as the declaration.
+We introduce the `declare script` and `create script` query language features. `delcare script` lets declare a template for a script to be run while `create script` instanciates it as a part of the graph. `create script` takes an additional `as <name>` argument if it is omitted the operator will have the same name as the declaration.
 
 ### Attention
 

@@ -1,6 +1,6 @@
 # Transform
 
-This example shows how handling apache logs with a tremor and elastic search could work. The example is a lot more complex than the simple showcases and combines three components.
+This example shows how handling apache logs with a tremor and elastic search could work. The example is a lot more complex than the initial showcases and combines three components.
 
 Kibana, which once started with docker-compose can be reached [locally](http://localhost:5601). It allows browsing through the logs. If you have never used Kibana before you can get started by clicking on **Management** then in the **Elasticsearch** section on **Index Management**.
 
@@ -25,7 +25,7 @@ script
     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}\\n| }
             => r.raw                                                           # this first case is hit of the log includes an execution time (cost) for the request
     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{}\\n| }
-            => r.raw         
+            => r.raw
     default => emit => "bad"
   end
 end;

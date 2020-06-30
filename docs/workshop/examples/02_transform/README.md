@@ -14,12 +14,12 @@ All other configuration is the same as per the passthrough example, and is elide
 select {                                    # 1. We can inline new json-like document structures
     "hello": "hi there {event.hello}",      # 2. Tremor supports flexible string interpolation useful for templating
     "world": event.hello
-} from in where event.selected into out 
+} from in where event.selected into out
 ```
 
 ## Command line testing during logic development
 
-Execute a the passthrough query against a sample input.json
+Run a the passthrough query against a sample input.json
 
 ```bash
 $ tremor-query -e input.json example.trickle
@@ -47,12 +47,12 @@ $ cat inputs.txt | websocat ws://localhost:4242
 Transformations in tremor query ( `trickle` ) can be any legal type / value supported
 by the tremor family of languages:
 
-* A boolean value
-* An integer
-* A floating point value
-* A UTF-8 encoded string
-* An array of any legal value
-* A record of field / value pairs where the field name is a string, and the value is any legal value
+- A boolean value
+- An integer
+- A floating point value
+- A UTF-8 encoded string
+- An array of any legal value
+- A record of field / value pairs where the field name is a string, and the value is any legal value
 
 ### Examples
 
@@ -63,7 +63,7 @@ and use string interpolation to generate record templates with a field naming sc
 structure this is compatible with tremor's influx data offramp.
 
 A nice advantage of tremor, is that the business logic is separate from any externalising
-factors. However, one obvious drawback with unstructured transformations is there is no
+factors. However, one drawback with unstructured transformations is there is no
 explicit validation by schema supported by tremor out of the box - although, there are
 patterns in use to validate against external schema formats in use in production.
 

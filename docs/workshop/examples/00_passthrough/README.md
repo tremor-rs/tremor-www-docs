@@ -8,12 +8,12 @@ The [onramp](etc/tremor/config/00_ramps.yaml) we use is a websocket onramp liste
 
 ```yaml
 onramp:
-  - id: ws-input          # A unique id for binding/mapping
-    type: ws              # The unique type descriptor for the onramp ( websocket server here)
-    codec: json           # The underlying data format expected for application payload data
+  - id: ws-input # A unique id for binding/mapping
+    type: ws # The unique type descriptor for the onramp ( websocket server here)
+    codec: json # The underlying data format expected for application payload data
     config:
-      port: 4242          # The TCP port to listen on
-      host: '0.0.0.0'     # The IP address to bind on ( all interfaces in this case )
+      port: 4242 # The TCP port to listen on
+      host: "0.0.0.0" # The IP address to bind on ( all interfaces in this case )
 ```
 
 It connects to the pipeline `example` in the [`example.trickle`](etc/tremor/config/example.trickle) file using the trickle query language to express its logic.
@@ -22,23 +22,23 @@ The [offramp](etc/tremor/config/00_ramps.yaml) we used is a console offramp prod
 
 ```yaml
 offramp:
-  - id: stdout-output     # The unique id for binding/mapping
-    type: stdout          # The unique type descriptor for the offramp ( stdout here )
-    codec: json           # The underlying data format expected for application payload data
+  - id: stdout-output # The unique id for binding/mapping
+    type: stdout # The unique type descriptor for the offramp ( stdout here )
+    codec: json # The underlying data format expected for application payload data
     config:
-      prefix: '>> '       # A prefix for data emitted on standard output by this offramp
+      prefix: ">> " # A prefix for data emitted on standard output by this offramp
 ```
 
 The [binding](./etc/tremor/config/01_binding.yaml) expresses those relations and gives the graph of onramp, pipeline and offramp.
 
 ```yaml
 binding:
-  - id: passthrough                                 # The unique name of this binding template
+  - id: passthrough # The unique name of this binding template
     links:
-      '/onramp/ws-input/{instance}/out':            # Connect the inpunt to the pipeline
-       - '/pipeline/example/{instance}/in'
-      '/pipeline/example/{instance}/out':           # Connect the pipeline to the output
-       - '/offramp/stdout-output/{instance}/in'
+      "/onramp/ws-input/{instance}/out": # Connect the inpunt to the pipeline
+        - "/pipeline/example/{instance}/in"
+      "/pipeline/example/{instance}/out": # Connect the pipeline to the output
+        - "/offramp/stdout-output/{instance}/in"
 ```
 
 Finally the [mapping](./etc/tremor/config/02_mapping.yaml) instanciates the binding with the given name and instance variable to activate the elements of the binding.
@@ -51,7 +51,7 @@ select event from in into out
 
 ## Command line testing during logic development
 
-Execute a the passthrough query against a sample input.json
+Run a the passthrough query against a sample input.json
 
 ```bash
 $ tremor-query -e input.json example.trickle

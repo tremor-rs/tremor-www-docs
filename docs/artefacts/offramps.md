@@ -35,14 +35,14 @@ The elastic offramp writes to one or more ElasticSearch hosts. This is currently
 
 Supported configuration options are:
 
-* `endpoints` - A list of elastic search endpoints to send to.
-* `concurrency` - Maximum number of parallel requests (default: 4).
+- `endpoints` - A list of elastic search endpoints to send to.
+- `concurrency` - Maximum number of parallel requests (default: 4).
 
 Used metadata Variables:
 
-* `index` - The index to write to (required).
-* `doc_type` - The document type for elastic (required).
-* `pipeline` - The elastic search pipeline to use (optional).
+- `index` - The index to write to (required).
+- `doc_type` - The document type for elastic (required).
+- `pipeline` - The elastic search pipeline to use (optional).
 
 Example:
 
@@ -63,11 +63,11 @@ The default [codec](codecs.md#json) is `json`.
 
 Supported configuration options are:
 
-* `topic` - The topic to send to.
-* `brokers` - Broker servers to connect to. (Kafka nodes)
-* `threads` - Number of threads to use for the Kafka offramp. (default: `4`)
-* `hostname` - Hostname to identify the client with. (default: the systems hostname)
-* `rdkafka_options` - An optional map of option to value, where both sides need to be strings.
+- `topic` - The topic to send to.
+- `brokers` - Broker servers to connect to. (Kafka nodes)
+- `threads` - Number of threads to use for the Kafka offramp. (default: `4`)
+- `hostname` - Hostname to identify the client with. (default: the systems hostname)
+- `rdkafka_options` - An optional map of option to value, where both sides need to be strings.
 
 Example:
 
@@ -89,8 +89,8 @@ The default [codec](codecs.md#json) is `json`.
 
 Supported configuration options are:
 
-* `url` - Websocket endpoint to send data to.
-* `binary` - If data should be send as binary instead of text (default: `fase`).
+- `url` - Websocket endpoint to send data to.
+- `binary` - If data should be send as binary instead of text (default: `fase`).
 
 Example:
 
@@ -112,10 +112,10 @@ When the UDP onramp gets a batch of messages it will send each element of the ba
 
 Supported configuration options are:
 
-* `host` - the local host to send data from
-* `port` - the local port to send data from
-* `dst_host` - the destination host to send data to
-* `dst_port` - the destination port to send data to.
+- `host` - the local host to send data from
+- `port` - the local port to send data from
+- `dst_host` - the destination host to send data to
+- `dst_port` - the destination port to send data to.
 
 Example:
 
@@ -124,9 +124,9 @@ offramp:
   - id: udp-out
     type: udp
     config:
-      host: '10.11.12.13'
+      host: "10.11.12.13"
       port: 1234
-      dst_host: '20.21.22.23'
+      dst_host: "20.21.22.23"
       dst_port: 2345
 ```
 
@@ -136,10 +136,10 @@ The REST offramp is used to send events or batches of events to a REST endpoint 
 
 Supprted configuration options are:
 
-* `endpoints` - A vector of URLs to send the data to.
-* `concurrency` - Number of paralel in flight requests (default: `4`)
-* `put` - If a `PUT` request should be used istead of `POST` (default: `false`)
-* `headers` - A map of headers to set for the requests
+- `endpoints` - A vector of URLs to send the data to.
+- `concurrency` - Number of paralel in flight requests (default: `4`)
+- `put` - If a `PUT` request should be used istead of `POST` (default: `false`)
+- `headers` - A map of headers to set for the requests
 
 ### REST offramp example for InfluxDB
 
@@ -154,7 +154,7 @@ offramp:
       endpoints:
         - http://influx/write?db=metrics
       headers:
-        'Client': 'Tremor'
+        "Client": "Tremor"
 ```
 
 ### PostgreSQL
@@ -162,20 +162,22 @@ offramp:
 PostgreSQL offramp.
 
 Supported configuration options are:
-* `host` - PostgreSQL database hostname
-* `port` - PostgresSQL database port
-* `user` - Username for authentication
-* `password` - Password for authentication
-* `dbname` - Database name
-* `table` - Database table name
 
-Data that comes in will be used to execute an `INSERT` statement. It is required
+- `host` - PostgreSQL database hostname
+- `port` - PostgresSQL database port
+- `user` - Username for authentication
+- `password` - Password for authentication
+- `dbname` - Database name
+- `table` - Database table name
+
+Data that comes in will be used to run an `INSERT` statement. It is required
 that data comes in objects representing columns. Object key must represent field
 name in database and must contain following fields:
-* `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
+
+- `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
   etc.)
-* `name` - field name as represented by database table schema
-* `value` - value of the field
+- `name` - field name as represented by database table schema
+- `value` - value of the field
 
 Example:
 
@@ -200,7 +202,7 @@ The default [codec](codecs.md#json) is `json`.
 
 Supported configuration options are:
 
-* `file` - The file to write to.
+- `file` - The file to write to.
 
 Example:
 
@@ -232,9 +234,9 @@ The blackhole offramp is used for benchmarking it takes measurements of the end 
 
 Supported configuration options are:
 
-* `warmup_secs` - Number of seconds after startup in which latency won't be measured to allow for a warmup period.
-* `stop_after_secs` - Stop tremor after a given number of seconds and print the histogram.
-* `significant_figures` - Significant figures for the HDR histogram. (the first digits of each measurement that are kept as precise values)
+- `warmup_secs` - Number of seconds after startup in which latency won't be measured to allow for a warmup delay.
+- `stop_after_secs` - Stop tremor after a given number of seconds and print the histogram.
+- `significant_figures` - Significant figures for the HDR histogram. (the first digits of each measurement that are kept as precise values)
 
 Example:
 
@@ -255,7 +257,7 @@ This operator does not support configuration.
 
 Used metadata Variables:
 
-* `$class` - Class of the event to count by. (optional)
+- `$class` - Class of the event to count by. (optional)
 
 Example:
 
@@ -276,11 +278,11 @@ The default [codec](codecs.md#json) is `json`.
 
 Supported configuration options are:
 
-* `host` - The host to advertise as
-* `port` - The TCP port to listen on
-* `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
-* `ttl` - Set the socket's time-to-live ( default: 64 )
-* `is_no_delay` - Set the socket's nagle ( delay ) algorithm to disabled ( default: true )
+- `host` - The host to advertise as
+- `port` - The TCP port to listen on
+- `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
+- `ttl` - Set the socket's time-to-live ( default: 64 )
+- `is_no_delay` - Set the socket's nagle ( delay ) algorithm to off ( default: true )
 
 Example:
 
@@ -320,11 +322,13 @@ To indicate non-succesful termination, a non-zero exit status may be used:
 Exit codes should follow standard UNIX/Linux guidelines when being integrated
 with `bash` or other shell-based environments, as follows:
 
+<!--alex ignore illegal-->
+
 |Code|Meaning|
 |0|Success|
 |1|General errors|
 |2|Misuse of builtins|
-|126|Command invoked cannot execute due to credentials/auth constraints|
+|126|Command invoked cannot run due to credentials/auth constraints|
 |127|Command not understood, not well formed or illegal|
 
 Example:
@@ -334,7 +338,3 @@ offramp:
   - id: terminate
     type: exit
 ```
-
-
-
-

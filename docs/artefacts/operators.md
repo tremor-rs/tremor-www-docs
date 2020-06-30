@@ -28,13 +28,13 @@ The tremor script runtime that allows to modify events or their metadata. To lea
 
 **Configuration options**:
 
-* `script` - The script to execute.
+- `script` - The script to run.
 
 **Outputs**:
 
-* `out` (default output used with `emit`)
-* `error` - special channel for runtime errors
-* `<anything else>` used when `emit event => "<anything else>"`
+- `out` (default output used with `emit`)
+- `error` - channel for runtime errors
+- `<anything else>` used when `emit event => "<anything else>"`
 
 **Example**:
 
@@ -48,22 +48,22 @@ The tremor script runtime that allows to modify events or their metadata. To lea
 
 ## grouper::bucket
 
-Bucket will perform a sliding window rate limiting based on event metadata. Limits are applied for every `$class`. In a `$class` each `$dimensions`  is allowed to pass `$rate` messages per second.
+Bucket will perform a sliding window rate limiting based on event metadata. Limits are applied for every `$class`. In a `$class` each `$dimensions` is allowed to pass `$rate` messages per second.
 
 This operator does not support configuration.
 
 **Metadata Variables**:
 
-* `$class` - The class of an event. (String)
-* `$rate` - Allowed events per second per class/dimension (Number)
-* (Optional) `$dimensions` - The dimensions of the event. (Any)
-* (Optional)`$cardinality` - the maximum number of dimensions kept track of at the same time (Number, default: `1000`)
+- `$class` - The class of an event. (String)
+- `$rate` - Allowed events per second per class/dimension (Number)
+- (Optional) `$dimensions` - The dimensions of the event. (Any)
+- (Optional)`$cardinality` - the maximum number of dimensions kept track of at the same time (Number, default: `1000`)
 
 **Outputs**:
 
-* `out`
-* `error` - Unprocessable events for example if `$class` or `$rate` are not set.
-* `overflow` - Events that exceed the rate defined for them
+- `out`
+- `error` - Unprocessable events for example if `$class` or `$rate` are not set.
+- `overflow` - Events that exceed the rate defined for them
 
 **Example**:
 
@@ -105,8 +105,8 @@ The bucket operator generates additional metrics. For each class the following t
 
 This tells us the following, up until this measurement was published in the class `test`:
 
-* (`pass`) Passed 93 events
-* (`overflow`) Marked 127 events as overflow due to not fitting in the limit
+- (`pass`) Passed 93 events
+- (`overflow`) Marked 127 events as overflow due to not fitting in the limit
 
 ## generic::backpressure
 
@@ -114,14 +114,14 @@ The backpressure operator is used to introduce delays based on downstream system
 
 **Configuration options**:
 
-* `timeout` - Maximum allowed 'write' time in milliseconds.
-* `steps` - Array of values to delay when a we detect backpressure. (default: `[50, 100, 250, 500, 1000, 5000, 10000]`)
-* `outputs` - Array of outputs, data will be round robined between outputs and backpressure kept track of on a per output basis. (Default: `["out"]`)
+- `timeout` - Maximum allowed 'write' time in milliseconds.
+- `steps` - Array of values to delay when a we detect backpressure. (default: `[50, 100, 250, 500, 1000, 5000, 10000]`)
+- `outputs` - Array of outputs, data will be round robined between outputs and backpressure kept track of on a per output basis. (Default: `["out"]`)
 
 **Outputs**:
 
-* `out`
-* `overflow` - Events that are not let past due to active backpressure
+- `out`
+- `overflow` - Events that are not let past due to active backpressure
 
 **Example**:
 
@@ -138,12 +138,12 @@ The batch operator is used to batch multiple events and send them in a bulk fash
 
 Supported configuration options are:
 
-* `count` - Elements per batch
-* `timeout` - Maximum delay between the first element of a batch and the last element of a batch.
+- `count` - Elements per batch
+- `timeout` - Maximum delay between the first element of a batch and the last element of a batch.
 
 **Outputs**:
 
-* `out`
+- `out`
 
 **Example**:
 
@@ -162,7 +162,7 @@ The counter starts when the first event comes through and begins from 1.
 
 **Outputs**:
 
-* `out`
+- `out`
 
 **Example**:
 
@@ -177,7 +177,7 @@ Passes through the event without modifying it, used for debugging.
 
 **Outputs**:
 
-* `out`
+- `out`
 
 **Example**:
 
@@ -192,12 +192,12 @@ Generates a history entry in the event. Data is written to an array with the key
 
 **Configuration options**:
 
-* `op` - The operation name of this operator
-* `name` - The field to store the history on
+- `op` - The operation name of this operator
+- `name` - The field to store the history on
 
 **Outputs**:
 
-* `out`
+- `out`
 
 **Example**:
 

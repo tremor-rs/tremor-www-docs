@@ -1,6 +1,6 @@
 # Preprocessors
 
-Preprocessors operate on the raw data stream and transform it. They are executed before data reaches the codec and do not know or care about tremors internal representation.
+Preprocessors operate on the raw data stream and transform it. They are run before data reaches the codec and do not know or care about tremors internal representation.
 
 Online codecs, preprocessors can be chained to perform multiple operations in succession.
 
@@ -26,15 +26,15 @@ Decodes base64 encoded data to the raw bytes.
 
 Decompresses a data stream, it is assumed that each message reaching the decompressor is a complete compressed entity.
 
-The compression algorithm is detected automatically from the supported formats, if it can't be detected the  assumption is that the data was decompressed and will be send on. Failure then can be transparently handled in the codec.
+The compression algorithm is detected automatically from the supported formats, if it can't be detected the assumption is that the data was decompressed and will be send on. Errors then can be transparently handled in the codec.
 
 Supported formats:
 
-* gzip
-* zlib
-* xz
-* snappy
-* lz4
+- gzip
+- zlib
+- xz
+- snappy
+- lz4
 
 ### gzip
 

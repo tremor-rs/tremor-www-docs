@@ -6,3 +6,6 @@ allow:
   # URI.
   - host-hostess
   - hostesses-hosts
+  - actor-actress
+  - actors-actresses
+  - crash

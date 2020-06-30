@@ -8,19 +8,19 @@ Tremor supports dynamic reconfiguration since v0.4.
 
 The tremor runtime is internally structured with repositories and registries of configurable elements or artefacts. These artefacts can be one of:
 
-* Onramp - Specify to tremor *how* to connect to the outside world to ingest or consume external data. For example, the Kafka onramp consumes data from Kafka topics.
+- Onramp - Specify to tremor _how_ to connect to the outside world to ingest or consume external data. For example, the Kafka onramp consumes data from Kafka topics.
 
-* Offramp - Specify to tremor *how* to connect to the outside world to publish data to external systems For example, the Elastic offramp pushes data to ElasticSearch via its bulk upload REST/HTTP API endpoint
+- Offramp - Specify to tremor _how_ to connect to the outside world to publish data to external systems For example, the Elastic offramp pushes data to ElasticSearch via its bulk upload REST/HTTP API endpoint
 
-* Pipeline - Specify to tremor *what* operations to perform on data ingested ( from any connected upstream source ) and *what* to contribute or publish downstream ( to any connected downstream target ).
+- Pipeline - Specify to tremor _what_ operations to perform on data ingested ( from any connected upstream source ) and _what_ to contribute or publish downstream ( to any connected downstream target ).
 
-* Binding - A binding is a specification of how to interconnect Onramps, Offramps and Pipelines. Binding specifications can be thought of a type of wiring harness
+- Binding - A binding is a specification of how to interconnect Onramps, Offramps and Pipelines. Binding specifications can be thought of a type of wiring harness
 
-Specifications for onramps, offramps, pipelines and bindings in tremor should be considered templates. They are stored in an internal tremor *repository*. A tremor repository stores artefacts, much like git repositories qcode.
+Specifications for onramps, offramps, pipelines and bindings in tremor should be considered templates. They are stored in an internal tremor _repository_. A tremor repository stores artefacts, much like git repositories qcode.
 
 Live onramps, offramps and pipelines in tremor are in a runnable state. They consume typically network bandwidth and some compute in the case of onramps and offramps. They consume compute bandwidth and threads in the case of pipelines.
 
-Live *instances* of tremor artefacts are stored in a *registry*. A tremor registry can be thought of similarly to the Domain Name Service or DNS.
+Live _instances_ of tremor artefacts are stored in a _registry_. A tremor registry can be thought of similarly to the Domain Name Service or DNS.
 
 All 'live' or 'deployed' instances in tremor ( onramps, offramps, pipelines ) are managed by a finite state machine.
 
@@ -45,7 +45,7 @@ Tremor leverages the registry/repository and publish-find-bind Service Oriented 
 
 As all artefacts in tremor are named, when a mapping is published, it deploys all the required onramps, offramps and pipelines automatically. This also means that when a mapping is deleted, that the corresponding live instances are undeployed.
 
-All live or running artefacts have a corresponding state machine that manages its deployment lifecycle. The FSM is a simplified version of the POA servant activator lifecycle from CORBA and other Application Server Platforms.
+All live or running artefacts have a corresponding state machine that manages its deployment lifecycle. The FSM is a simplified version of the POA worker activator lifecycle from CORBA and other Application Server Platforms.
 
 ## Using the docker image
 
@@ -53,9 +53,9 @@ When using the tremor docker image configuration is loaded from the folder `/etc
 
 The following files are looked for:
 
-* `/etc/tremor/logger.yaml` a [log4rs](https://docs.rs/log4rs/0.8.3/log4rs/) configuration file to control logging in tremor.
-* `/etc/tremor/config/*.trickle` all files will be loaded as trickle pipelines - trickle pipelines are always loaded before yaml configuration!
-* `/etc/tremor/config/*.yaml` all files will be laoded as configuration files and evaluated in order (so mappings can not refer to artifacts in later files!) - NOTE: defining pipelines in yaml is depricated and trickle pipelines should be used.
+- `/etc/tremor/logger.yaml` a [log4rs](https://docs.rs/log4rs/0.8.3/log4rs/) configuration file to control logging in tremor.
+- `/etc/tremor/config/*.trickle` all files will be loaded as trickle pipelines - trickle pipelines are always loaded before yaml configuration!
+- `/etc/tremor/config/*.yaml` all files will be laoded as configuration files and evaluated in order (so mappings can not refer to artifacts in later files!) - NOTE: defining pipelines in yaml is depricated and trickle pipelines should be used.
 
 ## Static or Bootstrap deployments
 
@@ -100,15 +100,15 @@ pipeline:
       - id: passthrough
         op: passthrough
     links:
-      in: [ passthrough ]
-      passthrough: [ out ]
+      in: [passthrough]
+      passthrough: [out]
 
 # define how blaster, the pipeline under test, and blackhole interconnect
 binding:
   - id: default
     links:
-      '/onramp/blaster/{instance}/out': [ '/pipeline/main/{instance}/in' ]
-      '/pipeline/main/{instance}/out': [ '/offramp/blackhole/{instance}/in' ]  
+      "/onramp/blaster/{instance}/out": ["/pipeline/main/{instance}/in"]
+      "/pipeline/main/{instance}/out": ["/offramp/blackhole/{instance}/in"]
 ```
 
 Static deployments support multiple configurations. You can specify multiple configurations by using a list in the config instead of specifying one item as illustrated below:
@@ -140,7 +140,7 @@ This file 'loads' the repository on startup with various specifications or templ
 ```yaml
 mapping:
   /binding/default/01: # deployment '01'
-    instance: "01"     # .. deploys, blaster/01, blackhole/01, pipeline/main/01
+    instance: "01" # .. deploys, blaster/01, blackhole/01, pipeline/main/01
 ```
 
 ## Interactive or Operational deployments

@@ -1,14 +1,14 @@
 # Tremor-Query
 
-The tremor query language, `tremor-query` or __trickle__ is an interpreted statement-oriented language designed for continuous online structured queries with support filtering, extraction, transformation and streaming of structured data in a stream or event-based processing system.
+The tremor query language, `tremor-query` or **trickle** is an interpreted statement-oriented language designed for continuous online structured queries with support filtering, extraction, transformation and streaming of structured data in a stream or event-based processing system.
 
-At its core, `tremor-query` supports the definition of windows operators, stream definitions and operations on those streams such as __select__, __operator__ and script__.
+At its core, `tremor-query` supports the definition of windows operators, stream definitions and operations on those streams such as **select**, **operator** and script\_\_.
 
-Structured queries in __trickle__ consume unstructured data that are in and of themselves at least well-formed ( eg: such as JSON ) and produce synthetic events that are also well-formed and in and of themselves unstructured.
+Structured queries in **trickle** consume unstructured data that are in and of themselves at least well-formed ( eg: such as JSON ) and produce synthetic events that are also well-formed and in and of themselves unstructured.
 
 The language does not impose schema based constraints on data flowing through the system, although this may produce runtime errors for badly written queries.
 
-The query language interpreter constructs a directed-acyclic-graph or __DAG__ by analysing the dependencies of operators in a user defined query. The input and output streams are then calculated. The DAG model is the same as the pipeline model in previous versions of tremor, but with a rich query language replacing the depricated** tremor yaml format for pipelines.
+The query language interpreter constructs a directed-acyclic-graph or **DAG** by analysing the dependencies of operators in a user defined query. The input and output streams are then calculated. The DAG model is the same as the pipeline model in previous versions of tremor, but with a rich query language replacing the depricated\*\* tremor yaml format for pipelines.
 
 ## Principles
 
@@ -16,15 +16,15 @@ The query language interpreter constructs a directed-acyclic-graph or __DAG__ by
 
 The language is explicitly not Turing-complete:
 
-* there are no unstructured `goto` grammar forms
-* there are no unbounded `for`, `while` or `do..while` looping constructs
-* the language is built on top of rust, inheriting its robustness and safety features, without the development overheads
+- there are no unstructured `goto` grammar forms
+- there are no unbounded `for`, `while` or `do..while` looping constructs
+- the language is built on top of rust, inheriting its robustness and safety features, without the development overheads
 
 ### Developer friendly
 
 The language adopts a SQL-like syntax for key statement forms and has a path-like syntax for indexing into records and arrays. The statement-oriented query language prefers nested data-structures to tables and columns from traditional ANSI-ISO SQL as most of the data processed through tremor is structured and JSON-like.
 
-The expression language in __trickle__ is based on `tremor-script`.
+The expression language in **trickle** is based on `tremor-script`.
 
 ### Stream-oriented / event-based
 
@@ -38,7 +38,7 @@ Leveraging the tremor-query expression syntax allows rich filtering, transformat
 
 The addition of aggregate functions, and windowing allows batches or a slice in time of events to be summarised or processed together to derive useful synthetic events.
 
-Like its sibling langauge `tremor-script`, `tremor-query` supports the same data-types is entirely event-driven. For existing tremor users it is relatively easy to learn, yet powerful and flexible.
+Like its sibling langauge `tremor-script`, `tremor-query` supports the same data-types is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet powerful and flexible.
 
 ### Extensibility
 
@@ -68,7 +68,7 @@ This section details the major components of the `tremor-query` language.
 
 ### Tremor-Script
 
-Comments, Literals, Paths and Expression forms supported in __trickle__ are the
+Comments, Literals, Paths and Expression forms supported in **trickle** are the
 same as in `tremor-script`.
 
 ### Queries
@@ -78,23 +78,25 @@ Queries are one or many statements separated by `;`
 Queries are compiled into a DAG of operator nodes and validated at compile time. At runtime, the resulting executable tremor pipeline is evaluated/interpreted.
 
 Query grammar:
+
 > ![query grammar](grammar/diagram/Query.png)
 
 ### Statements
 
 Statements can be one of:
 
-* Stream definitions
-* Window definitions
-* Custom Operator definitions
-* Embedded `tremor-script` definitions
-* Or builtin operations, like the `select` statement
+- Stream definitions
+- Window definitions
+- Custom Operator definitions
+- Embedded `tremor-script` definitions
+- Or builtin operations, like the `select` statement
 
 #### Stream definitions
 
 Stream definitions in `tremor-query` allow private intermediate streams to be named so that they can be used as the source or sinks in other continuous queries.
 
 Stream definition grammar:
+
 > ![create stream grammar](grammar/diagram/CreateStreamDefn.png)
 
 ```trickle
@@ -107,13 +109,11 @@ select event from passthrough into out; # select passthrough into default public
 
 Window definitions in `tremor-query` can be either tumbling or sliding.
 
-A tumbling window is a window configued with a fixed non-overlapping period of time. The aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.
+A tumbling window is a window configued with a fixed non-overlapping interval of time. The aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.
 
 Window definition grammar:
-> ![window definition grammar](grammar/diagram/DefineWindowDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
-> ![with partial paraqms grammar](grammar/diagram/WithPartialParams.png)
-> ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
+
+> ![window definition grammar](grammar/diagram/DefineWindowDefn.png) > ![with params grammar](grammar/diagram/WithParams.png) > ![with partial paraqms grammar](grammar/diagram/WithPartialParams.png) > ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
 
 For example a 15 second tumbling window can be defined as follows
 
@@ -129,12 +129,12 @@ end;
 Custom operators allow legacy operators written before the query language was designed to be used with the query language. As the query langauge and legacy yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:
 
 Operator definition grammar:
-> ![operator definition grammar](grammar/diagram/DefineOperatorDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
+
+> ![operator definition grammar](grammar/diagram/DefineOperatorDefn.png) > ![with params grammar](grammar/diagram/WithParams.png)
 
 Creating an operator:
-> ![create operator grammar](grammar/diagram/CreateOperatorDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
+
+> ![create operator grammar](grammar/diagram/CreateOperatorDefn.png) > ![with params grammar](grammar/diagram/WithParams.png)
 
 ```trickle
 # create a bucketing operator
@@ -153,13 +153,12 @@ select event from kfc into out;
 The tremor-script language can be embedded in the query language natively and this mirrors legacy usage where it was embedded within yaml-based pipeline configuration. However, the tooling that ships with `tremor-query` understands both the query language and scripting language dialects with better syntax highlighting and error checking built in for ease of operator productivity over the legacy yaml syntax.
 
 Script definition grammar:
-> ![script definition grammar](grammar/diagram/DefineScriptDefn.png)
-> ![with partial params grammar](grammar/diagram/WithPartialParams.png)
-> ![embeded script grammar](grammar/diagram/EmbeddedScript.png)
+
+> ![script definition grammar](grammar/diagram/DefineScriptDefn.png) > ![with partial params grammar](grammar/diagram/WithPartialParams.png) > ![embeded script grammar](grammar/diagram/EmbeddedScript.png)
 
 Script an operator:
-> ![create script grammar](grammar/diagram/CreateScriptDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
+
+> ![create script grammar](grammar/diagram/CreateScriptDefn.png) > ![with params grammar](grammar/diagram/WithParams.png)
 
 ```trickle
 define grouper::bucket operator kfc;
@@ -190,15 +189,7 @@ The select query is a builtin operation that is the workhorse of the tremor-quer
 
 The select operation is of the general form:
 
-> ![select grammar](grammar/diagram/SelectStmt.png)
-> ![from grammar](grammar/diagram/FromClause.png)
-> ![where grammar](grammar/diagram/WhereClause.png)
-> ![group by grammar](grammar/diagram/GroupByClause.png)
-> ![group by dimensions grammar](grammar/diagram/GroupByDimension.png)
-> ![set group grammar](grammar/diagram/SetBasedGroup.png)
-> ![each group grammar](grammar/diagram/EachBasedGroup.png)
-> ![into grammar](grammar/diagram/IntoClause.png)
-> ![having grammar](grammar/diagram/HavingClause.png)
+> ![select grammar](grammar/diagram/SelectStmt.png) > ![from grammar](grammar/diagram/FromClause.png) > ![where grammar](grammar/diagram/WhereClause.png) > ![group by grammar](grammar/diagram/GroupByClause.png) > ![group by dimensions grammar](grammar/diagram/GroupByDimension.png) > ![set group grammar](grammar/diagram/SetBasedGroup.png) > ![each group grammar](grammar/diagram/EachBasedGroup.png) > ![into grammar](grammar/diagram/IntoClause.png) > ![having grammar](grammar/diagram/HavingClause.png)
 
 A example select operation configured to pass through data from a pipelines default `in` stream to a pipelines default `out` stream:
 
@@ -218,7 +209,7 @@ Select operations can filter data being forwarded to other operators with the sp
 select event from in into out having event.is_interesting;
 ```
 
-Select operations can be windowed by __applying__ a window to the inbound data stream.
+Select operations can be windowed by **applying** a window to the inbound data stream.
 
 ```trickle
 define tumbling window fifteen_secs

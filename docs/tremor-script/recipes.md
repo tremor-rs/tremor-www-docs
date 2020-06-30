@@ -1,11 +1,10 @@
-
 # Recipes
 
 This document provides a few recipes for common patterns in tremor script. Please note however that it neither is exhaustive nor should those patterns considered the 'only way' to perform certain tasks.
 
 ## Extracting a raw message
 
-If the event is a unstructured / raw message parsing it can be tricky since we can not match over a string. The following code offers a simple solution to it:
+If the event is a unstructured / raw message parsing it can be tricky since we can not match over a string. The following code offers a solution to it:
 
 ```tremor
 # event = "John Doe"
@@ -29,7 +28,7 @@ let event.tags = array::push(event.tags, "tag2");
 
 ## Validating over extracted data
 
-Sometimes we want to validate over extracted data without forcing the extraction to be a regular expression. For simple validations like the one below this pattern can be used.
+Sometimes we want to validate over extracted data without forcing the extraction to be a regular expression. For validations like the one below this pattern can be used.
 
 ```tremor
 match event of
@@ -39,11 +38,11 @@ match event of
 end
 ```
 
-Here we extract the `log_level`  and validate of that the it is one of `ERROR`, `WARN`, `INFO` or `DEBUG` by moving the check into the when guard we don't need to use a regular expression for this validation instead can use array membership.
+Here we extract the `log_level` and validate of that the it is one of `ERROR`, `WARN`, `INFO` or `DEBUG` by moving the check into the when guard we don't need to use a regular expression for this validation instead can use array membership.
 
 ## Replacing a field with an extraction
 
-When extracting a field to merge with with the event and wanting to remove  the extracted field we can take advantage of the `merge` expressions behaviour that it will treat `null` in merged records as a command to delete the data by setting the field to replace to `null` before merging.
+When extracting a field to merge with with the event and wanting to remove the extracted field we can take advantage of the `merge` expressions behaviour that it will treat `null` in merged records as a command to delete the data by setting the field to replace to `null` before merging.
 
 ```tremor
 # event = %{"message": "John Doe"}
@@ -92,7 +91,7 @@ end
 
 ## The 'null default'
 
-When the result of a match statement isn't needed - as in we use it purely for it's side effects - and we want the `default` to have no effect we can simply use `null` here.
+When the result of a match statement isn't needed - as in we use it purely for it's side effects - and we want the `default` to have no effect we can use `null` here.
 
 ```tremor
 match event of
@@ -124,7 +123,7 @@ end
 
 Tremor script can be used to route messages by combining the `emit` feature and the fact that the tremor runtime operator allows different outputs.
 
-To route to doing a  `blue` / `green` split based on a field in a record we could use the following code:
+To route to doing a `blue` / `green` split based on a field in a record we could use the following code:
 
 ```tremor
 match event of
@@ -144,8 +143,8 @@ pipeline:
       - green
     # ...
     links:
-     script/blue: ["blue"]
-     script/green: ["green"]
+      script/blue: ["blue"]
+      script/green: ["green"]
 ```
 
 ## Percentage drops of events

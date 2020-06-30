@@ -28,7 +28,7 @@ brew install qcachegrind
 
 This is good enough for initial high-level exploration.
 
-For example, execute a tremor pipeline against recorded data in data.json
+For example, run a tremor pipeline against recorded data in data.json
 
 ```bash
 valgrind --tool=callgrind target/debug/tremor-cli pipe run tests/configs/ut.combine3-op.yaml data.json
@@ -47,7 +47,7 @@ Interactive analysis via QCachegrind / KCachegrind
 qcachegrind callgrind.out.93972
 ```
 
-The profiling ( sampling ) frequency is tunable and *SHOULD* be tuned for each run, eg:
+The profiling ( sampling ) frequency is tunable and _SHOULD_ be tuned for each run, eg:
 
 ```bash
 RUST_BACKTRACE=1 PROFILEFREQUENCY=1000 valgrind --tool=callgrind \

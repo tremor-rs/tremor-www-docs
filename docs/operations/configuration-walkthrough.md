@@ -6,11 +6,11 @@ This guide walks through configuring tremor via its API directly and via its com
 
 ## Introduction
 
-In this walkthrough we will deploy a simple tremor pipeline that generates a periodic sequence of messages or heartbeats every second. The solution is composed of the following tremor artefacts:
+In this walkthrough we will deploy a tremor pipeline that generates a periodic sequence of messages or heartbeats every second. The solution is composed of the following tremor artefacts:
 
-* A metronome onramp - our periodic message generator
-* A stdout offramp - an offramp that serializes to standard output useful for debugging
-* A simple pipeline - we simply pass the input ( metronome events ) to our output
+- A metronome onramp - our periodic message generator
+- A stdout offramp - an offramp that serializes to standard output useful for debugging
+- A pipeline - we pass the input ( metronome events ) to our output
 
 In this walkthrough we configure a single onramp, offramp and pipeline but many other configurations are possible.
 
@@ -53,38 +53,38 @@ type: stdout
 ---
 id: main
 interface:
-  inputs: [ in ]
-  outputs: [ out ]
+  inputs: [in]
+  outputs: [out]
 links:
-  in: [ out ]
+  in: [out]
 ```
 
 ### Write a binding specification
 
 In tremor pipelines have no non-deterministic side-effects.
 
-By design, tremor does not allow onramps or offramps to be specified as a part of a pipeline. This would couple running pipelines to external connections. For example, to an external kafka broker and topic. This isn't bad per se, but it would allow a configuration or programming style that allows pipelines that are not easily distributable, clusterable or scalable.
+By design, tremor does not allow onramps or offramps to be specified as a part of a pipeline. This would couple running pipelines to external connections. For example, to an external kafka broker and topic. This isn't bad per se, but it would allow a configuration or programming style that allows pipelines that are hard to distribute, clusterable or scalable.
 
 To be clear, therefore:
 
-* All data processed by a tremor pipeline is always ingested via an event
-* All events arrive into pipelines via 'input streams', operators that link a pipeline to the outside world
-* All events leave a pipeline via 'output streams', operators that link a pipeline to the outside world
-* Events always traverse a pipeline in graph order ( Depth-First-Search )
-* Where there is no imposed ordering ( in a branch ), tremor imposes declaration order
-* Synthetic events ( signals from the tremor system runtime, or contraflow that derive from events already in-flight in a pipeline ) follow the same rules, without exception.
-* All in-flight events in a pipeline are processed to completion before queued events are processed.
+- All data processed by a tremor pipeline is always ingested via an event
+- All events arrive into pipelines via 'input streams', operators that link a pipeline to the outside world
+- All events leave a pipeline via 'output streams', operators that link a pipeline to the outside world
+- Events always traverse a pipeline in graph order ( Depth-First-Search )
+- Where there is no imposed ordering ( in a branch ), tremor imposes declaration order
+- Synthetic events ( signals from the tremor system runtime, or contraflow that derive from events already in-flight in a pipeline ) follow the same rules, without exception.
+- All in-flight events in a pipeline are processed to completion before queued events are processed.
 
-As a result, in order to connect onramps, offramps and pipelines , we need to link them together. We call this set of ( required ) links a 'binding specification'. It is ok *not* to connect a pipeline input stream or output stream. But it is not ok to not connect the subset exposed in a binding specification.
+As a result, in order to connect onramps, offramps and pipelines , we need to link them together. We call this set of ( required ) links a 'binding specification'. It is ok _not_ to connect a pipeline input stream or output stream. But it is not ok to not connect the subset exposed in a binding specification.
 
-For our simple scenario, the following will suffice:
+For our scenario, the following will suffice:
 
 ```yaml
 # File: metronome-binding.yaml
 id: default
 links:
-  '/onramp/metronome/{instance}/out': [ '/pipeline/main/{instance}/in' ]
-  '/pipeline/main/{instance}/out': [ '/offramp/stdout/{instance}/in' ]
+  "/onramp/metronome/{instance}/out": ["/pipeline/main/{instance}/in"]
+  "/pipeline/main/{instance}/out": ["/offramp/stdout/{instance}/in"]
 ```
 
 ## Publish via the REST API / curl
@@ -190,19 +190,19 @@ In all steps to this point, we have been populating the tremor repository. Like 
 
 When we publish a mapping we are deploying live instances of onramps, offramps, and pipelines, in our case, we want to:
 
-* Deploy a single metronome onramp instance
-* Deploy a single stdout offramp instance
-* Deploy a single passthrough pipeline
-* We want the onramp to connect to the pipeline
-* We want the offramp to connect to the pipeline
+- Deploy a single metronome onramp instance
+- Deploy a single stdout offramp instance
+- Deploy a single passthrough pipeline
+- We want the onramp to connect to the pipeline
+- We want the offramp to connect to the pipeline
 
 In our final step we specify:
 
-* We want to call our instance 'walkthrough'
+- We want to call our instance 'walkthrough'
 
 ```yaml
 # File: metronome-mapping.yaml
-instance: 'walkthrough'
+instance: "walkthrough"
 ```
 
 Deploy via curl:

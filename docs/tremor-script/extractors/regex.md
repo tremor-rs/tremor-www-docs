@@ -107,7 +107,7 @@ $     the end of text (or end-of-line with multi-line mode)
 
 Flags are each a single character. For example, `(?x)` sets the flag `x` and `(?-x)` clears the flag `x`. Multiple flags can be set or cleared at the same time: `(?xy)` sets both the `x` and `y` flags and `(?x-y)` sets the `x` flag and clears the `y` flag.
 
-All flags are by default disabled unless stated otherwise. They are:
+All flags are by default set to off unless stated otherwise. They are:
 
 ```text
 i     case-insensitive: letters match both upper and lower case

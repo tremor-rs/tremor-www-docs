@@ -16,7 +16,7 @@ match event of
 end
 ```
 
-In the above example a regular expression `re` extractor is tested ( by use of the `~` test operator ) against the pattern form delimited by `|` symbols. The field level ( that obviously must exist on the event supplied, and requires that event is of record type ) is then tested against the regular expression.
+In the above example a regular expression `re` extractor is tested ( by use of the `~` test operator ) against the pattern form delimited by `|` symbols. The field level ( that must exist on the event supplied, and requires that event is of record type ) is then tested against the regular expression.
 
 ## Extraction Form
 
@@ -50,13 +50,13 @@ This will result in unintended behaviour because `present` will return the origi
 
 The different extractors available are:
 
-* [Base64](extractors/base64.md)
-* [CIDR](extractors/cidr.md)
-* [Datetime](extractors/datetime.md)
-* [Dissect](extractors/dissect.md)
-* [Glob](extractors/glob.md)
-* [Grok](extractors/grok.md)
-* [Influx](extractors/influx.md)
-* [JSON](extractors/json.md)
-* [KV](extractors/kv.md)
-* [Regex (Re)](extractors/regex.md)
+- [Base64](extractors/base64.md)
+- [CIDR](extractors/cidr.md)
+- [Datetime](extractors/datetime.md)
+- [Dissect](extractors/dissect.md)
+- [Glob](extractors/glob.md)
+- [Grok](extractors/grok.md)
+- [Influx](extractors/influx.md)
+- [JSON](extractors/json.md)
+- [KV](extractors/kv.md)
+- [Regex (Re)](extractors/regex.md)

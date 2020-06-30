@@ -12,9 +12,9 @@ A well-formed JSON document is a legal tremor-script expression.
 
 The language is explicitly not Turing-complete:
 
-* there are no unstructured `goto` grammar forms
-* there are no unbounded `for`, `while` or `do..while` looping constructs
-* the language is built on top of rust, inheriting its robustness and safety features, without the development overheads
+- there are no unstructured `goto` grammar forms
+- there are no unbounded `for`, `while` or `do..while` looping constructs
+- the language is built on top of rust, inheriting its robustness and safety features, without the development overheads
 
 ### Developer friendly
 
@@ -121,7 +121,7 @@ For strings tremor allows string interpolation, this means embedding code direct
 
 ##### HereDocs
 
-To deal with pre formatted strings in tremor script we allow for **here docs** they are started by using triple quotes `"""`  that terminate the line (aka `"""bla`  isn't legal) .
+To deal with pre formatted strings in tremor script we allow for **here docs** they are started by using triple quotes `"""` that terminate the line (aka `"""bla` isn't legal) .
 
 Here docs can in indented, the indentation will be truncated to the lowest number of spaces found in any of the lines.
 
@@ -140,6 +140,7 @@ The above **heredoc** would truncate 3 spaces characters since `...a` has 3 spac
 #### Arrays
 
 Array grammar:
+
 > ![array grammar](grammar/diagram/Array.png)
 
 Array literals in `tremor-script` are a comma-delimited set of expressions bracketed by the square brakcets '[' and ']'.
@@ -151,9 +152,11 @@ Array literals in `tremor-script` are a comma-delimited set of expressions brack
 #### Records
 
 Record grammar:
+
 > ![record grammar](grammar/diagram/Record.png)
 
 Field grammar:
+
 > ![field grammar](grammar/diagram/Field.png)
 
 Record literals in `tremor-script` are syntactically equivalent to JSON document objects
@@ -170,33 +173,37 @@ Record literals in `tremor-script` are syntactically equivalent to JSON document
 
 List of binary and unary operators in `tremor-script`, ordered by precedence (from low to high):
 
-|Symbol | Name | Example |
-|-------|------|---------|
-| or | Logical OR |`true or false` |
-| and |Logical AND | `true and false` |
-| \| | Bitwise OR | *Bitwise OR has not been implemented yet* |
-| ^ | Bitwise XOR | `42 ^ 42, true ^ true` |
-| & | Bitwise AND | `42 & 0, true & false` |
-| ==, != | Equality, Inequality | `"snot" != "badger"` |
-| <, <=, >, >= | Comparison Operators | `42 > 0` |
-| <<, >>, >>> | Bitwise shift -- Left, Right(signed), Right(unsigned) | `42 >> 2` |
-| +, - | Addition, Subtraction | `42 + 0` |
-| \*, /, % | Multiplication, Division, Modulus | `42 * 1` |
-| +, - | Unary Plus, Unary Minus | `+42` |
-| not , ! | Unary Logical NOT, Unary Bitwise NOT | `not false`, *Bitwise NOT has not been implemented yet* |
+| Symbol       | Name                                                  | Example                                                 |
+| ------------ | ----------------------------------------------------- | ------------------------------------------------------- |
+| or           | Logical OR                                            | `true or false`                                         |
+| and          | Logical AND                                           | `true and false`                                        |
+| \|           | Bitwise OR                                            | _Bitwise OR has not been implemented yet_               |
+| ^            | Bitwise XOR                                           | `42 ^ 42, true ^ true`                                  |
+| &            | Bitwise AND                                           | `42 & 0, true & false`                                  |
+| ==, !=       | Equality, Inequality                                  | `"snot" != "badger"`                                    |
+| <, <=, >, >= | Comparison Operators                                  | `42 > 0`                                                |
+| <<, >>, >>>  | Bitwise shift -- Left, Right(signed), Right(unsigned) | `42 >> 2`                                               |
+| +, -         | Addition, Subtraction                                 | `42 + 0`                                                |
+| \*, /, %     | Multiplication, Division, Modulus                     | `42 * 1`                                                |
+| +, -         | Unary Plus, Unary Minus                               | `+42`                                                   |
+| not , !      | Unary Logical NOT, Unary Bitwise NOT                  | `not false`, _Bitwise NOT has not been implemented yet_ |
 
 ### Paths
 
 Path grammar:
+
 > ![path grammar](grammar/diagram/Path.png)
 
 Qualified Segments grammar:
+
 > ![qualified segment grammar](grammar/diagram/QualifiedSegments.png)
 
 PathSegment grammar:
+
 > ![segment grammar](grammar/diagram/PathSegment.png)
 
 ArraySegment grammar:
+
 > ![array grammar](grammar/diagram/ArraySegment.png)
 
 Path-like structures in `tremor-script` allow a subset of an ingested event, meta-data passed to the tremor-script function and script-local data to be indexed.
@@ -285,6 +292,7 @@ Const can be used to define immutable, constant values that get evaluated at com
 ### Let
 
 Let grammar:
+
 > ![let grammar](grammar/diagram/Let.png)
 
 The let expression allows data pointed to by a path to be destructively mutated, and the pointed-to value reassigned. If the path does not yet exist, it will be created in-situ:
@@ -309,25 +317,26 @@ let $a = a;
 
 ### Drop
 
-Drop expressions enable short-circuiting the execution of a `tremor-script` when badly formed data is discovered. If no argument is supplied, `drop` will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process dropped events or data using purpose-built error-handling.
+Drop expressions enable short-circuiting the evaluation of a `tremor-script` when badly formed data is discovered. If no argument is supplied, `drop` will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process dropped events or data using purpose-built error-handling.
 
 As the content of the dropped event is user-defined, operators can standardise the format of the error emitted on drop from `tremor-script`
 
 ```tremor
 drop;
-drop; # As the first emit always wins, this expression never executes
+drop; # As the first emit always wins, this expression never runs
 ```
 
 ### Emit
 
 Emit grammar:
+
 > ![emit grammar](grammar/diagram/Emit.png)
 
-Emit expressions enable short-circuiting the execution of a `tremor-script` when processing is known to be complete and further processing can be avoided. If no argument is supplied, emit` will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process emitted events or data using their default flow-based or stream-based data processing pipelines.
+Emit expressions enable short-circuiting the evaluation of a `tremor-script` when processing is known to be complete and further processing can be avoided. If no argument is supplied, emit` will return the event record. If an argument is supplied, the result of evaluating the expression will be returned. Tremor or other processing tools can process emitted events or data using their default flow-based or stream-based data processing pipelines.
 
 As the content of the emitted event is user-defined, oeprators can standardise the format of the event emitted on emit from `tremor-script`
 
-*NOTE* By default, if no `emit` or `drop` expressions are defined, all expressions in a correctly written tremor-script will be executed until completion and the value of the last expression evaluated will be returned as an `emit` message.
+_NOTE_ By default, if no `emit` or `drop` expressions are defined, all expressions in a correctly written tremor-script will be evaluated until completion and the value of the last expression evaluated will be returned as an `emit` message.
 
 Implicit emission:
 
@@ -344,10 +353,10 @@ emit "snot"
 
 ```tremor
 emit "oh noes!"
-emit "never happens"; # As the first emit always wins, this expression never executes
+emit "never happens"; # As the first emit always wins, this expression never runs
 ```
 
-There are times when it is necessary to emit synthetic events from `tremor-script` within a tremor `pipeline` to an alternate `operator` port than the default success route. For example, when data is well-formed but not valid and the data needs to be __diverted__ into an alternate flow. The emit clause can be deployed for this purpose by specifying an optional named port.
+There are times when it is necessary to emit synthetic events from `tremor-script` within a tremor `pipeline` to an alternate `operator` port than the default success route. For example, when data is well-formed but not valid and the data needs to be **diverted** into an alternate flow. The emit clause can be deployed for this purpose by specifying an optional named port.
 
 ```tremor
 emit {
@@ -361,9 +370,11 @@ emit {
 ### Match
 
 Match grammar:
+
 > ![match grammar](grammar/diagram/Match.png)
 
 Match case grammar:
+
 > ![case grammar](grammar/diagram/MatchCaseClause.png)
 
 Match expressions enable data to be filtered or queried using case-based reasoning. Match expressions take the form:
@@ -378,20 +389,20 @@ end
 
 Where:
 
-* target: An expression that is the target of case-based queries
-* case-expr: A predicate test, literal  value or pattern to match against
-* guard: An optional predicate expression to gate whether or not an otherwise matching case-clause will in fact match
-* block: The expression to be evaluated if the case matches, and any supplied guard evaluates to true
+- target: An expression that is the target of case-based queries
+- case-expr: A predicate test, literal value or pattern to match against
+- guard: An optional predicate expression to gate whether or not an otherwise matching case-clause will in fact match
+- block: The expression to be evaluated if the case matches, and any supplied guard evaluates to true
 
 Examples:
 
-Discover if the `store.book` path is an array, record or primitive structure:
+Discover if the `store.book` path is an array, record or scalar structure:
 
 ```tremor
 match store.book of
   case %[] => "store.book is an array-like data-structure"
   case %{} => "store.book is a record-like data-structure"
-  default => "store.book is a primitive data-type"
+  default => "store.book is a scalar data-type"
 end
 ```
 
@@ -472,9 +483,11 @@ end;
 > ![array case grammar](grammar/diagram/ArrayCase.png)
 
 Array Pattern grammar:
+
 > ![array pattern grammar](grammar/diagram/ArrayPattern.png)
 
 Array Pattern filter grammar:
+
 > ![array filter grammar](grammar/diagram/ArrayPatternFilter.png)
 
 In addition to literal array matching, where the case expression array literal must exactly match the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
@@ -502,9 +515,11 @@ end;
 > ![record case grammar](grammar/diagram/RecordCase.png)
 
 Record Pattern grammar
+
 > ![record pattern grammar](grammar/diagram/RecordPattern.png)
 
 Record Pattern Fields grammar
+
 > ![record pattern field grammar](grammar/diagram/RecordPatternFields.png)
 
 Similarly to record literal matching where the case expression record must exactly match the target of the match expression, record patterns enable testing for matching fields or sub-structures within a record and extracting and elementizing data on the basis of matched predicate tests ( via `~=` ).
@@ -579,36 +594,38 @@ Merge expressions defines a difference against a targetted record and applies th
 let event = merge event of {"some": "record"} end
 ```
 
-|Given|Merge|Result|Explanation|
-|---|---|---|---|
-|`{"a":"b"}`|`{"a":"c"}`|`{"a":"c"}`|Insert/Update field 'a'|
-|`{"a":"b"}`|`{"b":"c"}`|`{"a":"b", "b":"c"}`|Insert field 'b'|
-|`{"a":"b"}`|`{"a":null}`|`{}`|Erase field 'a'|
-|`{"a":"b","b":"c"}`|`{"a":null}`|`{"b":"c"}`|Erase field 'a'|
-|`{"a": [{"b":"c"}]}`|`{"a": [1]}`|`{"a": [1]}`|Replace field 'a' with literal array|
+| Given                | Merge        | Result               | Explanation                          |
+| -------------------- | ------------ | -------------------- | ------------------------------------ |
+| `{"a":"b"}`          | `{"a":"c"}`  | `{"a":"c"}`          | Insert/Update field 'a'              |
+| `{"a":"b"}`          | `{"b":"c"}`  | `{"a":"b", "b":"c"}` | Insert field 'b'                     |
+| `{"a":"b"}`          | `{"a":null}` | `{}`                 | Erase field 'a'                      |
+| `{"a":"b","b":"c"}`  | `{"a":null}` | `{"b":"c"}`          | Erase field 'a'                      |
+| `{"a": [{"b":"c"}]}` | `{"a": [1]}` | `{"a": [1]}`         | Replace field 'a' with literal array |
 
 ### Patch
 
 > ![patch grammar](grammar/diagram/Patch.png)
 
 Patch operation grammar
+
 > ![patch operation grammar](grammar/diagram/PatchOperation.png)
 
 Patch expressions define a set of record level field operations to be applied to a target record in order to transform a targetted record. Patch allows fields to be: inserted where there was no field before; removed where there was a field before; updated where there was a field before; or inserted or updated regardless of whether or not there was a field before. Patch also allows field level merge operations on records or for the targetted document itself to be merged. Merge operations in patch are syntax sugar in that they are both based on the merge operation.
 
 Patch follows the semantics of [RFC 6902](https://tools.ietf.org/html/rfc6902) with the explicit exclusion of the `copy` and `move` operations and with the addition of an `upsert` operation the variant supported by `tremor-script`
 
-|Example|Expression|Result|Explanation|
-|---|---|---|---|
-|`let foo = {"foo":"bar"}`|`patch foo of insert "baz" => "qux" end`|`{"foo":"bar","baz":"qux"}`|Add baz field|
-|`let foo = {"foo":"bar","baz":"qux"}`|`patch foo of erase "foo" end`|`{"baz":"qux"}`|Erase foo and add baz field|
-|`let foo = {"foo":"bar"}`|`patch foo of upsert "foo" => null end`|`{"foo":null}`|Set foo to null, or reset to null if field already exists|
+| Example                               | Expression                               | Result                      | Explanation                                               |
+| ------------------------------------- | ---------------------------------------- | --------------------------- | --------------------------------------------------------- |
+| `let foo = {"foo":"bar"}`             | `patch foo of insert "baz" => "qux" end` | `{"foo":"bar","baz":"qux"}` | Add baz field                                             |
+| `let foo = {"foo":"bar","baz":"qux"}` | `patch foo of erase "foo" end`           | `{"baz":"qux"}`             | Erase foo and add baz field                               |
+| `let foo = {"foo":"bar"}`             | `patch foo of upsert "foo" => null end`  | `{"foo":null}`              | Set foo to null, or reset to null if field already exists |
 
 ### For comprehensions
 
 > ![for grammar](grammar/diagram/For.png)
 
 For Case Clause grammar
+
 > ![for case clause grammar](grammar/diagram/ForCaseClause.png)
 
 For expressions are case-based record or array comprehensions that can iterate over index/element or key/value pairs in record or array literals respectively.
@@ -655,9 +672,7 @@ Since the state storage lives for the lifetime of a pipeline, state will not be 
 
 ## Extractors
 
-> ![test expression grammar](grammar/diagram/TestExpr.png)
-> ![test literal grammar](grammar/diagram/TEST_LITERAL.png)
-> ![test literal escape grammar](grammar/diagram/TEST_ESCAPE.png)
+> ![test expression grammar](grammar/diagram/TestExpr.png) > ![test literal grammar](grammar/diagram/TEST_LITERAL.png) > ![test literal escape grammar](grammar/diagram/TEST_ESCAPE.png)
 
 The language has pluggable support for a number of microformats with two basic modes of operation that enable predicate tests ( does a particular value match the expected micro-format ) and elementization ( if a value does match a specific micro-format, then extract and elementize accordingly ).
 
@@ -669,23 +684,23 @@ The general form of a supported micro-format is as follows:
 
 Where:
 
-* name - The key for the micro-format being used for testing or extraction
-* format - An optional multi-line micro-format specific format encoding used for testing and extraction
+- name - The key for the micro-format being used for testing or extraction
+- format - An optional multi-line micro-format specific format encoding used for testing and extraction
 
 Formats can be spread out over multiple lines by adding a `\` as a last character of the line. Spaces at the start of the line will be truncated by the lowest number of leading spaces. So if 3 lines respectively have 2, 4, and 7 spaces then 2 spaces are going to be removed from each line leaving 0, 2, and 5 spaces at the start.
 
 The set of supported micro-formats at the time of writing are as follows:
 
-|Name|Format|Test mode|Return type|Extraction mode|
-|---|---|---|---|---|
-|__base64__|Not required|Tests if underlying value is a base64 encoded string|__string__|Performs a base64 decode, returning a UTF-8 encoded string|
-|__glob__|Glob expression|Tests if underlying value conforms to the supplied glob pattern|__string__|Returns the value that matches the glob ( identity extraction )|
-|__re__|PCRE regular expression with match groups|Tests if underlying value conforms to supplied PCRE format|__record__|Extracts matched named values into a record|
-|__cidr__|Plain IP or netmask|Tests if underlying value conforms to cidr specification|__record__|Extracted numeric ip range, netmask and relevant information as a record|
-|__kv__|Logstash KV specification|Tests if the underlying value conforms to Logstash KV specification|__record__|Returns a key/value record|
-|__dissect__|Logstash Dissect specification|Tests if the underlying value conforms to Logstash Dissect specification|__record__|Returns a record of matching extractions based on supplied specification|
-|__grok__|Logstash Grok specification|Tests if the underlying value conforms to Logstash Grok specification|__record__|Returns a record of matching extractions based on supplied specification|
-|__influx__|Not required|Tests if the underlying value conforms to Influx line protocol specification|__record__|Returns an influx line protocol record matching extractions based on supplied specification|
-|__json__|Not required|Tests if the underlying value is json encoded|__depends on value__|Returns a hydrated `tremor-script` value upon extraction|
+| Name        | Format                                    | Test mode                                                                    | Return type          | Extraction mode                                                                             |
+| ----------- | ----------------------------------------- | ---------------------------------------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------- |
+| **base64**  | Not required                              | Tests if underlying value is a base64 encoded string                         | **string**           | Performs a base64 decode, returning a UTF-8 encoded string                                  |
+| **glob**    | Glob expression                           | Tests if underlying value conforms to the supplied glob pattern              | **string**           | Returns the value that matches the glob ( identity extraction )                             |
+| **re**      | PCRE regular expression with match groups | Tests if underlying value conforms to supplied PCRE format                   | **record**           | Extracts matched named values into a record                                                 |
+| **cidr**    | Plain IP or netmask                       | Tests if underlying value conforms to cidr specification                     | **record**           | Extracted numeric ip range, netmask and relevant information as a record                    |
+| **kv**      | Logstash KV specification                 | Tests if the underlying value conforms to Logstash KV specification          | **record**           | Returns a key/value record                                                                  |
+| **dissect** | Logstash Dissect specification            | Tests if the underlying value conforms to Logstash Dissect specification     | **record**           | Returns a record of matching extractions based on supplied specification                    |
+| **grok**    | Logstash Grok specification               | Tests if the underlying value conforms to Logstash Grok specification        | **record**           | Returns a record of matching extractions based on supplied specification                    |
+| **influx**  | Not required                              | Tests if the underlying value conforms to Influx line protocol specification | **record**           | Returns an influx line protocol record matching extractions based on supplied specification |
+| **json**    | Not required                              | Tests if the underlying value is json encoded                                | **depends on value** | Returns a hydrated `tremor-script` value upon extraction                                    |
 
 There is no concept of _injector_ in the `tremor-script` language that is analogous to extractors. Where relevant the langauge supports functions thatcsupport the underlying operation ( such as base64 encoding ) and let expressions can be used for assignments.

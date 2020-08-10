@@ -18,7 +18,7 @@ tremor-based solutions.
 
 Make sure your environment is setup for building tremor:
 
-[Tremor Quick Start](https://github.com/wayfair-tremor/tremor-runtime/blob/master/docs/development/quick-start.md)
+[Tremor Quick Start](https://github.com/wayfair-tremor/tremor-runtime/blob/main/docs/development/quick-start.md)
 
 ### Setup support for your IDE
 

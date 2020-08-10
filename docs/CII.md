@@ -60,7 +60,7 @@ ASL-2.0
 
 **The software produced by the project MUST be released as FLOSS.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/tree/master/LICENSE
+Met. https://github.com/wayfair-tremor/tremor-runtime/tree/main/LICENSE
 
 **It is SUGGESTED that any required license(s) for the software produced by the project be approved by the Open Source Initiative (OSI).**
 
@@ -68,7 +68,7 @@ Met. The ASL-2.0 license is approved by the Open Source Initiative (OSI).
 
 **The project MUST post the license(s) of its results in a standard location in their source repository. (URL required)**
 
-Met. The license (ASL-2.0) in in the file LICENSE, see https://github.com/wayfair-tremor/tremor-runtime/tree/master/LICENSE
+Met. The license (ASL-2.0) in in the file LICENSE, see https://github.com/wayfair-tremor/tremor-runtime/tree/main/LICENSE
 
 ### Documentation
 
@@ -122,11 +122,11 @@ Met. The project follows [Semantic Versioning](https://semver.org/) (SemVer) for
 
 **It is SUGGESTED that projects identify each release within their version control system. For example, it is SUGGESTED that those using git identify each release using git tags.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/tree/master/docs/development/process/release.md
+Met. https://github.com/wayfair-tremor/tremor-runtime/tree/main/docs/development/process/release.md
 
 **The project MUST provide, in each release, release notes that are a human-readable summary of major changes in that release to help users determine if they should upgrade and what the upgrade impact will be. The release notes MUST NOT be the raw output of a version control log (e.g., the "git log" command results are not release notes). Projects whose results are not intended for reuse in multiple locations (such as the software for a single website or service) AND employ continuous delivery MAY select "N/A". (URL required)**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/tree/master/CHANGELOG.md
+Met. https://github.com/wayfair-tremor/tremor-runtime/tree/main/CHANGELOG.md
 
 **The release notes MUST identify every publicly known vulnerability with a CVE assignment or similar that is fixed in each new release, unless users typically cannot practically update the software themselves. If there are no release notes or there have been no publicly known vulnerabilities, choose "not applicable" (N/A).**
 

@@ -2,7 +2,7 @@ site_name: Tremor Documentation
 site_author: The Tremor Team
 repo_url: https://github.com/wayfair-tremor/tremor-www-docs
 repo_name: wayfair-tremor/tremor-www-docs
-edit_uri: edit/master/docs
+edit_uri: edit/main/docs
 docs_dir: docs
 site_dir: html
 pages:

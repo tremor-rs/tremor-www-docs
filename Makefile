@@ -1,4 +1,4 @@
-TREMOR_VSN=master
+TREMOR_VSN=main
 
 mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib
 	files=`find docs/tremor-script/stdlib -type f`;\

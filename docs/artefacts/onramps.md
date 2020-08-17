@@ -2,6 +2,9 @@
 
 Specify how Tremor connects to the outside world in order to receive from external systems.
 
+All Onramps support circuit breakers as in that no new events are read from it in the case of a
+circuit breaker triggering.
+
 For example, the Kafka onramp receives data from a Kafka cluster by creating a local record
 consumer, connecting to a set of topics and ingesting Kafka record data.
 
@@ -27,6 +30,8 @@ The `config` contains a map (key-value pairs) specific to the onramp type.
 ## Supported Onramps
 
 ### kafka
+
+* Guaranteed Delivery: optional (if `enable.auto.commit` is set to false)
 
 The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka configuration options](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).
 
@@ -63,6 +68,8 @@ onramp:
 
 ### udp
 
+* Guaranteed Delivery: none
+
 The udp onramp allows receiving data via UDP datagrams.
 
 The default [codec](codecs.md#string) is `string`.
@@ -96,6 +103,8 @@ onramp:
 
 ### file
 
+* Guaranteed Delivery: none
+
 The file onramp reads the content of a file, line by line. And sends each line as an event. It has the ability to shut down the system upon completion. Files can be `xz` compressed.
 
 The default [codec](codecs.md#json) is `json`.
@@ -123,6 +132,8 @@ onramp:
 
 ### metronome
 
+* Guaranteed Delivery: none
+
 This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.
 
 The default [codec](codecs.md#pass) is `pass`. (since we already output decoded JSON)
@@ -148,6 +159,8 @@ onramp:
 ```
 
 ### crononome
+
+* Guaranteed Delivery: none
 
 This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.
 
@@ -191,6 +204,8 @@ from the [year 2038 problem](https://en.wikipedia.org/wiki/Year_2038_problem).
 
 ### blaster
 
+* Guaranteed Delivery: none
+
 NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.
 
 The blaster onramp is built for performance testing, but it can be used for spaced out replays of events as well. Files to replay can be `xz` compressed. It will keep looping over the file.
@@ -221,6 +236,8 @@ onramp:
 ```
 
 ### tcp
+
+* Guaranteed Delivery: none
 
 This listens on a specified port for inbound tcp data.
 
@@ -315,6 +332,8 @@ configure rest onramps via swagger, raml or openapi configuration files.
 
 ### PostgreSQL
 
+* Guaranteed Delivery: none
+
 PostgreSQL onramp.
 
 Supported configuration options are:
@@ -367,6 +386,8 @@ config:
 ```
 
 ### ws
+
+* Guaranteed Delivery: none
 
 Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: `ws://<host>:<port>/`
 

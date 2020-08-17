@@ -21,15 +21,24 @@ Each tremor runtime comes with some pre-configured offramos that can be used.
 
 ### system::stdout
 
+* Guaranteed Delivery: auto-ack
+* Circuit Breaker: none
+
 The offramp `/offramp/system::stdout/system` can be used to print to STDOUT. Data will be formatted as JSON.
 
 ### system::sderr
+
+* Guaranteed Delivery: auto-ack
+* Circuit Breaker: none
 
 The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Data will be formatted as JSON.
 
 ## Supported Offramps
 
 ### elastic
+
+* Guaranteed Delivery: ack on 200
+* Circuit Breaker: none
 
 The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested wiht ES v6.
 
@@ -57,6 +66,9 @@ offramp:
 
 ### kafka
 
+* Guaranteed Delivery: ack on librdkafka success
+* Circuit Breaker: none
+
 The Kafka offramp connects sends events to a Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka configuration options](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).
 
 The default [codec](codecs.md#json) is `json`.
@@ -65,7 +77,6 @@ Supported configuration options are:
 
 - `topic` - The topic to send to.
 - `brokers` - Broker servers to connect to. (Kafka nodes)
-- `threads` - Number of threads to use for the Kafka offramp. (default: `4`)
 - `hostname` - Hostname to identify the client with. (default: the systems hostname)
 - `rdkafka_options` - An optional map of option to value, where both sides need to be strings.
 
@@ -82,6 +93,9 @@ offramp:
 ```
 
 ### ws
+
+* Guaranteed Delivery: on send
+* Circuit Breaker: on connection loss / connection
 
 Sends events over a websocket connection. Each event is a websocket message.
 
@@ -103,6 +117,9 @@ onramp:
 ```
 
 ### udp
+
+* Guaranteed Delivery: on send
+* Circuit Breaker: on socket loss / recreation
 
 The UDP offramp sends data to a given host and port as UDP datagram.
 
@@ -132,6 +149,9 @@ offramp:
 
 ### REST - Representational State Transfer
 
+* Guaranteed Delivery: on non 400/500
+* Circuit Breaker: none
+
 The REST offramp is used to send events or batches of events to a REST endpoint either via a `POST` or `PUT` request. By default, a `POST` request is used. Batched events are send in a single request.
 
 Supprted configuration options are:
@@ -158,6 +178,9 @@ offramp:
 ```
 
 ### PostgreSQL
+
+* Guaranteed Delivery: auto ack
+* Circuit Breaker: none
 
 PostgreSQL offramp.
 
@@ -196,6 +219,9 @@ config:
 
 ### file
 
+* Guaranteed Delivery: auto ack
+* Circuit Breaker: none
+
 The file offramp writes events to a file, one event per line. The file is overwritten if it exists.
 
 The default [codec](codecs.md#json) is `json`.
@@ -216,6 +242,9 @@ offramp:
 
 ### stdout
 
+* Guaranteed Delivery: auto ack
+* Circuit Breaker: none
+
 The standard out offramp prints each event to the stdout output.
 
 This operator does not support configuration.
@@ -229,6 +258,9 @@ offramp:
 ```
 
 ### blackhole
+
+* Guaranteed Delivery: auto ack
+* Circuit Breaker: none
 
 The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints a HDR ( High Dynamic Range ) [histogram](http://hdrhistogram.org/).
 
@@ -251,6 +283,9 @@ offramp:
 
 ### debug
 
+* Guaranteed Delivery: auto ack
+* Circuit Breaker: none
+
 The debug offramp is used to get an overview of how many events are put in wich classification.
 
 This operator does not support configuration.
@@ -268,6 +303,9 @@ offramp:
 ```
 
 ### tcp
+
+* Guaranteed Delivery: on send
+* Circuit Breaker: on connection loss / connection
 
 This connects on a specified port for distributing outbound tcp data.
 
@@ -301,6 +339,9 @@ offramp:
 ```
 
 ### exit
+
+* Guaranteed Delivery: auto ack
+* Circuit Breaker: none
 
 The exit offramp terminates the runtime with a system exit status.
 

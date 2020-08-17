@@ -6,7 +6,7 @@ Tools for investigating issues in a production environment.
 
 ### Logs & Metrics (prod)
 
-Logs and metrics are the first and most fundamental tool when starting to investigate an issue. While they do not provide a deep insight they allow correlating events from a the system under investigation and it is dependants and dependencies.
+Logs and metrics are the first and most fundamental tool when starting to investigate an issue. While they do not provide a deep insight they allow correlating events from the system under investigation and it is dependants and dependencies.
 
 ### `htop` (prod)
 
@@ -50,7 +50,7 @@ Both `lldb` and for rust more specifically `lldb-rust` are debuggers. They can a
 
 ### `valgrind` (dev: Linux)
 
-`valgrind` is used to debug and analyse memory leaks. While originally developed for C/C++ it mostly works with rust code as well - however on OS X it has shown to crash code and as the time of writing this is not a usable tool. More information can be found in the [quick start](http://www.valgrind.org/docs/manual/quick-start.html).
+`valgrind` is used to debug and analyze memory leaks. While originally developed for C/C++ it mostly works with rust code as well - however on OS X it has shown to crash code and as the time of writing this is not a usable tool. More information can be found in the [quick start](http://www.valgrind.org/docs/manual/quick-start.html).
 
 ### `dtrace` (dev: OS X / Windows / BSD)
 
@@ -58,7 +58,7 @@ Both `lldb` and for rust more specifically `lldb-rust` are debuggers. They can a
 
 ### Instruments (dev: OS X)
 
-OS X comes with a user interface around dtrace that abstracts a lot of the complication away and presents some of core functionality in bite sized portions that can be used without requiring to understand the whole functionality of dtrace. It is installed alongside with XCode.
+OS X comes with a user interface around dtrace that abstracts a lot of the complication away and presents some of the core functionality in bite-sized portions that can be used without requiring to understand the whole functionality of dtrace. It is installed alongside with XCode.
 
 Some of the more interesting profiling templates are:
 
@@ -68,11 +68,11 @@ Some of the more interesting profiling templates are:
 
 ### `strace` (prod: Linux)
 
-`strace` is a tool that allows tracing sys calls in linux, it can be helpful to determine what system calls do occur during a observed issue. For example this can rule in our out specific kernel calls such as IO, muteness, threading, networking and so on.
+`strace` is a tool that allows tracing sys calls in Linux, it can be helpful to determine what system calls do occur during an observed issue. For example this can rule in our out specific kernel calls such as IO, muteness, threading, networking and so on.
 
 ### `websocat` (prod: nay)
 
-[`websocat`](https://github.com/vi/websocat) is a websocket client that can be used to interact with trmeors websocket onramp and offramp for testing.
+[`websocat`](https://github.com/vi/websocat) is a WebSocket client that can be used to interact with trmeors WebSocket onramp and offramp for testing.
 
 ## Methodology
 
@@ -85,11 +85,11 @@ However there are general methods that have shown to be efficient in trying to i
 3. Decide on what would prove your theory - this is where you decide what the next debugging step is, it should ideally either completely confirm, or rule out your theory, that however isn't always possible.
 4. If the steps decided on in step 3 fully confirm the issue you're done. If they fully disprove the theory go back to step 1 with the new information. If you neither have prove or disprove for your theory return to 3 and re-formulate what is required to prove it.
 
-Especially initially it helps to document each step as you progress along with any changes you made. This helps to prevent double checking the same theory but also serves as a good learning exercise.
+Especially initially it helps to document each step as you progress along with any changes you made. This helps to prevent double-checking the same theory but also serves as a good learning exercise.
 
 **Note**: Don't be shy to re-visit a theory if you found new evidence for it that were not visible in the first attempt.
 
-**Note**: It is a very helpful to talk to someone, formulating the thoughts in sentences and words often springs new ideas and a second perspective helps with.
+**Note**: It is very helpful to talk to someone, formulating the thoughts in sentences and words often springs new ideas and a second perspective helps with.
 
 ## Logs
 
@@ -101,7 +101,7 @@ On one of the busier boxes the memory of the process kept growing until the syst
 
 #### 1st theory: a memory leak in tremor-script
 
-Most of tremor was written in rust which makes it very hard to create memory leaks, however we integrated two pices of C code: tremor script and librdkafka those two pices could either directly or by interfacing with rust introduce memory leaks.
+Most of tremor was written in rust which makes it very hard to create memory leaks, however we integrated two pieces of C code: tremor script and librdkafka those two pipieceses could either directly or by interfacing with rust introduce memory leaks.
 
 ##### disprove of 1st theory (oom)
 
@@ -121,7 +121,7 @@ Re-deploying tremor with the librdkafka settings set to only use 100MB of memory
 
 On GCP a node jumped to 75% (100% on a single core) and stopped processing data. No Kafka partitions were assigned to that node until it was restarted.
 
-This bug hunt carries some complications. We have not been able to replicate the bug outside of a production environment. The environment runs on a outdated linux, has no internet access to download tools and does not have many of the usual debugging tools available. The bug is rare enough that it take between one and two weeks to reproduce it.
+This bug hunt carries some complications. We have not been able to replicate the bug outside of a production environment. The environment runs on an outdated Linux, has no internet access to download tools and does not have many of the usual debugging tools available. The bug is rare enough that it take between one and two weeks to reproduce it.
 
 #### 1st theory: network problems on GCP
 
@@ -129,13 +129,13 @@ Since this was first and only observed directly after the migration to GCP the i
 
 ##### disprove of 1st theory (lib kafka)
 
-To validate the theory we installed the same version of tremor on premises - and in parallel to working installations and observed if the issue would surface outside of GCP. If it wouldn't we could have reduced it to a GCP related issue.
+To validate the theory we installed the same version of tremor on-premises - and in parallel to working installations and observed if the issue would surface outside of GCP. If it wouldn't we could have reduced it to a GCP related issue.
 
 **Result**: After two weeks of on-prem load we were able to recreate the issue locally, this invalidated our 1st theory.
 
 #### 2nd theory: a bug in our Kafka onramp
 
-Inspecting the code that run Kafka we identified a possible issue that we didn't abort on a bad return value to force a reconnect as we suspected the librdkafak wrapper to handle this situations.
+Inspecting the code that run Kafka we identified a possible issue that we didn't abort on a bad return value to force a reconnect as we suspected the librdkafak wrapper to handle these situations.
 
 ##### disprove of 2nd theory
 
@@ -143,9 +143,9 @@ We patched our Kafka onramp to explicitly handle this bad returns and provide lo
 
 **Result**: After a week the issue re-surfaced without the related logs printed.
 
-#### 3rd theory: incompatible versions of librdkafka and kafka
+#### 3rd theory: incompatible versions of librdkafka and Kafka
 
-During the update of tremor we also updated the version of librdkakfa - the Kafka version however remained quite old. We theorised that a incompatibility of the newer librdkafka and the old Kafka could cause undefined behaviour such as the busy loop.
+During the update of tremor we also updated the version of librdkakfa - the Kafka version however remained quite old. We theorized that incompatibility of the newer librdkafka and the old Kafka could cause undefined behavior such as the busy loop.
 
 ##### disprove of 3rd theory
 
@@ -172,11 +172,11 @@ After inspecting [the code](https://github.com/edenhill/librdkafka/blob/v1.0.0/s
 
 We isolated the hot thread using `stop` - looking for the tremor thread that was using 100% CPU. We then traced system calls using `strace`. If librdkafka would attempt to fetch a mutex lock we should see related system calls in the `strace` output.
 
-However observing the process for an hour didn't show a single system call to be made on the hot thread - this ruled out any mutex/kernel related code to be run in the hot loop.
+However observing the process for an hour didn't show a single system call to be made on the hot thread - this ruled out any mutex/kernel-related code to be run in the hot loop.
 
-#### 5th theory: a different rdkafka bug
+#### 5th theory: a different librdkafka bug
 
-Inspecting the code and the `perf` output further we noticed that `cnd_timedwait_abs` was part of the [last condition](https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L390) in a `while (1)` loop. It is reasonable to assume that if we spend time in `cnd_timedwait_abs` that we hit that part of the loop - if this call would fail the loop would re run possibly creating an infinite loop.
+Inspecting the code and the `perf` output further we noticed that `cnd_timedwait_abs` was part of the [last condition](https://github.com/edenhill/librdkafka/blob/v1.0.0/src/rdkafka_queue.c#L390) in a `while (1)` loop. It is reasonable to assume that if we spend time in `cnd_timedwait_abs` that we hit that part of the loop - if this call would fail the loop would re-run possibly creating an infinite loop.
 
 In addition we found a related [kafka issue](https://github.com/edenhill/librdkafka/issues/2208) that pointed to this particular location.
 
@@ -184,20 +184,20 @@ In addition we found a related [kafka issue](https://github.com/edenhill/librdka
 
 We deployed half the nodes with a version of tremor that the newest version of librdkafka (1.0.0) that includes a fix for the issue mentioned above while. We expect the patched nodes to keep stable and the unpatched nodes to eventually fail with the bug.
 
-This never happend again.
+This never happened again.
 
 ### UDP GELF messages issue
 
 Issues:
 
-- Undocumented and non standard conform use of Decompress after chunking, this messages were discarded, this was falsly attributed to tremor
-- Setup was spanning the WAN using local Logstas and WAN connected Tremor causing MTU issues that was not documented and falsly attributed to tremor
-- Using a non standard conform GELF header for 'uncompressed' caused those datapoints to be discarded, this was falsly attributed to tremor
-- the UDP buffer on the Tremor and logstash hosts were configured differently causing the tremor host to have signifiantly less buffer causing some messages to be discarded in the OS UDP stack, this was falsly attributed to tremor
-- A tool called udp_replay was used to copy data from a logstash host to a tremor host, this tool truncated the udp payload, this paylopad could no longer be decompressed making this packages fail, this was falsy attributed to trmeor
-- Some clients send a empty tailing message with a bad segment index (n+1) causing error messages to apear in the logs, this is valid behaviour but were flagged as a 'bug' in tremor because logstash does silently drop those.
+- Undocumented and nonstandard conform use of Decompress after chunking, these messages were discarded, this was falsely attributed to tremor
+- Setup was spanning the WAN using local Logstas and WAN connected Tremor causing MTU issues that was not documented and falsely attributed to tremor
+- Using a nonstandard conform GELF header for 'uncompressed' caused those datapoints to be discarded, this was falsely attributed to tremor
+- the UDP buffer on the Tremor and logstash hosts were configured differently causing the tremor host to have significantly less buffer causing some messages to be discarded in the OS UDP stack, this was falsely attributed to tremor
+- A tool called udp_replay was used to copy data from a logstash host to a tremor host, this tool truncated the UDP payload, this payload could no longer be decompressed making this packages fail, this was falsy attributed to trmeor
+- Some clients send a empty tailing message with a bad segment index (n+1) causing error messages to appear in the logs, this is valid behavior but were flagged as a 'bug' in tremor because logstash does silently drop those.
 - Some clients reuse the sequence number - this can lead to bad messages when UDP packages interleave, tremor reports those incidents and will likely be flagged as buggy because of it.
 - MIO's UDP with edge-poll stops receiving data [ticket](https://github.com/tokio-rs/mio/issues/1076) we switched to level poll which solves this.
-- PCAP files seem to include lots of invlaid gelfs when replaying
+- PCAP files seem to include lots of invalid gelfs when replaying
 - When replaying the pacap the tool shows the following error.
   thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error(WrongField("PacketHeader.incl_len (288) > PacketHeader.orig_len (272)"), State { next_error: None, backtrace: None })', src/libcore/result.rs:999:5

@@ -23,7 +23,7 @@ onramp:
       <key>: <value>
 ```
 
-The [`codec`](codecs.md) field is optional and if not provided will use Onramps default codec.
+The [`codec`](codecs.md) field is optional and if not provided will use onramps default codec.
 
 The `config` contains a map (key-value pairs) specific to the onramp type.
 
@@ -70,7 +70,7 @@ onramp:
 
 * Guaranteed Delivery: none
 
-The udp onramp allows receiving data via UDP datagrams.
+The UDP onramp allows receiving data via UDP datagrams.
 
 The default [codec](codecs.md#string) is `string`.
 
@@ -208,7 +208,7 @@ from the [year 2038 problem](https://en.wikipedia.org/wiki/Year_2038_problem).
 
 NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.
 
-The blaster onramp is built for performance testing, but it can be used for spaced out replays of events as well. Files to replay can be `xz` compressed. It will keep looping over the file.
+The blaster onramp is built for performance testing, but it can be used for spaced-out replays of events as well. Files to replay can be `xz` compressed. It will keep looping over the file.
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -328,7 +328,7 @@ Known limitations:
 
 Currently paths and path parameters are neither checked nor validated, nor are required parameters.
 Response status code configuration is also not currently respected. It is currently not possible to
-configure rest onramps via swagger, raml or openapi configuration files.
+configure rest onramps via swagger, RAML or OpenAPI configuration files.
 
 ### PostgreSQL
 

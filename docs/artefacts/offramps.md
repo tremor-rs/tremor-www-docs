@@ -17,7 +17,7 @@ offramp:
 
 ## System Offramps
 
-Each tremor runtime comes with some pre-configured offramos that can be used.
+Each tremor runtime comes with some pre-configured offramps that can be used.
 
 ### system::stdout
 
@@ -40,7 +40,7 @@ The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Dat
 * Guaranteed Delivery: ack on 200
 * Circuit Breaker: none
 
-The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested wiht ES v6.
+The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested with ES v6.
 
 Supported configuration options are:
 
@@ -69,7 +69,7 @@ offramp:
 * Guaranteed Delivery: ack on librdkafka success
 * Circuit Breaker: none
 
-The Kafka offramp connects sends events to a Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka configuration options](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).
+The Kafka offramp connects sends events to Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka configuration options](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -97,14 +97,14 @@ offramp:
 * Guaranteed Delivery: on send
 * Circuit Breaker: on connection loss / connection
 
-Sends events over a websocket connection. Each event is a websocket message.
+Sends events over a WebSocket connection. Each event is a WebSocket message.
 
 The default [codec](codecs.md#json) is `json`.
 
 Supported configuration options are:
 
-- `url` - Websocket endpoint to send data to.
-- `binary` - If data should be send as binary instead of text (default: `fase`).
+- `url` - WebSocket endpoint to send data to.
+- `binary` - If data should be send as binary instead of text (default: `false`).
 
 Example:
 
@@ -125,7 +125,7 @@ The UDP offramp sends data to a given host and port as UDP datagram.
 
 The default [codec](codecs.md#json) is `json`.
 
-When the UDP onramp gets a batch of messages it will send each element of the batch as a own UDP datagram.
+When the UDP onramp gets a batch of messages it will send each element of the batch as an own UDP datagram.
 
 Supported configuration options are:
 
@@ -154,16 +154,16 @@ offramp:
 
 The REST offramp is used to send events or batches of events to a REST endpoint either via a `POST` or `PUT` request. By default, a `POST` request is used. Batched events are send in a single request.
 
-Supprted configuration options are:
+Supported configuration options are:
 
 - `endpoints` - A vector of URLs to send the data to.
-- `concurrency` - Number of paralel in flight requests (default: `4`)
-- `put` - If a `PUT` request should be used istead of `POST` (default: `false`)
+- `concurrency` - Number of parallel in-flight requests (default: `4`)
+- `put` - If a `PUT` request should be used instead of `POST` (default: `false`)
 - `headers` - A map of headers to set for the requests
 
 ### REST offramp example for InfluxDB
 
-Structure is given for context.
+The structure is given for context.
 
 ```yaml
 offramp:
@@ -194,13 +194,13 @@ Supported configuration options are:
 - `table` - Database table name
 
 Data that comes in will be used to run an `INSERT` statement. It is required
-that data comes in objects representing columns. Object key must represent field
-name in database and must contain following fields:
+that data comes in objects representing columns. The object key must represent field
+name in the database and must contain following fields:
 
 - `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
   etc.)
 - `name` - field name as represented by database table schema
-- `value` - value of the field
+- `value` - the value of the field
 
 Example:
 
@@ -262,7 +262,7 @@ offramp:
 * Guaranteed Delivery: auto ack
 * Circuit Breaker: none
 
-The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints a HDR ( High Dynamic Range ) [histogram](http://hdrhistogram.org/).
+The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) [histogram](http://hdrhistogram.org/).
 
 Supported configuration options are:
 
@@ -307,7 +307,7 @@ offramp:
 * Guaranteed Delivery: on send
 * Circuit Breaker: on connection loss / connection
 
-This connects on a specified port for distributing outbound tcp data.
+This connects on a specified port for distributing outbound TCP data.
 
 The offramp can leverage postprocessors to frame data after codecs are applied and events are forwarded
 to external TCP protocol distribution endpoints.
@@ -348,7 +348,7 @@ The exit offramp terminates the runtime with a system exit status.
 The offramp accepts events via its standard input port and responds
 to events with a record structure containing a numeric exit field.
 
-To indicate succesful termination, an exit status of zero may be used:
+To indicate successful termination, an exit status of zero may be used:
 
 ```json
 { "exit": 0 }
@@ -370,7 +370,7 @@ with `bash` or other shell-based environments, as follows:
 |1|General errors|
 |2|Misuse of builtins|
 |126|Command invoked cannot run due to credentials/auth constraints|
-|127|Command not understood, not well formed or illegal|
+|127|Command not understood, not well-formed or illegal|
 
 Example:
 

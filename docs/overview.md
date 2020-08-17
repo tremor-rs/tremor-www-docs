@@ -44,26 +44,19 @@ At this time, the full URL form is not used in the configuration model.
 
 The Tremor runtime is composed of multiple internal components that communicate via queues across multiple threads of control managed/coordinated by a set of control plane actors driven by the Tremor REST API.
 
-### Threading model
+### Processing model
 
-Tremor is a multi-threaded client-server system.
+Tremor uses an async task model ontop of the [smol runtime](https://github.com/stjepang/smol) and
+[async-rs](https://async.rs/).
 
-Currently, the threading model is simplistic:
+Currently, the model is:
 
-- A thread is spawned per onramp
-- A thread is spawned per offramp
-- A thread is spawned per pipeline
-- Threads communicate via queues
+- A task is spawned per onramp
+- A task is spawned per offramp
+- A task is spawned per pipeline
+- Tasks communicate via queues
 
-This is sufficient for Tremor's primary use case as a log and metrics event processing system. In this and similar cases there are, and will only ever be, a small number of live onramps, pipelines and offramps.
-
-The threading model is very likely to evolve over time as concurrency, threading and other primitives available in the rust ecosystem mature and evolve.
-
-### Actor model
-
-Tremor exploits the Actor model for supervision, management and providing essential control plane services such as supporting the Tremor API and lifecycle management of onramps, pipelines and offramps.
-
-As Tremor is Rust-based, we have adopted the `actix` and `actix-web` projects which provide Tremor with a good enough actor based system to supervise and manage facilities within Tremor that are off the performance critical path.
+The Processing model is very likely to evolve over time as concurrency, threading, async and other primitives available in the rust ecosystem mature and evolve.
 
 ## Event ordering
 
@@ -137,6 +130,16 @@ There are many other ways to handle back-pressure ( for example: those used by S
 which philosophy results in less pager duty!
 
 Although the contraflow mechanism _may_ seem complex, its far simpler than back-pressure handling by almost all other reasonable mechanisms and with far fewer negative side-effects and tradeoffs.
+
+## Guaranteed delivery
+
+Tremor supports guaranteed delivery as long as both onramps and offramps support it. Alternatively,
+the [qos::wal](artefacts/operators.md#qos::wal) can be used to introduce a layer of Guaranteed
+delivery for onramps that do not support it naturally.
+
+The basic concept is that each event has a monotonically growing ID, once this ID is acknowledged
+as delivered all events with the provided ID or a lower Id are considered delivered. If an ID
+is marked as failed to deliver all events up until this ID will be replayed.
 
 ## Runtime facilities
 

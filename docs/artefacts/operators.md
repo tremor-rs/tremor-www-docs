@@ -108,7 +108,12 @@ This tells us the following, up until this measurement was published in the clas
 - (`pass`) Passed 93 events
 - (`overflow`) Marked 127 events as overflow due to not fitting in the limit
 
+
 ## generic::backpressure
+
+This operator is depricated please use `qos::backpressure` instead.
+
+## qos::backpressure
 
 The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached `timeout`, or an error occurs. On an successful transmission within the timeout limit, the delay is reset.
 
@@ -116,7 +121,6 @@ The backpressure operator is used to introduce delays based on downstream system
 
 - `timeout` - Maximum allowed 'write' time in milliseconds.
 - `steps` - Array of values to delay when a we detect backpressure. (default: `[50, 100, 250, 500, 1000, 5000, 10000]`)
-- `outputs` - Array of outputs, data will be round robined between outputs and backpressure kept track of on a per output basis. (Default: `["out"]`)
 
 **Outputs**:
 
@@ -127,9 +131,97 @@ The backpressure operator is used to introduce delays based on downstream system
 
 ```yaml
 - id: bp
-  op: generic::backpressure
+  op: qos::backpressure
   config:
     timeout: 100
+```
+
+## qos::percentile
+
+An alternative traffic shaping option to backpressure. Instead of all dropping events for a given
+time we drop a statistical subset with an increasing percentage of events dropped the longer we
+see errors / timeouts.
+
+In general `step_up` should always be significantly smaller then `step_down` to ensure we gradually
+reapproach the ideal state.
+
+**Configuration options**:
+
+- `timeout` - Maximum allowed 'write' time in milliseconds.
+- `step_down` - What additional percentile should be dropped in the case of a timeout (default 5%: `0.05`)
+- `step_up` - What percentile should be recovered in case of a good event. (default: 0.1%: `0.001`)
+
+**Outputs**:
+
+- `out`
+- `overflow` - Events that are not let past due to active backpressure
+
+**Example**:
+
+```yaml
+- id: bp
+  op: qos::percentile
+  config:
+    timeout: 100
+    step_down: 0.1 # 10%
+```
+
+## qos::roundrobin
+
+Evenly distributes events over it's outputs. If a CB trigger event is received from an output this
+output is skipped until the circuit breaker is restored. If all outputs are triggered the operator
+itself triggers a CB event.
+
+**Outputs**:
+
+- `*` (any named output is possible)
+
+**Example**:
+
+```yaml
+- id: rr
+  op: qos::roundrobin
+```
+
+## qos::wal
+
+A Write Ahead Log that will persist data to disk and feed the following operators from this disk
+cache. It allows to run onramps that do not provide any support for delivery guarantees with
+offramps that do.
+
+The wal operator will intercept and generate it's own circuit breaker events. You can think about it
+as a firewall that will protect all operators before itself from issues beyond it. On the other hand
+it will indiscriminately consume data from sources and operators before itself until it's own
+circuit breaking conditions are met.
+
+At the same time will it interact with tremors guaranteed delivery system, events are only removed
+from disk once they're acknowledged. In case of delivery failure the WAL operator will replay the
+failed events. On the same way the WAL operator will acknowledge events that it persists to disk.
+
+The WAL operator should be used with caution, since every event that passes through it will be
+written to the hard drive it has significant performance impact.
+
+**Configuration options**:
+
+- `read_count` - Maximum number of events that are read form the WAL at one time.
+- `dir` - Directory to store the WAL file in
+- `max_elements` - Maximum number of elements the WAL will cache before triggering a CB event
+- `max_bytes` - Maximum space on disk the WAL should take (this is a soft limit!)
+
+**Outputs**:
+
+- `out`
+
+**Example**:
+
+```yaml
+- id: wal
+  op: qos::wal
+  config:
+    dir: ./wal
+    read_count: 20
+    max_elements: 1000
+    max_bytes: 10485760
 ```
 
 ## generic::batch
@@ -169,21 +261,6 @@ The counter starts when the first event comes through and begins from 1.
 ```yaml
 - id: counter
   op: generic::counter
-```
-
-## passthrough
-
-Passes through the event without modifying it, used for debugging.
-
-**Outputs**:
-
-- `out`
-
-**Example**:
-
-```yaml
-- id: passthrough
-  op: passthrough
 ```
 
 ## debug::history

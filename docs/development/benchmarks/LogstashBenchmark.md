@@ -58,7 +58,7 @@ Batch size for micro-batching queues in logstash workers ( default 128 )
 
 ## Identity baseline benchmark
 
-Literally named baseline and is a equivalent in functionality to tremor's `empty-passthrough-json` benchmark
+Literally named baseline and is an equivalent in functionality to tremor's `empty-passthrough-json` benchmark
 
 ## For each logstash tunable, run a benchmark
 
@@ -75,11 +75,11 @@ $ java -cp build/libs/benchmark-cli.jar org.logstash.benchmark.cli.Main \
 
 ## For each tremor tunable, run a benchmark
 
-Given the `empty-passthrough-json` equivalent benchmark
+Given the `empty-passthrough-json` equivalent benchmark.
 
-Tremor has no performance related tunables
+Tremor has no performance-related tunables.
 
-Tremor's benchmark framework has no performance related tunables for the `empty-passthrough-json` equivalent benchmark
+Tremor's benchmark framework has no performance-related tunables for the `empty-passthrough-json` equivalent benchmark
 
 Record [results](./tremor-baseline-log.txt)
 
@@ -89,27 +89,27 @@ The `benchmark-cli` tool that ships with logstash suffers from a number of issue
 
 The number of events in each run is fixed and limited to 1 million events per run.
 
-No accomodation is made for warmup to ensure that the JVM has reached a stable state before results recording begins.
+No accommodation is made for warmup to ensure that the JVM has reached a stable state before results recording begins.
 
 The framework also incorrectly terminates after each run once 1 million results have been submitted. It should not complete until all workers have drained their respective queues and the benchmark reaches a quiescent state. Quiescence is not asserted.
 
 This means that the number of recorded processed events can be less than the configured target by a significant margin. As these are _micro-benchmarks_ and we are concerned with Order of Magnitude differences in performance we have not expended effort resolving these issues.
 
-A further issue with the logstash `benchmark-cli` tool is that the results suffer from the coordinated ommission problem.
+A further issue with the logstash `benchmark-cli` tool is that the results suffer from the coordinated omission problem.
 
-The coordinated ommission problem, is a term first-coined by Gil Tene based on the observations in benchmarking the Azul Vega hardware and Zing JVM with C4 garbage collector and related ZTS subsystems). In a nutshell, coordinated-ommission is where a benchmarking tool ( usually unintentionally ) incorrectly records events under measurement time spans by failing to record the intended verses actual time to record. Specifically, it is insufficient to record the start time and end time of a particular event of interest. Capturing the start and end time allows the delta or servicing time to be computed. It does not capture any synchronization overhead, waiting time, delays or other system induced hiccups introduced between up to the point the event should have started. We fail to capture unintentional drift introduced artificially by the benchmark framework when CO is in force. Well-designed benchmarks should be CO-free.
+The coordinated omission problem, is a term first-coined by Gil Tene based on the observations in benchmarking the Azul Vega hardware and Zing JVM with C4 garbage collector and related ZTS subsystems). In a nutshell, coordinated-omission is where a benchmarking tool ( usually unintentionally ) incorrectly records events under measurement time spans by failing to record the intended verses actual time to record. Specifically, it is insufficient to record the start time and end time of a particular event of interest. Capturing the start and end time allows the delta or servicing time to be computed. It does not capture any synchronization overhead, waiting time, delays or other system-induced hiccups introduced between up to the point the event should have started. We fail to capture unintentional drift introduced artificially by the benchmark framework when CO is in force. Well-designed benchmarks should be CO-free.
 
-Tremor's benchmarking facility allows events to be injected at a fixed frequency. This tactic ( which more specifically, pins the intended commencement time for an event to begin processing to a starting epoch ) is sufficient to practically account for any hiccups or drift in expected verses actual inter-arrival based on designed constraints in a benchmark framework. By selecting a fixed static frequency any measured hiccups should be outside of the control of the benchmark framework - they are either artefacts of the scenario under test, or the system upon which it is being tested. These conditions are optimal in all benchmark testing, but an absolute necessity for any latency-sensitive testing, especially where fine-grained statistic quartiles are being computed if they are to impart results that are fit for low-level analysis and interpretation.
+Tremor's benchmarking facility allows events to be injected at a fixed frequency. This tactic ( which more specifically, pins the intended commencement time for an event to begin processing to a starting epoch ) is sufficient to practically account for any hiccups or drift in expected verses actual inter-arrival based on designed constraints in a benchmark framework. By selecting a fixed static frequency any measured hiccups should be outside of the control of the benchmark framework - they are either artifacts of the scenario under test, or the system upon which it is being tested. These conditions are optimal in all benchmark testing, but an absolute necessity for any latency-sensitive testing, especially where fine-grained statistic quartiles are being computed if they are to impart results that are fit for low-level analysis and interpretation.
 
-Coordinated-ommission-free benchmarks are important for micro-benchmarking and latency-driven benchmarking. However, as we are interested in Order of Magnitude ( finger in the air ) characteristics rather than isolating long-tail latencies or understanding fine grained latency characteristics on a per-event basis ( say, at the long-tail of performance beyond the 99.99th percentile )
+Coordinated-omission-free benchmarks are important for micro-benchmarking and latency-driven benchmarking. However, as we are interested in Order of Magnitude ( finger in the air ) characteristics rather than isolating long-tail latencies or understanding fine-grained latency characteristics on a per-event basis ( say, at the long-tail of performance beyond the 99.99th percentile )
 
-In short, tremor makes some effort to account for coordinated-ommission where relevant, but logstash's benchmark framework does not. However, as we are taking a 50,000 foot view of characteristic throughput and are not focusing on specific per-event latency characteristics the identified issues are negligeable for our analysis.
+In short, tremor makes some effort to account for coordinated-omission where relevant, but logstash's benchmark framework does not. However, as we are taking a 50,000-foot view of characteristic throughput and are not focusing on specific per-event latency characteristics the identified issues are negligible for our analysis.
 
-It would be incorrect however, to focus on per-event performance characteristics or focus in on specific latency quartiles or throughput quartiles to derive any sigificance. Such an analysis would require more effort and would not necessarily deliver any greater value.
+It would be incorrect however, to focus on per-event performance characteristics or focus in on specific latency quartiles or throughput quartiles to derive any significance. Such an analysis would require more effort and would not necessarily deliver any greater value.
 
-We have not used lab quality environments to run any of the benchmarks. All benchmarks were run on the same development grade laptop ( not ideal ) with the same background processes active on an intel / Mac OS X x86_64 environment. As such we consider the results indicative of characteristics and `good enough` for high level analysis.
+We have not used lab-quality environments to run any of the benchmarks. All benchmarks were run on the same development grade laptop ( not ideal ) with the same background processes active on an intel / Mac OS X x86_64 environment. As such we consider the results indicative of characteristics and `good enough` for high-level analysis.
 
-It should, however, be a small task to follow this report to replicate the characteristic results detailed in this report and accompanying evidence and to replicate same on similar resources.
+It should, however, be a small task to follow this report to replicate the characteristic results detailed in this report and accompanying evidence and to replicate the same on similar resources.
 
 ## Baseline Analysis
 
@@ -151,13 +151,13 @@ Logstash can itself benefit from at least a 2x improvement, and this is consiste
 
 Tremor, however, is a factor of 45 better than the logstash worst case. Tremor, compared to the logstash best case, is still a factor of 20.54 higher throughput.
 
-So the total effective range of improvement for the given benchmark ( all other things considered equal ) is somewhere between a 20x to 45x increase in throughput favoring tremor over logstash for the baseline use case based on exprimental conditions detailed in this report.
+So the total effective range of improvement for the given benchmark ( all other things considered equal ) is somewhere between a 20x to 45x increase in throughput favoring tremor over logstash for the baseline use case based on experimental conditions detailed in this report.
 
 ## Production Analysis
 
 We don't typically deploy logstash or tremor into production as a distribution proxy or interconnect that passes through events. Logstash would be a pretty bad choice compared to tremor. But tremor, although it has excellent conditioning and is designed for elegantly handling back-pressure and saturation conditions for log shipping and distribution - it does not provide the delivery semantics, retention and feature-set of technologies such as Kafka.
 
-For the level 1 traffic limiting, traffic shaping and rate limiting use cases in Level 3 Logging at Wayfair for which tremor was originally designed we have seen a 7x-8x improvement in density compared to logstash for v0.4 of tremor. v0.5 should increase this to the 10x ballpark as we benefit from SIMD vectorization of JSON deserialization. However, there is further room for improvement as the tremor-script langauge has evolved to handle level 2 logging to replace ruby and logstash with far richer configuration than level 1. In v0.5 performance is a non-goal; as such there are many optimisations to the new tremor-script domain specific langauge that we have yet to undertake - so in practice for level 2 logging we won't see the full benefit of SIMD vectorization as some of those gains are ammortised by additional essential complexity of providing a richer DSL to support replacing logstash in level 2.
+For the level 1 traffic limiting, traffic shaping and rate-limiting use cases in Level 3 Logging at Wayfair for which tremor was originally designed we have seen a 7x-8x improvement in density compared to logstash for v0.4 of tremor. v0.5 should increase this to the 10x ballpark as we benefit from SIMD vectorization of JSON deserialization. However, there is further room for improvement as the tremor-script language has evolved to handle level 2 logging to replace ruby and logstash with far richer configuration than level 1. In v0.5 performance is a non-goal; as such there are many optimisations to the new tremor-script domain-specific-langauge that we have yet to undertake - so in practice for level 2 logging we won't see the full benefit of SIMD vectorization as some of those gains are ammortised by additional essential complexity of providing a richer DSL to support replacing logstash in level 2.
 
 Indicatively, we stand to see a range of 20x-40x improvement. In production we have _observed_ closer to a 7x-8x improvement in density with the L3 replacement, and with the v0.4 upgrade to L1 in GCP pre-live. We expect a further modest incremental improvement in L1 with v0.5, and a good ~10x over logstash for L2 this ( v0.5 ) release.
 

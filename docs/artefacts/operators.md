@@ -4,7 +4,7 @@ Operators are part of the pipeline configuration.
 
 Operators process events and signals in the context of a pipeline. An operator, upon receiving an event from an upstream operator or stream, MAY produce one or many events to one or many downstream directly connected operators. An operator MAY drop events which halts any further processing.
 
-Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behaviour, concurrency, event ordering or other aspects of a running tremor systems.
+Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behavior, concurrency, event ordering or other aspects of a running tremor system.
 
 Operators are created in the context of a pipeline and configured in the `nodes` section of each pipeline. An operator MUST have an identifier that is unique for its owning pipeline.
 
@@ -20,7 +20,7 @@ pipeline:
           <config key>: <config value>
 ```
 
-The `config` object is optional and only required for some operators. Configuration consists of key / value pairs.
+The `config` object is optional and only required for some operators. The configuration consists of key / value pairs.
 
 ## runtime::tremor
 
@@ -111,11 +111,11 @@ This tells us the following, up until this measurement was published in the clas
 
 ## generic::backpressure
 
-This operator is depricated please use `qos::backpressure` instead.
+This operator is deprecated please use `qos::backpressure` instead.
 
 ## qos::backpressure
 
-The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached `timeout`, or an error occurs. On an successful transmission within the timeout limit, the delay is reset.
+The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached `timeout`, or an error occurs. On a successful transmission within the timeout limit, the delay is reset.
 
 **Configuration options**:
 
@@ -199,7 +199,7 @@ from disk once they're acknowledged. In case of delivery failure the WAL operato
 failed events. On the same way the WAL operator will acknowledge events that it persists to disk.
 
 The WAL operator should be used with caution, since every event that passes through it will be
-written to the hard drive it has significant performance impact.
+written to the hard drive it has a significant performance impact.
 
 **Configuration options**:
 

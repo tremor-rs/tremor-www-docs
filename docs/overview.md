@@ -128,7 +128,7 @@ The answer is:
     - Any back-pressure or other events detected in the processing of existing events can result in a synthetic signalling event being injected into the reverse-DAG.
   - We call the injected events 'contraflow' events because they move _backwards_ against the primary data flow.
 - The cost or overhead of not injecting a contraflow event is zero
-- The cost or overhead of an injected contraflow event ( in tremor ) is minimised through pruning - for example - operators that are not contraflow aware do not need to receive or process contraflow events - tremor optimises for this case.
+- The cost or overhead of an injected contraflow event ( in Tremor ) is minimised through pruning - for example - operators that are not contraflow aware do not need to receive or process contraflow events - tremor optimises for this case.
 - We call the output-input pairs at the heart of contraflow the 'pivot point'
 
 Contraflow has been used in other event processing systems and was designed /inventedby one of the members of the tremor core team ( in a previous life ).

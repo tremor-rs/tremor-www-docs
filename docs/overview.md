@@ -111,7 +111,7 @@ Transparent to pipeline authors, but visible to onramp, offramp and operator dev
 
 ### Contraflow
 
-A core conceit with distributed event-based systems arrizes due to their typically asynchronous nature. Tremor employs a relatively novel algorithm to handle back-pressure or other events that propagate _backwards_ through a pipeline.
+A core conceit with distributed event-based systems arises due to their typically asynchronous nature. Tremor employs a relatively novel algorithm to handle back-pressure or other events that propagate _backwards_ through a pipeline.
 
 But pipelines are directed-acyclic-graphs ( DAGs ), so how do we back-propagate events without introducing cycles?
 

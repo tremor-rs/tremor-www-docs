@@ -193,7 +193,7 @@ For raw binary or other data formats, Tremor provides a growing set of codecs th
 
 In general, operators and developers should _minimize_ the number of encoding and decoding steps required in the transit of data through Tremor or between Tremor instances.
 
-The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as as JSON is the most dominent format, we [ported](https://github.com/simd-lite/simdjson-rs) [sims-json](https://github.com/lemire/simdjson) this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.
+The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominent format, we [ported](https://github.com/simd-lite/simdjson-rs) [sims-json](https://github.com/lemire/simdjson) this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.
 
 ### Distribution model
 

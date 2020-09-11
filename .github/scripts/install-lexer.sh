@@ -1,6 +1,6 @@
 
 fetch() {
-    git clone https://github.com/wayfair-tremor/tremor-mkdocs-lexer
+    git clone https://github.com/tremor-rs/tremor-mkdocs-lexer
 }
 
 install() {

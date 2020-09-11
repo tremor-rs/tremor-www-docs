@@ -11,7 +11,7 @@ mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib
 
 
 docs/tremor-script/stdlib:
-	-git clone https://github.com/wayfair-tremor/tremor-runtime
+	-git clone https://github.com/tremor-rs/tremor-runtime
 	cd tremor-runtime &&\
 	git checkout $(TREMOR_VSN) &&\
 	make stdlib-doc;

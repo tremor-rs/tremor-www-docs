@@ -18,13 +18,13 @@ tremor-based solutions.
 
 Make sure your environment is setup for building tremor:
 
-[Tremor Quick Start](https://github.com/wayfair-tremor/tremor-runtime/blob/main/docs/development/quick-start.md)
+[Tremor Quick Start](https://github.com/tremor-rs/tremor-runtime/blob/main/docs/development/quick-start.md)
 
 ### Setup support for your IDE
 
 Tremor supports language server extensions for VS Code and VIM text editors/IDEs:
 
-[Tremor Language Server](https://github.com/wayfair-tremor/tremor-language-server)
+[Tremor Language Server](https://github.com/tremor-rs/tremor-language-server)
 
 
 ### Make sure binaries are on your PATH

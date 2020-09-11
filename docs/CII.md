@@ -22,7 +22,7 @@ https://www.tremor.rs/
 
 **What is the URL for the version control repository (it may be the same as the project URL)?**
 
-https://github.com/wayfair-tremor/tremor
+https://github.com/tremor-rs/tremor
 
 **What programming language(s) are used to implement the project?**
 
@@ -42,7 +42,7 @@ Met
 
 **The project website MUST provide information on how to: obtain, provide feedback (as bug reports or enhancements), and contribute to the software.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/issues
+Met. https://github.com/tremor-rs/tremor-runtime/issues
 
 **The information on how to contribute MUST explain the contribution process (e.g., are pull requests used?) (URL required)**
 
@@ -60,7 +60,7 @@ ASL-2.0
 
 **The software produced by the project MUST be released as FLOSS.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/tree/main/LICENSE
+Met. https://github.com/tremor-rs/tremor-runtime/tree/main/LICENSE
 
 **It is SUGGESTED that any required license(s) for the software produced by the project be approved by the Open Source Initiative (OSI).**
 
@@ -68,7 +68,7 @@ Met. The ASL-2.0 license is approved by the Open Source Initiative (OSI).
 
 **The project MUST post the license(s) of its results in a standard location in their source repository. (URL required)**
 
-Met. The license (ASL-2.0) in in the file LICENSE, see https://github.com/wayfair-tremor/tremor-runtime/tree/main/LICENSE
+Met. The license (ASL-2.0) in in the file LICENSE, see https://github.com/tremor-rs/tremor-runtime/tree/main/LICENSE
 
 ### Documentation
 
@@ -100,19 +100,19 @@ Met.
 
 **The project MUST have a version-controlled source repository that is publicly readable and has a URL.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime.git
+Met. https://github.com/tremor-rs/tremor-runtime.git
 
 **The project's source repository MUST track what changes were made, who made the changes, and when the changes were made.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime.git
+Met. https://github.com/tremor-rs/tremor-runtime.git
 
 **To enable collaborative review, the project's source repository MUST include interim versions for review between releases; it MUST NOT include only final releases.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime.git
+Met. https://github.com/tremor-rs/tremor-runtime.git
 
 **It is SUGGESTED that common distributed version control software be used (e.g., git) for the project's source repository.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime.git
+Met. https://github.com/tremor-rs/tremor-runtime.git
 
 ### Unique version numbering
 
@@ -122,11 +122,11 @@ Met. The project follows [Semantic Versioning](https://semver.org/) (SemVer) for
 
 **It is SUGGESTED that projects identify each release within their version control system. For example, it is SUGGESTED that those using git identify each release using git tags.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/tree/main/docs/development/process/release.md
+Met. https://github.com/tremor-rs/tremor-runtime/tree/main/docs/development/process/release.md
 
 **The project MUST provide, in each release, release notes that are a human-readable summary of major changes in that release to help users determine if they should upgrade and what the upgrade impact will be. The release notes MUST NOT be the raw output of a version control log (e.g., the "git log" command results are not release notes). Projects whose results are not intended for reuse in multiple locations (such as the software for a single website or service) AND employ continuous delivery MAY select "N/A". (URL required)**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/tree/main/CHANGELOG.md
+Met. https://github.com/tremor-rs/tremor-runtime/tree/main/CHANGELOG.md
 
 **The release notes MUST identify every publicly known vulnerability with a CVE assignment or similar that is fixed in each new release, unless users typically cannot practically update the software themselves. If there are no release notes or there have been no publicly known vulnerabilities, choose "not applicable" (N/A).**
 
@@ -142,7 +142,7 @@ Met. https://docs.tremor.rs/Contributing
 
 **The project SHOULD use an issue tracker for tracking individual issues.**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/issues
+Met. https://github.com/tremor-rs/tremor-runtime/issues
 
 **The project MUST acknowledge a majority of bug reports submitted in the last 2-12 months (inclusive); the response need not include a fix.**
 
@@ -150,11 +150,11 @@ Met.
 
 **The project SHOULD respond to a majority (>50%) of enhancement requests in the last 2-12 months (inclusive).**
 
-Met. It is up to contributors to submit enhancement requests via the RFC process. https://github.com/wayfair-tremor/tremor-rfcs.
+Met. It is up to contributors to submit enhancement requests via the RFC process. https://github.com/tremor-rs/tremor-rfcs.
 
 **The project MUST have a publicly available archive for reports and responses for later searching.**
 
-Met. All requests, reports and responses are gated via the issue tracking system. https://github.com/wayfair-tremor/tremor-runtime/issues
+Met. All requests, reports and responses are gated via the issue tracking system. https://github.com/tremor-rs/tremor-runtime/issues
 
 ### Vulnerability report process
 
@@ -190,7 +190,7 @@ Met. The project primarily uses FLOSS tooling with the exception of EQC which is
 
 **The project MUST use at least one automated test suite that is publicly released as FLOSS (this test suite may be maintained as a separate FLOSS project).**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/actions
+Met. https://github.com/tremor-rs/tremor-runtime/actions
 
 **A test suite SHOULD be invocable in a standard way for that language.**
 
@@ -202,13 +202,13 @@ Met. The project uses a combination of unit, functional, benchmark, integration 
 
 **It is SUGGESTED that the project implement continuous integration (where new or changed code is frequently integrated into a central code repository and automated tests are run on the result).**
 
-Met. https://github.com/wayfair-tremor/tremor-runtime/actions and TBD-eqc-runner-public-url
+Met. https://github.com/tremor-rs/tremor-runtime/actions and TBD-eqc-runner-public-url
 
 ### New functionality testing
 
 **The project MUST have a general policy (formal or not) that as major new functionality is added to the software produced by the project, tests of that functionality should be added to an automated test suite.**
 
-Met. https://github.com/wayfair-tremor/tremor-rfcs
+Met. https://github.com/tremor-rs/tremor-rfcs
 
 **The project MUST have evidence that the test policy for adding tests has been adhered to in the most recent major changes to the software produced by the project.**
 

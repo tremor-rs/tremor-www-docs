@@ -1292,18 +1292,16 @@
                 
                 
                 <h1 id="constraints-and-limitations">Constraints and Limitations<a class="headerlink" href="#constraints-and-limitations" title="Permanent link">&para;</a></h1>
-<p>This section lists known limitations in the current version of tremor, this limitations are not oversights but tradeoffs driven by the use cases we focused on.</p>
+<p>This section lists known limitations in the current version of tremor, these limitations are not oversights but tradeoffs driven by the use cases we focused on.</p>
 <p>If any of those limitations are prohibitive for you please reach out and we can discuss if tradeoffs can be adjusted</p>
 <ul>
-<li>The Kafka onramp uses automatic acknowledgements for messages.</li>
 <li>The batch operator only flushes based on timeout when a new message arrival.</li>
 <li>Metrics are collected every 10 seconds, but again only when a message arrives at the pipeline. This means if there are no messages (and no new updates) we don't generate metrics.</li>
 <li>The metric output is currently only handling either InfluxDB line protocol or JSON encoding.</li>
 <li>Only incremental backoff is supported by back-pressure.</li>
-<li>Every pipeline, onramp, offramp runs in its own thread.</li>
 <li>Tremor is very opinionated towards performance and not so much towards exploratory work where it is not yet clear what the requirements are.</li>
 <li>The internal data representation is limited to what can be represented in JSON.</li>
-<li>Events that make it through all back pressure and rate limiting mechanism within the pipeline but arrive at a still overloaded offramp are dropped without the option diverting.</li>
+<li>Events that make it through all back-pressure and rate-limiting mechanism within the pipeline but arrive at a still overloaded offramp are dropped without the option diverting.</li>
 <li>The number of functions is the minimal set to cover current use cases.</li>
 <li>There is no way to 'create' new events within the pipeline.</li>
 </ul>

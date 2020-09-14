@@ -1500,6 +1500,8 @@
                 
                 <h1 id="onramps">Onramps<a class="headerlink" href="#onramps" title="Permanent link">&para;</a></h1>
 <p>Specify how Tremor connects to the outside world in order to receive from external systems.</p>
+<p>All Onramps support circuit breakers as in that no new events are read from it in the case of a
+circuit breaker triggering.</p>
 <p>For example, the Kafka onramp receives data from a Kafka cluster by creating a local record
 consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <p>All onramps are of the form:</p>
@@ -1516,10 +1518,13 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 </code></pre></div>
 
 
-<p>The <a href="../codecs/"><code>codec</code></a> field is optional and if not provided will use Onramps default codec.</p>
+<p>The <a href="../codecs/"><code>codec</code></a> field is optional and if not provided will use onramps default codec.</p>
 <p>The <code>config</code> contains a map (key-value pairs) specific to the onramp type.</p>
 <h2 id="supported-onramps">Supported Onramps<a class="headerlink" href="#supported-onramps" title="Permanent link">&para;</a></h2>
 <h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: optional (if <code>enable.auto.commit</code> is set to false)</li>
+</ul>
 <p>The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">librdkaka configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1550,7 +1555,10 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="udp">udp<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h3>
-<p>The udp onramp allows receiving data via UDP datagrams.</p>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
+<p>The UDP onramp allows receiving data via UDP datagrams.</p>
 <p>The default <a href="../codecs/#string">codec</a> is <code>string</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-udp://&lt;sender_ip&gt;:&lt;sender_port&gt;/&lt;config_receive_port&gt;</span>
@@ -1578,6 +1586,9 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="file">file<a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>The file onramp reads the content of a file, line by line. And sends each line as an event. It has the ability to shut down the system upon completion. Files can be <code>xz</code> compressed.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1600,6 +1611,9 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="metronome">metronome<a class="headerlink" href="#metronome" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.</p>
 <p>The default <a href="../codecs/#pass">codec</a> is <code>pass</code>. (since we already output decoded JSON)</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1621,6 +1635,9 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="crononome">crononome<a class="headerlink" href="#crononome" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.</p>
 <p>Multiple cron entries can be configured, each with a symbolic name and an optional JSON payload in addition to the cron expression.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1657,8 +1674,11 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 Cron entries beyond 2038 will not work due to underlying libraries ( rust, chrono, cron.rs ) suffering
 from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 problem</a>.</p>
 <h3 id="blaster">blaster<a class="headerlink" href="#blaster" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.</p>
-<p>The blaster onramp is built for performance testing, but it can be used for spaced out replays of events as well. Files to replay can be <code>xz</code> compressed. It will keep looping over the file.</p>
+<p>The blaster onramp is built for performance testing, but it can be used for spaced-out replays of events as well. Files to replay can be <code>xz</code> compressed. It will keep looping over the file.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-blaster://&lt;tremor-host.local&gt;/&lt;config_source_file&gt;</span>
@@ -1682,6 +1702,9 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 
 
 <h3 id="tcp">tcp<a class="headerlink" href="#tcp" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>This listens on a specified port for inbound tcp data.</p>
 <p>The onramp can leverage preprocessors to segment data before codecs are applied and events are forwarded
 to pipelines.</p>
@@ -1777,8 +1800,11 @@ support codecs. Body content is presumed to be UTF-8 encoded.</p>
 <p>Known limitations:</p>
 <p>Currently paths and path parameters are neither checked nor validated, nor are required parameters.
 Response status code configuration is also not currently respected. It is currently not possible to
-configure rest onramps via swagger, raml or openapi configuration files.</p>
+configure rest onramps via swagger, RAML or OpenAPI configuration files.</p>
 <h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>PostgreSQL onramp.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -1827,6 +1853,9 @@ specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and
 
 
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Guaranteed Delivery: none</li>
+</ul>
 <p>Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-ws://&lt;tremor-ws-client-host.remote&gt;</span>

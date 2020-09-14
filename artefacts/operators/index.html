@@ -1053,6 +1053,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#qosbackpressure" class="md-nav__link">
+    qos::backpressure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qospercentile" class="md-nav__link">
+    qos::percentile
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qosroundrobin" class="md-nav__link">
+    qos::roundrobin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qoswal" class="md-nav__link">
+    qos::wal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#genericbatch" class="md-nav__link">
     generic::batch
   </a>
@@ -1062,13 +1090,6 @@
         <li class="md-nav__item">
   <a href="#genericcounter" class="md-nav__link">
     generic::counter
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#passthrough" class="md-nav__link">
-    passthrough
   </a>
   
 </li>
@@ -1383,6 +1404,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#qosbackpressure" class="md-nav__link">
+    qos::backpressure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qospercentile" class="md-nav__link">
+    qos::percentile
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qosroundrobin" class="md-nav__link">
+    qos::roundrobin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qoswal" class="md-nav__link">
+    qos::wal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#genericbatch" class="md-nav__link">
     generic::batch
   </a>
@@ -1392,13 +1441,6 @@
         <li class="md-nav__item">
   <a href="#genericcounter" class="md-nav__link">
     generic::counter
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#passthrough" class="md-nav__link">
-    passthrough
   </a>
   
 </li>
@@ -1433,7 +1475,7 @@
                 <h1 id="operators">Operators<a class="headerlink" href="#operators" title="Permanent link">&para;</a></h1>
 <p>Operators are part of the pipeline configuration.</p>
 <p>Operators process events and signals in the context of a pipeline. An operator, upon receiving an event from an upstream operator or stream, MAY produce one or many events to one or many downstream directly connected operators. An operator MAY drop events which halts any further processing.</p>
-<p>Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behaviour, concurrency, event ordering or other aspects of a running tremor systems.</p>
+<p>Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behavior, concurrency, event ordering or other aspects of a running tremor system.</p>
 <p>Operators are created in the context of a pipeline and configured in the <code>nodes</code> section of each pipeline. An operator MUST have an identifier that is unique for its owning pipeline.</p>
 <p>Configuration is of the general form:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">pipeline</span><span class="p">:</span>
@@ -1446,7 +1488,7 @@
 </code></pre></div>
 
 
-<p>The <code>config</code> object is optional and only required for some operators. Configuration consists of key / value pairs.</p>
+<p>The <code>config</code> object is optional and only required for some operators. The configuration consists of key / value pairs.</p>
 <h2 id="runtimetremor">runtime::tremor<a class="headerlink" href="#runtimetremor" title="Permanent link">&para;</a></h2>
 <p>The tremor script runtime that allows to modify events or their metadata. To learn more about Tremor Script please see the <a href="../../tremor-script/">related section</a>.</p>
 <p><strong>Configuration options</strong>:</p>
@@ -1525,12 +1567,13 @@
 <li>(<code>overflow</code>) Marked 127 events as overflow due to not fitting in the limit</li>
 </ul>
 <h2 id="genericbackpressure">generic::backpressure<a class="headerlink" href="#genericbackpressure" title="Permanent link">&para;</a></h2>
-<p>The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached <code>timeout</code>, or an error occurs. On an successful transmission within the timeout limit, the delay is reset.</p>
+<p>This operator is deprecated please use <code>qos::backpressure</code> instead.</p>
+<h2 id="qosbackpressure">qos::backpressure<a class="headerlink" href="#qosbackpressure" title="Permanent link">&para;</a></h2>
+<p>The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached <code>timeout</code>, or an error occurs. On a successful transmission within the timeout limit, the delay is reset.</p>
 <p><strong>Configuration options</strong>:</p>
 <ul>
 <li><code>timeout</code> - Maximum allowed 'write' time in milliseconds.</li>
 <li><code>steps</code> - Array of values to delay when a we detect backpressure. (default: <code>[50, 100, 250, 500, 1000, 5000, 10000]</code>)</li>
-<li><code>outputs</code> - Array of outputs, data will be round robined between outputs and backpressure kept track of on a per output basis. (Default: <code>["out"]</code>)</li>
 </ul>
 <p><strong>Outputs</strong>:</p>
 <ul>
@@ -1539,9 +1582,84 @@
 </ul>
 <p><strong>Example</strong>:</p>
 <div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bp</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::backpressure</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::backpressure</span>
   <span class="nt">config</span><span class="p">:</span>
     <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+</code></pre></div>
+
+
+<h2 id="qospercentile">qos::percentile<a class="headerlink" href="#qospercentile" title="Permanent link">&para;</a></h2>
+<p>An alternative traffic shaping option to backpressure. Instead of all dropping events for a given
+time we drop a statistical subset with an increasing percentage of events dropped the longer we
+see errors / timeouts.</p>
+<p>In general <code>step_up</code> should always be significantly smaller then <code>step_down</code> to ensure we gradually
+reapproach the ideal state.</p>
+<p><strong>Configuration options</strong>:</p>
+<ul>
+<li><code>timeout</code> - Maximum allowed 'write' time in milliseconds.</li>
+<li><code>step_down</code> - What additional percentile should be dropped in the case of a timeout (default 5%: <code>0.05</code>)</li>
+<li><code>step_up</code> - What percentile should be recovered in case of a good event. (default: 0.1%: <code>0.001</code>)</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+<li><code>overflow</code> - Events that are not let past due to active backpressure</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bp</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::percentile</span>
+  <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+    <span class="nt">step_down</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span> <span class="c1"># 10%</span>
+</code></pre></div>
+
+
+<h2 id="qosroundrobin">qos::roundrobin<a class="headerlink" href="#qosroundrobin" title="Permanent link">&para;</a></h2>
+<p>Evenly distributes events over it's outputs. If a CB trigger event is received from an output this
+output is skipped until the circuit breaker is restored. If all outputs are triggered the operator
+itself triggers a CB event.</p>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>*</code> (any named output is possible)</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rr</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::roundrobin</span>
+</code></pre></div>
+
+
+<h2 id="qoswal">qos::wal<a class="headerlink" href="#qoswal" title="Permanent link">&para;</a></h2>
+<p>A Write Ahead Log that will persist data to disk and feed the following operators from this disk
+cache. It allows to run onramps that do not provide any support for delivery guarantees with
+offramps that do.</p>
+<p>The wal operator will intercept and generate it's own circuit breaker events. You can think about it
+as a firewall that will protect all operators before itself from issues beyond it. On the other hand
+it will indiscriminately consume data from sources and operators before itself until it's own
+circuit breaking conditions are met.</p>
+<p>At the same time will it interact with tremors guaranteed delivery system, events are only removed
+from disk once they're acknowledged. In case of delivery failure the WAL operator will replay the
+failed events. On the same way the WAL operator will acknowledge events that it persists to disk.</p>
+<p>The WAL operator should be used with caution, since every event that passes through it will be
+written to the hard drive it has a significant performance impact.</p>
+<p><strong>Configuration options</strong>:</p>
+<ul>
+<li><code>read_count</code> - Maximum number of events that are read form the WAL at one time.</li>
+<li><code>dir</code> - Directory to store the WAL file in</li>
+<li><code>max_elements</code> - Maximum number of elements the WAL will cache before triggering a CB event</li>
+<li><code>max_bytes</code> - Maximum space on disk the WAL should take (this is a soft limit!)</li>
+</ul>
+<p><strong>Outputs</strong>:</p>
+<ul>
+<li><code>out</code></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wal</span>
+  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::wal</span>
+  <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">dir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./wal</span>
+    <span class="nt">read_count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+    <span class="nt">max_elements</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+    <span class="nt">max_bytes</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10485760</span>
 </code></pre></div>
 
 
@@ -1574,18 +1692,6 @@
 <p><strong>Example</strong>:</p>
 <div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">counter</span>
   <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::counter</span>
-</code></pre></div>
-
-
-<h2 id="passthrough">passthrough<a class="headerlink" href="#passthrough" title="Permanent link">&para;</a></h2>
-<p>Passes through the event without modifying it, used for debugging.</p>
-<p><strong>Outputs</strong>:</p>
-<ul>
-<li><code>out</code></li>
-</ul>
-<p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span>
 </code></pre></div>
 
 

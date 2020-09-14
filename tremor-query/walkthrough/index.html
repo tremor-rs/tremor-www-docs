@@ -1753,21 +1753,21 @@ indirect looping cycles.</p>
 <li>Tilt Frames - A tilt frame is a chain of compatible windows with <strong>decreasing</strong> resolution used to reduce memory pressure and preserve relative accuracy of windowed aggregate functions</li>
 </ul>
 <p>An example clock-driven tumbling window:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">define</span> <span class="n">tumbling</span> <span class="n">window</span> <span class="o">`</span><span class="mi">15</span><span class="n">secs</span><span class="o">`</span>
- <span class="k">with</span>
-   <span class="nb">interval</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">::</span><span class="n">with_seconds</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
-<span class="k">end</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><code><span class="n">define</span> <span class="n">tumbling</span> <span class="n">window</span> <span class="err">`</span><span class="mi">15</span><span class="n">secs</span><span class="err">`</span>
+ <span class="n">with</span>
+   <span class="n">interval</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">::</span><span class="n">with_seconds</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+<span class="n">end</span><span class="p">;</span>
 
-<span class="k">select</span> <span class="err">{</span>
-    <span class="ss">&quot;count&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">count</span><span class="p">(),</span> <span class="o">#</span> <span class="k">Aggregate</span> <span class="s1">&#39;count&#39;</span> <span class="k">function</span>
-    <span class="ss">&quot;min&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">min</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
-    <span class="ss">&quot;max&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">max</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
-    <span class="ss">&quot;mean&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">mean</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
-    <span class="ss">&quot;stdev&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">stdev</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
-    <span class="ss">&quot;var&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">var</span><span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="n">value</span><span class="p">),</span>
-<span class="err">}</span>
-<span class="k">from</span> <span class="k">in</span><span class="p">[</span><span class="o">`</span><span class="mi">15</span><span class="n">secs</span><span class="o">`</span><span class="p">]</span> <span class="o">#</span> <span class="n">We</span> <span class="n">apply</span> <span class="n">the</span> <span class="n">window</span> <span class="n">nominally</span> <span class="k">to</span> <span class="n">streams</span>
-<span class="k">into</span> <span class="k">out</span><span class="p">;</span>
+<span class="n">select</span> <span class="p">{</span>
+    <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">count</span><span class="p">(),</span> <span class="c1"># Aggregate &#39;count&#39; function</span>
+    <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="nb">min</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="nb">max</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">mean</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="s2">&quot;stdev&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="n">stdev</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="n">stats</span><span class="p">::</span><span class="k">var</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">from</span> <span class="ow">in</span><span class="p">[</span><span class="err">`</span><span class="mi">15</span><span class="n">secs</span><span class="err">`</span><span class="p">]</span> <span class="c1"># We apply the window nominally to streams</span>
+<span class="n">into</span> <span class="n">out</span><span class="p">;</span>
 </code></pre></div>
 
 

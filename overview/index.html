@@ -258,15 +258,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#threading-model" class="md-nav__link">
-    Threading model
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#actor-model" class="md-nav__link">
-    Actor model
+  <a href="#processing-model" class="md-nav__link">
+    Processing model
   </a>
   
 </li>
@@ -314,6 +307,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guaranteed-delivery" class="md-nav__link">
+    Guaranteed delivery
+  </a>
   
 </li>
       
@@ -1483,15 +1483,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#threading-model" class="md-nav__link">
-    Threading model
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#actor-model" class="md-nav__link">
-    Actor model
+  <a href="#processing-model" class="md-nav__link">
+    Processing model
   </a>
   
 </li>
@@ -1539,6 +1532,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guaranteed-delivery" class="md-nav__link">
+    Guaranteed delivery
+  </a>
   
 </li>
       
@@ -1679,20 +1679,17 @@
 <p>At this time, the full URL form is not used in the configuration model.</p>
 <h2 id="runtime-model">Runtime model<a class="headerlink" href="#runtime-model" title="Permanent link">&para;</a></h2>
 <p>The Tremor runtime is composed of multiple internal components that communicate via queues across multiple threads of control managed/coordinated by a set of control plane actors driven by the Tremor REST API.</p>
-<h3 id="threading-model">Threading model<a class="headerlink" href="#threading-model" title="Permanent link">&para;</a></h3>
-<p>Tremor is a multi-threaded client-server system.</p>
-<p>Currently, the threading model is simplistic:</p>
+<h3 id="processing-model">Processing model<a class="headerlink" href="#processing-model" title="Permanent link">&para;</a></h3>
+<p>Tremor uses an async task model ontop of the <a href="https://github.com/stjepang/smol">smol runtime</a> and
+<a href="https://async.rs/">async-rs</a>.</p>
+<p>Currently, the model is:</p>
 <ul>
-<li>A thread is spawned per onramp</li>
-<li>A thread is spawned per offramp</li>
-<li>A thread is spawned per pipeline</li>
-<li>Threads communicate via queues</li>
+<li>A task is spawned per onramp</li>
+<li>A task is spawned per offramp</li>
+<li>A task is spawned per pipeline</li>
+<li>Tasks communicate via queues</li>
 </ul>
-<p>This is sufficient for Tremor's primary use case as a log and metrics event processing system. In this and similar cases there are, and will only ever be, a small number of live onramps, pipelines and offramps.</p>
-<p>The threading model is very likely to evolve over time as concurrency, threading and other primitives available in the rust ecosystem mature and evolve.</p>
-<h3 id="actor-model">Actor model<a class="headerlink" href="#actor-model" title="Permanent link">&para;</a></h3>
-<p>Tremor exploits the Actor model for supervision, management and providing essential control plane services such as supporting the Tremor API and lifecycle management of onramps, pipelines and offramps.</p>
-<p>As Tremor is Rust-based, we have adopted the <code>actix</code> and <code>actix-web</code> projects which provide Tremor with a good enough actor based system to supervise and manage facilities within Tremor that are off the performance critical path.</p>
+<p>The Processing model is very likely to evolve over time as concurrency, threading, async and other primitives available in the rust ecosystem mature and evolve.</p>
 <h2 id="event-ordering">Event ordering<a class="headerlink" href="#event-ordering" title="Permanent link">&para;</a></h2>
 <p>Events generally flow from onramps, where they are ingested into the system, through pipelines, into offramps where they are pushed to external systems.</p>
 <p>Tremor imposes causal event ordering over ingested events and processes events deterministically. This does not mean that Tremor imposes a total ordering over all ingested events, however ( ugh, because that is not tractable in a distributed system ).</p>
@@ -1743,6 +1740,13 @@
 <p>There are many other ways to handle back-pressure ( for example: those used by Spark, Storm, Hazelcast Jet, … ) but they are biasing for other nuances and tradeoffs than Tremor. Contraflow is far simpler to reason about and develop verifiable systems and code against as a user and puts a lot of the pressure for a good solution onto the Tremor project itself. Only time will tell
 which philosophy results in less pager duty!</p>
 <p>Although the contraflow mechanism <em>may</em> seem complex, its far simpler than back-pressure handling by almost all other reasonable mechanisms and with far fewer negative side-effects and tradeoffs.</p>
+<h2 id="guaranteed-delivery">Guaranteed delivery<a class="headerlink" href="#guaranteed-delivery" title="Permanent link">&para;</a></h2>
+<p>Tremor supports guaranteed delivery as long as both onramps and offramps support it. Alternatively,
+the <a href="../artefacts/operators/#qos::wal">qos::wal</a> can be used to introduce a layer of Guaranteed
+delivery for onramps that do not support it naturally.</p>
+<p>The basic concept is that each event has a monotonically growing ID, once this ID is acknowledged
+as delivered all events with the provided ID or a lower Id are considered delivered. If an ID
+is marked as failed to deliver all events up until this ID will be replayed.</p>
 <h2 id="runtime-facilities">Runtime facilities<a class="headerlink" href="#runtime-facilities" title="Permanent link">&para;</a></h2>
 <p>Tremor's runtime is composed of a number of facilities that work together to provide service.</p>
 <h3 id="conductor">Conductor<a class="headerlink" href="#conductor" title="Permanent link">&para;</a></h3>

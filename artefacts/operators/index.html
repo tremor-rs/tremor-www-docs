@@ -1644,7 +1644,8 @@ written to the hard drive it has a significant performance impact.</p>
 <p><strong>Configuration options</strong>:</p>
 <ul>
 <li><code>read_count</code> - Maximum number of events that are read form the WAL at one time.</li>
-<li><code>dir</code> - Directory to store the WAL file in</li>
+<li><code>dir</code> - Directory to store the WAL-file in (optional, if omitted the WAL will remain in memory and not be
+  persisted to disk)</li>
 <li><code>max_elements</code> - Maximum number of elements the WAL will cache before triggering a CB event</li>
 <li><code>max_bytes</code> - Maximum space on disk the WAL should take (this is a soft limit!)</li>
 </ul>

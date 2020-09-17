@@ -2,8 +2,8 @@
 
 This page explains how to get tremor running on a local system for development or testing. There are 2 ways of installing tremor:
 
-1) Installing tremor on the system without docker
-2) Using docker
+1. Installing tremor on the system without docker
+2. Using docker
 
 ## Without Docker
 
@@ -52,14 +52,15 @@ sudo apt install libssl-dev libclang-dev cmake
 
 #### Windows
 
-* [cmake](https://cmake.org/download/): choose the latest stable release (3.16 at the time of writing)
-* [clang](https://releases.llvm.org/download.html): choose windows pre-built binaries for the latest release that has it (9.0.0 at the time of writing)
+- [cmake](https://cmake.org/download/): choose the latest stable release (3.16 at the time of writing)
+- [clang](https://releases.llvm.org/download.html): choose windows pre-built binaries for the latest release that has it (9.0.0 at the time of writing)
 
 Make sure the cmake and llvm binaries are added to the system path for at least the current user (if not all), as part of the installation process.
 
 Since openssl does not provided official builds, you can get it via [vcpkg](https://github.com/microsoft/vcpkg).
 
 First, set up vcpkg:
+
 ```
 git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
@@ -68,11 +69,13 @@ cd vcpkg
 ```
 
 Now install openssl with:
+
 ```
 .\vcpkg install openssl:x64-windows-static
 ```
 
 To pick up the openssl libs during tremor build, you also have to set the `OPENSSL_DIR` environment variable right now. Example:
+
 ```
 set OPENSSL_DIR=C:\Users\juju\TREMOR\vcpkg\installed\x64-windows-static
 ```
@@ -81,7 +84,7 @@ Technically, the rust [openssl](https://docs.rs/openssl) crate will try to disco
 
 ### Running Tremor
 
-After installing rust and cloning the repository, you can start tremor server by changing to `tremor-server` directory in tremor and running:
+After installing rust and cloning the repository, you can start tremor server by changing to `tremor` directory in tremor and running:
 
 ```bash
 cargo run

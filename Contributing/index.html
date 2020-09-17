@@ -1537,13 +1537,13 @@ use it exactly:</p>
 
 
 <p>All three components are important: what you did, what you expected, what
-happened instead. Please include the output of <code>tremor-server --version</code>,
+happened instead. Please include the output of <code>tremor --version</code>,
 which includes important information about what platform you're on, what
 version of Rust you're using, etc.</p>
 <p>Sometimes, a backtrace is helpful, and so including that is nice. To get
 a backtrace, set the <code>RUST_BACKTRACE</code> environment variable to a value
-other than <code>0</code>. The easiest way to do this is to invoke <code>tremor-server</code> like this:</p>
-<div class="codehilite"><pre><span></span><code>$ <span class="nv">RUST_BACKTRACE</span><span class="o">=</span><span class="m">1</span> tremor-server...
+other than <code>0</code>. The easiest way to do this is to invoke <code>tremor</code> like this:</p>
+<div class="codehilite"><pre><span></span><code>$ <span class="nv">RUST_BACKTRACE</span><span class="o">=</span><span class="m">1</span> tremor...
 </code></pre></div>
 
 

@@ -1606,8 +1606,10 @@
                 
                 <h1 id="quick-start-guide">Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permanent link">&para;</a></h1>
 <p>This page explains how to get tremor running on a local system for development or testing. There are 2 ways of installing tremor:</p>
-<p>1) Installing tremor on the system without docker
-2) Using docker</p>
+<ol>
+<li>Installing tremor on the system without docker</li>
+<li>Using docker</li>
+</ol>
 <h2 id="without-docker">Without Docker<a class="headerlink" href="#without-docker" title="Permanent link">&para;</a></h2>
 <h3 id="install-rust">Install Rust<a class="headerlink" href="#install-rust" title="Permanent link">&para;</a></h3>
 <p>Tremor can be run on any platform without using docker by installing the rust ecosystem. To install the rust ecosystem, you can use <a href="https://www.rust-lang.org/tools/install">rustup</a> which is a toolchain installer.</p>
@@ -1665,7 +1667,7 @@ brew install bison <span class="c1">#make sure to follow the printed instruction
 
 <p>Technically, the rust <a href="https://docs.rs/openssl">openssl</a> crate will try to discover the openssl libs via vcpkg (as long as env var <code>VCPKGRS_DYNAMIC</code> is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a <a href="https://github.com/sfackler/rust-openssl/pull/1238">fix</a> for it and once that lands in a release for <code>rust-openssl</code> (and also starts getting used by tremor depenencies), we won't have to rely on the <code>OPENSSL_DIR</code> var.</p>
 <h3 id="running-tremor">Running Tremor<a class="headerlink" href="#running-tremor" title="Permanent link">&para;</a></h3>
-<p>After installing rust and cloning the repository, you can start tremor server by changing to <code>tremor-server</code> directory in tremor and running:</p>
+<p>After installing rust and cloning the repository, you can start tremor server by changing to <code>tremor</code> directory in tremor and running:</p>
 <div class="codehilite"><pre><span></span><code>cargo run
 </code></pre></div>
 

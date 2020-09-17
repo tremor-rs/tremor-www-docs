@@ -1501,10 +1501,10 @@ go get -u github.com/landoop/coyote
 <p>A HTML based graphical report of <a href="http://0.0.0.0:8000/coyote.html">the results</a>.</p>
 <h2 id="eqc">EQC<a class="headerlink" href="#eqc" title="Permanent link">&para;</a></h2>
 <p>EQC or 'QuickCheck' is a specification-based testing tool for Erlang supporting a test methodology called property-based testing. Programs are tested by writing properties - preconditions, postconditions and invariants. QuickCheck uses random generation to create constructive ( should pass ) and destructive ( should fail ) tests given the specified properties. This allows suitably defined specifications to cover a far greater set of use cases than would ordinarily be possible to write manually.</p>
-<p>Further to this, QuickCheck can reduce a set of failing testcases to the minimal testcase that forces any failing test to fail its specification. This drastically reduces the amount of QA and developer time required to verify or prove a piece of code works given a suitably defined specification.</p>
+<p>Further to this, QuickCheck can reduce a set of failing test cases to the minimal test case that forces any failing test to fail its specification. This drastically reduces the amount of QA and developer time required to verify or prove a piece of code works given a suitably defined specification.</p>
 <h3 id="start-tremor">Start tremor<a class="headerlink" href="#start-tremor" title="Permanent link">&para;</a></h3>
 <p>You need to start the tremor to run the tests:</p>
-<div class="codehilite"><pre><span></span><code>cargo run -p tremor-server
+<div class="codehilite"><pre><span></span><code>cargo run -p tremor -- server run
 </code></pre></div>
 
 

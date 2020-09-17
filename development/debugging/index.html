@@ -1109,15 +1109,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#preparing-tremor-server-for-debugging" class="md-nav__link">
-    Preparing tremor-server for debugging
+  <a href="#preparing-tremor-for-debugging" class="md-nav__link">
+    Preparing tremor for debugging
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-tremor-server-under-the-debugger" class="md-nav__link">
-    Run tremor-server under the debugger
+  <a href="#run-tremor-under-the-debugger" class="md-nav__link">
+    Run tremor under the debugger
   </a>
   
 </li>
@@ -1397,15 +1397,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#preparing-tremor-server-for-debugging" class="md-nav__link">
-    Preparing tremor-server for debugging
+  <a href="#preparing-tremor-for-debugging" class="md-nav__link">
+    Preparing tremor for debugging
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-tremor-server-under-the-debugger" class="md-nav__link">
-    Run tremor-server under the debugger
+  <a href="#run-tremor-under-the-debugger" class="md-nav__link">
+    Run tremor under the debugger
   </a>
   
 </li>
@@ -1477,18 +1477,18 @@
 <p>Alternately, rust integration with IntelliJ CLION also offers interactive breakpoint debugging in an IDE environment.</p>
 <h3 id="setup-on-mac-os-x">Setup on Mac OS X<a class="headerlink" href="#setup-on-mac-os-x" title="Permanent link">&para;</a></h3>
 <p>rust-lldb ships with rust so no added tooling is required.</p>
-<h3 id="preparing-tremor-server-for-debugging">Preparing tremor-server for debugging<a class="headerlink" href="#preparing-tremor-server-for-debugging" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>$ rust-lldb target/debug/tremor-server
+<h3 id="preparing-tremor-for-debugging">Preparing tremor for debugging<a class="headerlink" href="#preparing-tremor-for-debugging" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>$ rust-lldb target/debug/tremor
 <span class="o">(</span>lldb<span class="o">)</span> <span class="nb">command</span> script import <span class="s2">&quot;/Users/dennis/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/etc/lldb_rust_formatters.py&quot;</span>
 <span class="o">(</span>lldb<span class="o">)</span> <span class="nb">type</span> summary add --no-value --python-function lldb_rust_formatters.print_val -x <span class="s2">&quot;.*&quot;</span> --category Rust
 <span class="o">(</span>lldb<span class="o">)</span> <span class="nb">type</span> category <span class="nb">enable</span> Rust
-<span class="o">(</span>lldb<span class="o">)</span> target create <span class="s2">&quot;target/debug/tremor-server&quot;</span>
-Current executable <span class="nb">set</span> to <span class="s1">&#39;target/debug/tremor-server&#39;</span> <span class="o">(</span>x86_64<span class="o">)</span>.
+<span class="o">(</span>lldb<span class="o">)</span> target create <span class="s2">&quot;target/debug/tremor&quot;</span>
+Current executable <span class="nb">set</span> to <span class="s1">&#39;target/debug/tremor&#39;</span> <span class="o">(</span>x86_64<span class="o">)</span>.
 <span class="o">(</span>lldb<span class="o">)</span>
 </code></pre></div>
 
 
-<h3 id="run-tremor-server-under-the-debugger">Run tremor-server under the debugger<a class="headerlink" href="#run-tremor-server-under-the-debugger" title="Permanent link">&para;</a></h3>
+<h3 id="run-tremor-under-the-debugger">Run tremor under the debugger<a class="headerlink" href="#run-tremor-under-the-debugger" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="o">(</span>lldb<span class="o">)</span> run
 </code></pre></div>
 

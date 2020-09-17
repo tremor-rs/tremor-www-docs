@@ -1464,7 +1464,7 @@ dot -Tpng pipe.dot -o pipe.png <span class="o">&amp;&amp;</span> open pipe.png
 
 
 <p>Perform a benchmark run with flamegraph support ( on Mac OS X ):</p>
-<div class="codehilite"><pre><span></span><code>flamegraph target/release/tremor-server -c bench/real-workflow-througput-json.yaml bench/link.yaml
+<div class="codehilite"><pre><span></span><code>flamegraph target/release/tremor server run -f bench/real-workflow-througput-json.yaml bench/link.yaml
 </code></pre></div>
 
 

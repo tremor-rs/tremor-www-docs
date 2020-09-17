@@ -1,0 +1,14 @@
+{
+    "grammarly.userWords": [
+        "ahash",
+        "cron",
+        "deserializers",
+        "fxhash",
+        "json",
+        "librdkafka",
+        "logstash",
+        "serde",
+        "simd",
+        "simdjson"
+    ]
+}

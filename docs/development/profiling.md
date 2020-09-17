@@ -67,7 +67,7 @@ cargo install flamegraph
 Perform a benchmark run with flamegraph support ( on Mac OS X ):
 
 ```bash
-flamegraph target/release/tremor-server -c bench/real-workflow-througput-json.yaml bench/link.yaml
+flamegraph target/release/tremor server run -f bench/real-workflow-througput-json.yaml bench/link.yaml
 ```
 
 This generates a `flamegraph.svg` file which can be opened from a browser.

@@ -83,16 +83,16 @@ use it exactly:
 ```
 
 All three components are important: what you did, what you expected, what
-happened instead. Please include the output of `tremor-server --version`,
+happened instead. Please include the output of `tremor --version`,
 which includes important information about what platform you're on, what
 version of Rust you're using, etc.
 
 Sometimes, a backtrace is helpful, and so including that is nice. To get
 a backtrace, set the `RUST_BACKTRACE` environment variable to a value
-other than `0`. The easiest way to do this is to invoke `tremor-server` like this:
+other than `0`. The easiest way to do this is to invoke `tremor` like this:
 
 ```bash
-$ RUST_BACKTRACE=1 tremor-server...
+$ RUST_BACKTRACE=1 tremor...
 ```
 
 ## The Build System

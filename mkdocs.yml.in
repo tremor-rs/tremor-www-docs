@@ -54,6 +54,7 @@ nav:
       -  Regex: tremor-script/extractors/regex.md
     - Recipes: tremor-script/recipes.md
   - Operations:
+    - 'Circuit Breakers and Guaranteed Delivery': operations/gdcb.md
     - Configuration: operations/configuration.md
     - Monitoring: operations/monitoring.md
     - Tremor Tool: operations/cli.md

@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -13,7 +14,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.13">
     
     
       
@@ -21,9 +22,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.4dd2dd8d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.077507d7.min.css">
       
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.6a5ad368.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ff0a5ce4.min.css">
       
       
         
@@ -1380,14 +1381,14 @@ on the field <code>selected</code>. Only if this field is set to true the event 
 
 <h2 id="command-line-testing-during-logic-development">Command line testing during logic development<a class="headerlink" href="#command-line-testing-during-logic-development" title="Permanent link">&para;</a></h2>
 <p>Run a the passthrough query against a sample input.json</p>
-<div class="codehilite"><pre><span></span><code>$ tremor-query -e input.json example.trickle
-&gt;&gt; <span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;world&quot;</span><span class="o">}</span>
+<div class="codehilite"><pre><span></span><code>$ tremor run -i input.json etc/tremor/config/example.trickle
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;world&quot;</span><span class="o">}</span>
 </code></pre></div>
 
 
 <p>Deploy the solution into a docker environment</p>
 <div class="codehilite"><pre><span></span><code>$ docker-compose up
-&gt;&gt; <span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;again&quot;</span>, <span class="s2">&quot;selected&quot;</span>: true<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;again&quot;</span>, <span class="s2">&quot;selected&quot;</span>: true<span class="o">}</span>
 </code></pre></div>
 
 
@@ -1404,8 +1405,7 @@ on the field <code>selected</code>. Only if this field is set to true the event 
 <p>Filters in tremor query ( <code>trickle</code> ) can be any legal predicate expression ( boolean returning
 expression or function call ). For example:</p>
 <h4 id="where-clause">Where clause<a class="headerlink" href="#where-clause" title="Permanent link">&para;</a></h4>
-<p>Events are selected on the inbound event if the <code>numeric</code> field on the inbound event is less than or equal to <code>10</code> or
-greater than or equal to <code>100</code>.</p>
+<p>Events are selected on the inbound event if the <code>numeric</code> field on the inbound event is less than or equal to <code>10</code> or greater than or equal to <code>100</code>.</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"></span>
 <span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"></span>
 <span class="kd">where</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">numeric</span><span class="w"> </span><span class="err">&lt;=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="kc">or</span><span class="w"> </span><span class="err">&gt;=</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
@@ -1468,8 +1468,8 @@ greater than or equal to <code>100</code> and after procerssing them the <code>s
       
     </div>
     
-      <script src="../../../assets/javascripts/vendor.3636a4ec.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../../assets/javascripts/vendor.2d1db4bd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({

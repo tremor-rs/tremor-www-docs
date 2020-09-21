@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -13,7 +14,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.13">
     
     
       
@@ -21,9 +22,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.4dd2dd8d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.077507d7.min.css">
       
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.6a5ad368.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ff0a5ce4.min.css">
       
       
         
@@ -1420,7 +1421,7 @@
 
 
 <p>In this section we aggregate the different serieses we created in the previous section.</p>
-<p>Most notably are the <code>stats::hdr</code> and <code>win::first</code> functions which do the aggregation. <code>stats::hdr</code> uses a optimized <a href="http://hdrhistogram.org/">HDR Histogram</a> algorithm to generate the values requested of it. <code>win::first</code> gives the timestamp of the first event in the window.</p>
+<p>Most notably are the <code>aggr::stats::hdr</code> and <code>aggr::win::first</code> functions which do the aggregation. <code>aggr::stats::hdr</code> uses a optimized <a href="http://hdrhistogram.org/">HDR Histogram</a> algorithm to generate the values requested of it. <code>aggr::win::first</code> gives the timestamp of the first event in the window.</p>
 <h3 id="normalisation-to-influx-line-protocol">Normalisation to Influx Line Protocol<a class="headerlink" href="#normalisation-to-influx-line-protocol" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code><span class="nx">select</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
 <span class="w">  </span><span class="s">&quot;measurement&quot;</span><span class="err">:</span><span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">measurement</span><span class="err">,</span><span class="w"></span>
@@ -1453,10 +1454,10 @@
 
 <p>Open the <a href="http://localhost:8888">Chronograf</a> and connect the database.</p>
 <h3 id="discussion">Discussion<a class="headerlink" href="#discussion" title="Permanent link">&para;</a></h3>
-<p>It is noteworthy that in the aggregation context only <code>stats::hdr</code> and <code>win::first</code> are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.</p>
+<p>It is noteworthy that in the aggregation context only <code>aggr::stats::hdr</code> and <code>aggr::win::first</code> are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.</p>
 <p>We are using <code>having</code> in the goruping step, however this could also be done with a <code>where</code> clause on the aggregation step. In this example we choose <code>having</code> over were as it is worth discarding events as early as possible. If the requirement were to handle non numeric fields in a different manner routing the output of the grouping step to two different select statements we would have used <code>where</code> instead.</p>
 <h3 id="attention">Attention<a class="headerlink" href="#attention" title="Permanent link">&para;</a></h3>
-<p>Using <code>win::first</code> over <code>stats::min</code> is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with <code>win::first</code> being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so <code>stats::min</code> could
+<p>Using <code>aggr::win::first</code> over <code>aggr::stats::min</code> is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with <code>aggr::win::first</code> being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so <code>aggr::stats::min</code> could
 lead incorrect timestamps we'd rather avoid.</p>
                 
               
@@ -1489,8 +1490,8 @@ lead incorrect timestamps we'd rather avoid.</p>
       
     </div>
     
-      <script src="../../../assets/javascripts/vendor.3636a4ec.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../../assets/javascripts/vendor.2d1db4bd.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({

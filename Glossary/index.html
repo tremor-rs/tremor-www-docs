@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -13,7 +14,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.13">
     
     
       
@@ -21,9 +22,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4dd2dd8d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.077507d7.min.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/palette.6a5ad368.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ff0a5ce4.min.css">
       
       
         
@@ -1327,12 +1328,16 @@
 <td>A vertex ( node ) in a tremor pipeline graph. Operators perform work in a tremor pipeline graph</td>
 </tr>
 <tr>
-<td>Onramp</td>
+<td>Source, Onramp</td>
 <td>An artefact that describes a connector of primarily inbound data available for pipelines to ingest</td>
 </tr>
 <tr>
-<td>Offramp</td>
+<td>Sink, Offramp</td>
 <td>An artefact that describes a connector of primarily outbound data produced by pipelines available for egress</td>
+</tr>
+<tr>
+<td>Peer, Linked Transport</td>
+<td>An artefact that describes a connector with both inbound and outbound data that can be routed through a pipeline conversationally</td>
 </tr>
 <tr>
 <td>Link</td>
@@ -1377,6 +1382,22 @@
 <tr>
 <td>Undeploy</td>
 <td>The act of unpublishing a tremor mapping, the side-effect of which MAY be the undeployment of onramps, offramps and/or pipelines</td>
+</tr>
+<tr>
+<td>WAL, Write-ahead Log</td>
+<td>An in-memory or persistent data log used by the guaranteed delivery mechanism</td>
+</tr>
+<tr>
+<td>CB, Circuit-breaker</td>
+<td>A mechanism that can react to failure in sources and sinks in a robust and recoverable way</td>
+</tr>
+<tr>
+<td>GD, Guaranteed delivery</td>
+<td>A mechanism that guarantees that events that reach a pipeline are processed to completion. Depending on the source/sink this may extend end-to-end</td>
+</tr>
+<tr>
+<td>End to end GD</td>
+<td>A configuration of GD whereby the primary sources and sinks for a use case are guaranteed not to lose messages during normal processing conditions</td>
 </tr>
 </tbody>
 </table>
@@ -1446,8 +1467,8 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
-      <script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.2d1db4bd.min.js"></script>
+      <script src="../assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({

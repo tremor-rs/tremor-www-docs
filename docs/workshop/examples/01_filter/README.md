@@ -20,15 +20,15 @@ select event from in into out where event.selected
 Run a the passthrough query against a sample input.json
 
 ```bash
-$ tremor-query -e input.json example.trickle
->> {"hello": "world"}
+$ tremor run -i input.json etc/tremor/config/example.trickle
+{"hello": "world"}
 ```
 
 Deploy the solution into a docker environment
 
 ```bash
 $ docker-compose up
->> {"hello": "again", "selected": true}
+{"hello": "again", "selected": true}
 ```
 
 Inject test messages via [websocat](https://github.com/vi/websocat)
@@ -47,8 +47,7 @@ expression or function call ). For example:
 
 #### Where clause
 
-Events are selected on the inbound event if the `numeric` field on the inbound event is less than or equal to `10` or
-greater than or equal to `100`.
+Events are selected on the inbound event if the `numeric` field on the inbound event is less than or equal to `10` or greater than or equal to `100`.
 
 ```trickle
 select event

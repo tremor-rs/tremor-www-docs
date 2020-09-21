@@ -66,7 +66,7 @@ into normalize;
 
 In this section we aggregate the different serieses we created in the previous section.
 
-Most notably are the `stats::hdr` and `win::first` functions which do the aggregation. `stats::hdr` uses a optimized [HDR Histogram](http://hdrhistogram.org/) algorithm to generate the values requested of it. `win::first` gives the timestamp of the first event in the window.
+Most notably are the `aggr::stats::hdr` and `aggr::win::first` functions which do the aggregation. `aggr::stats::hdr` uses a optimized [HDR Histogram](http://hdrhistogram.org/) algorithm to generate the values requested of it. `aggr::win::first` gives the timestamp of the first event in the window.
 
 ### Normalisation to Influx Line Protocol
 
@@ -105,11 +105,11 @@ Open the [Chronograf](http://localhost:8888) and connect the database.
 
 ### Discussion
 
-It is noteworthy that in the aggregation context only `stats::hdr` and `win::first` are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.
+It is noteworthy that in the aggregation context only `aggr::stats::hdr` and `aggr::win::first` are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.
 
 We are using `having` in the goruping step, however this could also be done with a `where` clause on the aggregation step. In this example we choose `having` over were as it is worth discarding events as early as possible. If the requirement were to handle non numeric fields in a different manner routing the output of the grouping step to two different select statements we would have used `where` instead.
 
 ### Attention
 
-Using `win::first` over `stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `win::first` being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so `stats::min` could
+Using `aggr::win::first` over `aggr::stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `aggr::win::first` being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so `aggr::stats::min` could
 lead incorrect timestamps we'd rather avoid.

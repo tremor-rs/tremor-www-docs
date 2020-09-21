@@ -54,8 +54,8 @@ select event from in into out
 Run a the passthrough query against a sample input.json
 
 ```bash
-$ tremor-query -e input.json example.trickle
->> {"hello": "world"}
+$ tremor run -i input.json etc/tremor/config/example.trickle
+{"hello": "world"}
 ```
 
 Deploy the solution into a docker environment

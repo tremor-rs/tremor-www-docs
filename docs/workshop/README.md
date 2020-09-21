@@ -27,10 +27,10 @@ Tremor supports language server extensions for VS Code and VIM text editors/IDEs
 [Tremor Language Server](https://github.com/tremor-rs/tremor-language-server)
 
 
-### Make sure binaries are on your PATH
+### Make sure tremor binary is on your PATH
 
 ```bash
 $ export PATH=/Path/to/tremor-src-repo/target/debug/:$PATH
-$ tremor-query --version
-tremor-query 0.6.0
+$ tremor --version
+tremor 0.9.0
 ```

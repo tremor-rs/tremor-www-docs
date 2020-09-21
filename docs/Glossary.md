@@ -8,8 +8,9 @@ A set of terms in common or standardised usage by the tremor project and/or team
 |DAG|Directed Acyclic Graph - A graph with no cycles and unidirectional edges|
 |Pipeline|An artefact that describes a graph ( DAG ) of tremor operators|
 |Operator|A vertex ( node ) in a tremor pipeline graph. Operators perform work in a tremor pipeline graph|
-|Onramp|An artefact that describes a connector of primarily inbound data available for pipelines to ingest|
-|Offramp|An artefact that describes a connector of primarily outbound data produced by pipelines available for egress|
+|Source, Onramp|An artefact that describes a connector of primarily inbound data available for pipelines to ingest|
+|Sink, Offramp|An artefact that describes a connector of primarily outbound data produced by pipelines available for egress|
+|Peer, Linked Transport|An artefact that describes a connector with both inbound and outbound data that can be routed through a pipeline conversationally|
 |Link|A link is an edge or connection between operators in a pipeline or between pipelines and onramps/offramps|
 |Binding|A specification of ( set of links ), describing one-or-many interconnections to/from pipelines|
 |Mapping|A configuration of, ( set of bindings ), and set of key/value replacements that describes how to deploy pipelines and how to interconnect binding specifications and map to running instances of tremor artefacts|
@@ -21,3 +22,7 @@ A set of terms in common or standardised usage by the tremor project and/or team
 |Publish-Find-Bind|An Enterprise Integration Pattern common in Registry/Repository services for Application Server Platforms|
 |Deploy|The act of publishing a tremor mapping, the side-effect of which MAY be the deployment of onramps, offramps and/or pipelines|
 |Undeploy|The act of unpublishing a tremor mapping, the side-effect of which MAY be the undeployment of onramps, offramps and/or pipelines|
+|WAL, Write-ahead Log|An in-memory or persistent data log used by the guaranteed delivery mechanism|
+|CB, Circuit-breaker|A mechanism that can react to failure in sources and sinks in a robust and recoverable way|
+|GD, Guaranteed delivery|A mechanism that guarantees that events that reach a pipeline are processed to completion. Depending on the source/sink this may extend end-to-end|
+|End to end GD|A configuration of GD whereby the primary sources and sinks for a use case are guaranteed not to lose messages during normal processing conditions|

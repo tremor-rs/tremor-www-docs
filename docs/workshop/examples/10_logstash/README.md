@@ -66,7 +66,7 @@ Inject test messages via [websocat](https://github.com/vi/websocat)
 > Note: Can be installed via `cargo install websocat` for the lazy/impatient amongst us
 
 ```bash
-$ cat demo/data/apache_access_logs.xz | websocat ws://localhost:4242
+$ xzcat demo/data/apache_access_logs.xz | websocat ws://localhost:4242
 ...
 ```
 

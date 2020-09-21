@@ -22,9 +22,11 @@ select {                                    # 1. We can inline new json-like doc
 Run a the passthrough query against a sample input.json
 
 ```bash
-$ tremor-query -e input.json example.trickle
->> {"hello": "world"}
+$ tremor run -i input.json example.trickle
+{"hello": "world"}
 ```
+
+Change the `input.json` and toggle the `selected` filed to true and run again.
 
 Deploy the solution into a docker environment
 

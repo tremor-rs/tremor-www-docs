@@ -27,7 +27,7 @@ end;
 Run a the query against a sample input.json
 
 ```bash
-$ tremor-query -e input.json example.trickle
+$ tremor run -i input.json example.trickle
 >> {"hello": "world"}
 ```
 

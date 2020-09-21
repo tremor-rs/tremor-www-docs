@@ -2,46 +2,11 @@
 
 This is a short canned synopsis of testing in the tremor project.
 
-## Coyote
-
-Coyote is used for testing the tremor API via `curl` and via the command line `tremor-tool`
-
-### Install Coyote
+### Running Internal tests
 
 ```bash
-brew install golang
-go get -u github.com/landoop/coyote
+cargo run -p tremor-cli -- test all tremor-cli/tests
 ```
-
-### Running Coyote against the API
-
-Change directory to `tremor-runtime/tremor-api`
-
-Then, run
-
-```bash
-$GOPATH/bin/coyote -c tests/coyote.yml
-```
-
-### Running Coyote against tremor-tool
-
-Change directory to `tremor-runtime/tremor-tool`
-
-Then, run
-
-```bash
-$GOPATH/bin/coyote -c tests/coyote.yml
-```
-
-### Viewing Coyote HTML reports
-
-Via a python server:
-
-```bash
-python3 -m http.server 8000
-```
-
-A HTML based graphical report of [the results](http://0.0.0.0:8000/coyote.html).
 
 ## EQC
 

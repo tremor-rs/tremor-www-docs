@@ -79,7 +79,7 @@ end
 
 ## Diverting an event to a different channel
 
-By default the tremor-script operator forwards all events that are not dropped to the `out` channel for further processing. However it is possible to route events to different channels using the `emit` keyword. This allows, for example, diverting certain events to reserve bandwidth for a more important subset.
+By default the `tremor-script` operator forwards all events that are not dropped to the `out` channel for further processing. However it is possible to route events to different channels using the `emit` keyword. This allows, for example, diverting certain events to reserve bandwidth for a more important subset.
 
 ```tremor
 match event.importance of

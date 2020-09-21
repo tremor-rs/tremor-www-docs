@@ -1,10 +1,11 @@
 #!/bin/bash
 
-tool=`yaml2json ../tremor-tool/src/cli.yaml`
+tool=$(yaml2json ../tremor-runtime/tremor-cli/src/cli.yaml)
+api=`yaml2json ../tremor-runtime/static/openapi.yaml`
 
 echo "# Tremor tool"
 echo
-echo `echo $tool | jq -r '.about'`
+echo "$tool" | jq -r '.about'
 echo
 echo "## Scope"
 echo
@@ -18,8 +19,6 @@ echo
 echo "## Usage"
 echo
 echo
-
-api=`yaml2json ../static/openapi.yaml`
 
 echo
 echo "### General flags and switches"
@@ -68,8 +67,8 @@ do
     desc=`echo $elm | jq -r ".about"`
     echo
     echo
-    subs=`echo $elm| jq ".subcommands | keys[]"`
-    subn=`echo $elm| jq ".subcommands[] | keys[]"`
+    subs=$(echo $elm| jq ".subcommands | keys[]" || echo "")
+    subn=$(echo $elm| jq ".subcommands[] | keys[]" || echo "")
     echo "### Command: **${name}**"
     echo
     echo ${desc}
@@ -109,7 +108,7 @@ do
                   echo "##### $subn $ename"
                   echo
                   echo
-                  echo "`../target/debug/tremor-tool ${name} ${subn} ${ename} --help | tail -n +2 | sed -E "s/ -+([^ ,]+)/__\1__/g" | sed -E 's|FLAGS:|\`\`\`$$FLAGS:|' | sed -E 's|USAGE:|USAGE:$$\`\`\`|' | sed -E 's|ARGS:|$ARGS:|' | sed -e 's|  <|\&lt;|g' | sed '/^$/d;' | tr '$' '\n' | sed G`"
+                  echo "`../tremor-runtime/target/debug/tremor ${name} ${subn} ${ename} --help | tail -n +2 | sed -E "s/ -+([^ ,]+)/__\1__/g" | sed -E 's|FLAGS:|\`\`\`$$FLAGS:|' | sed -E 's|USAGE:|USAGE:$$\`\`\`|' | sed -E 's|ARGS:|$ARGS:|' | sed -e 's|  <|\&lt;|g' | sed '/^$/d;' | tr '$' '\n' | sed G`"
                   echo
                   echo
                   read -r -a idxs3 <<< `echo $eelm | jq ".args | keys[]" || echo ""`
@@ -134,16 +133,16 @@ do
           else
               echo
               echo
-              echo "`../target/debug/tremor-tool ${name} ${subn} --help | tail -n +2 | sed -E "s/ -+([^ ,]+)/__\1__/g" | sed -E 's|FLAGS:|\`\`\`$$FLAGS:|' | sed -E 's|USAGE:|USAGE:$$\`\`\`|' | sed -E 's|ARGS:|$ARGS:|' | sed 's/  </\&lt;/g' | sed '/^$/d;' | tr '$' '\n' | sed G`"
+              echo "`../tremor-runtime/target/debug/tremor ${name} ${subn} --help | tail -n +2 | sed -E "s/ -+([^ ,]+)/__\1__/g" | sed -E 's|FLAGS:|\`\`\`$$FLAGS:|' | sed -E 's|USAGE:|USAGE:$$\`\`\`|' | sed -E 's|ARGS:|$ARGS:|' | sed 's/  </\&lt;/g' | sed '/^$/d;' | tr '$' '\n' | sed G`"
               echo
               echo
           fi
         fi
-        if test "${name}" != "api";
+        if test "${name}" != "api" && test "${name}" != "completions";
         then
           echo
           echo
-          echo "`../target/debug/tremor-tool ${name} ${subn} --help | tail -n +2 | sed -E "s/ -+([^ ,]+)/__\1__/g" | sed -E 's|FLAGS:|\`\`\`$$FLAGS:|' | sed -E 's|USAGE:|USAGE:$$\`\`\`|' | sed -E 's|ARGS:|$ARGS:|' | sed 's/  </\&lt;/g' | sed '/^$/d;' | tr '$' '\n' | sed G`"
+          echo "`../tremor-runtime/target/debug/tremor ${name} ${subn} --help | tail -n +2 | sed -E "s/ -+([^ ,]+)/__\1__/g" | sed -E 's|FLAGS:|\`\`\`$$FLAGS:|' | sed -E 's|USAGE:|USAGE:$$\`\`\`|' | sed -E 's|ARGS:|$ARGS:|' | sed 's/  </\&lt;/g' | sed '/^$/d;' | tr '$' '\n' | sed G`"
           echo
           echo
 

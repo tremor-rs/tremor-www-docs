@@ -24,14 +24,14 @@ brew install gperftools
 brew install qcachegrind
 ```
 
-### Basic profiling via tremor-cli
+### Basic profiling via tremor
 
 This is good enough for initial high-level exploration.
 
 For example, run a tremor pipeline against recorded data in data.json
 
 ```bash
-valgrind --tool=callgrind target/debug/tremor-cli pipe run tests/configs/ut.combine3-op.yaml data.json
+valgrind --tool=callgrind target/debug/tremor run tests/configs/ut.combine3-op.yaml data.json
 ```
 
 Analysing results via google perf toolkit and graphviz for static call flow diagrams
@@ -51,7 +51,7 @@ The profiling ( sampling ) frequency is tunable and _SHOULD_ be tuned for each r
 
 ```bash
 RUST_BACKTRACE=1 PROFILEFREQUENCY=1000 valgrind --tool=callgrind \
-    target/release/tremor-cli script run examples/config-spike5.tremor data.json
+    target/release/tremor run examples/config-spike5.tremor data.json
 ```
 
 Note: When using a **release** build make sure debug symbols are configured in Cargo.toml and enable link time optimisations ( LTO ).

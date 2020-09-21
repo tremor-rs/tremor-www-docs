@@ -1,0 +1,13 @@
+offramp:
+  - id: ws0
+    type: ws
+    config:
+      url: ws://localhost:8080/
+  - id: ws1
+    type: ws
+    config:
+      url: ws://localhost:8081/
+  - id: ws2
+    type: ws
+    config:
+      url: ws://localhost:8082/

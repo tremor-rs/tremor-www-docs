@@ -1,0 +1,9 @@
+binding:
+  - id: default
+    links:
+      "/onramp/metronome/{instance}/out": ["/pipeline/persistent/{instance}/in"]
+      "/pipeline/persistent/{instance}/out": ["/offramp/ws/{instance}/in"]
+
+mapping:
+  /binding/default/01:
+    instance: "01"

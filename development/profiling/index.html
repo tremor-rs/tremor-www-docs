@@ -1105,8 +1105,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#basic-profiling-via-tremor-cli" class="md-nav__link">
-    Basic profiling via tremor-cli
+  <a href="#basic-profiling-via-tremor" class="md-nav__link">
+    Basic profiling via tremor
   </a>
   
 </li>
@@ -1377,8 +1377,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#basic-profiling-via-tremor-cli" class="md-nav__link">
-    Basic profiling via tremor-cli
+  <a href="#basic-profiling-via-tremor" class="md-nav__link">
+    Basic profiling via tremor
   </a>
   
 </li>
@@ -1433,10 +1433,10 @@ brew install qcachegrind
 </code></pre></div>
 
 
-<h3 id="basic-profiling-via-tremor-cli">Basic profiling via tremor-cli<a class="headerlink" href="#basic-profiling-via-tremor-cli" title="Permanent link">&para;</a></h3>
+<h3 id="basic-profiling-via-tremor">Basic profiling via tremor<a class="headerlink" href="#basic-profiling-via-tremor" title="Permanent link">&para;</a></h3>
 <p>This is good enough for initial high-level exploration.</p>
 <p>For example, run a tremor pipeline against recorded data in data.json</p>
-<div class="codehilite"><pre><span></span><code>valgrind --tool<span class="o">=</span>callgrind target/debug/tremor-cli pipe run tests/configs/ut.combine3-op.yaml data.json
+<div class="codehilite"><pre><span></span><code>valgrind --tool<span class="o">=</span>callgrind target/debug/tremor run tests/configs/ut.combine3-op.yaml data.json
 </code></pre></div>
 
 
@@ -1453,7 +1453,7 @@ dot -Tpng pipe.dot -o pipe.png <span class="o">&amp;&amp;</span> open pipe.png
 
 <p>The profiling ( sampling ) frequency is tunable and <em>SHOULD</em> be tuned for each run, eg:</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">RUST_BACKTRACE</span><span class="o">=</span><span class="m">1</span> <span class="nv">PROFILEFREQUENCY</span><span class="o">=</span><span class="m">1000</span> valgrind --tool<span class="o">=</span>callgrind <span class="se">\</span>
-    target/release/tremor-cli script run examples/config-spike5.tremor data.json
+    target/release/tremor run examples/config-spike5.tremor data.json
 </code></pre></div>
 
 

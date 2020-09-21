@@ -1453,7 +1453,7 @@
 <h2 id="static-or-bootstrap-deployments">Static or Bootstrap deployments<a class="headerlink" href="#static-or-bootstrap-deployments" title="Permanent link">&para;</a></h2>
 <p>Static or Bootstrap deployment allows tremor to be configured at startup with its registry and repository pre-populated with out of the box user defined configuration.</p>
 <p>For example, in the following example, tremor is started with a registry and repository that runs a micro benchmark on startup</p>
-<div class="codehilite"><pre><span></span><code>target/debug/tremor-runtime -c repo.yaml -m reg.yaml
+<div class="codehilite"><pre><span></span><code>target/debug/tremor server run -f repo.yaml reg.yaml
 </code></pre></div>
 
 
@@ -1532,10 +1532,10 @@
 
 <h2 id="interactive-or-operational-deployments">Interactive or Operational deployments<a class="headerlink" href="#interactive-or-operational-deployments" title="Permanent link">&para;</a></h2>
 <p>Tremor's registry and repository can be configured dynamically via tremor's REST API, and via the tremor-cli tool. For example:</p>
-<div class="codehilite"><pre><span></span><code>tremor-cli api onramp publish blaster.yaml
-tremor-cli api offramp publish offramp.yaml
-tremor-cli api pipeline publish main.yaml
-tremor-cli api binding publish benchmark.yaml
+<div class="codehilite"><pre><span></span><code>tremor api onramp publish blaster.yaml
+tremor api offramp publish offramp.yaml
+tremor api pipeline publish main.yaml
+tremor api binding publish benchmark.yaml
 </code></pre></div>
 
 

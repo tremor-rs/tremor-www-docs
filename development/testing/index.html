@@ -1157,43 +1157,9 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#coyote" class="md-nav__link">
-    Coyote
+  <a href="#running-internal-tests" class="md-nav__link">
+    Running Internal tests
   </a>
-  
-    <nav class="md-nav" aria-label="Coyote">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-coyote" class="md-nav__link">
-    Install Coyote
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-coyote-against-the-api" class="md-nav__link">
-    Running Coyote against the API
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-coyote-against-tremor-tool" class="md-nav__link">
-    Running Coyote against tremor-tool
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#viewing-coyote-html-reports" class="md-nav__link">
-    Viewing Coyote HTML reports
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1382,43 +1348,9 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#coyote" class="md-nav__link">
-    Coyote
+  <a href="#running-internal-tests" class="md-nav__link">
+    Running Internal tests
   </a>
-  
-    <nav class="md-nav" aria-label="Coyote">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-coyote" class="md-nav__link">
-    Install Coyote
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-coyote-against-the-api" class="md-nav__link">
-    Running Coyote against the API
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-coyote-against-tremor-tool" class="md-nav__link">
-    Running Coyote against tremor-tool
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#viewing-coyote-html-reports" class="md-nav__link">
-    Viewing Coyote HTML reports
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1471,35 +1403,11 @@
                 
                 <h1 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h1>
 <p>This is a short canned synopsis of testing in the tremor project.</p>
-<h2 id="coyote">Coyote<a class="headerlink" href="#coyote" title="Permanent link">&para;</a></h2>
-<p>Coyote is used for testing the tremor API via <code>curl</code> and via the command line <code>tremor-tool</code></p>
-<h3 id="install-coyote">Install Coyote<a class="headerlink" href="#install-coyote" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><code>brew install golang
-go get -u github.com/landoop/coyote
+<h3 id="running-internal-tests">Running Internal tests<a class="headerlink" href="#running-internal-tests" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>cargo run -p tremor-cli -- <span class="nb">test</span> all tremor-cli/tests
 </code></pre></div>
 
 
-<h3 id="running-coyote-against-the-api">Running Coyote against the API<a class="headerlink" href="#running-coyote-against-the-api" title="Permanent link">&para;</a></h3>
-<p>Change directory to <code>tremor-runtime/tremor-api</code></p>
-<p>Then, run</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">$GOPATH</span>/bin/coyote -c tests/coyote.yml
-</code></pre></div>
-
-
-<h3 id="running-coyote-against-tremor-tool">Running Coyote against tremor-tool<a class="headerlink" href="#running-coyote-against-tremor-tool" title="Permanent link">&para;</a></h3>
-<p>Change directory to <code>tremor-runtime/tremor-tool</code></p>
-<p>Then, run</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">$GOPATH</span>/bin/coyote -c tests/coyote.yml
-</code></pre></div>
-
-
-<h3 id="viewing-coyote-html-reports">Viewing Coyote HTML reports<a class="headerlink" href="#viewing-coyote-html-reports" title="Permanent link">&para;</a></h3>
-<p>Via a python server:</p>
-<div class="codehilite"><pre><span></span><code>python3 -m http.server <span class="m">8000</span>
-</code></pre></div>
-
-
-<p>A HTML based graphical report of <a href="http://0.0.0.0:8000/coyote.html">the results</a>.</p>
 <h2 id="eqc">EQC<a class="headerlink" href="#eqc" title="Permanent link">&para;</a></h2>
 <p>EQC or 'QuickCheck' is a specification-based testing tool for Erlang supporting a test methodology called property-based testing. Programs are tested by writing properties - preconditions, postconditions and invariants. QuickCheck uses random generation to create constructive ( should pass ) and destructive ( should fail ) tests given the specified properties. This allows suitably defined specifications to cover a far greater set of use cases than would ordinarily be possible to write manually.</p>
 <p>Further to this, QuickCheck can reduce a set of failing test cases to the minimal test case that forces any failing test to fail its specification. This drastically reduces the amount of QA and developer time required to verify or prove a piece of code works given a suitably defined specification.</p>

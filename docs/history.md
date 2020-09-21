@@ -4,6 +4,12 @@ Tremor started with a straight forward problem statement:
 
 **During peak events logs and metrics going to Elastic Search and InfluxDB back up in Kafka queues removing visibility from the system.**
 
+## tremor-0.9
+
+The 0.9 release unifies the various CLI tools into a singular `tremor` binary that is located in the `tremor-cli` folder.
+
+In addition we introduce the underpinning for both guaranteed delivery and circuit breakers. On this foundation it adds support for linked transports which allows to use tremor in proxy like scenarios.
+
 ## tremor-0.8 (develop)
 
 In this release, the embedded script and query languages have been extended with

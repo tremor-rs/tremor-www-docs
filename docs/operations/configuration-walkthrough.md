@@ -2,7 +2,7 @@
 
 A short canned synopsis of configuration tremor.
 
-This guide walks through configuring tremor via its API directly and via its command line tool 'tremor-tool'. For the API, we use 'curl' on the command line.
+This guide walks through configuring tremor via its API directly and via its command line tool 'tremor'. For the API, we use 'curl' on the command line.
 
 ## Introduction
 
@@ -152,9 +152,9 @@ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/offramp
 - default
 ```
 
-## Publish via tremor-tool
+## Publish via tremor
 
-The tremor-tool command allows the exact sample set of interactions as above. For brevity we simpilify the examples in this section but the steps are the same.
+The tremor command allows the exact sample set of interactions as above. For brevity we simpilify the examples in this section but the steps are the same.
 
 Tremor tool, however, makes it easier to switch between JSON and YAML
 
@@ -163,19 +163,19 @@ Tremor tool, however, makes it easier to switch between JSON and YAML
 Publish onramp, offramp, pipeline and binding:
 
 ```bash
-tremor-tool api onramp create metronome-onramp.yaml
-tremor-tool api offramp create metronome-offramp.yaml
-tremor-tool api pipeline create metronome-pipeline.yaml
-tremor-tool api binding create metronome-binding.yaml
+tremor api onramp create metronome-onramp.yaml
+tremor api offramp create metronome-offramp.yaml
+tremor api pipeline create metronome-pipeline.yaml
+tremor api binding create metronome-binding.yaml
 ```
 
 Check all our artefacts have published ok:
 
 ```bash
-tremor-tool api onramp list metronome-onramp.yaml
-tremor-tool api offramp list metronome-offramp.yaml
-tremor-tool api pipeline list metronome-pipeline.yaml
-tremor-tool api binding list metronome-binding.yaml
+tremor api onramp list
+tremor api offramp list
+tremor api pipeline list
+tremor api binding list
 ```
 
 ## Limitations
@@ -211,8 +211,8 @@ Deploy via curl:
 curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-mapping.yaml http://localhost:9898/binding/default/walkthrough
 ```
 
-Deploy via tremor-tool:
+Deploy via tremor:
 
 ```bash
-tremor-tool api binding activate default walkthrough metronome-mapping.yaml
+tremor api binding activate default walkthrough metronome-mapping.yaml
 ```

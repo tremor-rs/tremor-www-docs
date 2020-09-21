@@ -64,7 +64,7 @@ Static or Bootstrap deployment allows tremor to be configured at startup with it
 For example, in the following example, tremor is started with a registry and repository that runs a micro benchmark on startup
 
 ```bash
-target/debug/tremor-runtime -c repo.yaml -m reg.yaml
+target/debug/tremor server run -f repo.yaml reg.yaml
 ```
 
 The repository:
@@ -148,10 +148,10 @@ mapping:
 Tremor's registry and repository can be configured dynamically via tremor's REST API, and via the tremor-cli tool. For example:
 
 ```bash
-tremor-cli api onramp publish blaster.yaml
-tremor-cli api offramp publish offramp.yaml
-tremor-cli api pipeline publish main.yaml
-tremor-cli api binding publish benchmark.yaml
+tremor api onramp publish blaster.yaml
+tremor api offramp publish offramp.yaml
+tremor api pipeline publish main.yaml
+tremor api binding publish benchmark.yaml
 ```
 
 Or via curl:

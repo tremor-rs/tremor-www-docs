@@ -1,0 +1,11 @@
+binding:
+  - id: default
+    links:
+      "/onramp/metronome/{instance}/out": ["/pipeline/roundrobin/{instance}/in"]
+      "/pipeline/roundrobin/{instance}/ws0": [ "/offramp/ws0/{instance}/in"]
+      "/pipeline/roundrobin/{instance}/ws1": [ "/offramp/ws1/{instance}/in"]
+      "/pipeline/roundrobin/{instance}/ws2": [ "/offramp/ws2/{instance}/in"]
+
+mapping:
+  /binding/default/01:
+    instance: "01"

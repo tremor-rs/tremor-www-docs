@@ -1021,6 +1021,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#delicery-properties" class="md-nav__link">
+    Delicery Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#supported-onramps" class="md-nav__link">
     Supported Onramps
   </a>
@@ -1409,6 +1416,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#delicery-properties" class="md-nav__link">
+    Delicery Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#supported-onramps" class="md-nav__link">
     Supported Onramps
   </a>
@@ -1533,11 +1547,61 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 <p>The <a href="../codecs/"><code>codec</code></a> field is optional and if not provided will use onramps default codec.</p>
 <p>The <code>config</code> contains a map (key-value pairs) specific to the onramp type.</p>
+<h2 id="delicery-properties">Delicery Properties<a class="headerlink" href="#delicery-properties" title="Permanent link">&para;</a></h2>
+<p>Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:</p>
+<p>The column <code>Delivery Acknowledgements</code> describes when the onramp considers and reports the event delivered to the upstream it is connected to.</p>
+<table>
+<thead>
+<tr>
+<th>Onramp</th>
+<th>Delivery Acknowledgements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kafka</td>
+<td>always, only on <code>ack</code> event if <code>enable.auto.commit</code> is set to false</td>
+</tr>
+<tr>
+<td>udp</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>tcp</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>file</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>blaster</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>metronome</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>crononome</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>rest</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>ws</td>
+<td>not supported</td>
+</tr>
+</tbody>
+</table>
 <h2 id="supported-onramps">Supported Onramps<a class="headerlink" href="#supported-onramps" title="Permanent link">&para;</a></h2>
 <h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: optional (if <code>enable.auto.commit</code> is set to false)</li>
-</ul>
 <p>The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">librdkaka configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1568,9 +1632,6 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="udp">udp<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>The UDP onramp allows receiving data via UDP datagrams.</p>
 <p>The default <a href="../codecs/#string">codec</a> is <code>string</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1599,9 +1660,6 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="file">file<a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>The file onramp reads the content of a file, line by line. And sends each line as an event. It has the ability to shut down the system upon completion. Files can be <code>xz</code> compressed.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1624,9 +1682,6 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="metronome">metronome<a class="headerlink" href="#metronome" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.</p>
 <p>The default <a href="../codecs/#pass">codec</a> is <code>pass</code>. (since we already output decoded JSON)</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1648,9 +1703,6 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 
 
 <h3 id="crononome">crononome<a class="headerlink" href="#crononome" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.</p>
 <p>Multiple cron entries can be configured, each with a symbolic name and an optional JSON payload in addition to the cron expression.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -1687,9 +1739,6 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 Cron entries beyond 2038 will not work due to underlying libraries ( rust, chrono, cron.rs ) suffering
 from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 problem</a>.</p>
 <h3 id="blaster">blaster<a class="headerlink" href="#blaster" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.</p>
 <p>The blaster onramp is built for performance testing, but it can be used for spaced-out replays of events as well. Files to replay can be <code>xz</code> compressed. It will keep looping over the file.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
@@ -1715,9 +1764,6 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 
 
 <h3 id="tcp">tcp<a class="headerlink" href="#tcp" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>This listens on a specified port for inbound tcp data.</p>
 <p>The onramp can leverage preprocessors to segment data before codecs are applied and events are forwarded
 to pipelines.</p>
@@ -1815,9 +1861,6 @@ support codecs. Body content is presumed to be UTF-8 encoded.</p>
 Response status code configuration is also not currently respected. It is currently not possible to
 configure rest onramps via swagger, RAML or OpenAPI configuration files.</p>
 <h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>PostgreSQL onramp.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -1866,9 +1909,6 @@ specifies there are two fields, <code>username</code> (<code>VARCHAR</code>) and
 
 
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: none</li>
-</ul>
 <p>Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="codehilite"><pre><span></span><code><span class="c">tremor-ws://&lt;tremor-ws-client-host.remote&gt;</span>

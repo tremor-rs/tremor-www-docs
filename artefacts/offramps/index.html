@@ -1033,6 +1033,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#delivery-properties" class="md-nav__link">
+    Delivery Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#system-offramps" class="md-nav__link">
     System Offramps
   </a>
@@ -1457,6 +1464,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#delivery-properties" class="md-nav__link">
+    Delivery Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#system-offramps" class="md-nav__link">
     System Offramps
   </a>
@@ -1620,26 +1634,95 @@
 </code></pre></div>
 
 
+<h2 id="delivery-properties">Delivery Properties<a class="headerlink" href="#delivery-properties" title="Permanent link">&para;</a></h2>
+<p>Each offramp is able to report events as being definitely sent off or as failed. It can also report itself as not functional anymore to the connected pipelines. How each offramp implements those abilities is described in the table below.</p>
+<p>The column <code>Delivery acknowledgements</code> describes under what circumstanced the offramp considers an event delivered and acknowledges it to the connected pipelines and operators, onramps etc. therein.
+Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the kafka onramp).</p>
+<p>The column <code>Disconnect events</code> describes under which circumstances this offramp is not considered functional anymore.</p>
+<table>
+<thead>
+<tr>
+<th>Offramp</th>
+<th>Disconnect events</th>
+<th>Delivery acknowledgements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kafka</td>
+<td>see librdkafka</td>
+<td>see librdkafka</td>
+</tr>
+<tr>
+<td>elastic</td>
+<td>connection loss</td>
+<td>on 200 replies</td>
+</tr>
+<tr>
+<td>REST</td>
+<td>connection loss</td>
+<td>on non 4xx/5xx replies</td>
+</tr>
+<tr>
+<td>ws</td>
+<td>connection loss</td>
+<td>on send</td>
+</tr>
+<tr>
+<td>udp</td>
+<td>local socket loss</td>
+<td>on send</td>
+</tr>
+<tr>
+<td>tcp</td>
+<td>connection loss</td>
+<td>on send</td>
+</tr>
+<tr>
+<td>Postgres</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>file</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>blackhole</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>debug</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>stdout</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>sderr</td>
+<td>never</td>
+<td>always</td>
+</tr>
+</tbody>
+</table>
 <h2 id="system-offramps">System Offramps<a class="headerlink" href="#system-offramps" title="Permanent link">&para;</a></h2>
 <p>Each tremor runtime comes with some pre-configured offramps that can be used.</p>
 <h3 id="systemstdout">system::stdout<a class="headerlink" href="#systemstdout" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto-ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The offramp <code>/offramp/system::stdout/system</code> can be used to print to STDOUT. Data will be formatted as JSON.</p>
 <h3 id="systemsderr">system::sderr<a class="headerlink" href="#systemsderr" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto-ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The offramp <code>/offramp/system::stderr/system</code> can be used to print to STDERR. Data will be formatted as JSON.</p>
 <h2 id="supported-offramps">Supported Offramps<a class="headerlink" href="#supported-offramps" title="Permanent link">&para;</a></h2>
 <h3 id="elastic">elastic<a class="headerlink" href="#elastic" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: ack on 200</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested with ES v6.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -1663,10 +1746,6 @@
 
 
 <h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: ack on librdkafka success</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The Kafka offramp connects sends events to Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">librdkaka configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>Supported configuration options are:</p>
@@ -1688,10 +1767,6 @@
 
 
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: on send</li>
-<li>Circuit Breaker: on connection loss / connection</li>
-</ul>
 <p>Sends events over a WebSocket connection. Each event is a WebSocket message.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>Supported configuration options are:</p>
@@ -1709,10 +1784,6 @@
 
 
 <h3 id="udp">udp<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: on send</li>
-<li>Circuit Breaker: on socket loss / recreation</li>
-</ul>
 <p>The UDP offramp sends data to a given host and port as UDP datagram.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>When the UDP onramp gets a batch of messages it will send each element of the batch as an own UDP datagram.</p>
@@ -1736,10 +1807,6 @@
 
 
 <h3 id="rest-representational-state-transfer">REST - Representational State Transfer<a class="headerlink" href="#rest-representational-state-transfer" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: on non 400/500</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The REST offramp is used to send events or batches of events to a REST endpoint either via a <code>POST</code> or <code>PUT</code> request. By default, a <code>POST</code> request is used. Batched events are send in a single request.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -1763,10 +1830,6 @@
 
 
 <h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>PostgreSQL offramp.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -1801,10 +1864,6 @@ name in the database and must contain following fields:</p>
 
 
 <h3 id="file">file<a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The file offramp writes events to a file, one event per line. The file is overwritten if it exists.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>Supported configuration options are:</p>
@@ -1821,10 +1880,6 @@ name in the database and must contain following fields:</p>
 
 
 <h3 id="stdout">stdout<a class="headerlink" href="#stdout" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The standard out offramp prints each event to the stdout output.</p>
 <p>This operator does not support configuration.</p>
 <p>Example:</p>
@@ -1835,10 +1890,6 @@ name in the database and must contain following fields:</p>
 
 
 <h3 id="blackhole">blackhole<a class="headerlink" href="#blackhole" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) <a href="http://hdrhistogram.org/">histogram</a>.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -1857,10 +1908,6 @@ name in the database and must contain following fields:</p>
 
 
 <h3 id="debug">debug<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The debug offramp is used to get an overview of how many events are put in wich classification.</p>
 <p>This operator does not support configuration.</p>
 <p>Used metadata Variables:</p>
@@ -1875,10 +1922,6 @@ name in the database and must contain following fields:</p>
 
 
 <h3 id="tcp">tcp<a class="headerlink" href="#tcp" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: on send</li>
-<li>Circuit Breaker: on connection loss / connection</li>
-</ul>
 <p>This connects on a specified port for distributing outbound TCP data.</p>
 <p>The offramp can leverage postprocessors to frame data after codecs are applied and events are forwarded
 to external TCP protocol distribution endpoints.</p>
@@ -1907,10 +1950,6 @@ to external TCP protocol distribution endpoints.</p>
 
 
 <h3 id="exit">exit<a class="headerlink" href="#exit" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Guaranteed Delivery: auto ack</li>
-<li>Circuit Breaker: none</li>
-</ul>
 <p>The exit offramp terminates the runtime with a system exit status.</p>
 <p>The offramp accepts events via its standard input port and responds
 to events with a record structure containing a numeric exit field.</p>

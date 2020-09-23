@@ -1337,24 +1337,24 @@ where sources/onramps do not offer guaranteed delivery themselves, but the data 
 
 <p>We configure a straight forward passthrough query to distribute
 the data to connected downstream sinks.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># File: etc/tremor/config/transient_gd.trickle</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># File: etc/tremor/config/persistent.trickle</span>
 <span class="kd">use</span><span class="w"> </span><span class="nx">tremor</span><span class="err">::</span><span class="nx">system</span><span class="err">;</span><span class="w"></span>
 
-<span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">wal</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">in_memory_wal</span><span class="w"></span>
+<span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">wal</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">on_disk_wal</span><span class="w"></span>
 <span class="kd">with</span><span class="w"></span>
 <span class="w">  </span><span class="nx">read_count</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">20</span><span class="err">,</span><span class="w"></span>
 <span class="w">  </span><span class="nx">max_elements</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">1000</span><span class="err">,</span><span class="w"> </span><span class="c1"># Capacity limit of 1000 stored events</span>
 <span class="w">  </span><span class="nx">max_bytes</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">10485760</span><span class="w"> </span><span class="c1"># Capacity limit of 1MB of events</span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 
-<span class="kd">create</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">in_memory_wal</span><span class="err">;</span><span class="w"></span>
+<span class="kd">create</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">on_disk_wal</span><span class="err">;</span><span class="w"></span>
 
 <span class="kd">select</span><span class="w"> </span><span class="kd">patch</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
 <span class="w">  </span><span class="kd">insert</span><span class="w"> </span><span class="nx">hostname</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">system</span><span class="err">::</span><span class="nx">hostname</span><span class="err">()</span><span class="w"></span>
 <span class="kd">end</span><span class="w"></span>
-<span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">in_memory_wal</span><span class="err">;</span><span class="w"></span>
+<span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">on_disk_wal</span><span class="err">;</span><span class="w"></span>
 
-<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in_memory_wal</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">on_disk_wal</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1389,26 +1389,60 @@ an active flow:</p>
 </code></pre></div>
 
 
-<p>Running the example via the tremor client as follows:</p>
-<div class="codehilite"><pre><span></span><code>$ tremor server run -f transient_gd.trickle metronome.yaml downstream.yaml flow.yaml
+<p>Running the example via the tremor cli as follows:</p>
+<div class="codehilite"><pre><span></span><code>$ tremor server run -f etc/tremor/config/persistent.trickle etc/tremor/config/metronome.yaml etc/tremor/config/downstream.yaml etc/tremor/config/flow.yaml
 </code></pre></div>
 
 
 <h1 id="insights">Insights<a class="headerlink" href="#insights" title="Permanent link">&para;</a></h1>
 <ol>
-<li>
-<p>If the tremor process restarts we <strong>DO</strong> <strong>NOT</strong> sequence from the beginning, we pick up where we left off.</p>
-</li>
-<li>
-<p>If the downstream websocket service restarts we can recover up to
-1000 events. We may lose in flight events that were sending at the
-time the server went down. However, for fast restarts of the downstream
-service the losses should be minimal.</p>
-</li>
+<li>If the tremor process restarts we pick up and re-send events that have not been acknowledged by the ws offramp and then carry on with new events coming from the metronome:</li>
 </ol>
-<p>In short, the transient in memory wal can assist with partial recovery and
-will actively reduce data loss to within the configured retention but it is
-not lossless.</p>
+<blockquote>
+<p><code>bash
+$ websocat -s 8080 ; websocat -s 8080
+Listening on ws://127.0.0.1:8080/
+{"onramp":"metronome","id":0,"hostname":"localhost","ingest_ns":1600860720749137000}
+{"onramp":"metronome","id":1,"hostname":"localhost","ingest_ns":1600860721751965000}
+{"onramp":"metronome","id":2,"hostname":"localhost","ingest_ns":1600860722756684000}
+{"onramp":"metronome","id":3,"hostname":"localhost","ingest_ns":1600860723761037000}
+{"onramp":"metronome","id":4,"hostname":"localhost","ingest_ns":1600860724764683000}
+{"onramp":"metronome","id":3,"hostname":"localhost","ingest_ns":1600860723761037000}
+{"onramp":"metronome","id":4,"hostname":"localhost","ingest_ns":1600860724764683000}
+{"onramp":"metronome","id":0,"hostname":"localhost","ingest_ns":1600860730353260000}
+{"onramp":"metronome","id":1,"hostname":"localhost","ingest_ns":1600860731355463000}
+{"onramp":"metronome","id":2,"hostname":"localhost","ingest_ns":1600860732357883000}
+{"onramp":"metronome","id":3,"hostname":"localhost","ingest_ns":1600860733362429000}
+{"onramp":"metronome","id":4,"hostname":"localhost","ingest_ns":1600860734364277000}
+{"onramp":"metronome","id":5,"hostname":"localhost","ingest_ns":1600860735367967000}
+{"onramp":"metronome","id":6,"hostname":"localhost","ingest_ns":1600860736373137000}</code></p>
+<p>We restarted tremor after sending event with id <code>4</code>. It did resend events <code>3</code> and <code>4</code> as they have not been acked
+from the perspective of the WAL yet.</p>
+</blockquote>
+<ol>
+<li>If the downstream websocket service restarts we can recover up to 1000 events or any number of events worth 1MB. We may lose in flight events that were already acknowledged at the time the server went down and thus not fully delivered by the downstream system.</li>
+</ol>
+<blockquote>
+<p><code>bash
+$ websocat -s 8080 ; websocat -s 8080 
+{"onramp":"metronome","id":0,"hostname":"ALT01828","ingest_ns":1600861519788231000}
+{"onramp":"metronome","id":1,"hostname":"ALT01828","ingest_ns":1600861520790241000}
+{"onramp":"metronome","id":2,"hostname":"ALT01828","ingest_ns":1600861521792297000}
+{"onramp":"metronome","id":3,"hostname":"ALT01828","ingest_ns":1600861522797476000}
+{"onramp":"metronome","id":4,"hostname":"ALT01828","ingest_ns":1600861523802114000}
+^C
+$  websocat -s 8080 ; websocat -s 8080 
+Listening on ws://127.0.0.1:8080/
+{"onramp":"metronome","id":6,"hostname":"ALT01828","ingest_ns":1600861525809835000}
+{"onramp":"metronome","id":7,"hostname":"ALT01828","ingest_ns":1600861526813574000}
+{"onramp":"metronome","id":8,"hostname":"ALT01828","ingest_ns":1600861527817722000}
+{"onramp":"metronome","id":9,"hostname":"ALT01828","ingest_ns":1600861528822667000}
+{"onramp":"metronome","id":10,"hostname":"ALT01828","ingest_ns":1600861529826521000}
+{"onramp":"metronome","id":11,"hostname":"ALT01828","ingest_ns":1600861530830497000}</code></p>
+<p>We killed the websocket server and restarted right afterwards. We in fact lost 1 event (id <code>5</code>) which was acked
+inside tremor but not yet fully delivered to the console by websocat. Other events that the offramp was unable to send will be resent once the ws offramp can connect again.</p>
+</blockquote>
+<p>In short, the persistent in memory wal can assist with partial recovery of downstream system or tremor itself and will actively reduce data loss within the configured retention but it is not guarenteed to be lossless.</p>
                 
               
               

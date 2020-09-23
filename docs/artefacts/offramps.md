@@ -15,30 +15,46 @@ offramp:
       <key>: <value>
 ```
 
+## Delivery Properties
+
+Each offramp is able to report events as being definitely sent off or as failed. It can also report itself as not functional anymore to the connected pipelines. How each offramp implements those abilities is described in the table below.
+
+The column `Delivery acknowledgements` describes under what circumstanced the offramp considers an event delivered and acknowledges it to the connected pipelines and operators, onramps etc. therein.
+Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the kafka onramp).
+
+The column `Disconnect events` describes under which circumstances this offramp is not considered functional anymore.
+
+Offramp   | Disconnect events | Delivery acknowledgements
+----------|-------------------|--------------------------
+kafka     | see librdkafka    | see librdkafka
+elastic   | connection loss   | on 200 replies
+REST      | connection loss   | on non 4xx/5xx replies
+ws        | connection loss   | on send
+udp       | local socket loss | on send
+tcp       | connection loss   | on send
+Postgres  | never             | always
+file      | never             | always
+blackhole | never             | always
+debug     | never             | always
+exit      | never             | always
+stdout    | never             | always
+sderr     | never             | always
+
 ## System Offramps
 
 Each tremor runtime comes with some pre-configured offramps that can be used.
 
 ### system::stdout
 
-* Guaranteed Delivery: auto-ack
-* Circuit Breaker: none
-
 The offramp `/offramp/system::stdout/system` can be used to print to STDOUT. Data will be formatted as JSON.
 
 ### system::sderr
-
-* Guaranteed Delivery: auto-ack
-* Circuit Breaker: none
 
 The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Data will be formatted as JSON.
 
 ## Supported Offramps
 
 ### elastic
-
-* Guaranteed Delivery: ack on 200
-* Circuit Breaker: none
 
 The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested with ES v6.
 
@@ -66,9 +82,6 @@ offramp:
 
 ### kafka
 
-* Guaranteed Delivery: ack on librdkafka success
-* Circuit Breaker: none
-
 The Kafka offramp connects sends events to Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka configuration options](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).
 
 The default [codec](codecs.md#json) is `json`.
@@ -94,9 +107,6 @@ offramp:
 
 ### ws
 
-* Guaranteed Delivery: on send
-* Circuit Breaker: on connection loss / connection
-
 Sends events over a WebSocket connection. Each event is a WebSocket message.
 
 The default [codec](codecs.md#json) is `json`.
@@ -117,9 +127,6 @@ onramp:
 ```
 
 ### udp
-
-* Guaranteed Delivery: on send
-* Circuit Breaker: on socket loss / recreation
 
 The UDP offramp sends data to a given host and port as UDP datagram.
 
@@ -149,9 +156,6 @@ offramp:
 
 ### REST - Representational State Transfer
 
-* Guaranteed Delivery: on non 400/500
-* Circuit Breaker: none
-
 The REST offramp is used to send events or batches of events to a REST endpoint either via a `POST` or `PUT` request. By default, a `POST` request is used. Batched events are send in a single request.
 
 Supported configuration options are:
@@ -178,9 +182,6 @@ offramp:
 ```
 
 ### PostgreSQL
-
-* Guaranteed Delivery: auto ack
-* Circuit Breaker: none
 
 PostgreSQL offramp.
 
@@ -219,9 +220,6 @@ config:
 
 ### file
 
-* Guaranteed Delivery: auto ack
-* Circuit Breaker: none
-
 The file offramp writes events to a file, one event per line. The file is overwritten if it exists.
 
 The default [codec](codecs.md#json) is `json`.
@@ -242,9 +240,6 @@ offramp:
 
 ### stdout
 
-* Guaranteed Delivery: auto ack
-* Circuit Breaker: none
-
 The standard out offramp prints each event to the stdout output.
 
 This operator does not support configuration.
@@ -258,9 +253,6 @@ offramp:
 ```
 
 ### blackhole
-
-* Guaranteed Delivery: auto ack
-* Circuit Breaker: none
 
 The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) [histogram](http://hdrhistogram.org/).
 
@@ -283,9 +275,6 @@ offramp:
 
 ### debug
 
-* Guaranteed Delivery: auto ack
-* Circuit Breaker: none
-
 The debug offramp is used to get an overview of how many events are put in wich classification.
 
 This operator does not support configuration.
@@ -303,9 +292,6 @@ offramp:
 ```
 
 ### tcp
-
-* Guaranteed Delivery: on send
-* Circuit Breaker: on connection loss / connection
 
 This connects on a specified port for distributing outbound TCP data.
 
@@ -339,9 +325,6 @@ offramp:
 ```
 
 ### exit
-
-* Guaranteed Delivery: auto ack
-* Circuit Breaker: none
 
 The exit offramp terminates the runtime with a system exit status.
 

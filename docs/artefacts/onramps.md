@@ -27,11 +27,29 @@ The [`codec`](codecs.md) field is optional and if not provided will use onramps 
 
 The `config` contains a map (key-value pairs) specific to the onramp type.
 
+## Delicery Properties
+
+Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:
+
+The column `Delivery Acknowledgements` describes when the onramp considers and reports the event delivered to the upstream it is connected to.
+
+Onramp     | Delivery Acknowledgements                                           |
+-----------|---------------------------------------------------------------------|
+kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
+udp        | not supported                                                       |
+tcp        | not supported                                                       |
+file       | not supported                                                       |
+blaster    | not supported                                                       |
+metronome  | not supported                                                       |
+crononome  | not supported                                                       |
+rest       | not supported                                                       |
+PostgreSQL | not supported                                                       |
+ws         | not supported                                                       |
+
+
 ## Supported Onramps
 
 ### kafka
-
-* Guaranteed Delivery: optional (if `enable.auto.commit` is set to false)
 
 The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka configuration options](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md).
 
@@ -68,8 +86,6 @@ onramp:
 
 ### udp
 
-* Guaranteed Delivery: none
-
 The UDP onramp allows receiving data via UDP datagrams.
 
 The default [codec](codecs.md#string) is `string`.
@@ -103,8 +119,6 @@ onramp:
 
 ### file
 
-* Guaranteed Delivery: none
-
 The file onramp reads the content of a file, line by line. And sends each line as an event. It has the ability to shut down the system upon completion. Files can be `xz` compressed.
 
 The default [codec](codecs.md#json) is `json`.
@@ -132,8 +146,6 @@ onramp:
 
 ### metronome
 
-* Guaranteed Delivery: none
-
 This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.
 
 The default [codec](codecs.md#pass) is `pass`. (since we already output decoded JSON)
@@ -159,8 +171,6 @@ onramp:
 ```
 
 ### crononome
-
-* Guaranteed Delivery: none
 
 This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.
 
@@ -204,8 +214,6 @@ from the [year 2038 problem](https://en.wikipedia.org/wiki/Year_2038_problem).
 
 ### blaster
 
-* Guaranteed Delivery: none
-
 NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.
 
 The blaster onramp is built for performance testing, but it can be used for spaced-out replays of events as well. Files to replay can be `xz` compressed. It will keep looping over the file.
@@ -236,8 +244,6 @@ onramp:
 ```
 
 ### tcp
-
-* Guaranteed Delivery: none
 
 This listens on a specified port for inbound tcp data.
 
@@ -332,8 +338,6 @@ configure rest onramps via swagger, RAML or OpenAPI configuration files.
 
 ### PostgreSQL
 
-* Guaranteed Delivery: none
-
 PostgreSQL onramp.
 
 Supported configuration options are:
@@ -386,8 +390,6 @@ config:
 ```
 
 ### ws
-
-* Guaranteed Delivery: none
 
 Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: `ws://<host>:<port>/`
 

@@ -90,9 +90,9 @@ $ tremor server run -f etc/tremor/config/transient_gd.trickle etc/tremor/config/
 > ```bash
 > websocat -s 8080
 > Listening on ws://127.0.0.1:8080/
-> {"onramp":"metronome","id":0,"hostname":"ALT01827",  "ingest_ns":1600689100122526000}
+> {"onramp":"metronome","id":0,"hostname":"ALT01827","ingest_ns":1600689100122526000}
 > {"onramp":"metronome","id":1,"hostname":"ALT01827","ingest_ns":1600689101122912000}
-> {"onramp":"metronome","id":2,"hostname":"ALT01827", "ingest_ns":1600689102124688000}
+> {"onramp":"metronome","id":2,"hostname":"ALT01827","ingest_ns":1600689102124688000}
 > {"onramp":"metronome","id":0,"hostname":"ALT01827","ingest_ns":1600689104854927000}
 > {"onramp":"metronome","id":1,"hostname":"ALT01827","ingest_ns":1600689105855314000}
 > {"onramp":"metronome","id":2,"hostname":"ALT01827","ingest_ns":1600689106855645000}
@@ -141,5 +141,5 @@ service the losses should be minimal.
 > data loss is best effort in this case
 
 In short, the transient in memory wal can assist with partial recovery and
-will actively reduce data loss to within the configured retention but it is
+will actively reduce data loss within the configured retention but it is
 not lossless.

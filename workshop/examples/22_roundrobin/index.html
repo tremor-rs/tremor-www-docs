@@ -1422,7 +1422,7 @@ an active flow:</p>
 
 
 <p>Running the example via the tremor client as follows:</p>
-<div class="codehilite"><pre><span></span><code>$ tremor server run -f etc/tremor/config/roundrobin.trickle etc/tremor/config/metronome.yaml etc/tremor/config/downstream.yaml etc/tremor/config/flow.yaml
+<div class="codehilite"><pre><span></span><code>$ tremor server run -f etc/tremor/config/*
 </code></pre></div>
 
 
@@ -1432,7 +1432,7 @@ an active flow:</p>
 </ol>
 <blockquote>
 <p><code>bash
-websocat -s 8080
+$ websocat -s 8080
 Listening on ws://127.0.0.1:8080/
 {"onramp":"metronome","id":0,"hostname":"ALT01827",  "ingest_ns":1600689100122526000}
 {"onramp":"metronome","id":3,"hostname":"ALT01827","ingest_ns":1600689101122912000}

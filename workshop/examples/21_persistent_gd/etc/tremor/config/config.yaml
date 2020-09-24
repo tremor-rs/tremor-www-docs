@@ -1,3 +1,15 @@
+onramp:
+  - id: metronome
+    type: metronome
+    config:
+      interval: 1000 # Every second
+
+offramp:
+  - id: ws
+    type: ws
+    config:
+      url: ws://localhost:8080/
+
 binding:
   - id: default
     links:

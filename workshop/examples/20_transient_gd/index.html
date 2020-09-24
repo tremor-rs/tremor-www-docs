@@ -1359,7 +1359,7 @@ the data to connected downstream sinks.</p>
 
 
 <p>We then distribute the metronome events downstream to another websocket
-listener. We use websocat for this purpose in this example. We can invoke
+listener. We use <code>websocat</code> for this purpose in this example. We can invoke
 the server as follows:</p>
 <div class="codehilite"><pre><span></span><code>$ websocat -s <span class="m">8080</span>
 Listening on ws://127.0.0.1:8080/
@@ -1390,7 +1390,7 @@ an active flow:</p>
 
 
 <p>Running the example via the tremor client as follows:</p>
-<div class="codehilite"><pre><span></span><code>$ tremor server run -f etc/tremor/config/transient_gd.trickle etc/tremor/config/metronome.yaml etc/tremor/config/downstream.yaml etc/tremor/config/flow.yaml
+<div class="codehilite"><pre><span></span><code>$ tremor server run -f etc/tremor/config/*
 </code></pre></div>
 
 
@@ -1400,7 +1400,7 @@ an active flow:</p>
 </ol>
 <blockquote>
 <p><code>bash
-websocat -s 8080
+$ websocat -s 8080
 Listening on ws://127.0.0.1:8080/
 {"onramp":"metronome","id":0,"hostname":"ALT01827","ingest_ns":1600689100122526000}
 {"onramp":"metronome","id":1,"hostname":"ALT01827","ingest_ns":1600689101122912000}
@@ -1411,14 +1411,14 @@ Listening on ws://127.0.0.1:8080/
 {"onramp":"metronome","id":3,"hostname":"ALT01827","ingest_ns":1600689107856271000}
 {"onramp":"metronome","id":0,"hostname":"ALT01827","ingest_ns":1600689202887145000}
 {"onramp":"metronome","id":1,"hostname":"ALT01827","ingest_ns":1600689203888395000}
-{"onramp":"metronome","id":2,"hostname":"ALT01827","ingest_ns":1600689204889220000}</code>
-Notice that we start from sequence <code>0</code> 3 times, so we restarted tremor 3 times.</p>
+{"onramp":"metronome","id":2,"hostname":"ALT01827","ingest_ns":1600689204889220000}</code></p>
+<p>Notice that we start from sequence <code>0</code> 3 times, so we restarted tremor 3 times.</p>
 </blockquote>
 <ol>
 <li>If the downstream websocket service restarts we can recover up to
-1000 events. We may lose in flight events that were sending at the
-time the server went down. However, for fast restarts of the downstream
-service the losses should be minimal.</li>
+   1000 events. We may lose in flight events that were sending at the
+   time the server went down. However, for fast restarts of the downstream
+   service the losses should be minimal.</li>
 </ol>
 <blockquote>
 <p>```bash
@@ -1446,10 +1446,8 @@ Listening on ws://127.0.0.1:8080/
 {"onramp":"metronome","id":35,"hostname":"ALT01827","ingest_ns":1600689237976774000}
 {"onramp":"metronome","id":36,"hostname":"ALT01827","ingest_ns":1600689238980380000}
 {"onramp":"metronome","id":37,"hostname":"ALT01827","ingest_ns":1600689239985447000}
-```
-Notice that we recover <strong>most</strong> but now all of the data. As the downstream websocket
-connection is not a guaranteed delivery connection the recovery and protection against
-data loss is best effort in this case</p>
+```</p>
+<p>Notice that we recover <strong>most</strong> but now all of the data. As the downstream websocket connection is not a guaranteed delivery connection the recovery and protection against data loss is best effort in this case</p>
 </blockquote>
 <p>In short, the transient in memory wal can assist with partial recovery and
 will actively reduce data loss within the configured retention but it is

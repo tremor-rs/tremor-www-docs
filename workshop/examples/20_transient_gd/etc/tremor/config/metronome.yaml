@@ -1,5 +1,0 @@
-onramp:
-  - id: metronome
-    type: metronome
-    config:
-      interval: 1000 # Every second

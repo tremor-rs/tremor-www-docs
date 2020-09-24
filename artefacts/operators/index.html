@@ -1491,13 +1491,13 @@
 <p>Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behavior, concurrency, event ordering or other aspects of a running tremor system.</p>
 <p>Operators are created in the context of a pipeline and configured in the <code>nodes</code> section of each pipeline. An operator MUST have an identifier that is unique for its owning pipeline.</p>
 <p>Configuration is of the general form:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">pipeline</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example-pipeline</span>
-    <span class="nt">nodes</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;pipeline unique node id&gt;</span>
-        <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;namespace&gt;::&lt;opertor&gt;</span>
-        <span class="nt">config</span><span class="p">:</span>
-          <span class="nt">&lt;config key&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;config value&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">add</span><span class="w"></span>
+<span class="kd">script</span><span class="w"></span>
+<span class="w">  </span><span class="kd">emit</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">add</span><span class="err">;</span><span class="w"></span>
+<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1515,11 +1515,10 @@
 <li><code>&lt;anything else&gt;</code> used when <code>emit event =&gt; "&lt;anything else&gt;"</code></li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rt</span>
-    <span class="l l-Scalar l-Scalar-Plain">op</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">runtime::tremor</span>
-    <span class="l l-Scalar l-Scalar-Plain">config</span><span class="p p-Indicator">:</span>
-      <span class="nt">script</span><span class="p">:</span> <span class="p p-Indicator">|</span>
-        <span class="no">emit</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">rt</span><span class="w"></span>
+<span class="kd">script</span><span class="w"></span>
+<span class="w">  </span><span class="kd">emit</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1540,8 +1539,7 @@
 <li><code>overflow</code> - Events that exceed the rate defined for them</li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">group</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grouper::bucket</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">grouper</span><span class="err">::</span><span class="nx">bucket</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="kd">group</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1594,10 +1592,10 @@
 <li><code>overflow</code> - Events that are not let past due to active backpressure</li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bp</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::backpressure</span>
-  <span class="nt">config</span><span class="p">:</span>
-    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">backpressure</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">bp</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">timeout</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1619,11 +1617,11 @@ reapproach the ideal state.</p>
 <li><code>overflow</code> - Events that are not let past due to active backpressure</li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bp</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::percentile</span>
-  <span class="nt">config</span><span class="p">:</span>
-    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-    <span class="nt">step_down</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span> <span class="c1"># 10%</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">percentile</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="kd">as</span><span class="w"> </span><span class="nx">perc</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">timeout</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">100</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="nx">step_down</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="c1"># 10%</span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1636,8 +1634,10 @@ itself triggers a CB event.</p>
 <li><code>*</code> (any named output is possible)</li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rr</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::roundrobin</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">roundrobin</span><span class="w"> </span><span class="kd">operator</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">outputs</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">[</span><span class="s">&quot;round&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;robin&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;outputs&quot;</span><span class="err">]</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1667,13 +1667,12 @@ written to the hard drive it has a significant performance impact.</p>
 <li><code>out</code></li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wal</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qos::wal</span>
-  <span class="nt">config</span><span class="p">:</span>
-    <span class="nt">dir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./wal</span>
-    <span class="nt">read_count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-    <span class="nt">max_elements</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
-    <span class="nt">max_bytes</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10485760</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">wal</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">wal</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">dir</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s">&quot;./wal&quot;</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="nx">read_count</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">20</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="nx">max_elements</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">1000</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="nx">max_bytes</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">10485760</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1689,10 +1688,9 @@ written to the hard drive it has a significant performance impact.</p>
 <li><code>out</code></li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">batch</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::batch</span>
-  <span class="nt">config</span><span class="p">:</span>
-    <span class="nt">count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">generic</span><span class="err">::</span><span class="nx">batch</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">batch</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">count</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1704,8 +1702,7 @@ written to the hard drive it has a significant performance impact.</p>
 <li><code>out</code></li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">counter</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">generic::counter</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">generic</span><span class="err">::</span><span class="nx">counter</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">counter</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1721,11 +1718,10 @@ written to the hard drive it has a significant performance impact.</p>
 <li><code>out</code></li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">history</span>
-  <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">debug::history</span>
-  <span class="nt">config</span><span class="p">:</span>
-    <span class="nt">op</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-checkpoint</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">event_history</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">debug</span><span class="err">::</span><span class="nx">history</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">history</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">op</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s">&quot;my-checkpoint&quot;</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="nx">name</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s">&quot;event_history&quot;</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
                 
               

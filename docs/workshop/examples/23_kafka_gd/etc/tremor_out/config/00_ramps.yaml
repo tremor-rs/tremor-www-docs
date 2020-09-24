@@ -1,0 +1,13 @@
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor server.
+#
+onramp:
+  - id: kafka-in
+    type: kafka
+    codec: json
+    config:
+      brokers:
+        - kafka:9092
+      topics:
+        - tremor
+      group_id: demo

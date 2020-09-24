@@ -24,21 +24,21 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 
 The column `Disconnect events` describes under which circumstances this offramp is not considered functional anymore.
 
-Offramp   | Disconnect events | Delivery acknowledgements
-----------|-------------------|--------------------------
-kafka     | see librdkafka    | see librdkafka
-elastic   | connection loss   | on 200 replies
-REST      | connection loss   | on non 4xx/5xx replies
-ws        | connection loss   | on send
-udp       | local socket loss | on send
-tcp       | connection loss   | on send
-Postgres  | never             | always
-file      | never             | always
-blackhole | never             | always
-debug     | never             | always
-exit      | never             | always
-stdout    | never             | always
-sderr     | never             | always
+| Offramp   | Disconnect events | Delivery acknowledgements |
+| --------- | ----------------- | ------------------------- |
+| kafka     | see librdkafka    | see librdkafka            |
+| elastic   | connection loss   | on 200 replies            |
+| REST      | connection loss   | on non 4xx/5xx replies    |
+| ws        | connection loss   | on send                   |
+| udp       | local socket loss | on send                   |
+| tcp       | connection loss   | on send                   |
+| Postgres  | never             | always                    |
+| file      | never             | always                    |
+| blackhole | never             | always                    |
+| debug     | never             | always                    |
+| exit      | never             | always                    |
+| stdout    | never             | always                    |
+| sderr     | never             | always                    |
 
 ## System Offramps
 
@@ -331,13 +331,13 @@ The exit offramp terminates the runtime with a system exit status.
 The offramp accepts events via its standard input port and responds
 to events with a record structure containing a numeric exit field.
 
-To indicate successful termination, an exit status of zero may be used:
+To indicate successful termination, an `exit` status of zero may be used:
 
 ```json
 { "exit": 0 }
 ```
 
-To indicate non-succesful termination, a non-zero exit status may be used:
+To indicate non-succesful termination, a non-zero `exit` status may be used:
 
 ```json
 { "exit": 1 }
@@ -348,12 +348,22 @@ with `bash` or other shell-based environments, as follows:
 
 <!--alex ignore illegal-->
 
-|Code|Meaning|
-|0|Success|
-|1|General errors|
-|2|Misuse of builtins|
-|126|Command invoked cannot run due to credentials/auth constraints|
-|127|Command not understood, not well-formed or illegal|
+| Code | Meaning                                                        |
+| ---- | -------------------------------------------------------------- |
+| 0    | Success                                                        |
+| 1    | General errors                                                 |
+| 2    | Misuse of builtins                                             |
+| 126  | Command invoked cannot run due to credentials/auth constraints |
+| 127  | Command not understood, not well-formed or illegal             |
+
+To delay the exit (to allow flushing of other offramps) the `delay` key can be used to delay the exit by a number of milliseconds:
+
+```json
+{
+  "exit": 1,
+  "delay": 1000
+}
+```
 
 Example:
 

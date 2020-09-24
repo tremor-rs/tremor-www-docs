@@ -14,7 +14,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.13">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.14">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.077507d7.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d3202873.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ff0a5ce4.min.css">
       
@@ -1953,12 +1953,12 @@ to external TCP protocol distribution endpoints.</p>
 <p>The exit offramp terminates the runtime with a system exit status.</p>
 <p>The offramp accepts events via its standard input port and responds
 to events with a record structure containing a numeric exit field.</p>
-<p>To indicate successful termination, an exit status of zero may be used:</p>
+<p>To indicate successful termination, an <code>exit</code> status of zero may be used:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;exit&quot;</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
 </code></pre></div>
 
 
-<p>To indicate non-succesful termination, a non-zero exit status may be used:</p>
+<p>To indicate non-succesful termination, a non-zero <code>exit</code> status may be used:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;exit&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span>
 </code></pre></div>
 
@@ -1967,12 +1967,44 @@ to events with a record structure containing a numeric exit field.</p>
 with <code>bash</code> or other shell-based environments, as follows:</p>
 <!--alex ignore illegal-->
 
-<p>|Code|Meaning|
-|0|Success|
-|1|General errors|
-|2|Misuse of builtins|
-|126|Command invoked cannot run due to credentials/auth constraints|
-|127|Command not understood, not well-formed or illegal|</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Success</td>
+</tr>
+<tr>
+<td>1</td>
+<td>General errors</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Misuse of builtins</td>
+</tr>
+<tr>
+<td>126</td>
+<td>Command invoked cannot run due to credentials/auth constraints</td>
+</tr>
+<tr>
+<td>127</td>
+<td>Command not understood, not well-formed or illegal</td>
+</tr>
+</tbody>
+</table>
+<p>To delay the exit (to allow flushing of other offramps) the <code>delay</code> key can be used to delay the exit by a number of milliseconds:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;exit&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;delay&quot;</span><span class="p">:</span> <span class="mi">1000</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p>Example:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">terminate</span>

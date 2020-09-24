@@ -10,14 +10,14 @@ Operators are created in the context of a pipeline and configured in the `nodes`
 
 Configuration is of the general form:
 
-```yaml
-pipeline:
-  - id: example-pipeline
-    nodes:
-      - id: <pipeline unique node id>
-        op: <namespace>::<opertor>
-        config:
-          <config key>: <config value>
+```trickle
+define script add
+script
+  emit + 1
+end;
+
+select event from in into add;
+select event from add into out;
 ```
 
 The `config` object is optional and only required for some operators. The configuration consists of key / value pairs.
@@ -38,12 +38,11 @@ The tremor script runtime that allows to modify events or their metadata. To lea
 
 **Example**:
 
-```yaml
-- id: rt
-    op: runtime::tremor
-    config:
-      script: |
-        emit
+```trickle
+define script rt
+script
+  emit
+end;
 ```
 
 ## grouper::bucket
@@ -67,9 +66,8 @@ This operator does not support configuration.
 
 **Example**:
 
-```yaml
-- id: group
-  op: grouper::bucket
+```trickle
+define grouper::bucket operator group;
 ```
 
 **Metrics**:
@@ -128,11 +126,11 @@ The backpressure operator is used to introduce delays based on downstream system
 
 **Example**:
 
-```yaml
-- id: bp
-  op: qos::backpressure
-  config:
-    timeout: 100
+```trickle
+define qos::backpressure operator bp
+with
+  timeout = 100
+end;
 ```
 
 ## qos::percentile
@@ -157,12 +155,12 @@ reapproach the ideal state.
 
 **Example**:
 
-```yaml
-- id: bp
-  op: qos::percentile
-  config:
-    timeout: 100
-    step_down: 0.1 # 10%
+```trickle
+define qos::percentile operator as perc
+with
+  timeout = 100,
+  step_down = 0.1 # 10%
+end;
 ```
 
 ## qos::roundrobin
@@ -177,9 +175,11 @@ itself triggers a CB event.
 
 **Example**:
 
-```yaml
-- id: rr
-  op: qos::roundrobin
+```trickle
+define qos::roundrobin operator
+with
+  outputs = ["round", "robin", "outputs"]
+end;
 ```
 
 ## qos::wal
@@ -214,14 +214,13 @@ written to the hard drive it has a significant performance impact.
 
 **Example**:
 
-```yaml
-- id: wal
-  op: qos::wal
-  config:
-    dir: ./wal
-    read_count: 20
-    max_elements: 1000
-    max_bytes: 10485760
+```trickle
+define qos::wal operator wal with
+  dir = "./wal",
+  read_count = 20,
+  max_elements = 1000,
+  max_bytes = 10485760
+end;
 ```
 
 ## generic::batch
@@ -239,11 +238,10 @@ Supported configuration options are:
 
 **Example**:
 
-```yaml
-- id: batch
-  op: generic::batch
-  config:
-    count: 300
+```trickle
+define generic::batch operator batch with
+  count = 300
+end;
 ```
 
 ## generic::counter
@@ -258,9 +256,8 @@ The counter starts when the first event comes through and begins from 1.
 
 **Example**:
 
-```yaml
-- id: counter
-  op: generic::counter
+```trickle
+define generic::counter operator counter;
 ```
 
 ## debug::history
@@ -278,10 +275,9 @@ Generates a history entry in the event. Data is written to an array with the key
 
 **Example**:
 
-```yaml
-- id: history
-  op: debug::history
-  config:
-    op: my-checkpoint
-    name: event_history
+```trickle
+define debug::history operator history with
+  op = "my-checkpoint",
+  name = "event_history"
+end;
 ```

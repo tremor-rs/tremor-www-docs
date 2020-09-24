@@ -1,5 +1,0 @@
-offramp:
-  - id: ws
-    type: ws
-    config:
-      url: ws://localhost:8080/

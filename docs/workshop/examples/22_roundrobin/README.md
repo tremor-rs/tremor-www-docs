@@ -57,18 +57,21 @@ downstream websocket servers and round robin load balance
 across them
 
 Server 1, in first shell
+
 ```bash
 $ websocat -s 8080
 Listening on ws://127.0.0.1:8080/
 ```
 
 Server 2, in second shell
+
 ```bash
 $ websocat -s 8081
 Listening on ws://127.0.0.1:8081/
 ```
 
 Server 3, in third shell
+
 ```bash
 $ websocat -s 8082
 Listening on ws://127.0.0.1:8082/
@@ -112,7 +115,7 @@ mapping:
 Running the example via the tremor client as follows:
 
 ```bash
-$ tremor server run -f etc/tremor/config/roundrobin.trickle etc/tremor/config/metronome.yaml etc/tremor/config/downstream.yaml etc/tremor/config/flow.yaml
+$ tremor server run -f etc/tremor/config/*
 ```
 
 # Insights
@@ -120,7 +123,7 @@ $ tremor server run -f etc/tremor/config/roundrobin.trickle etc/tremor/config/me
 1. If the tremor process restarts we sequence from the beginning.
 
 > ```bash
-> websocat -s 8080
+> $ websocat -s 8080
 > Listening on ws://127.0.0.1:8080/
 > {"onramp":"metronome","id":0,"hostname":"ALT01827",  "ingest_ns":1600689100122526000}
 > {"onramp":"metronome","id":3,"hostname":"ALT01827","ingest_ns":1600689101122912000}
@@ -134,8 +137,8 @@ round-robin distribution set
 2. If we lose a downstream instance we load-balance across the remainder
 
 3. If we lose all downstream instances, we buffer up to our rentention limit of 1000 events or 1MB of event data.
-   
-Notice that we recover __most__ but now all of the data. As the downstream websocket
+
+Notice that we recover **most** but now all of the data. As the downstream websocket
 connection is not a guaranteed delivery connection the recovery and protection against
 data loss is best effort in this case
 

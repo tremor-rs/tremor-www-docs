@@ -80,7 +80,7 @@ mapping:
 Running the example via the tremor cli as follows:
 
 ```bash
-$ tremor server run -f etc/tremor/config/persistent.trickle etc/tremor/config/metronome.yaml etc/tremor/config/downstream.yaml etc/tremor/config/flow.yaml
+$ tremor server run -f etc/tremor/config/*
 ```
 
 # Insights
@@ -106,20 +106,19 @@ $ tremor server run -f etc/tremor/config/persistent.trickle etc/tremor/config/me
 > {"onramp":"metronome","id":6,"hostname":"localhost","ingest_ns":1600860736373137000}
 > ```
 >
-> We restarted tremor after sending event with id `4`. It did resend events `3` and `4` as they have not been acked
-> from the perspective of the WAL yet.
+> We restarted tremor after sending event with id `4`. It did resend events `3` and `4` as they have not been acked from the perspective of the WAL yet.
 
 2. If the downstream websocket service restarts we can recover up to 1000 events or any number of events worth 1MB. We may lose in flight events that were already acknowledged at the time the server went down and thus not fully delivered by the downstream system.
 
 > ```bash
-> $ websocat -s 8080 ; websocat -s 8080 
+> $ websocat -s 8080 ; websocat -s 8080
 > {"onramp":"metronome","id":0,"hostname":"ALT01828","ingest_ns":1600861519788231000}
 > {"onramp":"metronome","id":1,"hostname":"ALT01828","ingest_ns":1600861520790241000}
 > {"onramp":"metronome","id":2,"hostname":"ALT01828","ingest_ns":1600861521792297000}
 > {"onramp":"metronome","id":3,"hostname":"ALT01828","ingest_ns":1600861522797476000}
 > {"onramp":"metronome","id":4,"hostname":"ALT01828","ingest_ns":1600861523802114000}
 > ^C
-> $  websocat -s 8080 ; websocat -s 8080 
+> $  websocat -s 8080 ; websocat -s 8080
 > Listening on ws://127.0.0.1:8080/
 > {"onramp":"metronome","id":6,"hostname":"ALT01828","ingest_ns":1600861525809835000}
 > {"onramp":"metronome","id":7,"hostname":"ALT01828","ingest_ns":1600861526813574000}
@@ -129,7 +128,6 @@ $ tremor server run -f etc/tremor/config/persistent.trickle etc/tremor/config/me
 > {"onramp":"metronome","id":11,"hostname":"ALT01828","ingest_ns":1600861530830497000}
 > ```
 >
-> We killed the websocket server and restarted right afterwards. We in fact lost 1 event (id `5`) which was acked
-> inside tremor but not yet fully delivered to the console by websocat. Other events that the offramp was unable to send will be resent once the ws offramp can connect again.
+> We killed the websocket server and restarted right afterwards. We in fact lost 1 event (id `5`) which was acked inside tremor but not yet fully delivered to the console by websocat. Other events that the offramp was unable to send will be resent once the ws offramp can connect again.
 
 In short, the persistent in memory wal can assist with partial recovery of downstream system or tremor itself and will actively reduce data loss within the configured retention but it is not guarenteed to be lossless.

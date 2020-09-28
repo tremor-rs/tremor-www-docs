@@ -1,7 +1,4 @@
 
-
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -14,7 +11,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.14">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.1">
     
     
       
@@ -22,19 +19,21 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d3202873.min.css">
-      
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ff0a5ce4.min.css">
-      
+      <link rel="stylesheet" href="../../assets/stylesheets/main.38780c08.min.css">
       
         
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f72e892.min.css">
         
-        <meta name="theme-color" content="#000000">
+          
+          
+          <meta name="theme-color" content="#000000">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -52,9 +51,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
-  
     
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
+      
+  
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -144,8 +145,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -209,10 +208,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
     <label class="md-nav__link" for="nav-3">
       Tremor Query
@@ -232,7 +233,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/" title="Overview" class="md-nav__link">
+    <a href="../" title="Overview" class="md-nav__link">
       Overview
     </a>
   </li>
@@ -242,9 +243,122 @@
           
           
 
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Operators
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" title="Operators" class="md-nav__link md-nav__link--active">
+      Operators
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runtimetremor" class="md-nav__link">
+    runtime::tremor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grouperbucket" class="md-nav__link">
+    grouper::bucket
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericbackpressure" class="md-nav__link">
+    generic::backpressure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qosbackpressure" class="md-nav__link">
+    qos::backpressure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qospercentile" class="md-nav__link">
+    qos::percentile
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qosroundrobin" class="md-nav__link">
+    qos::roundrobin
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qoswal" class="md-nav__link">
+    qos::wal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericbatch" class="md-nav__link">
+    generic::batch
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#genericcounter" class="md-nav__link">
+    generic::counter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debughistory" class="md-nav__link">
+    debug::history
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/modules/" title="Modules" class="md-nav__link">
+    <a href="../modules/" title="Modules" class="md-nav__link">
       Modules
     </a>
   </li>
@@ -256,7 +370,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/pp/" title="Lexical Preprocessor" class="md-nav__link">
+    <a href="../pp/" title="Lexical Preprocessor" class="md-nav__link">
       Lexical Preprocessor
     </a>
   </li>
@@ -268,7 +382,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/walkthrough/" title="Walkthrough" class="md-nav__link">
+    <a href="../walkthrough/" title="Walkthrough" class="md-nav__link">
       Walkthrough
     </a>
   </li>
@@ -281,14 +395,14 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-5" type="checkbox" id="nav-3-5">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6">
     
-    <label class="md-nav__link" for="nav-3-5">
+    <label class="md-nav__link" for="nav-3-6">
       Aggregate Function Reference
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Aggregate Function Reference" data-md-level="2">
-      <label class="md-nav__title" for="nav-3-5">
+      <label class="md-nav__title" for="nav-3-6">
         <span class="md-nav__icon md-icon"></span>
         Aggregate Function Reference
       </label>
@@ -301,7 +415,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/functions/" title="Overview" class="md-nav__link">
+    <a href="../functions/" title="Overview" class="md-nav__link">
       Overview
     </a>
   </li>
@@ -313,7 +427,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/functions/stats/" title="stats" class="md-nav__link">
+    <a href="../functions/stats/" title="stats" class="md-nav__link">
       stats
     </a>
   </li>
@@ -325,7 +439,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/functions/win/" title="win" class="md-nav__link">
+    <a href="../functions/win/" title="win" class="md-nav__link">
       win
     </a>
   </li>
@@ -342,7 +456,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../tremor-query/recipes/" title="Recipes" class="md-nav__link">
+    <a href="../recipes/" title="Recipes" class="md-nav__link">
       Recipes
     </a>
   </li>
@@ -929,12 +1043,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
     <label class="md-nav__link" for="nav-6">
       Artefacts
@@ -954,7 +1066,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../preprocessors/" title="Preprocessors" class="md-nav__link">
+    <a href="../../artefacts/preprocessors/" title="Preprocessors" class="md-nav__link">
       Preprocessors
     </a>
   </li>
@@ -966,7 +1078,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../postprocessors/" title="Postprocessors" class="md-nav__link">
+    <a href="../../artefacts/postprocessors/" title="Postprocessors" class="md-nav__link">
       Postprocessors
     </a>
   </li>
@@ -978,7 +1090,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../codecs/" title="Codecs" class="md-nav__link">
+    <a href="../../artefacts/codecs/" title="Codecs" class="md-nav__link">
       Codecs
     </a>
   </li>
@@ -990,7 +1102,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../onramps/" title="Onramps" class="md-nav__link">
+    <a href="../../artefacts/onramps/" title="Onramps" class="md-nav__link">
       Onramps
     </a>
   </li>
@@ -1002,122 +1114,9 @@
 
 
   <li class="md-nav__item">
-    <a href="../offramps/" title="Offramps" class="md-nav__link">
+    <a href="../../artefacts/offramps/" title="Offramps" class="md-nav__link">
       Offramps
     </a>
-  </li>
-
-        
-          
-          
-          
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Operators
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" title="Operators" class="md-nav__link md-nav__link--active">
-      Operators
-    </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#runtimetremor" class="md-nav__link">
-    runtime::tremor
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grouperbucket" class="md-nav__link">
-    grouper::bucket
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#genericbackpressure" class="md-nav__link">
-    generic::backpressure
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qosbackpressure" class="md-nav__link">
-    qos::backpressure
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qospercentile" class="md-nav__link">
-    qos::percentile
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qosroundrobin" class="md-nav__link">
-    qos::roundrobin
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#qoswal" class="md-nav__link">
-    qos::wal
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#genericbatch" class="md-nav__link">
-    generic::batch
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#genericcounter" class="md-nav__link">
-    generic::counter
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#debughistory" class="md-nav__link">
-    debug::history
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -1477,12 +1476,9 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/tremor-rs/tremor-www-docs/edit/main/docs/artefacts/operators.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/tremor-rs/tremor-www-docs/edit/main/docs/tremor-query/operators.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
-                
-                
-                  
                 
                 
                 <h1 id="operators">Operators<a class="headerlink" href="#operators" title="Permanent link">&para;</a></h1>
@@ -1741,7 +1737,7 @@ written to the hard drive it has a significant performance impact.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../offramps/" title="Offramps" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../" title="Overview" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -1750,19 +1746,19 @@ written to the hard drive it has a significant performance impact.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Offramps
+                Overview
               </div>
             </div>
           </a>
         
         
-          <a href="../../development/quick-start/" title="Quick Start Guide" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../modules/" title="Modules" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Quick Start Guide
+                Modules
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
@@ -1789,15 +1785,15 @@ written to the hard drive it has a significant performance impact.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.2d1db4bd.min.js"></script>
-      <script src="../../assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../../assets/javascripts/vendor.77e55a48.min.js"></script>
+      <script src="../../assets/javascripts/bundle.aa3f9871.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "../..",
           features: [],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.5eca75d3.min.js"
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

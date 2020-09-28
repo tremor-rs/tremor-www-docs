@@ -80,7 +80,7 @@ Notes:
 
 - Preprocessor and codec level errors count as errors for onramp metrics.
 - For onramps, count for `in` port is always zero since an event in tremor is something concrete only after the initial onramp processing. Furthermore, for stream-based onramps like tcp, the idea of counting `in` events does not make sense.
-- If your pipeline is using the [batch operator](../artefacts/operators.md#genericbatch) and offramp is receiving events from it, no of events tracked at offramp is going to be dictated by the batching config.
+- If your pipeline is using the [batch operator](../tremor-query/operators.md#genericbatch) and offramp is receiving events from it, no of events tracked at offramp is going to be dictated by the batching config.
 
 ## Operator level metrics
 
@@ -88,7 +88,7 @@ In addition to the metrics provided by the pipeline itself, some operators can g
 
 The details are documented on a per operator level. Currently the following operators provide custom metrics:
 
-- [grouper::bucket](../artefacts/operators.md#grouperbucket)
+- [grouper::bucket](../tremor-query/operators.md#grouperbucket)
 
 ## Enriching
 

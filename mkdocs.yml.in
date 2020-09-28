@@ -25,6 +25,7 @@ nav:
   - 'Architecture Overview': overview.md
   - Tremor Query:
     - Overview: tremor-query/index.md
+    - Operators: tremor-query/operators.md
     - Modules: tremor-query/modules.md
     - Lexical Preprocessor: tremor-query/pp.md
     - Walkthrough: tremor-query/walkthrough.md
@@ -65,7 +66,6 @@ nav:
     - Codecs: artefacts/codecs.md
     - Onramps: artefacts/onramps.md
     - Offramps: artefacts/offramps.md
-    - Operators: artefacts/operators.md
   - Development:
     - 'Quick Start Guide': development/quick-start.md
     - Profiling: development/profiling.md

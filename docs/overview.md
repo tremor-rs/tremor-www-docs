@@ -134,7 +134,7 @@ Although the contraflow mechanism _may_ seem complex, its far simpler than back-
 ## Guaranteed delivery
 
 Tremor supports guaranteed delivery as long as both onramps and offramps support it. Alternatively,
-the [qos::wal](artefacts/operators.md#qos::wal) can be used to introduce a layer of Guaranteed
+the [qos::wal](tremor-query/operators.md#qos::wal) can be used to introduce a layer of Guaranteed
 delivery for onramps that do not support it naturally.
 
 The basic concept is that each event has a monotonically growing ID, once this ID is acknowledged

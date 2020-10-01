@@ -172,3 +172,29 @@ match event of
   default => null                                         # drop 0% of other events
 end
 ```
+
+## Check if a variable is present/absent
+
+To check if a variable is present, we can rely on the `present` keyword (and inversely, `absent`).
+
+```tremor
+# matches default case
+match present non_existent_var of
+  case true => "is present"
+  default => "not present"
+end;
+```
+
+Note that this is different from the case where a variable is set to `null`, for which we can do [function-based](tremor-script/stdlib/std/type/#is_nullvalue) checks as well as pattern-match with [match](tremor-script/#match).
+
+Using non-existent variables in contexts other than `present` or `absent` will throw an error terminating the script, so this is useful for guarding against that when needed. This is especially useful when working with meta variables as part of tremor runtime, where -- as part of a pipeline node -- we may need to check if a certain meta variable is set or not (eg: from a previous pipeline node) and act accordingly. For such needs, the approach above can be used. Alternatively, we can also rely on [record patterns](tremor-script/#matching-record-patterns) there:
+
+```tremor
+# tests for presence of $key
+match $ of
+  case %{present key} => "present"
+  default => "not present"
+end;
+```
+
+Since `$` gives a record with all the meta variable name-value mapping, this works nicely.

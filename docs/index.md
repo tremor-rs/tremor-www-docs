@@ -28,9 +28,10 @@ Other interesting topics are:
     * [Configuration](operations/configuration.md) and the [Configuration Walkthrough](operations/configuration-walkthrough.md)
     * [The tremor CLI](operations/cli.md)
 * [The tremor API](api.md)
+* [Workshop](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/) and various use case [examples](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples)
 * Development related information
     * [Benchmarks](development/benchmarking.md)
     * [A Quickstart Guide](development/quick-start.md)
     * Nots about [Testing](development/testing.md) and [Debugging](development/debugging.md)
 
-This is not an exhaustive list and for the curious it might be worth to explore the `docs` folder on their own.
+This is not an exhaustive list and for the curious it might be worth to explore the [docs](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs) folder on their own.

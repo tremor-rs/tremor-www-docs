@@ -1,6 +1,6 @@
 # Glob
 
-Glob is an extractor that checks if the input string matches the specified Unix shell-style pattern. The extractor fails if an pattern is specified that is not valid or the string doesn't match the pattern.
+Glob is an extractor that checks if the input string matches the specified [Unix shell-style pattern](https://en.wikipedia.org/wiki/Glob_(programming)#Unix-like). The extractor fails if an pattern is specified that is not valid or the string doesn't match the pattern.
 
 ## Predicate
 

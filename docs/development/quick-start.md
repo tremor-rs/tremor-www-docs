@@ -84,13 +84,13 @@ Technically, the rust [openssl](https://docs.rs/openssl) crate will try to disco
 
 ### Running Tremor
 
-After installing rust and cloning the repository, you can start tremor server by changing to `tremor` directory in tremor and running:
+After installing rust and cloning the repository, you can start tremor server by running the following from the root (`tremor-runtime`) directory:
 
 ```bash
-cargo run
+cargo run -p tremor-cli -- server run
 ```
 
-To run the test suite, in the root (`tremor-runtime`) directory you can run:
+And to run the test suite, you can run:
 
 ```bash
 cargo test

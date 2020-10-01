@@ -20,7 +20,7 @@ tremor-based solutions.
 
 Make sure your environment is setup for building tremor:
 
-[Tremor Quick Start](https://github.com/tremor-rs/tremor-runtime/blob/main/docs/development/quick-start.md)
+[Tremor Quick Start](https://docs.tremor.rs/development/quick-start/)
 
 ### Setup support for your IDE
 

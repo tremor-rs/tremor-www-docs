@@ -1676,12 +1676,12 @@ brew install bison <span class="c1">#make sure to follow the printed instruction
 
 <p>Technically, the rust <a href="https://docs.rs/openssl">openssl</a> crate will try to discover the openssl libs via vcpkg (as long as env var <code>VCPKGRS_DYNAMIC</code> is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a <a href="https://github.com/sfackler/rust-openssl/pull/1238">fix</a> for it and once that lands in a release for <code>rust-openssl</code> (and also starts getting used by tremor depenencies), we won't have to rely on the <code>OPENSSL_DIR</code> var.</p>
 <h3 id="running-tremor">Running Tremor<a class="headerlink" href="#running-tremor" title="Permanent link">&para;</a></h3>
-<p>After installing rust and cloning the repository, you can start tremor server by changing to <code>tremor</code> directory in tremor and running:</p>
-<div class="codehilite"><pre><span></span><code>cargo run
+<p>After installing rust and cloning the repository, you can start tremor server by running the following from the root (<code>tremor-runtime</code>) directory:</p>
+<div class="codehilite"><pre><span></span><code>cargo run -p tremor-cli -- server run
 </code></pre></div>
 
 
-<p>To run the test suite, in the root (<code>tremor-runtime</code>) directory you can run:</p>
+<p>And to run the test suite, you can run:</p>
 <div class="codehilite"><pre><span></span><code>cargo <span class="nb">test</span>
 </code></pre></div>
 

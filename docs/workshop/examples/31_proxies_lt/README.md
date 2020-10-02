@@ -18,3 +18,12 @@ tremor server run -f config.yaml -f request_processing.trickle -f response_proce
 ```
 
 TODO add simple passthrough proxy as part of the LT explanatory doc
+
+
+## Websocket Proxy Server
+
+```sh
+# proxies to ws://echo.websocket.org
+cd etc/tremor_ws/config
+tremor server run -f config.yaml -f pass_incoming.trickle -f pass_outgoing.trickle
+```

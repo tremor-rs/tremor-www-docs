@@ -2,6 +2,8 @@ define script process
 script
   use std::array;
   use std::json;
+  use std::type;
+
   use utils;
 
   let VALID_METHODS = ["GET", "POST"];
@@ -15,6 +17,14 @@ script
     #"content-type": [ "application/json" ],
     "x-powered-by": [ "Tremor" ],
   };
+
+  # count no of requests so far (using the pipeline state mechanism)
+  match type::is_null(state) of
+    case true =>
+      let state = {"count": 1}
+    default =>
+      let state.count = state.count + 1
+  end;
 
   # --------------------------------------------------------------------------
 
@@ -61,6 +71,9 @@ script
 
     case "/ping" =>
       emit ""
+
+    case "/stats" =>
+      emit {"requests_processed": state.count}
 
     case "/error-test" =>
       emit non_existent_var # will throw a runtime error here

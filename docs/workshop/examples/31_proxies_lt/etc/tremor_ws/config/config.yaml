@@ -1,0 +1,42 @@
+onramp:
+  - id: ws
+    type: ws
+    linked: true
+    codec: string
+    preprocessors:
+      - lines
+    config:
+      host: localhost
+      port: 9139
+
+offramp:
+  - id: upstream
+    type: ws
+    linked: true
+    codec: string
+    postprocessors:
+      - lines
+    config:
+      url: "ws://echo.websocket.org"
+
+binding:
+  - id: main
+    links:
+      "/onramp/ws/{instance}/out":
+        [ "/pipeline/pass_incoming/{instance}/in" ]
+
+      "/pipeline/pass_incoming/{instance}/out":
+        [ "/offramp/upstream/{instance}/in" ]
+
+      "/offramp/upstream/{instance}/response":
+        [ "/pipeline/pass_outgoing/{instance}/in" ]
+
+      "/pipeline/pass_outgoing/{instance}/out": [
+        "/onramp/ws/{instance}/response",
+        #"/offramp/system::stdout/system/in"
+      ]
+
+
+mapping:
+  /binding/main/01:
+    instance: "01"

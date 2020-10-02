@@ -1,0 +1,59 @@
+# Collection of utility functions for our application
+#
+# TODO once we send the url parts as meta variables from the rest onramp,
+# the parsing functions here won't be necessary
+
+use std::url;
+
+# TODO add similar function to std::url for better parsing (or a url extractor)
+# functionality here is rudimentary and is here only for demo purposes
+fn parse_url(string) with
+  match {"test": string} of
+    case r = %{test ~= dissect|%{scheme}://%{host}/%{path}?%{query}|} =>
+      {
+        "scheme": r.test.scheme,
+        "host": r.test.host,
+        "path": "/" + url::decode(r.test.path),
+        "query": r.test.query,
+      }
+    case r = %{test ~= dissect|%{scheme}://%{host}/%{path}|} =>
+      {
+        "scheme": r.test.scheme,
+        "host": r.test.host,
+        "path": "/" + url::decode(r.test.path),
+        "query": "",
+      }
+    case r = %{test ~= dissect|%{scheme}://%{host}|} =>
+      {
+        "scheme": r.test.scheme,
+        "host": r.test.host,
+        "path": "/",
+        "query": "",
+      }
+    default =>
+      null
+  end
+end;
+
+# TODO add similar function to std::url for better parsing
+fn parse_query(string) with
+  match {"test": string} of
+    case r = %{test ~= kv|%{key}=%{val}&|} =>
+      # TODO urldecode key and value pairs
+      r.test
+    default =>
+      {}
+  end
+end;
+
+fn get_request_data(body, meta, url_parsed) with
+  {
+    "method": meta.request_method,
+    "url": meta.request_url,
+    "url_parsed": url_parsed,
+    "query_parsed": parse_query(url_parsed.query),
+    "headers": meta.request_headers,
+    "content_type": meta.request_content_type,
+    "body": body,
+  }
+end;

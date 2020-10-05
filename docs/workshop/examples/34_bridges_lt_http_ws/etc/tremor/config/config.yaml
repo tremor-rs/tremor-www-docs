@@ -8,13 +8,14 @@ onramp:
       port: 9139
 
 offramp:
-  - id: upstream
-    type: rest
+  - id: ws
+    type: ws
     linked: true
     codec: string
+    postprocessors:
+      - lines
     config:
-      endpoints:
-        - http://tremor-server:8139
+      url: "ws://tremor-server:8139"
 
 # TODO fix this error we sometimes get on startup:
 #   error: URL does not contain a pipeline servant id
@@ -25,16 +26,18 @@ binding:
       "/onramp/http/{instance}/out":
         ["/pipeline/request_processing/{instance}/in"]
 
-      # process incoming requests and relay it to upstream
+      # process incoming requests and relay it to ws offramp
       "/pipeline/request_processing/{instance}/out":
-        ["/offramp/upstream/{instance}/in"]
+        ["/offramp/ws/{instance}/in"]
 
-      # send the response from upstream for processing
-      "/offramp/upstream/{instance}/response":
-        ["/pipeline/response_processing/{instance}/in"]
+      # send the response from ws offramp to the passthrough pipeline
+      # this works well as long as the passthrough pipeline is not used
+      # by anything else (which is the case for this example)
+      "/offramp/ws/{instance}/response":
+        ["/pipeline/system::passthrough/{instance}/in"]
 
-      # process upstream response and send it back as a response to incoming
-      "/pipeline/response_processing/{instance}/out":
+      # send the ws repsonse back as a response to incoming
+      "/pipeline/system::passthrough/{instance}/out":
         ["/onramp/http/{instance}/response"]
         #"/offramp/system::stdout/system/in"
 
@@ -47,11 +50,7 @@ binding:
       "/pipeline/request_processing/{instance}/err":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
-      "/offramp/upstream/{instance}/error":
-        ["/pipeline/internal_error_processing/{instance}/in"]
-
-      # TODO naming here should be standardized to one thing (either err or error)
-      "/pipeline/response_processing/{instance}/err":
+      "/offramp/ws/{instance}/error":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
       # send back errors as response as well

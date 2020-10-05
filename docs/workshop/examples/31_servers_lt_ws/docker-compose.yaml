@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  tremor:
+    image: tremorproject/tremor:latest
+    ports:
+      - 9898:9898
+      - 8139:8139
+    environment:
+      - RUST_BACKTRACE=full
+      - TREMOR_PATH=/opt/local/tremor/lib:/etc/tremor/lib
+    volumes:
+      - ./etc/tremor:/etc/tremor:rw
+      - ./var/log:/var/log:rw

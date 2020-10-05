@@ -4,44 +4,38 @@ onramp:
     linked: true
     codec: string
     config:
-      host: localhost
+      host: 0.0.0.0
       port: 8139
-
 
 binding:
   - id: main
     links:
       "/onramp/http/{instance}/out":
-        [ "/pipeline/request_processing/{instance}/in" ]
+        ["/pipeline/request_processing/{instance}/in"]
 
       # process incoming requests and send back the response
-      "/pipeline/request_processing/{instance}/out": [
-        "/onramp/http/{instance}/response",
+      "/pipeline/request_processing/{instance}/out":
+        ["/onramp/http/{instance}/response"]
         #"/offramp/system::stdout/system/in"
-      ]
 
   - id: error
     links:
       "/onramp/http/{instance}/error":
-        [ "/pipeline/internal_error_processing/{instance}/in" ]
+        ["/pipeline/internal_error_processing/{instance}/in"]
 
       # TODO naming here should be standardized to one thing (either err or error)
-      "/pipeline/request_processing/{instance}/err": [
-        "/pipeline/internal_error_processing/{instance}/in"
-      ]
+      "/pipeline/request_processing/{instance}/err":
+        ["/pipeline/internal_error_processing/{instance}/in"]
 
       # send back errors as response as well
-      "/pipeline/internal_error_processing/{instance}/out": [
-        "/onramp/http/{instance}/response",
+      "/pipeline/internal_error_processing/{instance}/out":
+        ["/onramp/http/{instance}/response"]
         #"/offramp/system::stderr/system/in"
-      ]
 
       # respond on errors during error processing too
-      "/pipeline/internal_error_processing/{instance}/err": [
-        "/onramp/http/{instance}/response",
+      "/pipeline/internal_error_processing/{instance}/err":
+        ["/onramp/http/{instance}/response"]
         #"/offramp/system::stderr/system/in"
-      ]
-
 
 mapping:
   /binding/main/01:

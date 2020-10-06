@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+    tremor:
+        image: tremorproject/tremor:latest
+        depends_on:
+            - webserver01
+            - webserver02
+            - webserver03
+        environment:
+            - RUST_BACKTRACE=full
+            - RUST_LOG=trace
+        volumes:
+            - ./etc/tremor:/etc/tremor:rw
+            - ./var/log:/var/log:rw
+        ports:
+            - 9898:9898
+            - 65535:65535
+    webserver01:
+        image: kennethreitz/httpbin:latest
+    webserver02:
+        image: kennethreitz/httpbin:latest
+    webserver03:
+        image: kennethreitz/httpbin:latest

@@ -1,0 +1,2 @@
+# primitive passthrough pipeline
+select event from in into out;

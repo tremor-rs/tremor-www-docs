@@ -1,0 +1,58 @@
+define script request_handling
+script
+    let host = match $request.headers of
+      case %{ host ~= %[] } => $request.headers.host[0]
+      case %{ present host }=> $request.headers.host 
+      default => "UNDEFINED"
+    end;
+    let forwarded = "by=localhost:65535;host={host};proto=http";
+    let $request.headers["Forwarded"] = forwarded;
+
+    # fiddle with the event
+    let event = patch event of
+      insert "forwarded" => forwarded
+    end;
+
+    # set request url parts for forwarding it to the rest offramp
+    # stripping out the host and port, as they will be set by the offramp
+    let $endpoint = patch $request.url of
+      erase "host",
+      erase "port"
+    end;
+
+    event;
+
+end;
+
+# ensure we distribute the load evenly
+define qos::roundrobin operator rr
+with
+  outputs = ["ws01", "ws02", "ws03"]
+end;
+create operator rr;
+
+# apply backpressure if a server cannot keep up
+# or is not reachable
+define qos::backpressure operator bp
+with
+  timeout = 10000,
+  steps = [100, 500, 1000, 10000]
+end;
+create operator bp01 from bp;
+create operator bp02 from bp;
+create operator bp03 from bp;
+
+create script request_handling;
+
+# wire everything together
+select event from in into request_handling;
+select event from request_handling into rr;
+# connect each upstream throught the round-robin operator and a distinct backpressure operator
+select event from rr/ws01 into bp01;
+select event from rr/ws02 into bp02;
+select event from rr/ws03 into bp03;
+# create three outputs - one for each upstream server
+select event from bp01 into out/ws01;
+select event from bp02 into out/ws02;
+select event from bp03 into out/ws03;
+select event from request_handling/error into err; # report error to its own port

@@ -53,9 +53,9 @@ def print_subcommand(p, c):
     for name, command in c.items():
         print()
         if len(p) == 0:
-            print(f"{'#' * (len(p) + 4)} Command: **{name}**")
+            print(f"{'#' * (len(p) + 3)} **{name}**")
         else:
-            print(f"{'#' * (len(p) + 4)} Command: {' '.join(p)} **{name}**")
+            print(f"{'#' * (len(p) + 3)} {' '.join(p)} **{name}**")
         subp = p.copy()
         subp.append(name)
         args = []
@@ -94,18 +94,20 @@ with open(sys.argv[1], 'r') as stream:
         print(y['about'])
         print()
         print("""
-# Scope
+## Scope
 
 This document summarises tremor tool commands
 
-# Audience
+## Audience
 
 Tremor operators and developers
 
-# General flags and switches
+## General flags and switches
 
         """)
         print_args(y)
+        print()
+        print("## Commands")
         print_commands(y)
         for c in y['subcommands']:
             print_subcommand([], c)

@@ -87,9 +87,11 @@ However there are general methods that have shown to be efficient in trying to i
 
 Especially initially it helps to document each step as you progress along with any changes you made. This helps to prevent double-checking the same theory but also serves as a good learning exercise.
 
-**Note**: Don't be shy to re-visit a theory if you found new evidence for it that were not visible in the first attempt.
+!!! note
+    Don't be shy to re-visit a theory if you found new evidence for it that were not visible in the first attempt.
 
-**Note**: It is very helpful to talk to someone, formulating the thoughts in sentences and words often springs new ideas and a second perspective helps with.
+!!! note
+    It is very helpful to talk to someone, formulating the thoughts in sentences and words often springs new ideas and a second perspective helps with.
 
 ## Logs
 

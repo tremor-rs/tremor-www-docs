@@ -17,6 +17,8 @@ theme:
 extra:
   repo_icon: github
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - pymdownx.superfences
   - codehilite
   - toc:
@@ -78,6 +80,27 @@ nav:
     - Investigation: development/issue-investigation.md
   - API: api.md
   - History: history.md
+  - Workshops:
+    - Basic examples:
+      - Passthrough: workshop/examples/00_passthrough/README.md
+      - Filter: workshop/examples/01_filter/README.md
+      - Transform: workshop/examples/02_transform/README.md
+      - Validate: workshop/examples/03_validate/README.md
+    - Integrations:
+      - Logstash: workshop/examples/10_logstash/README.md
+      - Influx: workshop/examples/11_influx/README.md
+      - Timescale: workshop/examples/12_postgres_timescaledb/README.md
+    - Delivery Guarantees:
+      - Transient GD: workshop/examples/20_transient_gd/README.md
+      - Persistent GD: workshop/examples/21_persistent_gd/README.md
+      - Round Robin: workshop/examples/22_roundrobin/README.md
+      - Kafka: workshop/examples/23_kafka_gd/README.md
+    - Linked Ramps:
+      - HTTP Server: workshop/examples/30_servers_lt_http/README.md
+      - WS Server: workshop/examples/31_servers_lt_ws/README.md
+      - HTTP Proxy: workshop/examples/32_proxies_lt_http/README.md
+      - WS Proxy: workshop/examples/33_proxies_lt_ws/README.md
+      - HTTP/WS Bridge: workshop/examples/34_bridges_lt_http_ws/README.md
   - 'Glossary': Glossary.md
   - Governance:
     - 'Code of Conduct': CodeOfConduct.md

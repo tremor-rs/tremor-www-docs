@@ -33,7 +33,8 @@ $ docker-compose up
 
 Inject test messages via [websocat](https://github.com/vi/websocat)
 
-> Note: Can be installed via `cargo install websocat` for the lazy/impatient amongst us
+!!! note
+    Can be installed via `cargo install websocat` for the lazy/impatient amongst us
 
 ```bash
 $ cat inputs.txt | websocat ws://localhost:4242
@@ -80,10 +81,9 @@ into out
 having event.selected
 ```
 
-### Attention
+!!! tip
+    The `where` clause has to be located after the `from` section in a trickle select expression!     The `where` clause is evaluated on the incoming event.
 
-The `where` clause has to be located after the `from` section in a trickle select expression! The `where` clause is evaluated on the incoming event.
+    The `having` clause can be used to filter events, but it has to appear after the `into`     expression and will be evaluated on the resulting produced event prior to passing it on.
 
-The `having` clause can be used to filter events, but it has to appear after the `into` expression and will be evaluated on the resulting produced event prior to passing it on.
-
-The `where` and `having` clauses are optional in trickle select query statements.
+    The `where` and `having` clauses are optional in trickle select query statements.

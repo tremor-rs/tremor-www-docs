@@ -63,7 +63,8 @@ $ docker-compose up
 
 Inject test messages via [websocat](https://github.com/vi/websocat)
 
-> Note: Can be installed via `cargo install websocat` for the lazy/impatient amongst us
+!!! note
+    Can be installed via `cargo install websocat` for the lazy/impatient amongst us
 
 ```bash
 $ xzcat demo/data/apache_access_logs.xz | websocat ws://localhost:4242
@@ -76,6 +77,5 @@ Open the [Kibana index management](http://localhost:5601/app/kibana#/management/
 
 This is a fairly complex example that combines everything we've seen in the prior examples and a bit more. It should serve as a starting point of how to use tremor to ingest, process, filter and classify data with tremor into an upstream system.
 
-### Attention
-
-When using this as a baseline be aware that around things like batching tuning will be involved to make the numbers fit with the infrastructure it is pointed at. Also since it is not an ongoing data stream we omitted backpressure or classification based rate limiting from the example.
+!!! tip
+    When using this as a baseline be aware that around things like batching tuning will be involved to make the numbers fit with the infrastructure it is pointed at. Also since it is not an ongoing data stream we omitted backpressure or classification based rate limiting from the example.

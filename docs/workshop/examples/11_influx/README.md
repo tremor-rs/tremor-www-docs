@@ -109,7 +109,5 @@ It is noteworthy that in the aggregation context only `aggr::stats::hdr` and `ag
 
 We are using `having` in the goruping step, however this could also be done with a `where` clause on the aggregation step. In this example we choose `having` over were as it is worth discarding events as early as possible. If the requirement were to handle non numeric fields in a different manner routing the output of the grouping step to two different select statements we would have used `where` instead.
 
-### Attention
-
-Using `aggr::win::first` over `aggr::stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `aggr::win::first` being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so `aggr::stats::min` could
-lead incorrect timestamps we'd rather avoid.
+!!! tip
+    Using `aggr::win::first` over `aggr::stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `aggr::win::first` being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so `aggr::stats::min` could lead incorrect timestamps we'd rather avoid.

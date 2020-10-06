@@ -1,10 +1,18 @@
 define script process
 script
   # TODO if we provide parsed url parts as meta variables, this logic will be
-  # simpler here (just need to override request_host/port)
+  # simpler here (just need to construct the endpoint from the url parts)
   match {"test": $request_url} of
     case r = %{test ~= dissect|%{scheme}://%{host}/%{path_and_rest}|} =>
-      let $endpoint = "{r.test.scheme}://localhost:8139/{r.test.path_and_rest}"
+      let $endpoint = "{r.test.scheme}://tremor-server:8139/{r.test.path_and_rest}"
+      # alternate assignment
+      #let $endpoint = {
+      #  "scheme": "http",
+      #  "host": "tremor-server",
+      #  "port": 8139,
+      #  # TODO parse and pass query/fragment parts separately
+      #  "path": r.test.path_and_rest,
+      #}
     default =>
       null
   end;

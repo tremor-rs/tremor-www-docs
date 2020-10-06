@@ -12,9 +12,10 @@ offramp:
     type: rest
     linked: true
     codec: string
+    # for proxying needs, endpoint here is set as a meta variable
+    # (on a per-request basis), from the request_processing pipeline
     config:
-      endpoints:
-        - http://tremor-server:8139
+      endpoint: "http://tremor-server:8139"
 
 # TODO fix this error we sometimes get on startup:
 #   error: URL does not contain a pipeline servant id

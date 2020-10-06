@@ -2,6 +2,7 @@
 
 Tremor cli - Command Line Interface
 
+[TOC]
 
 # Scope
 

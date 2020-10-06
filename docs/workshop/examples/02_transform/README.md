@@ -37,7 +37,8 @@ $ docker-compose up
 
 Inject test messages via [websocat](https://github.com/vi/websocat)
 
-> Note: Can be installed via `cargo install websocat` for the lazy/impatient amongst us
+!!! note
+    Can be installed via `cargo install websocat` for the lazy/impatient amongst us
 
 ```bash
 $ cat inputs.txt | websocat ws://localhost:4242
@@ -92,6 +93,5 @@ from normalize
 into batch;
 ```
 
-### Attention
-
-Not all tremor script ideoms are allowed in the select statement. Most notably we do not allow any mutating operations such as `let` or control flow such as `emit` or `drop`. Those constructs can however still be used inside a `script` block on their own.
+!!! tip
+    Not all tremor script ideoms are allowed in the select statement. Most notably we do not allow any mutating operations such as `let` or control flow such as `emit` or `drop`. Those constructs can however still be used inside a `script` block on their own.

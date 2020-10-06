@@ -120,27 +120,26 @@ $ tremor server run -f etc/tremor/config/*
 
 # Insights
 
-1. If the tremor process restarts we sequence from the beginning.
+If the tremor process restarts we sequence from the beginning.
 
-> ```bash
-> $ websocat -s 8080
-> Listening on ws://127.0.0.1:8080/
-> {"onramp":"metronome","id":0,"hostname":"ALT01827",  "ingest_ns":1600689100122526000}
-> {"onramp":"metronome","id":3,"hostname":"ALT01827","ingest_ns":1600689101122912000}
-> {"onramp":"metronome","id":6,"hostname":"ALT01827", "ingest_ns":1600689102124688000}
-> ...
-> ```
+```bash
+$ websocat -s 8080
+Listening on ws://127.0.0.1:8080/
+{"onramp":"metronome","id":0,"hostname":"ALT01827",  "ingest_ns":1600689100122526000}
+{"onramp":"metronome","id":3,"hostname":"ALT01827","ingest_ns":1600689101122912000}
+{"onramp":"metronome","id":6,"hostname":"ALT01827", "ingest_ns":1600689102124688000}
+...
+```
 
 Otherwise, we should see sequences distribute across our downstream
 round-robin distribution set
 
-2. If we lose a downstream instance we load-balance across the remainder
+If we lose a downstream instance we load-balance across the remainder
 
-3. If we lose all downstream instances, we buffer up to our rentention limit of 1000 events or 1MB of event data.
+If we lose all downstream instances, we buffer up to our rentention limit of 1000 events or 1MB of event data.
 
-Notice that we recover **most** but now all of the data. As the downstream websocket
-connection is not a guaranteed delivery connection the recovery and protection against
-data loss is best effort in this case
+!!! note
+    Notice that we recover **most** but now all of the data. As the downstream websocket connection is not a guaranteed delivery connection the recovery and protection against data loss is best effort in this case
 
 In short, the transient in memory wal can assist with partial recovery and
 will actively reduce data loss to within the configured retention but it is

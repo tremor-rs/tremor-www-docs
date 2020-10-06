@@ -54,7 +54,8 @@ RUST_BACKTRACE=1 PROFILEFREQUENCY=1000 valgrind --tool=callgrind \
     target/release/tremor run examples/config-spike5.tremor data.json
 ```
 
-Note: When using a **release** build make sure debug symbols are configured in Cargo.toml and enable link time optimisations ( LTO ).
+!!! note
+    When using a **release** build make sure debug symbols are configured in Cargo.toml and enable link time optimisations ( LTO ).
 
 ## Flamegraphs
 

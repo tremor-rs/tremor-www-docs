@@ -20,3 +20,4 @@ docs/tremor-script/stdlib: tremor-runtime
 	cp -r tremor-runtime/docs docs/tremor-script/stdlib
 
 docs/operations/cli.md: tremor-runtime
+	./cli2md/cli2md.py tremor-runtime/tremor-cli/src/cli.yaml > docs/operations/cli.md

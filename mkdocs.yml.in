@@ -17,6 +17,7 @@ theme:
 extra:
   repo_icon: github
 markdown_extensions:
+  - pymdownx.superfences
   - codehilite
   - toc:
       permalink: true

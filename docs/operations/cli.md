@@ -1,310 +1,797 @@
-# Tremor tool
+# Tremor tool v0.9
 
-Tremor command line interface tool
+Tremor cli - Command Line Interface
 
-## Scope
+
+# Scope
 
 This document summarises tremor tool commands
 
-## Audience
+# Audience
 
 Tremor operators and developers
 
-## Usage
+# General flags and switches
 
-### General flags and switches
+        
 
-| Name    | Switch | Kind        | Multiple | Description                   |
-| ------- | ------ | ----------- | -------- | ----------------------------- |
-| config  | c      | takes value | yes      | Sets a custom config file     |
-| verbose | v      | switch/flag | yes      | Sets the level of verbosity   |
-| format  | f      | takes value | yes      | Sets the output format ( json | yaml ) |
+**Arguments**
 
-### Commands
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|verbose|None|switch/flag|yes|Sets the level of verbosity|
 
-Top level command summary
+**Subcommands**
 
-| Command | Description                               |
-| ------- | ----------------------------------------- |
-| script  | Tremor scripting language tool            |
-| grok    | Tremor support for logstash grok patterns |
-| pipe    | Tremor pipeline tool                      |
-| api     | Tremor API client                         |
+|Command|Description|
+|-------|-----------|
+|[completions](#command-completions)|Generate shell completions to stdout. Tries to guess the shell if no subcommand is given.|
+|[server](#command-server)|Tremor server|
+|[test](#command-test)|Testing facilities|
+|[dbg](#command-dbg)|Advanced debugging commands|
+|[run](#command-run)|Run tremor script or query files against stdin or a json data archive, the data will be read from STDIN or an archive and written to STDOUT.|
+|[doc](#command-doc)|Generates documention from tremor script files|
+|[api](#command-api)|Tremor API client|
 
-## Command Details
+#### Command: **completions**
 
-Details for each supported command
+Generate shell completions to stdout. Tries to guess the shell if no subcommand is given.
 
-### Command: **script**
 
-Tremor scripting language tool
+**Subcommands**
 
-#### Subcommand: run
+|Command|Description|
+|-------|-----------|
+|[guess](#command-completions-guess)|Generate completion based on active shell|
+|[bash](#command-completions-bash)|Generate bash shell completions|
+|[zsh](#command-completions-zsh)|Generate zsh shell completions|
+|[elvish](#command-completions-elvish)|Generate elvish shell completions|
+|[fish](#command-completions-fish)|Generate fish shell completions|
+|[powershell](#command-completions-powershell)|Generate powershell shell completions|
 
-**Arguments:**
+##### Command: completions **guess**
 
-| Argument | Required? | Description                      |
-| -------- | --------- | -------------------------------- |
-| SCRIPT   | yes       | tremor script filename           |
-| DATA     | no        | JSON-per-line data log to replay |
+Generate completion based on active shell
 
-### Command: **grok**
+**Usage**
 
-Tremor support for logstash grok patterns
+```
+tremor completions guess
+```
 
-#### Subcommand: run
+##### Command: completions **bash**
 
-**Arguments:**
+Generate bash shell completions
 
-| Argument     | Required? | Description                                                             |
-| ------------ | --------- | ----------------------------------------------------------------------- |
-| patterns     | no        | Extra patterns ( or alternative builtins if ignoring builtin patterns ) |
-| TEST_PATTERN | yes       | The grok pattern under test for this run                                |
-| DATA         | no        | line by line data log to replay, or stdin otherwise                     |
+**Usage**
 
-### Command: **pipe**
+```
+tremor completions bash
+```
 
-Tremor pipeline tool
+##### Command: completions **zsh**
 
-#### Subcommand: run
+Generate zsh shell completions
 
-**Arguments:**
+**Usage**
 
-| Argument | Required? | Description                      |
-| -------- | --------- | -------------------------------- |
-| CONFIG   | yes       | tremor pipeline configuration    |
-| DATA     | no        | JSON-per-line data log to replay |
+```
+tremor completions zsh
+```
 
-#### Subcommand: dot
+##### Command: completions **elvish**
 
-**Arguments:**
+Generate elvish shell completions
 
-| Argument | Required? | Description                   |
-| -------- | --------- | ----------------------------- |
-| CONFIG   | yes       | tremor pipeline configuration |
+**Usage**
 
-### Command: **api**
+```
+tremor completions elvish
+```
+
+##### Command: completions **fish**
+
+Generate fish shell completions
+
+**Usage**
+
+```
+tremor completions fish
+```
+
+##### Command: completions **powershell**
+
+Generate powershell shell completions
+
+**Usage**
+
+```
+tremor completions powershell
+```
+
+#### Command: **server**
+
+Tremor server
+
+
+**Subcommands**
+
+|Command|Description|
+|-------|-----------|
+|[run](#command-server-run)|Runs the tremor server process|
+
+##### Command: server **run**
+
+Runs the tremor server process
+
+**Usage**
+
+```
+tremor server run
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|artefacts|None|switch/flag|yes|Paths to files containing pipelines, onramps, offramps to provision|
+|storage-directory|None|switch/flag|no|Directory to cache/store runtime type information|
+|pid|None|switch/flag|no|Captures process id if set and stores in a file|
+|no-api|None|switch/flag|no|Disable the API|
+|api-host|None|switch/flag|no|The `host:port` to listen for the API|
+|instance|None|switch/flag|no|Instance identifier|
+|logger-config|None|switch/flag|no|log4rs config|
+|recursion-limit|None|switch/flag|no|function tail-recursion stack depth limit|
+
+#### Command: **test**
+
+Testing facilities
+
+**Usage**
+
+```
+tremor test [<MODE>] [<PATH>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|MODE|None|switch/flag|no|One of `all`, `api`, `bench`, `command`, `integration`, `rest`, or `unit`|
+|PATH|None|switch/flag|no|The root test path|
+|REPORT|None|switch/flag|no|Should generate a test report to specified path|
+|INCLUDES|None|switch/flag|yes|Optional tags to filter test executions by|
+|EXCLUDES|None|switch/flag|yes|Optional tags to filter test executions by|
+
+#### Command: **dbg**
+
+Advanced debugging commands
+
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|no-banner|None|switch/flag|no|do not print the banner|
+|no-highlight|None|switch/flag|no|do not highlight output|
+
+**Subcommands**
+
+|Command|Description|
+|-------|-----------|
+|[dot](#command-dbg-dot)|prints the .dot representation for a trickle file|
+|[ast](#command-dbg-ast)|prints the AST of the source|
+|[preprocess](#command-dbg-preprocess)|prints the preprocessed source|
+|[lex](#command-dbg-lex)|prints lexemes|
+|[src](#command-dbg-src)|prints source|
+
+##### Command: dbg **dot**
+
+prints the .dot representation for a trickle file
+
+**Usage**
+
+```
+tremor dbg dot [<SCRIPT>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SCRIPT|None|switch/flag|no|trickle script filename|
+
+##### Command: dbg **ast**
+
+prints the AST of the source
+
+**Usage**
+
+```
+tremor dbg ast [<SCRIPT>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SCRIPT|None|switch/flag|no|tremor/json/trickle script filename|
+
+##### Command: dbg **preprocess**
+
+prints the preprocessed source
+
+**Usage**
+
+```
+tremor dbg preprocess [<SCRIPT>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SCRIPT|None|switch/flag|no|tremor/json/trickle script filename|
+
+##### Command: dbg **lex**
+
+prints lexemes
+
+**Usage**
+
+```
+tremor dbg lex [<SCRIPT>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SCRIPT|None|switch/flag|no|tremor/json/trickle script filename|
+
+##### Command: dbg **src**
+
+prints source
+
+**Usage**
+
+```
+tremor dbg src [<SCRIPT>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SCRIPT|None|switch/flag|no|tremor/json/trickle script filename|
+
+#### Command: **run**
+
+Run tremor script or query files against stdin or a json data archive, the data will be read from STDIN or an archive and written to STDOUT.
+
+
+**Usage**
+
+```
+tremor run [<SCRIPT>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SCRIPT|None|switch/flag|no|filename to run the data through|
+|interactive|None|switch/flag|no|Should not output to consumed source / produced synthetic data or errors|
+|pretty|None|switch/flag|no|Should not pretty print data [ when in interactive mode ]|
+|ENCODER|None|switch/flag|no|The codec to use for encoding the data|
+|DECODER|None|switch/flag|no|The codec to use for decoding the data|
+|INFILE|None|switch/flag|no|input file|
+|OUTFILE|None|switch/flag|no|output file|
+|PREPROCESSOR|None|switch/flag|no|preprocessor to pass data through before decoding|
+|POSTPROCESSOR|None|switch/flag|no|postprocessor to pass data through after encoding|
+|output-port|None|switch/flag|no|selects the port to pull output|
+
+#### Command: **doc**
+
+Generates documention from tremor script files
+
+
+**Usage**
+
+```
+tremor doc [<DIR>] [<OUTDIR>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|interactive|None|switch/flag|no|generates output to standard output|
+|DIR|None|switch/flag|no|directory or source to generate documents for|
+|OUTDIR|None|switch/flag|no|directory to generate documents into|
+
+#### Command: **api**
 
 Tremor API client
 
-#### Subcommand: version
 
-#### Subcommand: target
+**Arguments**
 
-| Name   | Description                   |
-| ------ | ----------------------------- |
-| list   | List registered targets       |
-| create | Create a new API target       |
-| delete | Delete an existing API target |
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|FORMAT|None|switch/flag|no|Sets the output format|
+|CONFIG|None|switch/flag|no|Sets a custom config file|
 
-##### target list
+**Subcommands**
 
-##### target create
+|Command|Description|
+|-------|-----------|
+|[version](#command-api-version)|Get tremor version|
+|[target](#command-api-target)|Target one or many tremor server instances|
+|[binding](#command-api-binding)|Query/update binding specification repository|
+|[pipeline](#command-api-pipeline)|Query/update pipeline specification repository|
+|[onramp](#command-api-onramp)|Query/update onramp specification repository|
+|[offramp](#command-api-offramp)|Query/update offramp specification repository|
 
-**Arguments:**
+##### Command: api **version**
 
-| Argument  | Required? | Description                                           |
-| --------- | --------- | ----------------------------------------------------- |
-| TARGET_ID | yes       | The unique target id for the targetted tremor servers |
+Get tremor version
 
-##### target delete
+**Usage**
 
-**Arguments:**
+```
+tremor api version
+```
 
-| Argument  | Required? | Description                                           |
-| --------- | --------- | ----------------------------------------------------- |
-| TARGET_ID | yes       | The unique target id for the targetted tremor servers |
+##### Command: api **target**
 
-#### Subcommand: binding
+Target one or many tremor server instances
 
-| Name       | Description                                              |
-| ---------- | -------------------------------------------------------- |
-| list       | List registered binding specifications                   |
-| fetch      | Fetch a binding by artefact id                           |
-| delete     | Delete a binding by artefact id                          |
-| create     | Create and register a binding specification              |
-| instance   | Fetch an binding instance by artefact id and instance id |
-| activate   | Activate a binding by artefact id and worker instance id |
-| deactivate | Activate a binding by artefact id and worker instance id |
 
-##### binding list
+**Subcommands**
 
-##### binding fetch
+|Command|Description|
+|-------|-----------|
+|[list](#command-api-target-list)|List registered targets|
+|[create](#command-api-target-create)|Create a new API target|
+|[delete](#command-api-target-delete)|Delete an existing API target|
 
-**Arguments:**
+###### Command: api target **list**
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the binding specification |
+List registered targets
 
-##### binding delete
+**Usage**
 
-**Arguments:**
+```
+tremor api target list
+```
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the binding specification |
+###### Command: api target **create**
 
-##### binding create
+Create a new API target
 
-**Arguments:**
+**Usage**
 
-| Argument | Required? | Description                    |
-| -------- | --------- | ------------------------------ |
-| SOURCE   | yes       | JSON or YAML file request body |
+```
+tremor api target create [<TARGET_ID>] [<SOURCE>]
+```
 
-##### binding instance
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|TARGET_ID|None|switch/flag|no|The unique target id for the targetted tremor servers|
+|SOURCE|None|switch/flag|no|JSON or YAML file request body|
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the binding specification |
+###### Command: api target **delete**
 
-##### binding activate
+Delete an existing API target
 
-**Arguments:**
+**Usage**
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the binding specification |
+```
+tremor api target delete [<TARGET_ID>]
+```
 
-##### binding deactivate
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|TARGET_ID|None|switch/flag|no|The unique target id for the targetted tremor servers|
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the binding specification |
+##### Command: api **binding**
 
-#### Subcommand: pipeline
+Query/update binding specification repository
 
-| Name     | Description                                               |
-| -------- | --------------------------------------------------------- |
-| list     | List registered pipeline specifications                   |
-| fetch    | Fetch a pipeline by artefact id                           |
-| delete   | Delete a pipeline by artefact id                          |
-| create   | Create and register a pipeline specification              |
-| instance | Fetch an pipeline instance by artefact id and instance id |
 
-##### pipeline list
+**Subcommands**
 
-##### pipeline fetch
+|Command|Description|
+|-------|-----------|
+|[list](#command-api-binding-list)|List registered binding specifications|
+|[fetch](#command-api-binding-fetch)|Fetch a binding by artefact id|
+|[delete](#command-api-binding-delete)|Delete a binding by artefact id|
+|[create](#command-api-binding-create)|Create and register a binding specification|
+|[instance](#command-api-binding-instance)|Fetch an binding instance by artefact id and instance id|
+|[activate](#command-api-binding-activate)|Activate a binding by artefact id and servant instance id|
+|[deactivate](#command-api-binding-deactivate)|Activate a binding by artefact id and servant instance id|
 
-**Arguments:**
+###### Command: api binding **list**
 
-| Argument    | Required? | Description                                           |
-| ----------- | --------- | ----------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the pipeline specification |
+List registered binding specifications
 
-##### pipeline delete
+**Usage**
 
-**Arguments:**
+```
+tremor api binding list
+```
 
-| Argument    | Required? | Description                                           |
-| ----------- | --------- | ----------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the pipeline specification |
+###### Command: api binding **fetch**
 
-##### pipeline create
+Fetch a binding by artefact id
 
-**Arguments:**
+**Usage**
 
-| Argument | Required? | Description                    |
-| -------- | --------- | ------------------------------ |
-| SOURCE   | no        | JSON or YAML file request body |
+```
+tremor api binding fetch [<ARTEFACT_ID>]
+```
 
-##### pipeline instance
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the binding specification|
 
-| Argument    | Required? | Description                                           |
-| ----------- | --------- | ----------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the pipeline specification |
+###### Command: api binding **delete**
 
-#### Subcommand: onramp
+Delete a binding by artefact id
 
-| Name     | Description                                             |
-| -------- | ------------------------------------------------------- |
-| list     | List registered onramp specifications                   |
-| fetch    | Fetch an onramp by artefact id                          |
-| delete   | Delete an onramp by artefact id                         |
-| create   | Create and register an onramp specification             |
-| instance | Fetch an onramp instance by artefact id and instance id |
+**Usage**
 
-##### onramp list
+```
+tremor api binding delete [<ARTEFACT_ID>]
+```
 
-##### onramp fetch
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the binding specification|
 
-| Argument    | Required? | Description                                         |
-| ----------- | --------- | --------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the onramp specification |
+###### Command: api binding **create**
 
-##### onramp delete
+Create and register a binding specification
 
-**Arguments:**
+**Usage**
 
-| Argument    | Required? | Description                                         |
-| ----------- | --------- | --------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the onramp specification |
+```
+tremor api binding create [<SOURCE>]
+```
 
-##### onramp create
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SOURCE|None|switch/flag|no|JSON or YAML file request body|
 
-| Argument | Required? | Description                    |
-| -------- | --------- | ------------------------------ |
-| SOURCE   | no        | JSON or YAML file request body |
+###### Command: api binding **instance**
 
-##### onramp instance
+Fetch an binding instance by artefact id and instance id
 
-**Arguments:**
+**Usage**
 
-| Argument    | Required? | Description                                         |
-| ----------- | --------- | --------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the onramp specification |
+```
+tremor api binding instance [<ARTEFACT_ID>] [<INSTANCE_ID>]
+```
 
-#### Subcommand: offramp
+**Arguments**
 
-| Name     | Description                                              |
-| -------- | -------------------------------------------------------- |
-| list     | List registered offramp specifications                   |
-| fetch    | Fetch an offramp by artefact id                          |
-| delete   | Delete an offramp by artefact id                         |
-| create   | Create and register an offramp specification             |
-| instance | Fetch an offramp instance by artefact id and instance id |
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the binding specification|
+|INSTANCE_ID|None|switch/flag|no|The unique instance id for the binding specification|
 
-##### offramp list
+###### Command: api binding **activate**
 
-##### offramp fetch
+Activate a binding by artefact id and servant instance id
 
-**Arguments:**
+**Usage**
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the offramp specification |
+```
+tremor api binding activate [<ARTEFACT_ID>] [<INSTANCE_ID>] [<SOURCE>]
+```
 
-##### offramp delete
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the binding specification|
+|INSTANCE_ID|None|switch/flag|no|The unique instance id for the binding specification|
+|SOURCE|None|switch/flag|no|JSON -r YAML file request body|
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the offramp specification |
+###### Command: api binding **deactivate**
 
-##### offramp create
+Activate a binding by artefact id and servant instance id
 
-**Arguments:**
+**Usage**
 
-| Argument | Required? | Description                    |
-| -------- | --------- | ------------------------------ |
-| SOURCE   | no        | JSON or YAML file request body |
+```
+tremor api binding deactivate [<ARTEFACT_ID>] [<INSTANCE_ID>]
+```
 
-##### offramp instance
+**Arguments**
 
-**Arguments:**
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the binding specification|
+|INSTANCE_ID|None|switch/flag|no|The unique instance id for the binding specification|
 
-| Argument    | Required? | Description                                          |
-| ----------- | --------- | ---------------------------------------------------- |
-| ARTEFACT_ID | yes       | The unique artefact id for the offramp specification |
+##### Command: api **pipeline**
+
+Query/update pipeline specification repository
+
+
+**Subcommands**
+
+|Command|Description|
+|-------|-----------|
+|[list](#command-api-pipeline-list)|List registered pipeline specifications|
+|[fetch](#command-api-pipeline-fetch)|Fetch a pipeline by artefact id|
+|[delete](#command-api-pipeline-delete)|Delete a pipeline by artefact id|
+|[create](#command-api-pipeline-create)|Create and register a pipeline specification|
+|[instance](#command-api-pipeline-instance)|Fetch an pipeline instance by artefact id and instance id|
+
+###### Command: api pipeline **list**
+
+List registered pipeline specifications
+
+**Usage**
+
+```
+tremor api pipeline list
+```
+
+###### Command: api pipeline **fetch**
+
+Fetch a pipeline by artefact id
+
+**Usage**
+
+```
+tremor api pipeline fetch [<ARTEFACT_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the pipeline specification|
+
+###### Command: api pipeline **delete**
+
+Delete a pipeline by artefact id
+
+**Usage**
+
+```
+tremor api pipeline delete [<ARTEFACT_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the pipeline specification|
+
+###### Command: api pipeline **create**
+
+Create and register a pipeline specification
+
+**Usage**
+
+```
+tremor api pipeline create [<SOURCE>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SOURCE|None|switch/flag|no|JSON or YAML file request body|
+
+###### Command: api pipeline **instance**
+
+Fetch an pipeline instance by artefact id and instance id
+
+**Usage**
+
+```
+tremor api pipeline instance [<ARTEFACT_ID>] [<INSTANCE_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the pipeline specification|
+|INSTANCE_ID|None|switch/flag|no|The unique instance id for the pipeline specification|
+
+##### Command: api **onramp**
+
+Query/update onramp specification repository
+
+
+**Subcommands**
+
+|Command|Description|
+|-------|-----------|
+|[list](#command-api-onramp-list)|List registered onramp specifications|
+|[fetch](#command-api-onramp-fetch)|Fetch an onramp by artefact id|
+|[delete](#command-api-onramp-delete)|Delete an onramp by artefact id|
+|[create](#command-api-onramp-create)|Create and register an onramp specification|
+|[instance](#command-api-onramp-instance)|Fetch an onramp instance by artefact id and instance id|
+
+###### Command: api onramp **list**
+
+List registered onramp specifications
+
+**Usage**
+
+```
+tremor api onramp list
+```
+
+###### Command: api onramp **fetch**
+
+Fetch an onramp by artefact id
+
+**Usage**
+
+```
+tremor api onramp fetch [<ARTEFACT_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the onramp specification|
+
+###### Command: api onramp **delete**
+
+Delete an onramp by artefact id
+
+**Usage**
+
+```
+tremor api onramp delete [<ARTEFACT_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the onramp specification|
+
+###### Command: api onramp **create**
+
+Create and register an onramp specification
+
+**Usage**
+
+```
+tremor api onramp create [<SOURCE>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SOURCE|None|switch/flag|no|JSON or YAML file request body|
+
+###### Command: api onramp **instance**
+
+Fetch an onramp instance by artefact id and instance id
+
+**Usage**
+
+```
+tremor api onramp instance [<ARTEFACT_ID>] [<INSTANCE_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the onramp specification|
+|INSTANCE_ID|None|switch/flag|no|The unique instance id for the onramp specification|
+
+##### Command: api **offramp**
+
+Query/update offramp specification repository
+
+
+**Subcommands**
+
+|Command|Description|
+|-------|-----------|
+|[list](#command-api-offramp-list)|List registered offramp specifications|
+|[fetch](#command-api-offramp-fetch)|Fetch an offramp by artefact id|
+|[delete](#command-api-offramp-delete)|Delete an offramp by artefact id|
+|[create](#command-api-offramp-create)|Create and register an offramp specification|
+|[instance](#command-api-offramp-instance)|Fetch an offramp instance by artefact id and instance id|
+
+###### Command: api offramp **list**
+
+List registered offramp specifications
+
+**Usage**
+
+```
+tremor api offramp list
+```
+
+###### Command: api offramp **fetch**
+
+Fetch an offramp by artefact id
+
+**Usage**
+
+```
+tremor api offramp fetch [<ARTEFACT_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the offramp specification|
+
+###### Command: api offramp **delete**
+
+Delete an offramp by artefact id
+
+**Usage**
+
+```
+tremor api offramp delete [<ARTEFACT_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the offramp specification|
+
+###### Command: api offramp **create**
+
+Create and register an offramp specification
+
+**Usage**
+
+```
+tremor api offramp create [<SOURCE>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|SOURCE|None|switch/flag|no|JSON or YAML file request body|
+
+###### Command: api offramp **instance**
+
+Fetch an offramp instance by artefact id and instance id
+
+**Usage**
+
+```
+tremor api offramp instance [<ARTEFACT_ID>] [<INSTANCE_ID>]
+```
+
+**Arguments**
+
+|Name|Switch|Kind|Multiple|Description|
+|----|------|----|--------|-----------|
+|ARTEFACT_ID|None|switch/flag|no|The unique artefact id for the offramp specification|
+|INSTANCE_ID|None|switch/flag|no|The unique instance id for the offramp specification|

@@ -46,7 +46,7 @@ def print_commands(c, pfx=""):
         for c in subcommands:
             for name, command in c.items():
                 print(
-                    f"|[{name}](#command-{pfx}{name})|{command['about'].strip()}|")
+                    f"|[{name}](#{pfx}{name})|{command['about'].strip()}|")
 
 
 def print_subcommand(p, c):

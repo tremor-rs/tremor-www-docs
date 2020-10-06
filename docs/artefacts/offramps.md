@@ -63,7 +63,7 @@ Supported configuration options are:
 - `endpoints` - A list of elastic search endpoints to send to.
 - `concurrency` - Maximum number of parallel requests (default: 4).
 
-Used metadata Variables:
+Used metadata variables:
 
 - `index` - The index to write to (required).
 - `doc_type` - The document type for elastic (required).
@@ -91,7 +91,12 @@ Supported configuration options are:
 - `topic` - The topic to send to.
 - `brokers` - Broker servers to connect to. (Kafka nodes)
 - `hostname` - Hostname to identify the client with. (default: the systems hostname)
+- `key` - Key to use for messages (default: none)
 - `rdkafka_options` - An optional map of option to value, where both sides need to be strings.
+
+Used metadata variables:
+
+- `$kafka_key` - same as config `key` (optional. overrides related config param when present)
 
 Example:
 
@@ -115,6 +120,17 @@ Supported configuration options are:
 
 - `url` - WebSocket endpoint to send data to.
 - `binary` - If data should be send as binary instead of text (default: `false`).
+
+Used metadata variables:
+
+- `$url` - same as config `url` (optional. overrides related config param when present)
+- `$binary` - same as config `binary` (optional. overrides related config param when present)
+
+Set metadata variables (for reply with linked transports):
+
+- `$binary` - `true` if the websocket message reply came as binary (`false` otherwise)
+
+When used as a linked offramp, batched events are rejected by the offramp.
 
 Example:
 
@@ -156,14 +172,38 @@ offramp:
 
 ### REST - Representational State Transfer
 
-The REST offramp is used to send events or batches of events to a REST endpoint either via a `POST` or `PUT` request. By default, a `POST` request is used. Batched events are send in a single request.
+The REST offramp is used to send events to the sepcified endpoint.
 
 Supported configuration options are:
 
-- `endpoints` - A vector of URLs to send the data to.
+- `endpoint` - URL string or struct
 - `concurrency` - Number of parallel in-flight requests (default: `4`)
-- `put` - If a `PUT` request should be used instead of `POST` (default: `false`)
+- `method` - HTTP method to use (default: `POST`)
 - `headers` - A map of headers to set for the requests
+
+The struct form of the `endpoint` config param has the following standard URL fields (and all are string-valued, except numeric `port`):
+
+- `scheme`
+- `username`
+- `password`
+- `host`
+- `port`
+- `path`
+- `query`
+- `fragment`
+
+Used metadata variables:
+
+- `$endpoint` - same as config `endpoint` (optional. overrides related config param when present)
+- `$request_method` - same as config `method` (optional. overrides related config param when present)
+- `$request_headers` - same as config `headers` (optional. overrides related config param when present)
+
+Set metadata variables (for reply with linked transports):
+
+- `$response_status` - Numeric HTTP status code
+- `$response_headers` - A map of headers for the response, where both sides are strings
+
+When used as a linked offramp, batched events are rejected by the offramp.
 
 ### REST offramp example for InfluxDB
 
@@ -175,8 +215,7 @@ offramp:
     type: rest
     codec: influx
     config:
-      endpoints:
-        - http://influx/write?db=metrics
+      endpoint: http://influx/write?db=metrics
       headers:
         "Client": "Tremor"
 ```
@@ -279,7 +318,7 @@ The debug offramp is used to get an overview of how many events are put in wich 
 
 This operator does not support configuration.
 
-Used metadata Variables:
+Used metadata variables:
 
 - `$class` - Class of the event to count by. (optional)
 

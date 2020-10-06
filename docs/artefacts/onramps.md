@@ -280,10 +280,7 @@ onramp:
 
 ### rest ( alpha )
 
-The rest onramp listens on a specified port for inbound RESTful ( http ) data.
-
-The onramp can leverage preprocessors to segment rest body content but does not currently
-support codecs. Body content is presumed to be UTF-8 encoded.
+The rest onramp listens on a specified port for inbound RESTful ( http ) data, converting the http body as event data (and attaching other request attributes as event metadata).
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
 
@@ -295,21 +292,21 @@ Supported configuration options are:
 
 - `host` - The host to advertise as
 - `port` - The TCP port to listen on
-- `resources` - A set of HTTP method / relative paths to accept
-  - `path` - The ( possibly parameterized ) path for which a set of HTTP methods is acceptable
-    - `allow`
-      - `methods` - Array of acceptable HTTP methods for this path
-      - `method` - GET, PUT, POST, PATCH, or DELETE
-      - `params` - An optional set of required parameters
-      - `status_code` - An override for the HTTP status code to return to with the response
 
-Status codes:
+The rest onramp respects the HTTP [Content-Type header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) and will use it to decode the request body when it's present (otherwise it defaults to using the codec specified in the onramp config).
 
-| Method  | Default status code |
-| ------- | ------------------- |
-| POST    | `201`               |
-| DELETE  | `200`               |
-| _other_ | `204`               |
+Set metadata variables:
+
+- `$request_url` - Full URL string for the incoming request
+- `$request_method` - HTTP method used by the incoming request
+- `$request_headers` - Map of header name (string) to values (array of strings)
+
+Used metadata variables (for reply with linked transports):
+
+- `$response_status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
+- `$response_headers` - A map of headers to set for the requests, where both sides need to be strings. (optional)
+
+When not used as a linked onramp, the status code returned with the response is `202`.
 
 Example:
 
@@ -323,18 +320,13 @@ onramp:
     config:
       host: "localhost"
       port: 9000
-      resources:
-        - path: /write?db=test.db
-          allow:
-            - method: POST
-              status_code: 204
 ```
+
+TODO add link to linked transport usage example with examples of the metadata vars too
 
 Known limitations:
 
-Currently paths and path parameters are neither checked nor validated, nor are required parameters.
-Response status code configuration is also not currently respected. It is currently not possible to
-configure rest onramps via swagger, RAML or OpenAPI configuration files.
+It is currently not possible to configure rest onramps via swagger, RAML or OpenAPI configuration files.
 
 ### PostgreSQL
 
@@ -403,6 +395,14 @@ Supported configuration options are:
 
 - `host` - The IP to listen on
 - `port` - The Port to listen on
+
+Set metadata variables:
+
+- `$binary` - `true` if the incoming websocket message came as binary (`false` otherwise)
+
+Used metadata variables (for reply with linked transports):
+
+- `$binary` - If reply data should be send as binary instead of text (optional. data format defaults to text when not set).
 
 Example:
 

@@ -1,6 +1,11 @@
 define script process
 script
-  let $response_status = 500;
+  let $response = match present $response of
+    case true =>
+      merge event of {"status": 500} end
+    default =>
+      {"status": 500}
+  end;
 
   # can choose to not include the actual event error here, if we don't want
   # to send it back to the client

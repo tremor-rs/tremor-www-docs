@@ -214,6 +214,8 @@ offramp:
   - id: influxdb
     type: rest
     codec: influx
+    postprocessors:
+      - lines
     config:
       endpoint: http://influx/write?db=metrics
       headers:

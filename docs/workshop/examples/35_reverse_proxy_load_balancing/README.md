@@ -184,6 +184,37 @@ In another shell, we fire up curl and send requests through our reverse proxy:
 
 ```bash
 $ curl -v -XGET http://localhost:65535/anything  -H'Content-Type: appliaction/json' -d '{"snot": "badger"}'
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 65535 (#0)
+> GET /anything HTTP/1.1
+> Host: localhost:65535
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 18
+>
+* upload completely sent off: 18 out of 18 bytes
+< HTTP/1.1 200 OK
+< content-length: 549
+< access-control-allow-origin: *
+< content-type: application/json
+< connection: keep-alive
+< server: gunicorn/19.9.0
+< date: Tue, 06 Oct 2020 15:05:22 GMT
+< access-control-allow-credentials: true
+< via: 1.1 789e85f38adc/tremor
+<
+* Connection #0 to host localhost left intact
+{"args":{},"data":"{\"snot\":\"badger\",\"forwarded\":\"by=localhost:65535;host=localhost:65535;proto=http\"}","files":{},"form":{},"headers":{"Accept":"*/*","Accept-Encoding":"deflate, gzip","Content-Length":"82","Content-Type":"application/json","Expect":"100-continue","Forwarded":"by=localhost:65535;host=localhost:65535;proto=http","Host":"webserver01","User-Agent":"curl/7.64.1"},"json":{"forwarded":"by=localhost:65535;host=localhost:65535;proto=http","snot":"badger"},"method":"GET","origin":"172.19.0.5","url":"http://webserver01/anything"}
 ```
 
+The tremor reverse-proxy added the `forwarded` field and header to the request (See the `data` amd `headers` fields of the response body) and passed through the response body from the upstream.
 
+In the case of an upstream failing, the `qos::backpressure` operators will kick in and discard events for the failed upstream.
+
+Here is an example response for the case an upstream is not reachable:
+
+```json
+{"error":"ConnectFailed: failed to connect to the server","event_id":"1: 4"}
+```

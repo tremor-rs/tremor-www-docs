@@ -15,8 +15,6 @@ offramp:
     config:
       endpoint: "http://tremor-server:8139"
 
-# TODO fix this error we sometimes get on startup:
-#   error: URL does not contain a pipeline servant id
 binding:
   - id: main
     links:
@@ -29,39 +27,36 @@ binding:
         ["/offramp/upstream/{instance}/in"]
 
       # send the response from upstream for processing
-      "/offramp/upstream/{instance}/response":
+      "/offramp/upstream/{instance}/out":
         ["/pipeline/response_processing/{instance}/in"]
 
       # process upstream response and send it back as a response to incoming
       "/pipeline/response_processing/{instance}/out":
-        ["/onramp/http/{instance}/response"]
+        ["/onramp/http/{instance}/in"]
         #"/offramp/system::stdout/system/in"
 
   - id: error
     links:
-      "/onramp/http/{instance}/error":
+      "/onramp/http/{instance}/err":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
-      # TODO naming here should be standardized to one thing (either err or error)
       "/pipeline/request_processing/{instance}/err":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
-      "/offramp/upstream/{instance}/error":
+      "/offramp/upstream/{instance}/err":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
-      # TODO naming here should be standardized to one thing (either err or error)
       "/pipeline/response_processing/{instance}/err":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
       # send back errors as response as well
       "/pipeline/internal_error_processing/{instance}/out":
-        ["/onramp/http/{instance}/response"]
+        ["/onramp/http/{instance}/in"]
         #"/offramp/system::stderr/system/in"
 
       # respond on errors during error processing too
-      # TODO naming here should be standardized to one thing (either err or error)
       "/pipeline/internal_error_processing/{instance}/err":
-        ["/onramp/http/{instance}/response"]
+        ["/onramp/http/{instance}/in"]
         #"/offramp/system::stderr/system/in"
 
 mapping:

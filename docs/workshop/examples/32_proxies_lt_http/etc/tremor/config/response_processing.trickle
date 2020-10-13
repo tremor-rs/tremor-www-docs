@@ -11,11 +11,6 @@ script
 
   # TODO add upstream url to the response as well
 
-  # if we want to overide the content-type sent as part of the offramp response
-  # TODO currently content type in headers has more priority. revisit?
-  # or just drop the need for this variable
-  #let $response_content_type = "text/plain";
-
   event;
 end;
 
@@ -26,5 +21,4 @@ select event from in into process;
 select event from process into out;
 
 # tremor runtime errors from the processing script
-# TODO naming here should be standardized to one thing (either err or error)
-select event from process/error into err;
+select event from process/err into err;

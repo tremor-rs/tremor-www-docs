@@ -14,7 +14,7 @@ The upstreams in a docker-compose and sta
 ## Setting up Tremor as a reverse proxy
 
 To issue incoming HTTP requests to an upstream HTTP server
-a [REST onramp](../../artefacts/onramps.md#rest) needs to be configured in `config.yaml` to listen on a port of our choice:
+a [REST onramp](../../../artefacts/onramps.md#rest) needs to be configured in `config.yaml` to listen on a port of our choice:
 
 ```yaml
 onramp:
@@ -27,7 +27,7 @@ onramp:
         port: 65535
 ```
 
-To forward received requests to the httpbin upstream servers a [REST offramp](../../artefacts/offramps.md#rest) needs to be configured in `config.yaml` to point at it:
+To forward received requests to the httpbin upstream servers a [REST offramp](../../../artefacts/offramps.md#rest) needs to be configured in `config.yaml` to point at it:
 
 ```yaml
 offramp:

@@ -18,9 +18,10 @@ extra:
   repo_icon: github
 markdown_extensions:
   - admonition
+  - codehilite
+  - mdx_truly_sane_lists
   - pymdownx.details
   - pymdownx.superfences
-  - codehilite
   - toc:
       permalink: true
 nav:
@@ -101,7 +102,8 @@ nav:
       - HTTP Proxy: workshop/examples/32_proxies_lt_http/README.md
       - WS Proxy: workshop/examples/33_proxies_lt_ws/README.md
       - HTTP/WS Bridge: workshop/examples/34_bridges_lt_http_ws/README.md
-  - 'Glossary': Glossary.md
+      - HTTP Load Balancing: workshop/examples/35_reverse_proxy_load_balancing/README.md
+  - Glossary: Glossary.md
   - Governance:
     - 'Code of Conduct': CodeOfConduct.md
     - 'Contributing': Contributing.md

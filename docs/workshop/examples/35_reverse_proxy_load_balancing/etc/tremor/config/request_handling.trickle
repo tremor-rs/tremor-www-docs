@@ -2,7 +2,7 @@ define script request_handling
 script
     let host = match $request.headers of
       case %{ host ~= %[] } => $request.headers.host[0]
-      case %{ present host }=> $request.headers.host 
+      case %{ present host }=> $request.headers.host
       default => "UNDEFINED"
     end;
     let forwarded = "by=localhost:65535;host={host};proto=http";
@@ -55,4 +55,4 @@ select event from rr/ws03 into bp03;
 select event from bp01 into out/ws01;
 select event from bp02 into out/ws02;
 select event from bp03 into out/ws03;
-select event from request_handling/error into err; # report error to its own port
+select event from request_handling/err into err; # report error to its own port

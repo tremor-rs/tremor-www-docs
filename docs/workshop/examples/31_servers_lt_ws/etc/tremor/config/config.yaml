@@ -13,11 +13,8 @@ binding:
   - id: main
     links:
       "/onramp/ws/{instance}/out": ["/pipeline/echo/{instance}/in"]
-
-      "/pipeline/echo/{instance}/out": ["/onramp/ws/{instance}/response"]
-        #"/offramp/system::stdout/system/in"
-
-      "/pipeline/echo/{instance}/error": ["/offramp/system::stderr/system/in"]
+      "/pipeline/echo/{instance}/out": ["/onramp/ws/{instance}/in"]
+      "/pipeline/echo/{instance}/err": ["/offramp/system::stderr/system/in"]
 
 mapping:
   /binding/main/01:

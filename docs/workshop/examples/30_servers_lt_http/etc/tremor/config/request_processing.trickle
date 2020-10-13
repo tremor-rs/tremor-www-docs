@@ -98,15 +98,13 @@ script
 
       # serve html!
       let $response.headers["content-type"] = "text/html",
-      # TODO resolve issues of string duplication with heredoc
-      #emit """
-      #<h1>Hello, {name}!</h1>
-      #<p>Your request:</p>
-      #<pre>
-      #  {json::encode_pretty(data)}
-      #</pre>
-      #"""
-      emit "<h1>Hello {name}!</h1><p>Your request:</p><pre>{json::encode_pretty(request_data)}</pre>"
+      emit """
+      <h1>Hello, {name}!</h1>
+      <p>Your request:</p>
+      <pre>
+        {json::encode_pretty(request_data)}
+      </pre>
+      """
 
     case "/" =>
       # redirect example
@@ -134,5 +132,4 @@ select event from process into out;
 select event from process/app_error into out;
 
 # tremor runtime errors from the processing script
-# TODO naming here should be standardized to one thing (either err or error)
-select event from process/error into err;
+select event from process/err into err;

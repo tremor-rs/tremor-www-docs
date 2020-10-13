@@ -114,7 +114,7 @@ select event from rr/ws03 into bp03;
 select event from bp01 into out/ws01;
 select event from bp02 into out/ws02;
 select event from bp03 into out/ws03;
-select event from request_handling/error into err; # report error to its own port
+select event from request_handling/err into err; # report error to its own port
 ```
 
 With the `qos::roundrobin` and `qos::backpressure` we distribute the load evenly and
@@ -139,7 +139,7 @@ create script response_handling;
 
 select event from in into response_handling;
 select event from response_handling into out;
-select event from response_handling/error into err;
+select event from response_handling/err into err;
 ```
 
 Here we only set the `Via` response header.
@@ -165,9 +165,9 @@ binding:
         # error handling - send errors back to the http_in onramp
         "/pipeline/request_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
         "/pipeline/response_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
-        "/offramp/upstream01/{instance}/error": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream02/{instance}/error": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream03/{instance}/error": ["/pipeline/pass/{instance}/in"]
+        "/offramp/upstream01/{instance}/err": ["/pipeline/pass/{instance}/in"]
+        "/offramp/upstream02/{instance}/err": ["/pipeline/pass/{instance}/in"]
+        "/offramp/upstream03/{instance}/err": ["/pipeline/pass/{instance}/in"]
         "/pipeline/pass/{instance}/out": ["onramp/http_in/{instance}/in"]
 mapping:
   /binding/main/01:

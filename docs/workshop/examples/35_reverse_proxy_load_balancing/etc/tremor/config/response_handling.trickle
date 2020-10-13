@@ -16,4 +16,4 @@ create script response_handling;
 
 select event from in into response_handling;
 select event from response_handling into out;
-select event from response_handling/error into err;
+select event from response_handling/err into err;

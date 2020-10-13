@@ -27,11 +27,11 @@ binding:
       "/pipeline/pass_incoming/{instance}/out":
         ["/offramp/upstream/{instance}/in"]
 
-      "/offramp/upstream/{instance}/response":
+      "/offramp/upstream/{instance}/out":
         ["/pipeline/pass_outgoing/{instance}/in"]
 
       "/pipeline/pass_outgoing/{instance}/out":
-        ["/onramp/ws/{instance}/response"]
+        ["/onramp/ws/{instance}/in"]
         #"/offramp/system::stdout/system/in"
 
 mapping:

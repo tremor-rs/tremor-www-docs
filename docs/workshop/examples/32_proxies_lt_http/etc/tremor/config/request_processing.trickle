@@ -18,5 +18,4 @@ select event from in into process;
 select event from process into out;
 
 # tremor runtime errors from the processing script
-# TODO naming here should be standardized to one thing (either err or error)
-select event from process/error into err;
+select event from process/err into err;

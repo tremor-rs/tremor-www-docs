@@ -42,19 +42,19 @@ binding:
         "/pipeline/request_handling/{instance}/ws02": ["/offramp/upstream02/{instance}/in"]
         "/pipeline/request_handling/{instance}/ws03": ["/offramp/upstream03/{instance}/in"]
         # send responses from upstreams through the response handling pipeline
-        "/offramp/upstream01/{instance}/response": ["/pipeline/response_handling/{instance}/in"]
-        "/offramp/upstream02/{instance}/response": ["/pipeline/response_handling/{instance}/in"]
-        "/offramp/upstream03/{instance}/response": ["/pipeline/response_handling/{instance}/in"]
+        "/offramp/upstream01/{instance}/out": ["/pipeline/response_handling/{instance}/in"]
+        "/offramp/upstream02/{instance}/out": ["/pipeline/response_handling/{instance}/in"]
+        "/offramp/upstream03/{instance}/out": ["/pipeline/response_handling/{instance}/in"]
         # send responses back to the http_in onramp
-        "/pipeline/response_handling/{instance}/out": ["/onramp/http_in/{instance}/response"]
+        "/pipeline/response_handling/{instance}/out": ["/onramp/http_in/{instance}/in"]
         # error handling - send errors back to the http_in onramp
-        "/pipeline/request_handling/{instance}/err": ["/onramp/http_in/{instance}/response"]
-        "/pipeline/response_handling/{instance}/err": ["/onramp/http_in/{instance}/response"]
-        "/onramp/http_in/{instance}/error": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream01/{instance}/error": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream02/{instance}/error": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream03/{instance}/error": ["/pipeline/pass/{instance}/in"]
-        "/pipeline/pass/{instance}/out": ["onramp/http_in/{instance}/response"]
+        "/pipeline/request_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
+        "/pipeline/response_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
+        "/onramp/http_in/{instance}/err": ["/pipeline/pass/{instance}/in"]
+        "/offramp/upstream01/{instance}/err": ["/pipeline/pass/{instance}/in"]
+        "/offramp/upstream02/{instance}/err": ["/pipeline/pass/{instance}/in"]
+        "/offramp/upstream03/{instance}/err": ["/pipeline/pass/{instance}/in"]
+        "/pipeline/pass/{instance}/out": ["onramp/http_in/{instance}/in"]
 mapping:
   /binding/main/01:
     instance: "01"

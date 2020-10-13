@@ -44,7 +44,7 @@ offramp:
       codec: json
       config:
         endpoint: http://webserver02
-        method: POST # set a default method if no $request_method is set
+        method: POST # set a default method if no $request.method is set
     - id: upstream03
       type: rest
       linked: true
@@ -144,7 +144,7 @@ select event from response_handling/error into err;
 
 Here we only set the `Via` response header.
 
-Now the single bits need to be connected in order to complete the flow back and forth between client and upstream. When linking REST offramps and onramps together it is important to take care that any error that might happen on the way is reported back to the REST onramp `http_in` as otherwise clients would not receive any response. Luckily with Linked Transports we can connect all error outputs easily in our binding and thus will receive proper error messages as HTTP responses. 
+Now the single bits need to be connected in order to complete the flow back and forth between client and upstream. When linking REST offramps and onramps together it is important to take care that any error that might happen on the way is reported back to the REST onramp `http_in` as otherwise clients would not receive any response. Luckily with Linked Transports we can connect all error outputs easily in our binding and thus will receive proper error messages as HTTP responses.
 Again, we do it in `config.yaml`:
 
 ```yaml

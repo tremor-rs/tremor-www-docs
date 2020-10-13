@@ -12,7 +12,7 @@ services:
     volumes:
       - ../31_servers_lt_ws/etc/tremor:/etc/tremor:rw
       - ../31_servers_lt_ws/var/log:/var/log:rw
-  tremor-proxy:
+  tremor-bridge:
     image: tremorproject/tremor:latest
     depends_on:
       - tremor-server

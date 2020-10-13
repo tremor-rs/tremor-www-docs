@@ -278,7 +278,7 @@ onramp:
       port: 9000
 ```
 
-### rest ( alpha )
+### rest
 
 The rest onramp listens on a specified port for inbound RESTful ( http ) data, converting the http body as event data (and attaching other request attributes as event metadata).
 

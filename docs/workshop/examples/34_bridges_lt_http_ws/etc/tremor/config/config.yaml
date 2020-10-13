@@ -34,10 +34,10 @@ binding:
       # this works well as long as the passthrough pipeline is not used
       # by anything else (which is the case for this example)
       "/offramp/ws/{instance}/response":
-        ["/pipeline/system::passthrough/{instance}/in"]
+        ["/pipeline/response_processing/{instance}/in"]
 
       # send the ws repsonse back as a response to incoming
-      "/pipeline/system::passthrough/{instance}/out":
+      "/pipeline/response_processing/{instance}/out":
         ["/onramp/http/{instance}/response"]
         #"/offramp/system::stdout/system/in"
 
@@ -51,6 +51,10 @@ binding:
         ["/pipeline/internal_error_processing/{instance}/in"]
 
       "/offramp/ws/{instance}/error":
+        ["/pipeline/internal_error_processing/{instance}/in"]
+
+      # TODO naming here should be standardized to one thing (either err or error)
+      "/pipeline/response_processing/{instance}/err":
         ["/pipeline/internal_error_processing/{instance}/in"]
 
       # send back errors as response as well

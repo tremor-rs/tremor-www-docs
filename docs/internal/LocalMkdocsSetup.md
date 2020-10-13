@@ -18,8 +18,16 @@ brew install mkdocs
 pip3 install -r requirements.txt
 ```
 
-This installs the `mkdocs-material` theme which we use, as well as extensions that improve on the default
-mkdocs experience (eg: `mdx_truly_sane_lists` for supporting rendering of nested lists).
+This installs the `mkdocs-material` theme which we use, along with other dependencies.
+
+## Generate mkdocs configuration
+
+```
+make
+```
+
+This auto-generates the doc files for tremor stdlib and cli, and also produces the default config file for
+mkdocs (`mkdocs.yml`) file at the end (with the right navigation references to the generated stdlib docs).
 
 ## Build documentation
 

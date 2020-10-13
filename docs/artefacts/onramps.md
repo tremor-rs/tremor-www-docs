@@ -298,23 +298,23 @@ The rest onramp respects the HTTP [Content-Type header](https://developer.mozill
 Set metadata variables:
 
 - `$request` - A record capturing the HTTP request attributes. Available fields within:
-  - `url` - A record with the following standard URL fields (all are string-valued, except numeric port):
-    - `scheme`
-    - `username`
-    - `password`
-    - `host`
-    - `port`
-    - `path`
-    - `query`
-    - `fragment`
-  - `method` - HTTP method used by the incoming request
-  - `headers` - A record that maps header name (string) to values (array of strings)
+    - `url` - A record with the following standard URL fields (all are string-valued, except numeric port):
+        - `scheme`
+        - `username`
+        - `password`
+        - `host`
+        - `port`
+        - `path`
+        - `query`
+        - `fragment`
+    - `method` - HTTP method used by the incoming request
+    - `headers` - A record that maps header name (string) to values (array of strings)
 
 Used metadata variables (for reply with linked transports):
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
-  - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
-  - `headers` - A record that maps header name (string) to value (string) (optional)
+    - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
+    - `headers` - A record that maps header name (string) to value (string) (optional)
 
 When not used as a linked onramp, the status code returned with the response is `202`.
 

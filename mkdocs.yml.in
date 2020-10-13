@@ -19,7 +19,6 @@ extra:
 markdown_extensions:
   - admonition
   - codehilite
-  - mdx_truly_sane_lists
   - pymdownx.details
   - pymdownx.superfences
   - toc:

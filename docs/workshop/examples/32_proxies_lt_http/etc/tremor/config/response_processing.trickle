@@ -2,14 +2,11 @@ define script process
 script
   use std::array;
 
-  let $response_headers.x-powered-by = match $response_headers of
-    # TODO standardize on string type for header values (even with multiple entries)?
-    case %{x-powered-by ~= %[]}  =>
-      array::push($response_headers.x-powered-by, "Tremor (As Proxy)")
+  let $response.headers.x-powered-by = match $response.headers of
     case %{present x-powered-by}  =>
-      let $response_headers.x-powered-by = [ $response_headers.x-powered-by, "Tremor (As Proxy)" ]
+      let $response.headers.x-powered-by = "{$response.headers.x-powered-by}, Tremor (As Proxy)"
     default =>
-      let $response_headers.x-powered-by = [ "Tremor (As Proxy)" ]
+      let $response.headers.x-powered-by = [ "Tremor (As Proxy)" ]
   end;
 
   # TODO add upstream url to the response as well

@@ -1,25 +1,14 @@
 define script process
 script
-  # TODO if we provide parsed url parts as meta variables, this logic will be
-  # simpler here (just need check $request.path)
-  #
-  # also, if we provide configuration of supported rest onramp endpoints as
+  # TODO if we provide configuration of supported rest onramp paths as
   # part of the onramp config itself (optionally), we won't need this processing here
-  match {"test": $request_url} of
-    case r = %{test ~= dissect|%{scheme}://%{host}/%{path_and_rest}|} =>
-      match r.test.path_and_rest of
-        # only pass requests to /bridge
-        case "bridge" =>
-          null
-        default =>
-          emit {
-            "error": "Unsupported url path: {r.test.path_and_rest}",
-            "event": event
-          } => "error"
-      end
+  match $request.url.path of
+    # only pass requests to /bridge
+    case "/bridge" =>
+      null
     default =>
       emit {
-        "error": "Failed to parse url: {$request_url}",
+        "error": "Unsupported url path: {$request.url.path}",
         "event": event
       } => "error"
   end;

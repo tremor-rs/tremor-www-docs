@@ -203,4 +203,4 @@ Participate in the [RFC process](https://github.com/tremor-rs/tremor-rfcs).
 
 [tremor-chat]: #tremor-chat
 
-Join the tremor community [slack](https://join.slack.com/t/tremor-debs/shared_invite/enQtOTMxNzY3NDg0MjI2LTQ4MTU4NjlkZDk0MmJmNmIwYjU0ZDc1OTNjMGRmNzUwZTdlZGVkMWFmNGFkZTAwOWJlYjlkMDZkNGNiMjQ2NzI)
+Join the tremor community [slack](https://cloud-native.slack.com/messages/tremor)

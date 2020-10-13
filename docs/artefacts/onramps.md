@@ -27,7 +27,7 @@ The [`codec`](codecs.md) field is optional and if not provided will use onramps 
 
 The `config` contains a map (key-value pairs) specific to the onramp type.
 
-## Delicery Properties
+## Delivery Properties
 
 Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:
 
@@ -297,14 +297,24 @@ The rest onramp respects the HTTP [Content-Type header](https://developer.mozill
 
 Set metadata variables:
 
-- `$request_url` - Full URL string for the incoming request
-- `$request_method` - HTTP method used by the incoming request
-- `$request_headers` - Map of header name (string) to values (array of strings)
+- `$request` - A record capturing the HTTP request attributes. Available fields within:
+  - `url` - A record with the following standard URL fields (all are string-valued, except numeric port):
+    - `scheme`
+    - `username`
+    - `password`
+    - `host`
+    - `port`
+    - `path`
+    - `query`
+    - `fragment`
+  - `method` - HTTP method used by the incoming request
+  - `headers` - A record that maps header name (string) to values (array of strings)
 
 Used metadata variables (for reply with linked transports):
 
-- `$response_status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
-- `$response_headers` - A map of headers to set for the requests, where both sides need to be strings. (optional)
+- `$response` - A record capturing the HTTP response attributes. Available fields within:
+  - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
+  - `headers` - A record that maps header name (string) to value (string) (optional)
 
 When not used as a linked onramp, the status code returned with the response is `202`.
 
@@ -321,8 +331,6 @@ onramp:
       host: "localhost"
       port: 9000
 ```
-
-TODO add link to linked transport usage example with examples of the metadata vars too
 
 Known limitations:
 

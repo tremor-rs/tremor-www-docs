@@ -314,7 +314,7 @@ Set metadata variables:
 
 Used metadata variables:
 
-These variables can be used to dynamically change how responses are handled when using this onramp as linked transport:
+> These variables can be used to dynamically change how responses are handled when using this onramp as linked transport:
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
     - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)

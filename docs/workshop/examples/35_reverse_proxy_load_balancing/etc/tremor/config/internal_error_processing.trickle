@@ -21,4 +21,4 @@ select event from process into out;
 
 # tremor runtime errors from the error processing script itself
 # turtles all the way down
-select event from process/err into out;
+select event from process/err into err;

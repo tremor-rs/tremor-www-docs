@@ -191,7 +191,7 @@ Supported configuration options are:
 
 Used metadata variables:
 
-Setting these metadata variables here allows users to dynamically change the behaviour of the REST offramp:
+> Setting these metadata variables here allows users to dynamically change the behaviour of the REST offramp:
 
 - `$endpoint` - same format as config `endpoint` (optional. overrides related config param when present)
 - `$request` - A record capturing the HTTP request attributes. Available fields within:
@@ -206,7 +206,7 @@ When used as [Linked Transport](../operations/linked-transports.md) the same han
 
 Set metadata variables:
 
-These metadata variables are used for HTTP response events emitted through the `OUT` port:
+> These metadata variables are used for HTTP response events emitted through the `OUT` port:
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
     - `status` - Numeric HTTP status code

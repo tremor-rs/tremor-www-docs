@@ -1,11 +1,10 @@
-# Server Applications
+## Websocket Server
 
-Based on linked transport.
-
-FIXME add details
-
-## Websocket Echo Server
+TODO add details
 
 ```sh
 docker-compose up
 ```
+
+Raw setup available at:
+https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/31_servers_lt_ws

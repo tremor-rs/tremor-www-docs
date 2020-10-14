@@ -1,11 +1,10 @@
-# Proxy Applications
+# HTTP Proxy
 
-Based on linked transport.
-
-FIXME add details
-
-## HTTP Proxy Server
+TODO add details
 
 ```sh
 docker-compose up
 ```
+
+Raw setup available at:
+https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/32_proxies_lt_http

@@ -25,6 +25,8 @@ onramp:
     preprocessors:
       # events are delimited by new line
       - lines
+    postprocessors:
+      - lines
     config:
       host: localhost
       port: 8139

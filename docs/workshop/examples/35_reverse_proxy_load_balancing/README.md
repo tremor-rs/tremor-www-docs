@@ -3,13 +3,13 @@
 This example shows how to setup tremor as a reverse proxy for HTTP/1.1 that
 load balances between multiple upstream servers in a round-robin fashion.
 
-We are going to make use of the new [linked transport]()  and [Quality of Service]() features in tremor *0.9*.
+We are going to make use of the new [linked transport](../../../operations/linked-transports.md) and *Quality of Service* features in tremor *0.9*.
 
 ## Setting up multiple web-servers for testing purposes
 
 We use the server behind `https://httpbin.org` to have three endpoints ready to proxy to and to inspect what we sent vs. what the upstream servers received.
 
-The upstreams in a docker-compose and sta
+Three httpbin servers are set up in the accompagnying `docker-compose.yml`.
 
 ## Setting up Tremor as a reverse proxy
 
@@ -27,7 +27,7 @@ onramp:
         port: 65535
 ```
 
-To forward received requests to the httpbin upstream servers a [REST offramp](../../../artefacts/offramps.md#rest) needs to be configured in `config.yaml` to point at it:
+To forward received requests to the httpbin upstream servers a [REST offramp](../../../artefacts/offramps.md#rest) needs to be configured in `config.yaml` to point at each of it:
 
 ```yaml
 offramp:
@@ -120,7 +120,7 @@ select event from request_handling/err into err; # report error to its own port
 With the `qos::roundrobin` and `qos::backpressure` we distribute the load evenly and
 back off if a server is overloaded or events continue to fail (result in HTTP status coded >= 400 or are unable to establish a connection etc.).
 
-But this is only half a proxy without response handling getting back from the offramp, which is implemented in the following pipeline:
+But this is only half a proxy without response handling getting back from the offramp, which is only now possible with the dawn of [linked transports](../../../operations/linked-transports.md). Handling the responses coming back from the upstreams is implemented in the following pipeline:
 
 ```trickle
 define script response_handling
@@ -144,7 +144,7 @@ select event from response_handling/err into err;
 
 Here we only set the `Via` response header.
 
-Now the single bits need to be connected in order to complete the flow back and forth between client and upstream. When linking REST offramps and onramps together it is important to take care that any error that might happen on the way is reported back to the REST onramp `http_in` as otherwise clients would not receive any response. Luckily with Linked Transports we can connect all error outputs easily in our binding and thus will receive proper error messages as HTTP responses.
+Now the single bits need to be connected in order to complete the flow back and forth between client and upstream. When linking [REST offramps](../../../artefacts/offramps.md#rest) and [onramps](../../../artefacts/onramps.md#rest) together it is important to take care that any error that might happen on the way is reported back to the REST onramp `http_in` as otherwise clients would not receive any response. Luckily with Linked Transports we can connect all error outputs easily in our binding and thus will receive proper error messages as HTTP responses.
 Again, we do it in `config.yaml`:
 
 ```yaml
@@ -165,16 +165,20 @@ binding:
         # error handling - send errors back to the http_in onramp
         "/pipeline/request_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
         "/pipeline/response_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
-        "/offramp/upstream01/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream02/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream03/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/pipeline/pass/{instance}/out": ["onramp/http_in/{instance}/in"]
+        "/offramp/upstream01/{instance}/err": ["/pipeline/internal_error_processing/{instance}/in"]
+        "/offramp/upstream02/{instance}/err": ["/pipeline/internal_error_processing/{instance}/in"]
+        "/offramp/upstream03/{instance}/err": ["/pipeline/internal_error_processing/{instance}/in"]
+        "/pipeline/internal_error_processing/{instance}/out": ["onramp/http_in/{instance}/in"]
+        "/pipeline/internal_error_processing/{instance}/err": ["onramp/http_in/{instance}/in"]
 mapping:
   /binding/main/01:
     instance: "01"
 ```
 
 ## Start the Reverse Proxy and test it
+
+We set up 3 upstream servers and tremor itself in the `docker-compose.yml`.
+Starting them is straight-forward:
 
 ```bash
 $ docker compose up

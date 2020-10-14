@@ -280,7 +280,7 @@ onramp:
 
 ### rest
 
-The rest onramp listens on a specified port for inbound RESTful ( http ) data, converting the http body as event data (and attaching other request attributes as event metadata).
+The rest onramp listens on a specified port for inbound RESTful ( http ) data, treating the decoded and preprocessed http body as event data (and attaching other request attributes as event metadata).
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
 
@@ -295,22 +295,26 @@ Supported configuration options are:
 
 The rest onramp respects the HTTP [Content-Type header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) and will use it to decode the request body when it's present (otherwise it defaults to using the codec specified in the onramp config).
 
+Tremor supports a limited set of builtin codecs used for well known MIME types (e.g. `application/json`, `application/yaml`, `text/plain`). In order to customize how certain `Content-Type`s are handled, provide a `codec_map` providing a mapping from MIME type to Tremor codec in the top level artifact config (where the `codec` is set).
+
 Set metadata variables:
 
 - `$request` - A record capturing the HTTP request attributes. Available fields within:
-    - `url` - A record with the following standard URL fields (all are string-valued, except numeric port):
-        - `scheme`
-        - `username`
-        - `password`
-        - `host`
-        - `port`
-        - `path`
-        - `query`
-        - `fragment`
+    - `url` - A record with the following standard URL fields (optional fields might not be present):
+        - `scheme` - String, typically `http`
+        - `username` - String, optional
+        - `password` - String, optional
+        - `host` - String
+        - `port` - number, optional, absence means `80`
+        - `path` - String
+        - `query` - String, optional
+        - `fragment` - String, optional
     - `method` - HTTP method used by the incoming request
-    - `headers` - A record that maps header name (string) to values (array of strings)
+    - `headers` - A record that maps header name (lowercase string) to values (array of strings)
 
-Used metadata variables (for reply with linked transports):
+Used metadata variables:
+
+These variables can be used to dynamically change how responses are handled when using this onramp as linked transport:
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
     - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
@@ -327,6 +331,8 @@ onramp:
     preprocessors:
       - lines
     codec: json
+    codec_map:
+      "text/html": "string"
     config:
       host: "localhost"
       port: 9000

@@ -51,10 +51,11 @@ binding:
         "/pipeline/request_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
         "/pipeline/response_handling/{instance}/err": ["/onramp/http_in/{instance}/in"]
         "/onramp/http_in/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream01/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream02/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/offramp/upstream03/{instance}/err": ["/pipeline/pass/{instance}/in"]
-        "/pipeline/pass/{instance}/out": ["onramp/http_in/{instance}/in"]
+        "/offramp/upstream01/{instance}/err": ["/pipeline/internal_error_handling/{instance}/in"]
+        "/offramp/upstream02/{instance}/err": ["/pipeline/internal_error_handling/{instance}/in"]
+        "/offramp/upstream03/{instance}/err": ["/pipeline/internal_error_handling/{instance}/in"]
+        "/pipeline/internal_error_handling/{instance}/out": ["onramp/http_in/{instance}/in"]
+        "/pipeline/internal_error_handling/{instance}/err": ["onramp/http_in/{instance}/in"]
 mapping:
   /binding/main/01:
     instance: "01"

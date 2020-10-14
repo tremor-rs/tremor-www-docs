@@ -1,13 +1,10 @@
-# Server Applications
+# HTTP Server
 
-Based on linked transport.
-
-FIXME add details
-
-## HTTP Server
+TODO add details
 
 ```sh
 docker-compose up
 ```
 
-FIXME add simpler server as part of the LT explanatory doc
+Raw setup available at:
+https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/30_servers_lt_http

@@ -70,17 +70,9 @@ nav:
     - Codecs: artefacts/codecs.md
     - Onramps: artefacts/onramps.md
     - Offramps: artefacts/offramps.md
-  - Development:
-    - 'Quick Start Guide': development/quick-start.md
-    - Profiling: development/profiling.md
-    - 'Debugging with LLDB': development/debugging.md
-    - Benchmarking:
-      - Overview: development/benchmarking.md
-      - Logstash: development/benchmarks/LogstashBenchmark.md
-    - Testing: development/testing.md
-    - Investigation: development/issue-investigation.md
   - API: api.md
   - History: history.md
+  - Glossary: Glossary.md
   - Workshops:
     - Basic examples:
       - Passthrough: workshop/examples/00_passthrough/README.md
@@ -103,7 +95,15 @@ nav:
       - WS Proxy: workshop/examples/33_proxies_lt_ws/README.md
       - HTTP/WS Bridge: workshop/examples/34_bridges_lt_http_ws/README.md
       - HTTP Load Balancing: workshop/examples/35_reverse_proxy_load_balancing/README.md
-  - Glossary: Glossary.md
+  - Development:
+    - 'Quick Start Guide': development/quick-start.md
+    - Profiling: development/profiling.md
+    - 'Debugging with LLDB': development/debugging.md
+    - Benchmarking:
+      - Overview: development/benchmarking.md
+      - Logstash: development/benchmarks/LogstashBenchmark.md
+    - Testing: development/testing.md
+    - Investigation: development/issue-investigation.md
   - Governance:
     - 'Code of Conduct': CodeOfConduct.md
     - 'Contributing': Contributing.md

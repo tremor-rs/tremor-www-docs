@@ -13,6 +13,10 @@ Three httpbin servers are set up in the accompagnying `docker-compose.yml`.
 
 ## Setting up Tremor as a reverse proxy
 
+!!! tip
+    All the code here is available in the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/35_reverse_proxy_load_balancing) as well.
+
+
 To issue incoming HTTP requests to an upstream HTTP server
 a [REST onramp](../../../artefacts/onramps.md#rest) needs to be configured in `config.yaml` to listen on a port of our choice:
 

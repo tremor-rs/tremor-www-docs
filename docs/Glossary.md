@@ -27,3 +27,4 @@ A set of terms in common or standardised usage by the tremor project and/or team
 |CB, Circuit-breaker|A mechanism that can react to failure in sources and sinks in a robust and recoverable way|
 |GD, Guaranteed delivery|A mechanism that guarantees that events that reach a pipeline are processed to completion. Depending on the source/sink this may extend end-to-end|
 |End to end GD|A configuration of GD whereby the primary sources and sinks for a use case are guaranteed not to lose messages during normal processing conditions|
+|LT, Linked transports|A mechanism that allows linking of source and sink nature into one ramp artefact|

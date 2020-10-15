@@ -83,7 +83,7 @@ Running the example via the tremor cli as follows:
 $ tremor server run -f etc/tremor/config/*
 ```
 
-# Insights
+## Insights
 
 If the tremor process restarts we pick up and re-send events that have not been acknowledged by the ws offramp and then carry on with new events coming from the metronome:
 

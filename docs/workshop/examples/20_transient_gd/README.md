@@ -83,7 +83,7 @@ Running the example via the tremor client as follows:
 $ tremor server run -f etc/tremor/config/*
 ```
 
-# Insights
+## Insights
 
 If the tremor process restarts we sequence from the beginning.
 

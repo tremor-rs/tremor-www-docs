@@ -90,10 +90,10 @@ nav:
       - Kafka: workshop/examples/23_kafka_gd/README.md
     - Linked Ramps:
       - HTTP Server: workshop/examples/30_servers_lt_http/README.md
-      - WS Server: workshop/examples/31_servers_lt_ws/README.md
+      - Websocket Server: workshop/examples/31_servers_lt_ws/README.md
       - HTTP Proxy: workshop/examples/32_proxies_lt_http/README.md
-      - WS Proxy: workshop/examples/33_proxies_lt_ws/README.md
-      - HTTP/WS Bridge: workshop/examples/34_bridges_lt_http_ws/README.md
+      - Websocket Proxy: workshop/examples/33_proxies_lt_ws/README.md
+      - HTTP -> WS Bridge: workshop/examples/34_bridges_lt_http_ws/README.md
       - HTTP Load Balancing: workshop/examples/35_reverse_proxy_load_balancing/README.md
   - Development:
     - 'Quick Start Guide': development/quick-start.md

@@ -33,7 +33,6 @@ binding:
       # process upstream response and send it back as a response to incoming
       "/pipeline/response_processing/{instance}/out":
         ["/onramp/http/{instance}/in"]
-        #"/offramp/system::stdout/system/in"
 
   - id: error
     links:

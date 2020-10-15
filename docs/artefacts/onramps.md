@@ -18,7 +18,14 @@ onramp:
       - <preprocessor 1>
       - <preprocessor 2>
       - ...
+    postprocessors: # only for linked transport, can be omitted
+      - <postprocessor 1>
+      - <postprocessor 2>
+      - ...
+    linked: <true or false> # enable linked transport, default: false
     codec: <codec of the data>
+    codec_map:
+      "<mime-type>": <coded handling events of this mime-type>
     config:
       <key>: <value>
 ```

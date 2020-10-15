@@ -11,6 +11,17 @@ offramp:
   - id: <unique offramp id>
     type: <offramp name>
     codec: <codec of the data>
+    postprocessors: # can be omitted
+      - <postprocessor 1>
+      - <postprocessor 2>
+      - ...
+    preprocessors: # only for linked transport, can be omitted
+      - <preprocessor 1>
+      - <preprocessor 2>
+      - ...
+    linked: <true or false> # enable linked transport, default: false
+    codec_map:
+      "<mime-type>": "<codec handling the given mime-type>"
     config:
       <key>: <value>
 ```

@@ -7,7 +7,7 @@ Example HTTP server application built on top of Tremor and meant to be a demonst
 !!! tip
     All the code here is available in the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/30_servers_lt_http) as well.
 
-### Onramp
+### Sources
 
 We configure a rest onramp listening on port 8139:
 
@@ -24,7 +24,7 @@ onramp:
 
 ### Request flow
 
-The incoming requests here are directed to the pipeline named [request_processing](etc/tremor/config/request_processing.trickle) pipeline, and the output of the pipeline is fed back again to the onramp -- this now becomes the server response to the incoming request.
+Incoming requests from clients are directed to the pipeline named [request_processing](etc/tremor/config/request_processing.trickle) pipeline, and the output of the pipeline is fed back again to the onramp -- this now becomes the server response to the incoming request.
 
 ```yaml
 binding:
@@ -115,7 +115,7 @@ Of special interest is the binding specific for error handling -- we make sure t
 
 ## Testing
 
-Assuming you have all the code from the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/30_servers_lt_http), run the following to start our server application:
+Assuming you have all the code from the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/30_servers_lt_http), run the following to start our application:
 
 ```sh
 docker-compose up

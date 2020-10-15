@@ -32,7 +32,6 @@ binding:
 
       "/pipeline/pass_outgoing/{instance}/out":
         ["/onramp/ws/{instance}/in"]
-        #"/offramp/system::stdout/system/in"
 
 mapping:
   /binding/main/01:

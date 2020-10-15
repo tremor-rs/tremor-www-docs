@@ -89,14 +89,14 @@ def print_subcommand(p, c):
 with open(sys.argv[1], 'r') as stream:
     try:
         y = yaml.safe_load(stream)
-        print(f"# Tremor tool v{y['version']}")
+        print(f"# Tremor cli v{y['version']}")
         print()
         print(y['about'])
         print()
         print("""
 ## Scope
 
-This document summarises tremor tool commands
+This document summarises the `tremor` cli commands.
 
 ## Audience
 

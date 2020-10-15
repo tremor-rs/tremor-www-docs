@@ -107,14 +107,26 @@ Example:
 onramp:
   - id: udp
     type: udp
+    codec: json
+    config:
+      host: "127.0.0.1"
+      port: 9000
+```
+
+#### udp onramp example for [GELF](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-via-udp)
+
+```yaml
+onramp:
+  - id: gelf-udp
+    type: udp
     preprocessors:
       - decompress
       - gelf-chunking
       - decompress
     codec: json
     config:
-      port: 12201
       host: "127.0.0.1"
+      port: 12201
 ```
 
 ### file
@@ -274,8 +286,22 @@ onramp:
       - lines
     codec: json
     config:
-      host: "localhost"
+      host: "127.0.0.1"
       port: 9000
+```
+
+#### tcp onramp example for [GELF](https://docs.graylog.org/en/latest/pages/gelf.html#gelf-via-tcp)
+
+```yaml
+onramp:
+  - id: gelf-tcp
+    type: tcp
+    preprocessors:
+      - lines-null
+    codec: json
+    config:
+      host: "127.0.0.1"
+      port: 12201
 ```
 
 ### rest

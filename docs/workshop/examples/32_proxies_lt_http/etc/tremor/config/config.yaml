@@ -51,12 +51,10 @@ binding:
       # send back errors as response as well
       "/pipeline/internal_error_processing/{instance}/out":
         ["/onramp/http/{instance}/in"]
-        #"/offramp/system::stderr/system/in"
 
       # respond on errors during error processing too
       "/pipeline/internal_error_processing/{instance}/err":
         ["/onramp/http/{instance}/in"]
-        #"/offramp/system::stderr/system/in"
 
 mapping:
   /binding/main/01:

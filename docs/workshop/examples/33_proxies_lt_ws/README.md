@@ -38,11 +38,12 @@ offramp:
 
 Incoming websocket messages from a client's websocket connection are forwarded to the upstream websocket server (via the `pass_incoming` pipeline which just lives up to its name). The resulting upstream reply is then returned back to the client reusing its connection (after a quick pass through the `pass_outgoing` pipeline).
 
-```
+```yaml
 binding:
   - id: main
     links:
-      "/onramp/ws/{instance}/out": ["/pipeline/pass_incoming/{instance}/in"]
+      "/onramp/ws/{instance}/out":
+        ["/pipeline/pass_incoming/{instance}/in"]
 
       "/pipeline/pass_incoming/{instance}/out":
         ["/offramp/upstream/{instance}/in"]
@@ -92,4 +93,21 @@ Our special snot-handling works as well:
 ```sh
 $ echo "snot" | websocat -n1 ws://localhost:9139
 badger
+```
+
+And if there's an internal tremor error while processing both the incoming message and the upstream reply to it (eg: codec or pre/post-processor failure), or if the upstream server is just down, an error will be bubbled up to the client. Example:
+
+```sh
+# stop the upstream server
+$ docker stop 33_proxies_lt_ws_tremor-server_1
+
+# upstream connection now gets closed from the proxy
+$ echo "hello" | websocat -n1 ws://localhost:9139
+{"error":"Error receiving reply from server ws://localhost:8139: WebSocket protocol error: Connection reset without closing handshake","event_id":"
+1: 2"}
+
+# sending further messages results in errors
+$ echo "hello" | websocat -n1 ws://localhost:9139
+$ echo "hello" | websocat -n1 ws://localhost:9139
+{"error":"Error sending event to server ws://localhost:8139: Trying to work with closed connection","event_id":"1: 3"}
 ```

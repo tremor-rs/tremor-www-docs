@@ -27,13 +27,12 @@ We configure a websocket onramp listening on port 8139:
 
 Incoming websocket messages from a client's websocket connection are sent to the pipeline `echo` and the output of it is sent back again from the same connection.
 
-```
+```yaml
 binding:
   - id: main
     links:
       "/onramp/ws/{instance}/out": ["/pipeline/echo/{instance}/in"]
       "/pipeline/echo/{instance}/out": ["/onramp/ws/{instance}/in"]
-      "/pipeline/echo/{instance}/err": ["/offramp/system::stderr/system/in"]
 ```
 
 ### Processing logic
@@ -85,4 +84,12 @@ snot
 badger
 goodbye
 goodbye
+```
+
+If there's internal tremor error while processing the incoming message (eg: codec or preprocessor failure), the error should be bubbled up to the client. To test this out, change the codec in the [onramp configuration](etc/tremor/config/config.yaml) to be `json` from `string` and send an invalid json input:
+
+```sh
+# after changing the onramp codec to json
+$ echo "{" | websocat -n1 ws://localhost:8139
+{"error":"[Codec] Syntax at character 0 ('{')","event_id":1,"source_id":"tremor://localhost/onramp/ws/01/in"}
 ```

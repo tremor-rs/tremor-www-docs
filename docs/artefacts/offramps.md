@@ -469,3 +469,27 @@ offramp:
   - id: terminate
     type: exit
 ```
+
+### newrelic
+
+Send events to [New Relic](https://newrelic.com/) platform, using it's log apis (variable by region).
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration options are:
+
+- `license_key` - New Relic's license (or insert only) key
+- `compress_logs` - Whther logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
+- `region` - Region to use to send logs. Available choices: usa, europe (default: usa)
+
+Example:
+
+```yaml
+offramp:
+  - id: newrelic
+    type: newrelic
+    config:
+      license_key: keystring
+      compress_logs: true
+      region: europe
+```

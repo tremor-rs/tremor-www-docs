@@ -57,10 +57,8 @@ binding:
         ["/onramp/http/{instance}/in"]
 
       # respond on errors during error processing too
-      "/pipeline/internal_error_processing/{instance}/err": [
-        "/onramp/http/{instance}/in",
-        "/offramp/system::stderr/system/in"
-      ]
+      "/pipeline/internal_error_processing/{instance}/err":
+        ["/onramp/http/{instance}/in", "/offramp/system::stderr/system/in"]
 
 mapping:
   /binding/main/01:

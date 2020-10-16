@@ -15,14 +15,16 @@ appenders:
 
 # Write only warnings to stdout
 root:
-  level: trace
+  level: info
   appenders:
+    - file
     - stdout
 
 loggers:
   # Write info level logs to the log file
   tremor_runtime:
-    level: trace
+    level: info
     appenders:
       - file
+      - stdout
     additive: false

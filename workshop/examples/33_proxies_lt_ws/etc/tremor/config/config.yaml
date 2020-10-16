@@ -1,0 +1,53 @@
+onramp:
+  - id: ws
+    type: ws
+    linked: true
+    codec: string
+    preprocessors:
+      - lines
+    config:
+      host: 0.0.0.0
+      port: 9139
+
+offramp:
+  - id: upstream
+    type: ws
+    linked: true
+    codec: string
+    postprocessors:
+      - lines
+    config:
+      url: "ws://tremor-server:8139"
+
+binding:
+  - id: main
+    links:
+      "/onramp/ws/{instance}/out":
+        ["/pipeline/pass_incoming/{instance}/in"]
+
+      "/pipeline/pass_incoming/{instance}/out":
+        ["/offramp/upstream/{instance}/in"]
+
+      "/offramp/upstream/{instance}/out":
+        ["/pipeline/pass_outgoing/{instance}/in"]
+
+      "/pipeline/pass_outgoing/{instance}/out":
+        ["/onramp/ws/{instance}/in"]
+
+  - id: error
+    links:
+      "/onramp/ws/{instance}/err":
+        ["/pipeline/pass_errors/{instance}/in"]
+
+      "/offramp/upstream/{instance}/err":
+        ["/pipeline/pass_errors/{instance}/in"]
+
+      # send back errors as reply as well
+      "/pipeline/pass_errors/{instance}/out":
+        ["/onramp/ws/{instance}/in"]
+
+mapping:
+  /binding/main/01:
+    instance: "01"
+  /binding/error/01:
+    instance: "01"

@@ -1,0 +1,135 @@
+define script process
+script
+  use std::array;
+  use std::json;
+  use std::type;
+
+  use utils;
+
+  let VALID_METHODS = ["GET", "POST"];
+
+  # defaults for the server response
+  let $response = {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-powered-by": "Tremor",
+    }
+  };
+
+  # count no of requests so far (using the pipeline state mechanism)
+  match type::is_null(state) of
+    case true =>
+      let state = {"count": 1}
+    default =>
+      let state.count = state.count + 1
+  end;
+
+  # --------------------------------------------------------------------------
+
+  # short-circuit if $request is absent
+  match absent $request of
+    case true =>
+      let $response.status = 500,
+      emit {
+        "error": "No request metadata available",
+        "event": event,
+      } => "app_error"
+    default =>
+      null
+  end;
+
+  # short-circuit for invalid request methods
+  match array::contains(VALID_METHODS, $request.method) of
+    case false  =>
+      let $response.status = 501,
+
+      # can also name the emit port here "error" and handle
+      # it same as runtime errors (which goes to "error" port too)
+      # or even emit to the default port ("out"). approach here
+      # is useful to track application errors though.
+      emit {
+        "error": "Method not implemented: {$request.method}",
+        "event": event,
+      } => "app_error"
+    default =>
+      null
+  end;
+
+  # --------------------------------------------------------------------------
+
+  # content based on path
+  match $request.url.path of
+    case "/echo" =>
+      emit {
+        "body": event,
+        "meta": $request,
+      }
+
+    case "/snot" =>
+      emit "badger"
+
+    case "/ping" =>
+      emit ""
+
+    case "/stats" =>
+      emit {"requests_processed": state.count}
+
+    case "/error-test" =>
+      emit non_existent_var # will throw a runtime error here
+
+    case "/index" =>
+      let request_data = {
+        "body": event,
+        "meta": $request,
+      },
+
+      # determine the name to greet
+      let name = match $request.url of
+        case %{present query} =>
+          let query_parsed = utils::parse_query($request.url.query),
+          let request_data.url_query_parsed = query_parsed,
+          match query_parsed of
+            case %{present name} => query_parsed.name
+            default => "world"
+          end
+        default => "world"
+      end,
+
+      # serve html!
+      let $response.headers["content-type"] = "text/html",
+      emit """
+      <h1>Hello, {name}!</h1>
+      <p>Your request:</p>
+      <pre>
+        {json::encode_pretty(request_data)}
+      </pre>
+      """
+
+    case "/" =>
+      # redirect example
+      let $response.status = 301,
+      let $response.headers["location"] = "/index",
+      emit ""
+
+    default =>
+      let $response.status = 404,
+      emit {
+        "error": "Path not found: {$request.url.path}",
+        "event": event,
+      } => "app_error"
+  end;
+end;
+
+create script process;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+# our defined app errors (still succesful processing from tremor's perspective)
+# useful to track these from different port (app_error) for metrics
+select event from process/app_error into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

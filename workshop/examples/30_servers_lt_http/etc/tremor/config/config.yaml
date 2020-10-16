@@ -1,0 +1,40 @@
+onramp:
+  - id: http
+    type: rest
+    linked: true
+    codec: string
+    config:
+      host: 0.0.0.0
+      port: 8139
+
+binding:
+  - id: main
+    links:
+      "/onramp/http/{instance}/out":
+        ["/pipeline/request_processing/{instance}/in"]
+
+      # process incoming requests and send back the response
+      "/pipeline/request_processing/{instance}/out":
+        ["/onramp/http/{instance}/in"]
+
+  - id: error
+    links:
+      "/onramp/http/{instance}/err":
+        ["/pipeline/internal_error_processing/{instance}/in"]
+
+      "/pipeline/request_processing/{instance}/err":
+        ["/pipeline/internal_error_processing/{instance}/in"]
+
+      # send back errors as response as well
+      "/pipeline/internal_error_processing/{instance}/out":
+        ["/onramp/http/{instance}/in"]
+
+      # respond on errors during error processing too
+      "/pipeline/internal_error_processing/{instance}/err":
+        ["/onramp/http/{instance}/in"]
+
+mapping:
+  /binding/main/01:
+    instance: "01"
+  /binding/error/01:
+    instance: "01"

@@ -1,0 +1,29 @@
+onramp:
+  - id: ws
+    type: ws
+    linked: true
+    codec: string
+    preprocessors:
+      - lines
+    config:
+      host: 0.0.0.0
+      port: 8139
+
+binding:
+  - id: main
+    links:
+      "/onramp/ws/{instance}/out": ["/pipeline/echo/{instance}/in"]
+      "/pipeline/echo/{instance}/out": ["/onramp/ws/{instance}/in"]
+
+  - id: error
+    links:
+      # send back errors as reply as well
+      "/onramp/ws/{instance}/err": ["/pipeline/system::passthrough/system/in"]
+      "/pipeline/echo/{instance}/err": ["/pipeline/system::passthrough/system/in"]
+      "/pipeline/system::passthrough/system/out": ["/onramp/ws/{instance}/in"]
+
+mapping:
+  /binding/main/01:
+    instance: "01"
+  /binding/error/01:
+    instance: "01"

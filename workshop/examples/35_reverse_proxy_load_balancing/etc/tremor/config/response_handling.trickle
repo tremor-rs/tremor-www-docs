@@ -1,0 +1,19 @@
+define script response_handling
+script
+use tremor::system;
+    # see: https://tools.ietf.org/html/rfc7230#section-5.7.1
+    let via_value = "1.1 {system::hostname()}/tremor";
+    match $response.headers of
+        case %{ present via } =>
+            let $response.headers.via = [$response.headers.via, via_value]
+        default =>
+            let $response.headers.via = via_value
+    end;
+    event;
+end;
+
+create script response_handling;
+
+select event from in into response_handling;
+select event from response_handling into out;
+select event from response_handling/err into err;

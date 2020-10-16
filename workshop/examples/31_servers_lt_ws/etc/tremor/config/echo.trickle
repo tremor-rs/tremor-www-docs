@@ -1,0 +1,17 @@
+define script process
+script
+  match event of
+    # snot is a special snowflake
+    case "snot" => "badger"
+    default => event
+  end
+end;
+
+create script process;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

@@ -1,0 +1,24 @@
+define script process
+script
+  use std::array;
+
+  let $response.headers.x-powered-by = match $response.headers of
+    case %{present x-powered-by}  =>
+      let $response.headers.x-powered-by = "{$response.headers.x-powered-by}, Tremor (As Proxy)"
+    default =>
+      let $response.headers.x-powered-by = [ "Tremor (As Proxy)" ]
+  end;
+
+  # TODO add upstream url to the response as well
+
+  event;
+end;
+
+create script process;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

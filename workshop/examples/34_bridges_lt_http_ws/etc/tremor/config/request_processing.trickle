@@ -1,0 +1,26 @@
+define script process
+script
+  # TODO if we provide configuration of supported rest onramp paths as
+  # part of the onramp config itself (optionally), we won't need this processing here
+  match $request.url.path of
+    # only pass requests to /bridge
+    case "/bridge" =>
+      null
+    default =>
+      # can send this to a different port than the default err port too
+      emit {
+        "error": "Unsupported url path: {$request.url.path}",
+        "event": event
+      } => "err"
+  end;
+  event;
+end;
+
+create script process;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

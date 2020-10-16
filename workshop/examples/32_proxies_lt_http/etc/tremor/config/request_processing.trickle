@@ -1,0 +1,21 @@
+define script process
+script
+  # erase the host/port from request url so that requests are routed
+  # to the endpoint configured as part of the rest offramp
+  # can set endpoint concretely here too, depending on the need
+  # (eg: different endpoint based on request path/headers)
+  let $endpoint = patch $request.url of
+    erase "host",
+    erase "port"
+  end;
+  event;
+end;
+
+create script process;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

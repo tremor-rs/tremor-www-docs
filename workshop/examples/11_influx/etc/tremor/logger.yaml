@@ -17,6 +17,7 @@ appenders:
 root:
   level: info
   appenders:
+    - file
     - stdout
 
 loggers:
@@ -25,4 +26,5 @@ loggers:
     level: info
     appenders:
       - file
+      - stdout
     additive: false

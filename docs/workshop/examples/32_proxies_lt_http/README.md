@@ -34,7 +34,7 @@ offramp:
 
 Incoming requests from clients are forwarded to the `request_processing` pipeline, from where it goes to the upstream server. The resulting response is then returned back to the client which initiated the request (after any needed processing from the `response_processing` pipeline).
 
-```
+```yaml
 binding:
   - id: main
     links:

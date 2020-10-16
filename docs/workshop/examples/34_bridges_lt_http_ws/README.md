@@ -36,7 +36,7 @@ offramp:
 
 Incoming HTTP requests from clients are forwarded to the `request_processing` pipeline, from where it goes to the websocket server. The resulting websocket message reply is then sent back as HTTP response to the client which initiated the request (after some needed processing from the `response_processing` pipeline).
 
-```
+```yaml
 binding:
   - id: main
     links:
@@ -154,4 +154,26 @@ Only the `/bridge` path (as setup from the pipeline) works for the bridging:
 ```sh
 $ curl http://localhost:9139/some_path -d "snot"
 {"error":"Oh no, we ran into something unexpected :(\n Unsupported url path: /some_path","event":"snot"}
+```
+
+And if there's an internal tremor error while processing both the incoming HTTP request and the websocket reply to it (eg: codec or pre/post-processor failure), or if the websocket server is just down, an error will be bubbled up to the client. Example:
+
+```sh
+# stop the websocket server
+$ docker stop 34_bridges_lt_http_ws_tremor-server_1
+
+# websocket server connection now gets closed from the bridge
+$ curl -i http://localhost:9139/bridge -d "hello"
+HTTP/1.1 500 Internal Server Error
+content-length: 198
+date: Fri, 16 Oct 2020 04:12:11 GMT
+content-type: application/json
+
+{"error":"Oh no, we ran into something unexpected :(\n Error receiving reply from server ws://localhost:8139: WebSocket protocol error: Connection reset without closing handshake","event_id":"1: 3"}
+
+
+# sending further messages results in errors
+$ curl http://localhost:9139/bridge -d "hello"
+{"error":"Oh no, we ran into something unexpected :(\n Error sending event to server ws://localhost:8139: Trying to work with closed connection","e
+vent_id":"1: 4"}
 ```

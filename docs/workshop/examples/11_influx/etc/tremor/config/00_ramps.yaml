@@ -13,7 +13,7 @@ onramp:
 
 offramp:
   - id: influx-output
-    type: rest # an elastic search offramp
+    type: rest # an influxdb offramp
     codec: influx
     config:
       endpoints:

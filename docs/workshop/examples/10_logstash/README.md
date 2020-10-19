@@ -8,13 +8,11 @@ Elastic Search, which stores the logs submitted.
 
 Tremor, which takes the apache logs, parses and classifies them then submits them to indexes in elastic search.
 
-In addition the file `demo/data/apache_access_logs.xz` is used as example payload.
+In addition the file `demo/data/apache_access_logs.xz` [Link](https://github.com/tremor-rs/tremor-runtime/tree/main/demo/data) is used as example payload.
 
 ## Environment
 
-In the [`example.trickle`](etc/tremor/config/example.trickle) we define a script that validates the schema that the field `hello` is a string and the field `selected` is a boolean. If both conditions are true we pass it on, otherwise, it'll drop.
-
-All other configuration is the same as per the previous example and is elided here for brevity.
+In the [`example.trickle`](etc/tremor/config/example.trickle) we define scripts that `extract` and `categorize` apache logs. Any log that is not conforming ther predefined format will be dropped. All other configuration is the same as per the previous example and is elided here for brevity.
 
 ## Business Logic
 

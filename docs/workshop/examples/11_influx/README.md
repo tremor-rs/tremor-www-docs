@@ -2,9 +2,9 @@
 
 This example demonstrates using Tremor as a proxy and aggregator for InfluxDB data. As such it coveres three topics. Ingesting and decoding influx data is the first part. Then grouping this data and aggregating over it.
 
-The demo starts up a [local Capacitor instance](http://localhost:8888). This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the \*8Connection URL\*\* to `ihttp://influxdb:8086`. For all other questions select `Skip` as we do not need to configure those.
+The demo starts up a [local Chronograf](http://localhost:8888). This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the \*\*Connection URL\*\* to `http://influxdb:8086`. For all other questions select `Skip` as we do not need to configure those.
 
-Once in capacitor look at the `tremor` database to see the metrics and rollups. Since rollups do roll up over time you might have to wait a few minutes untill aggregated data propagates.
+Once in Chronograf, look at the `tremor` database to see the metrics and rollups. Since rollups do roll up over time you might have to wait a few minutes untill aggregated data propagates.
 
 Depending on the performance of the system the demo is run on metrics may be shed due to tremors over load protection.
 

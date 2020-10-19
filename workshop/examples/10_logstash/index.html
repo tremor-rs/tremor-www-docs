@@ -1766,10 +1766,9 @@
 <p>Kibana, which once started with docker-compose can be reached <a href="http://localhost:5601">locally</a>. It allows browsing through the logs. If you have never used Kibana before you can get started by clicking on <strong>Management</strong> then in the <strong>Elasticsearch</strong> section on <strong>Index Management</strong>.</p>
 <p>Elastic Search, which stores the logs submitted.</p>
 <p>Tremor, which takes the apache logs, parses and classifies them then submits them to indexes in elastic search.</p>
-<p>In addition the file <code>demo/data/apache_access_logs.xz</code> is used as example payload.</p>
+<p>In addition the file <code>demo/data/apache_access_logs.xz</code> <a href="https://github.com/tremor-rs/tremor-runtime/tree/main/demo/data">Link</a> is used as example payload.</p>
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
-<p>In the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a> we define a script that validates the schema that the field <code>hello</code> is a string and the field <code>selected</code> is a boolean. If both conditions are true we pass it on, otherwise, it'll drop.</p>
-<p>All other configuration is the same as per the previous example and is elided here for brevity.</p>
+<p>In the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a> we define scripts that <code>extract</code> and <code>categorize</code> apache logs. Any log that is not conforming ther predefined format will be dropped. All other configuration is the same as per the previous example and is elided here for brevity.</p>
 <h2 id="business-logic">Business Logic<a class="headerlink" href="#business-logic" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">extract</span><span class="w">                                                          </span><span class="c1"># define the script that parses our apache logs</span>
 <span class="kd">script</span><span class="w"></span>

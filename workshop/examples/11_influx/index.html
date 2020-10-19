@@ -1817,8 +1817,8 @@
                 
                 <h1 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h1>
 <p>This example demonstrates using Tremor as a proxy and aggregator for InfluxDB data. As such it coveres three topics. Ingesting and decoding influx data is the first part. Then grouping this data and aggregating over it.</p>
-<p>The demo starts up a <a href="http://localhost:8888">local Capacitor instance</a>. This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the *8Connection URL** to <code>ihttp://influxdb:8086</code>. For all other questions select <code>Skip</code> as we do not need to configure those.</p>
-<p>Once in capacitor look at the <code>tremor</code> database to see the metrics and rollups. Since rollups do roll up over time you might have to wait a few minutes untill aggregated data propagates.</p>
+<p>The demo starts up a <a href="http://localhost:8888">local Chronograf</a>. This allows browsing the data stored in influxdb. When first connecting you'll be asked to specify the database to use, please change the **Connection URL** to <code>http://influxdb:8086</code>. For all other questions select <code>Skip</code> as we do not need to configure those.</p>
+<p>Once in Chronograf, look at the <code>tremor</code> database to see the metrics and rollups. Since rollups do roll up over time you might have to wait a few minutes untill aggregated data propagates.</p>
 <p>Depending on the performance of the system the demo is run on metrics may be shed due to tremors over load protection.</p>
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
 <p>In the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a> we process the data in multiple steps, since this is somewhat more complex then the prior examples we'll discuss each step in the Business Logic section.</p>

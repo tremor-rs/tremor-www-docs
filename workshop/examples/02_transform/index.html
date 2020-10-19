@@ -1814,13 +1814,13 @@
 </code></pre></div>
 <h2 id="command-line-testing-during-logic-development">Command line testing during logic development<a class="headerlink" href="#command-line-testing-during-logic-development" title="Permanent link">&para;</a></h2>
 <p>Run a the passthrough query against a sample input.json</p>
-<div class="highlight"><pre><span></span><code>$ tremor run -i input.json example.trickle
-<span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;world&quot;</span><span class="o">}</span>
+<div class="highlight"><pre><span></span><code>$ tremor run -i input.json ./etc/tremor/config/example.trickle
+<span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;hi there world&quot;</span>,<span class="s2">&quot;world&quot;</span>:<span class="s2">&quot;world&quot;</span><span class="o">}</span>
 </code></pre></div>
 <p>Change the <code>input.json</code> and toggle the <code>selected</code> filed to true and run again.</p>
 <p>Deploy the solution into a docker environment</p>
 <div class="highlight"><pre><span></span><code>$ docker-compose up
-&gt;&gt; <span class="o">{</span><span class="s2">&quot;hello&quot;</span>: <span class="s2">&quot;again&quot;</span>, <span class="s2">&quot;selected&quot;</span>: true<span class="o">}</span>
+&gt;&gt; <span class="o">{</span><span class="s2">&quot;hello&quot;</span>:<span class="s2">&quot;hi there again&quot;</span>,<span class="s2">&quot;world&quot;</span>:<span class="s2">&quot;again&quot;</span><span class="o">}</span>
 </code></pre></div>
 <p>Inject test messages via <a href="https://github.com/vi/websocat">websocat</a></p>
 <div class="admonition note">

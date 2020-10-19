@@ -12,7 +12,7 @@ All other configuration is the same as per the passthrough example, and is elide
 ## Business Logic
 
 ```trickle
-select event from in into out where event.selected
+select event from in where event.selected into out
 ```
 
 ## Command line testing during logic development

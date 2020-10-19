@@ -22,8 +22,8 @@ select {                                    # 1. We can inline new json-like doc
 Run a the passthrough query against a sample input.json
 
 ```bash
-$ tremor run -i input.json example.trickle
-{"hello": "world"}
+$ tremor run -i input.json ./etc/tremor/config/example.trickle
+{"hello":"hi there world","world":"world"}
 ```
 
 Change the `input.json` and toggle the `selected` filed to true and run again.
@@ -32,7 +32,7 @@ Deploy the solution into a docker environment
 
 ```bash
 $ docker-compose up
->> {"hello": "again", "selected": true}
+>> {"hello":"hi there again","world":"again"}
 ```
 
 Inject test messages via [websocat](https://github.com/vi/websocat)

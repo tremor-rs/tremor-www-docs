@@ -1,6 +1,6 @@
 # Passthrough
 
-The `passthrough` example is the simplest possible configuration of thremor. It shows the very basic building blocks: Onramp, Offramp, Binding, Mapping and Pipeline.
+The `passthrough` example is the simplest possible configuration of tremor. It shows the very basic building blocks: Onramp, Offramp, Binding, Mapping and Pipeline.
 
 ## Environment
 

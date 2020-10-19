@@ -23,7 +23,7 @@ onramp:
           expr: "0/5 * * * * *"
           payload:
             user_id:
-              fieldType: "INT8"
+              fieldType: "INT4"
               name: "user_id"
               value: 12345
             product_id:
@@ -31,7 +31,7 @@ onramp:
               name: "product_id"
               value: jdwa2djh2
             quantity:
-              fieldType: "INT8"
+              fieldType: "INT4"
               name: "quantity"
               value: 2
             created_at:

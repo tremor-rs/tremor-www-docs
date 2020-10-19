@@ -11,7 +11,6 @@ services:
     environment:
       - RUST_BACKTRACE=full
       - RUST_LOG=trace
-      - SLEEP=10
     volumes:
       - ./etc/tremor:/etc/tremor:rw
       - ./var/log:/var/log:rw

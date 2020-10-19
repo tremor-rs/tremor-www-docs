@@ -13,11 +13,13 @@ jobs:
         with:
           node-version: 12.x
       - name: Comment on new PR
-        uses: brown-ccv/alex-recommends@v1.0.0
+        uses: brown-ccv/alex-recommends@v1.1.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           message_id: "alex"
           no_binary: false
           profanity_sureness: 2
           pr_only: false
+          glob_pattern:
+            *.md
 

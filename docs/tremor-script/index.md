@@ -121,9 +121,7 @@ For strings tremor allows string interpolation, this means embedding code direct
 
 ##### HereDocs
 
-To deal with pre formatted strings in tremor script we allow for **here docs** they are started by using triple quotes `"""` that terminate the line (aka `"""bla` isn't legal) .
-
-Here docs can in indented, the indentation will be truncated to the lowest number of spaces found in any of the lines.
+To deal with pre formatted strings in tremor script we allow for **heredocs** they are started by using triple quotes `"""` that terminate the line (aka `"""bla` isn't legal). Heredocs do not truncate leading indentation, only the first leading linebreak after the leading triple-quote `"""` stripped.
 
 ```tremor
 """
@@ -131,11 +129,11 @@ Here docs can in indented, the indentation will be truncated to the lowest numbe
    a
     long
     multi-line
-    string
+    string with { "{1} interpolation" }
 """
 ```
 
-The above **heredoc** would truncate 3 spaces characters since `...a` has 3 spaces in front of it even so other lines have 4.
+Since Tremor 0.9 Heredocs also support [String Interpolation](#string-interpolation). Literal curly braces thus need to be escaped as `{{` or `\{`.
 
 #### Arrays
 

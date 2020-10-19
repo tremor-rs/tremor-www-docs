@@ -11,7 +11,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
     
     
       
@@ -19,10 +19,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bc7e593a.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab28b872.min.css">
         
           
           
@@ -71,7 +71,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Tremor Documentation" class="md-header-nav__button md-logo" aria-label="Tremor Documentation">
       
@@ -155,7 +157,9 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Tremor Documentation" class="md-nav__button md-logo" aria-label="Tremor Documentation">
       
@@ -2358,17 +2362,16 @@ scripts to simplify fixing such scripts.</p>
 <div class="highlight"><pre><span></span><code><span class="s">&quot;I am a { &quot;</span><span class="nx">string</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="err">{</span><span class="mi">1</span><span class="err">}</span><span class="w"> </span><span class="nx">interpolation</span><span class="err">.</span><span class="s">&quot; }&quot;</span><span class="w"></span>
 </code></pre></div>
 <h5 id="heredocs">HereDocs<a class="headerlink" href="#heredocs" title="Permanent link">&para;</a></h5>
-<p>To deal with pre formatted strings in tremor script we allow for <strong>here docs</strong> they are started by using triple quotes <code>"""</code> that terminate the line (aka <code>"""bla</code> isn't legal) .</p>
-<p>Here docs can in indented, the indentation will be truncated to the lowest number of spaces found in any of the lines.</p>
+<p>To deal with pre formatted strings in tremor script we allow for <strong>heredocs</strong> they are started by using triple quotes <code>"""</code> that terminate the line (aka <code>"""bla</code> isn't legal). Heredocs do not truncate leading indentation, only the first leading linebreak after the leading triple-quote <code>"""</code> stripped.</p>
 <div class="highlight"><pre><span></span><code><span class="s">&quot;&quot;&quot;</span>
 <span class="s">    I am</span>
 <span class="s">   a</span>
 <span class="s">    long</span>
 <span class="s">    multi-line</span>
-<span class="s">    string</span>
+<span class="s">    string with { &quot;</span><span class="err">{</span><span class="mi">1</span><span class="err">}</span><span class="w"> </span><span class="nx">interpolation</span><span class="s">&quot; }</span>
 <span class="s">&quot;&quot;&quot;</span><span class="w"></span>
 </code></pre></div>
-<p>The above <strong>heredoc</strong> would truncate 3 spaces characters since <code>...a</code> has 3 spaces in front of it even so other lines have 4.</p>
+<p>Since Tremor 0.9 Heredocs also support <a href="#string-interpolation">String Interpolation</a>. Literal curly braces thus need to be escaped as <code>{{</code> or <code>\{</code>.</p>
 <h4 id="arrays">Arrays<a class="headerlink" href="#arrays" title="Permanent link">&para;</a></h4>
 <p>Array grammar:</p>
 <blockquote>
@@ -3035,8 +3038,8 @@ scripts to simplify fixing such scripts.</p>
       
     </div>
     
-      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

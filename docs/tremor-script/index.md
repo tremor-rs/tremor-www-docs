@@ -476,7 +476,43 @@ match sneaky_json of
 end;
 ```
 
+#### Matching tuple patterns
+
+!!! tip
+    A *tuple pattern* matches a *target* value if the *target* is an array and **each** test matches the positionally correspondent value in the *target*. The *target* needs to be **at least as long** as the *pattern* but **can be longer** if the *pattern* ends with `...`.
+
+    If you are looking for a more set like operation look at the [array pattern](#matching-array-patterns).
+
+> ![tuple case grammar](grammar/diagram/TupleCase.png)
+
+Tuple Pattern grammar:
+
+> ![tuple pattern grammar](grammar/diagram/TuplePattern.png)
+
+Tuple Pattern filter grammar:
+
+> ![tuple filter grammar](grammar/diagram/TuplePatternFilter.png)
+
+In addition to literal array matching, where the case expression tuple literal must exactly match the target of the match expression one for one, tuple patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
+
+
+```tremor
+let a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+match a of
+  case %( 0 ) => "is a zero"
+  case %( 0, .. ) => "starts with a zero"
+  case %( _, 1, .. ) => "has 1 one at index 1"
+  default => "does not contain zero's"
+end;
+```
+
 #### Matching array patterns
+
+!!! tip
+    An *array pattern* matches a target value if the *target* is an array and **each** test in the pattern matches **at least for one** element in the *target* indiscriminate of their positions.
+
+    If you are looking for a more array like / positional operation look at the [tuple pattern](#matching-tuple-patterns).
+
 
 > ![array case grammar](grammar/diagram/ArrayCase.png)
 
@@ -488,7 +524,7 @@ Array Pattern filter grammar:
 
 > ![array filter grammar](grammar/diagram/ArrayPatternFilter.png)
 
-In addition to literal array matching, where the case expression array literal must exactly match the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
+In addition to a subset match, where the elements if the pattern must be included in the match the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
 
 ```tremor
 let a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -509,6 +545,10 @@ end;
 ```
 
 #### Matching record patterns
+
+!!! tip
+    A record pattern matches a target if the target is a record that contains **at least all declared keys** and the tests for **each of the declared key** match.
+
 
 > ![record case grammar](grammar/diagram/RecordCase.png)
 

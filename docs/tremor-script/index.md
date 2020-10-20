@@ -524,7 +524,7 @@ Array Pattern filter grammar:
 
 > ![array filter grammar](grammar/diagram/ArrayPatternFilter.png)
 
-In addition to a subset match, where the elements if the pattern must be included in the match the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
+In addition to a subset match, where the elements of the pattern must be included in the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
 
 ```tremor
 let a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];

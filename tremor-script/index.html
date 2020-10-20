@@ -665,6 +665,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#matching-tuple-patterns" class="md-nav__link">
+    Matching tuple patterns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#matching-array-patterns" class="md-nav__link">
     Matching array patterns
   </a>
@@ -2215,6 +2222,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#matching-tuple-patterns" class="md-nav__link">
+    Matching tuple patterns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#matching-array-patterns" class="md-nav__link">
     Matching array patterns
   </a>
@@ -2673,7 +2687,38 @@ scripts to simplify fixing such scripts.</p>
 <span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">drop</span><span class="w"> </span><span class="s">&quot;this is not the json we were looking for&quot;</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
+<h4 id="matching-tuple-patterns">Matching tuple patterns<a class="headerlink" href="#matching-tuple-patterns" title="Permanent link">&para;</a></h4>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A <em>tuple pattern</em> matches a <em>target</em> value if the <em>target</em> is an array and <strong>each</strong> test matches the positionally correspondent value in the <em>target</em>. The <em>target</em> needs to be <strong>at least as long</strong> as the <em>pattern</em> but <strong>can be longer</strong> if the <em>pattern</em> ends with <code>...</code>.</p>
+<p>If you are looking for a more set like operation look at the <a href="#matching-array-patterns">array pattern</a>.</p>
+</div>
+<blockquote>
+<p><img alt="tuple case grammar" src="grammar/diagram/TupleCase.png" /></p>
+</blockquote>
+<p>Tuple Pattern grammar:</p>
+<blockquote>
+<p><img alt="tuple pattern grammar" src="grammar/diagram/TuplePattern.png" /></p>
+</blockquote>
+<p>Tuple Pattern filter grammar:</p>
+<blockquote>
+<p><img alt="tuple filter grammar" src="grammar/diagram/TuplePatternFilter.png" /></p>
+</blockquote>
+<p>In addition to literal array matching, where the case expression tuple literal must exactly match the target of the match expression one for one, tuple patterns enable testing for matching elements within an array and filtering on the basis of matched elements.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">[</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="mi">2</span><span class="err">,</span><span class="w"> </span><span class="mi">3</span><span class="err">,</span><span class="w"> </span><span class="mi">4</span><span class="err">,</span><span class="w"> </span><span class="mi">5</span><span class="err">,</span><span class="w"> </span><span class="mi">6</span><span class="err">,</span><span class="w"> </span><span class="mi">7</span><span class="err">,</span><span class="w"> </span><span class="mi">8</span><span class="err">,</span><span class="w"> </span><span class="mi">9</span><span class="err">,</span><span class="w"> </span><span class="mi">0</span><span class="err">];</span><span class="w"></span>
+<span class="kd">match</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
+<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">%(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">)</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;is a zero&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">%(</span><span class="w"> </span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="err">..</span><span class="w"> </span><span class="err">)</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;starts with a zero&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">%(</span><span class="w"> </span><span class="kc">_</span><span class="err">,</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="err">..</span><span class="w"> </span><span class="err">)</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;has 1 one at index 1&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;does not contain zero&#39;s&quot;</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
 <h4 id="matching-array-patterns">Matching array patterns<a class="headerlink" href="#matching-array-patterns" title="Permanent link">&para;</a></h4>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>An <em>array pattern</em> matches a target value if the <em>target</em> is an array and <strong>each</strong> test in the pattern matches <strong>at least for one</strong> element in the <em>target</em> indiscriminate of their positions.</p>
+<p>If you are looking for a more array like / positional operation look at the <a href="#matching-tuple-patterns">tuple pattern</a>.</p>
+</div>
 <blockquote>
 <p><img alt="array case grammar" src="grammar/diagram/ArrayCase.png" /></p>
 </blockquote>
@@ -2685,7 +2730,7 @@ scripts to simplify fixing such scripts.</p>
 <blockquote>
 <p><img alt="array filter grammar" src="grammar/diagram/ArrayPatternFilter.png" /></p>
 </blockquote>
-<p>In addition to literal array matching, where the case expression array literal must exactly match the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.</p>
+<p>In addition to a subset match, where the elements of the pattern must be included in the target of the match expression, array patterns enable testing for matching elements within an array and filtering on the basis of matched elements.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">[</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="mi">2</span><span class="err">,</span><span class="w"> </span><span class="mi">3</span><span class="err">,</span><span class="w"> </span><span class="mi">4</span><span class="err">,</span><span class="w"> </span><span class="mi">5</span><span class="err">,</span><span class="w"> </span><span class="mi">6</span><span class="err">,</span><span class="w"> </span><span class="mi">7</span><span class="err">,</span><span class="w"> </span><span class="mi">8</span><span class="err">,</span><span class="w"> </span><span class="mi">9</span><span class="err">,</span><span class="w"> </span><span class="mi">0</span><span class="err">];</span><span class="w"></span>
 <span class="kd">match</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
 <span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">%[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">]</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;contains zero&#39;s&quot;</span><span class="w"></span>
@@ -2700,6 +2745,10 @@ scripts to simplify fixing such scripts.</p>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <h4 id="matching-record-patterns">Matching record patterns<a class="headerlink" href="#matching-record-patterns" title="Permanent link">&para;</a></h4>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A record pattern matches a target if the target is a record that contains <strong>at least all declared keys</strong> and the tests for <strong>each of the declared key</strong> match.</p>
+</div>
 <blockquote>
 <p><img alt="record case grammar" src="grammar/diagram/RecordCase.png" /></p>
 </blockquote>

@@ -2221,7 +2221,7 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <li><code>$endpoint</code> - same format as config <code>endpoint</code> (optional. overrides related config param when present)</li>
 <li><code>$request</code> - A record capturing the HTTP request attributes. Available fields within:<ul>
 <li><code>method</code> - same as config <code>method</code> (optional. overrides related config param when present)</li>
-<li><code>headers</code> - same as config <code>headers</code> (optional. overrides related config param when present)</li>
+<li><code>headers</code> - A map from header name (string) to header value (string or array of strings)(optional. overrides related config param when present)</li>
 </ul>
 </li>
 </ul>
@@ -2235,7 +2235,7 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <ul>
 <li><code>$response</code> - A record capturing the HTTP response attributes. Available fields within:<ul>
 <li><code>status</code> - Numeric HTTP status code</li>
-<li><code>headers</code> - A record that maps header name (lowercase string) to value (string)</li>
+<li><code>headers</code> - A record that maps header name (lowercase string) to value (array of strings)</li>
 </ul>
 </li>
 </ul>

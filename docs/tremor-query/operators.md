@@ -20,15 +20,9 @@ select event from in into add;
 select event from add into out;
 ```
 
-The `config` object is optional and only required for some operators. The configuration consists of key / value pairs.
+## script
 
-## runtime::tremor
-
-The tremor script runtime that allows to modify events or their metadata. To learn more about Tremor Script please see the [related section](../tremor-script/index.md).
-
-**Configuration options**:
-
-- `script` - The script to run.
+The tremor script runtime allows to modify events or their metadata. To learn more about Tremor Script please see the [related section](../tremor-script/index.md).
 
 **Outputs**:
 

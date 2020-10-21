@@ -351,7 +351,7 @@ Used metadata variables:
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
     - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
-    - `headers` - A record that maps header name (string) to value (string) (optional)
+    - `headers` - A record that maps header name (string) to value (string or array of strings) (optional)
 
 When not used as a linked onramp, the status code returned with the response is `202`.
 

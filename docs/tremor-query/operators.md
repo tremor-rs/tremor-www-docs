@@ -170,7 +170,7 @@ itself triggers a CB event.
 **Example**:
 
 ```trickle
-define qos::roundrobin operator
+define qos::roundrobin operator roundrobin
 with
   outputs = ["round", "robin", "outputs"]
 end;

@@ -6,25 +6,8 @@ appenders:
   stdout:
     kind: console
 
-  # An appender named "requests" that writes to a file with a custom pattern encoder
-  file:
-    kind: file
-    path: "/var/log/tremor/tremor.log"
-    encoder:
-      pattern: "{d} - {m}{n}"
-
 # Write only warnings to stdout
 root:
   level: info
   appenders:
-    - file
     - stdout
-
-loggers:
-  # Write info level logs to the log file
-  tremor_runtime:
-    level: info
-    appenders:
-      - file
-      - stdout
-    additive: false

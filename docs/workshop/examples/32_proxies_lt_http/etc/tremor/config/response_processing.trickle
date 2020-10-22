@@ -4,7 +4,7 @@ script
 
   let $response.headers.x-powered-by = match $response.headers of
     case %{present x-powered-by}  =>
-      let $response.headers.x-powered-by = "{$response.headers.x-powered-by}, Tremor (As Proxy)"
+      let $response.headers.x-powered-by = array::push($response.headers.x-powered-by, "Tremor (As Proxy)")
     default =>
       let $response.headers.x-powered-by = [ "Tremor (As Proxy)" ]
   end;

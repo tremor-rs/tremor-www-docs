@@ -65,8 +65,7 @@ Then we need to do the actual proxying in a pipeline that receives requests from
 define script request_handling
 script
     let host = match $request.headers of
-      case %{ host ~= %[] } => $request.headers.host[0]
-      case %{ present host }=> $request.headers.host
+      case %{ present host } => $request.headers.host[0]
       default => "UNDEFINED"
     end;
     let forwarded = "by=localhost:65535;host={host};proto=http";
@@ -129,13 +128,16 @@ But this is only half a proxy without response handling getting back from the of
 ```trickle
 define script response_handling
 script
+    use std::array;
+    use tremor::system;
     # see: https://tools.ietf.org/html/rfc7230#section-5.7.1
-    let via_value = "1.1 {hostname()}/tremor";
+    let via_value = "1.1 {system::hostname()}/tremor";
     match $response.headers of
         case %{ present via } =>
-            let $response.headers.via = [$response.headers.via, via_value]
+            let $response.headers.via = array::push($response.headers.via, via_value)
+
         default =>
-            let $response_headers.via = via_value
+            let $response.headers.via = via_value
     end;
     event;
 end;

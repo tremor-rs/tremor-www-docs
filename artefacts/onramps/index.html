@@ -2005,7 +2005,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 </table>
 <h2 id="supported-onramps">Supported Onramps<a class="headerlink" href="#supported-onramps" title="Permanent link">&para;</a></h2>
 <h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
-<p>The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">librdkaka configuration options</a>.</p>
+<p>The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkafka 1.5.0 configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-kafka://&lt;config_first_broker_host&gt;[:&lt;config_first_broker_port&gt;]/&lt;topic&gt;/&lt;partition&gt;/&lt;offset&gt;

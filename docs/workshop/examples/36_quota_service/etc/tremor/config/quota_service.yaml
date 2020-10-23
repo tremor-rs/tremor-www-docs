@@ -1,0 +1,74 @@
+onramp:
+  - id: http
+    type: rest
+    linked: true
+    codec: string
+    config:
+      host: 0.0.0.0
+      port: 8139
+
+  - id: state
+    type: file
+    codec: json
+    config:
+      # load quotas state from this file (during startup)
+      source: /etc/tremor/data/quotas.json
+
+offramp:
+  - id: state
+    type: file
+    codec: json
+    config:
+      # save quotas updates to this file (replayed during startup)
+      # FIXME support file appends from offramp and just use the same file as state onramp
+      # this will simplify the quotas load process during restart
+      file: /etc/tremor/data/quotas.json.save
+
+binding:
+  - id: main
+    links:
+      "/onramp/http/{instance}/out":
+        - "/pipeline/quota_service/{instance}/in"
+
+      # load initial state based on this onramp output
+      "/onramp/state/{instance}/out":
+        - "/pipeline/quota_service/{instance}/in"
+
+      # process incoming requests and send back the response
+      "/pipeline/quota_service/{instance}/out":
+        - "/onramp/http/{instance}/response"
+        # for debugging
+        #- "/offramp/system::stdout/system/in"
+
+      # handle updates to the quotas state:
+      # publish the quotas state to the logs pipeline as well as save it
+      # for persistent state (that survives tremor restarts)
+      "/pipeline/quota_service/{instance}/quotas":
+        - "/pipeline/logs/{instance}/in"
+        - "/offramp/state/{instance}/in"
+        # for debugging
+        #- "/offramp/system::stdout/system/in"
+
+  - id: error
+    links:
+      "/onramp/http/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
+      "/pipeline/quota_service/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
+      # send back errors as response as well
+      "/pipeline/internal_error_processing/{instance}/out":
+        - "/onramp/http/{instance}/response"
+        #- "/offramp/system::stderr/system/in"
+
+      # respond on errors during error processing too
+      "/pipeline/internal_error_processing/{instance}/err":
+        - "/onramp/http/{instance}/response"
+        #- "/offramp/system::stderr/system/in"
+
+mapping:
+  /binding/main/01:
+    instance: "01"
+  /binding/error/01:
+    instance: "01"

@@ -116,6 +116,11 @@ Or when the proxying use case is combined with some qos operators ([roundrobin](
 
 These are some example use cases now possible with linked transports at the center, but with the amount of flexibility and composability that Tremor supports for its various capabilities, we can get very creative with what we can do here -- our imagination is the limit.
 
+Examples of even more advanced Tremor applications:
+
+* [Quota Service](../workshop/examples/36_quota_service/README.md)
+* [Configurator](../workshop/examples/37_configurator/README.md)
+
 ## Error handling
 
 The above linked examples also demonstrate typical error handling needed for applications built on top of linked transports (eg: for HTTP-based applications, how to send a proper error response to the client with an appropriate status code on tremor-internal failures like runtime script errors, or codec errors on invalid input).

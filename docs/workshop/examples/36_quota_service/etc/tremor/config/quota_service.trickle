@@ -1,0 +1,137 @@
+define script process
+script
+  use std::array;
+  use std::json;
+  use std::type;
+  use tremor::origin;
+
+  # picked up from ../lib folder here
+  #use utils;
+
+  # defaults for the server response
+  let $response = {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-powered-by": "Tremor",
+    }
+  };
+
+  match type::is_null(state) of
+    case true =>
+      let state = {"count": 0, "quotas": {}}
+    default =>
+      null
+  end;
+
+  # TODO better way to catch initial state updates
+  match origin::scheme() of
+    case "tremor-file" =>
+      let state.quotas = merge state.quotas of event end,
+      drop # this event is of no use now
+    default =>
+      # keep counting no of (non-file) events i.e. service requests
+      let state.count = state.count + 1
+  end;
+
+  # --------------------------------------------------------------------------
+
+  # short-circuit if $request is absent
+  match absent $request of
+    case true =>
+      let $response.status = 500,
+      emit {
+        "error": "No request metadata available",
+        "event": event,
+      } => "app_error"
+    default =>
+      null
+  end;
+
+  # --------------------------------------------------------------------------
+
+  # content based on method and path combo
+  match [$request.method, $request.url.path] of
+    case ["GET", "/"] =>
+      let $response.headers["content-type"] = "text/plain",
+      emit """
+      Welcome to the Logging Quota Service!
+
+      Available routes:
+
+      GET /quotas
+      POST /quotas
+      POST /flush
+
+      HEAD /ping
+      GET /stats
+
+      /echo
+      """
+
+    case ["GET", "/quotas"] =>
+      emit state.quotas
+
+    case ["POST", "/quotas"] =>
+      let state.quotas = merge state.quotas of event end,
+      let $is_quotas = true,
+      emit state.quotas => "quotas"
+
+    case ["POST", "/flush"] =>
+      # TODO ensure 200 on succesful flush
+      let $response.status = 202,
+      let $is_quotas = true,
+      emit state.quotas => "quotas"
+
+    # TODO add path for setting total instances
+
+    case ["HEAD", "/ping"] =>
+      emit ""
+
+    # application statistics
+    case ["GET", "/stats"] =>
+      emit {"requests_processed": state.count}
+
+    # useful for debugging (also matches all methods)
+    case %(_, "/echo") =>
+      emit {
+        "body": event,
+        "meta": $request,
+      }
+
+    # our top-secret endpoint
+    case ["GET", "/snot"] =>
+      emit "badger"
+
+    # example for runtime error handling
+    case ["GET", "/error-test"] =>
+      emit non_existent_var
+
+    default =>
+      let $response.status = 404,
+      emit {
+        "error": "Path '{$request.url.path}' not found for method {$request.method}",
+        "event": event,
+      } => "app_error"
+  end;
+end;
+
+create script process;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+# quotas output from the pipeline ensures we can share the quota state with other pipelines
+# (as well as forward it to save on disk, for persistent state)
+select event from process/quotas into out/quotas;
+
+# this ensures we return a service response for quota updates as well
+select event from process/quotas into out;
+
+# our defined app errors (still succesful processing from tremor's perspective)
+# useful to track these from different port (app_error) for metrics
+select event from process/app_error into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

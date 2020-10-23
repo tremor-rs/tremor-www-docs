@@ -1,0 +1,24 @@
+define script process
+script
+  let $response = match present $response of
+    case true =>
+      merge event of {"status": 500} end
+    default =>
+      {"status": 500}
+  end;
+
+  # can choose to not include the actual event error here, if we don't want
+  # to send it back to the client
+  let event.error = "Oh no, we ran into something unexpected :(\n {event.error}";
+
+  event;
+end;
+
+create script process;
+
+select event from in into process;
+select event from process into out;
+
+# tremor runtime errors from the error processing script itself
+# turtles all the way down
+select event from process/err into err;

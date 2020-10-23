@@ -1,0 +1,67 @@
+onramp:
+  - id: http
+    type: rest
+    linked: true
+    codec: string
+    config:
+      host: 0.0.0.0
+      port: 9139
+
+offramp:
+  - id: quota_service_1
+    type: rest
+    linked: true
+    codec: string
+    config:
+      endpoint: "http://quota_service_1:8139/quotas"
+  - id: quota_service_2
+    type: rest
+    linked: true
+    codec: string
+    config:
+      endpoint: "http://quota_service_2:8139/quotas"
+
+binding:
+  - id: main
+    links:
+      "/onramp/http/{instance}/out":
+        - "/pipeline/main/{instance}/in"
+
+      # process incoming requests and send back the response
+      "/pipeline/main/{instance}/out":
+        - "/onramp/http/{instance}/response"
+        # for debugging
+        #- "/offramp/system::stdout/system/in"
+
+      # distribute quota service config submissions to all its members
+      # TODO aggregate responses from all members and store in the state for
+      # status updates
+      "/pipeline/main/{instance}/quota_service":
+        - "/offramp/quota_service_1/{instance}/in"
+        - "/offramp/quota_service_2/{instance}/in"
+        # for debugging
+        #- "/offramp/system::stdout/system/in"
+
+  - id: error
+    links:
+      "/onramp/http/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
+      "/pipeline/main/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
+      # send back errors as response as well
+      "/pipeline/internal_error_processing/{instance}/out":
+        - "/onramp/http/{instance}/response"
+        #- "/offramp/system::stderr/system/in"
+
+      # respond on errors during error processing too
+      "/pipeline/internal_error_processing/{instance}/err":
+        - "/onramp/http/{instance}/response"
+        #- "/offramp/system::stderr/system/in"
+
+mapping:
+  /binding/main/01:
+    instance: "01"
+  /binding/error/01:
+    instance: "01"

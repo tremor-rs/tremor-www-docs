@@ -1,0 +1,142 @@
+define script process
+script
+  use std::array;
+  use std::json;
+  use std::type;
+  use tremor::origin;
+
+  # defaults for the server response
+  let $response = {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-powered-by": "Tremor",
+    }
+  };
+
+  match type::is_null(state) of
+    case true =>
+      let state = {"count": 0}
+    default =>
+      null
+  end;
+
+  # --------------------------------------------------------------------------
+
+  # short-circuit if $request is absent
+  match absent $request of
+    case true =>
+      let $response.status = 500,
+      emit {
+        "error": "No request metadata available",
+        "event": event,
+      } => "app_error"
+    default =>
+      null
+  end;
+
+  # --------------------------------------------------------------------------
+
+  let request_path_parts = match $request.url of
+    case r = %{path ~= dissect|/%{base}/%{rest}|} =>
+      [ "/{r.path.base}", r.path.rest ]
+    default =>
+      [ $request.url.path ]
+  end;
+
+  # content based on method and path combo
+  match [$request.method, request_path_parts[0]] of
+    case ["GET", "/"] =>
+      let $response.headers["content-type"] = "text/plain",
+      emit """
+      Welcome to the Configurator!
+
+      Available routes:
+
+      GET /services
+      POST /service/<id>
+
+      HEAD /ping
+      GET /stats
+
+      /echo
+      """
+
+    case ["GET", "/services"] =>
+      [
+        "quota_service"
+      ]
+
+    case ["POST", "/service"] =>
+      let service_id = match array::len(request_path_parts) > 1 of
+        case true => request_path_parts[1]
+        default =>
+          let $response.status = 400,
+          emit {
+            "error": "Please provide a service id",
+            "event": event,
+          } => "app_error"
+      end,
+      let $response.status = 202,
+      # TODO add common event structure and validate
+      # also check if it's one of the registered services
+      emit event => "{service_id}"
+
+    case ["HEAD", "/ping"] =>
+      emit ""
+
+    # application statistics
+    case ["GET", "/stats"] =>
+      emit {"requests_processed": state.count}
+
+    # useful for debugging (also matches all methods)
+    case %(_, "/echo") =>
+      emit {
+        "body": event,
+        "meta": $request,
+      }
+
+    # our top-secret endpoint
+    case ["GET", "/snot"] =>
+      emit "badger"
+
+    # example for runtime error handling
+    case ["GET", "/error-test"] =>
+      emit non_existent_var
+
+    default =>
+      let $response.status = 404,
+      emit {
+        "error": "Path '{$request.url.path}' not found for method {$request.method}",
+        "event": event,
+      } => "app_error"
+  end;
+end;
+
+# https://docs.tremor.rs/tremor-query/operators/#qoswal
+define qos::wal operator on_disk_wal with
+  dir = "store",
+  read_count = 20,
+  max_elements = 1000, # Capacity limit of 1000 stored events
+  max_bytes = 10485760 # Capacity limit of 1MB of events
+end;
+
+create script process;
+create operator on_disk_wal;
+
+# main request processing
+select event from in into process;
+select event from process into out;
+
+select event from process/quota_service into on_disk_wal;
+select event from on_disk_wal into out/quota_service;
+
+# this ensures we return a response from configurator on service updates
+select event from process/quota_service into out;
+
+# our defined app errors (still succesful processing from tremor's perspective)
+# useful to track these from different port (app_error) for metrics
+select event from process/app_error into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;

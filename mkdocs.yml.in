@@ -95,6 +95,8 @@ nav:
       - Websocket Proxy: workshop/examples/33_proxies_lt_ws/README.md
       - HTTP -> WS Bridge: workshop/examples/34_bridges_lt_http_ws/README.md
       - HTTP Load Balancing: workshop/examples/35_reverse_proxy_load_balancing/README.md
+      - Quota Service: workshop/examples/36_quota_service/README.md
+      - Configurator: workshop/examples/37_configurator/README.md
   - Development:
     - 'Quick Start Guide': development/quick-start.md
     - Profiling: development/profiling.md

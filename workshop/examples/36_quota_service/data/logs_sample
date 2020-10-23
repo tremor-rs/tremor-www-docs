@@ -1,0 +1,2 @@
+{"message":"test log message","application":"test-app","logger_name":"test-logger","@timestamp":"2020-10-06T21:11:05.827Z","hostname":"test-host","log_level":"INFO"}
+{"message":"hello world","application":"tremolo","logger_name":"snot","@timestamp":"2020-10-06T22:11:05.827Z","hostname":"snot-factory","log_level":"TRACE"}

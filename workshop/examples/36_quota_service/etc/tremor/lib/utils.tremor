@@ -1,0 +1,16 @@
+# Collection of utility functions for our application
+
+use std::url;
+
+# TODO add similar function to std::url for better parsing
+# or if we send the query string here already parsed from the rest onramp,
+# this here won't be necessary
+fn parse_query(string) with
+  match {"test": string} of
+    case r = %{test ~= kv|%{key}=%{val}&|} =>
+      # TODO urldecode key and value pairs
+      r.test
+    default =>
+      {}
+  end
+end;

@@ -1466,6 +1466,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../workshop/examples/36_quota_service/" class="md-nav__link">
+      Quota Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../workshop/examples/37_configurator/" class="md-nav__link">
+      Configurator
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1860,6 +1884,11 @@ hello
 <li><a href="../../workshop/examples/35_reverse_proxy_load_balancing/">HTTP Load Balancing</a></li>
 </ul>
 <p>These are some example use cases now possible with linked transports at the center, but with the amount of flexibility and composability that Tremor supports for its various capabilities, we can get very creative with what we can do here -- our imagination is the limit.</p>
+<p>Examples of even more advanced Tremor applications:</p>
+<ul>
+<li><a href="../../workshop/examples/36_quota_service/">Quota Service</a></li>
+<li><a href="../../workshop/examples/37_configurator/">Configurator</a></li>
+</ul>
 <h2 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <p>The above linked examples also demonstrate typical error handling needed for applications built on top of linked transports (eg: for HTTP-based applications, how to send a proper error response to the client with an appropriate status code on tremor-internal failures like runtime script errors, or codec errors on invalid input).</p>
 <details class="example"><summary>Example error-handling binding for a HTTP proxy</summary><div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">error</span>

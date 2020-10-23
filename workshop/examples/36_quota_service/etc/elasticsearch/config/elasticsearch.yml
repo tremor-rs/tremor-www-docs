@@ -1,0 +1,33 @@
+cluster.name: tremolo-cluster
+
+# for containers, this is the container id
+node.name: ${HOSTNAME}
+
+# set the bind address
+network.host: 0.0.0.0
+
+# we have only one es node right now
+discovery.type: single-node
+
+# minimum_master_nodes need to be explicitly set when bound on a public IP
+# set to 1 to allow single node clusters
+# Details: https://github.com/elastic/elasticsearch/pull/17288
+discovery.zen.minimum_master_nodes: 1
+
+# disabling swapping for performance and node stability
+# for container use, make sure that ulimit memlock options are set. See:
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode
+bootstrap.memory_lock: true
+
+# guard against index deletes with *
+action.destructive_requires_name: true
+
+# disable the disk allocation decider
+cluster.routing.allocation.disk.threshold_enabled: false
+
+# Disable CORS
+http.cors.enabled: true
+http.cors.allow-origin: "/.*/"
+http.cors.allow-credentials: true
+http.cors.allow-methods : OPTIONS, HEAD, GET, POST
+http.cors.allow-headers: "X-Requested-With, Content-Type, Content-Length, Authorization"

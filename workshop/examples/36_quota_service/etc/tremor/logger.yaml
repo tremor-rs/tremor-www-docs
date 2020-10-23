@@ -1,0 +1,38 @@
+---
+refresh_rate: 30 seconds
+
+appenders:
+  stdout:
+    kind: console
+
+  # FIXME eliminate this after resolving logging overrides below
+  # (using this to route away noisy logs from stdout for now)
+  file:
+    kind: file
+    path: "/var/log/tremor/tremor.log"
+    encoder:
+      pattern: "{d} {l} {M} - {m}{n}"
+
+root:
+  level: info
+  appenders:
+    - stdout
+
+loggers:
+  # FIXME resolve these repeated info logs. can then eliminate this override
+  # INFO elastic::http::sender::synchronous - Elasticsearch Response: correlation_id: '785298c7-622a-4c7b-96ba-e0109a944921', status: '400 Bad Request'
+  elastic::http::sender::synchronous:
+    level: warn
+    appenders:
+      #- stdout
+      - file
+    additive: false
+
+  # FIXME resolve these repeated info logs. can then eliminate this override
+  #Elastic search error: Err(Error(ElasticError(Client(ClientError { inner: Error(Response(400), State { next_error: Some(Parse(ParseError { inner: UnknownApiError({"reason": String("request body is required"), "root_cause": Array([Object({"reason": String("request body is required"), "type": String("parse_exception")})]), "type": String("parse_exception")}) })), backtrace: None }) })), State { next_error: None, backtrace: InternalBacktrace { backtrace: None } }))
+  tremor_runtime::sink::elastic:
+    level: warn
+    appenders:
+      #- stdout
+      - file
+    additive: false

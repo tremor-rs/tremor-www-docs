@@ -1,0 +1,146 @@
+define script process
+script
+  use std::math;
+  use std::record;
+  use std::type;
+  use tremor::system;
+
+  # TODO initial state here should be synced with quotas file load?
+  match type::is_null(state) of
+    case true =>
+      let state = {"rates_override": {}}
+    default =>
+      null
+  end;
+
+  # handle quota publish events from the quota-service
+  # (overwrites the pipeline node-local state here)
+  # TODO use origin uri to distinguish state updates? or some other mechanism
+  match present $is_quotas of
+    case true =>
+      let state.rates_override = event,
+      drop # this event is of no use now
+    default =>
+      null # pass the regular log events
+  end;
+
+  # align this with no of tremor nodes handling traffic here
+  # (with the assumption that traffic is evenly aligned across the nodes)
+  let total_instances = 1;
+
+  # --------------------------------------------------------------------------
+
+  # for bucketing operator
+  # https://docs.tremor.rs/tremor-query/operators/#grouperbucket
+  #let $cardinality = 1000;
+
+  # classify and set the default rates
+  match event of
+    case %{application == "tremolo"} =>
+      let $class = "tremolo",
+      let $rate = 100
+
+    case %{present application} =>
+      let $class = "application_default",
+      let $dimensions = event.application,
+      let $rate = 100
+
+    case %{present logger_name} =>
+      let $class = "logger_default",
+      let $dimensions = event.logger_name,
+      let $rate = 50
+
+    case %{present hostname} =>
+      let $class = "host_default",
+      let $dimensions = event.hostname,
+      let $rate = 500
+
+    default =>
+      let $class = "index_default",
+      let $rate = 100
+  end;
+
+  # override the rate if one exists for the class
+  match record::contains(state.rates_override, $class) of
+    case true =>
+      let $rate = math::round(state.rates_override[$class]/total_instances)
+    default =>
+      null
+  end;
+
+  # hack to make dynamic rate assignments work for now
+  # (eg: when set via the quota service)
+  # TODO make bucketing operator update rate value on each event
+  let $dimensions = match present $dimensions of
+    case true => "{$dimensions}_{$rate}"
+    default => "_{$rate}"
+  end;
+
+  # --------------------------------------------------------------------------
+
+  # for elasticsearch offramp
+  # https://docs.tremor.rs/artefacts/offramps/#elastic
+  let $index = "test_logs";
+  let $doc_type = "_doc";
+
+  # log enrichments
+  let event = patch event of
+    # for prod deployments, pre-set this if possible
+    #insert "tremor_sink" => system::hostname(),
+    insert "tremor_sink" => "demo-tremor-sink",
+
+    # for the demo:
+    # this allows us to choose this field for timeseries visualization in kibana
+    # (elasticsearch treats iso8601 strings as date type by default)
+    insert "ingestion_timestamp" => core::datetime::iso8601(system::ingest_ns()),
+
+    insert "tremor_class" => $class,
+    insert "tremor_class_rate" => $rate # useful for debugging during demo
+  end;
+
+  event;
+end;
+
+# for debugging during demo
+define script debug_bucket
+script
+  {"event": event, "meta": $, "error": "bucketing failure"}
+end;
+
+# https://docs.tremor.rs/tremor-query/operators/#grouperbucket
+define grouper::bucket operator bucket;
+
+# https://docs.tremor.rs/tremor-query/operators/#qosbackpressure
+define qos::backpressure operator backpressure
+with
+  timeout = 10000, # 10s
+  steps = [500, 1000, 10000] # in ms
+end;
+
+# https://docs.tremor.rs/tremor-query/operators/#genericbatch
+define generic::batch operator batch
+with
+  count = 300,
+  timeout = 1000, # in ms
+end;
+
+create script process;
+create script debug_bucket;
+create operator bucket;
+create operator backpressure;
+create operator batch;
+
+# main log flow
+select event from in into process;
+select event from process into bucket;
+select event from bucket into backpressure;
+select event from backpressure into batch;
+select event from batch into out;
+
+# tremor runtime errors from the processing script
+select event from process/err into err;
+
+# visibility for bucketing errors (for debugging during demo)
+select event from bucket/error into debug_bucket;
+select event from debug_bucket into err;
+select event from debug_bucket/error into err;

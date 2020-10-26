@@ -1,5 +1,3 @@
-'use strict';
-
 // Copyright 2020, The Tremor Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -216,4 +214,4 @@ const main = {};
 main.defineTremorGrammar = defineTremorGrammar;
 main.defineTrickleGrammar = defineTrickleGrammar;
 
-module.exports = main;
+export default main;

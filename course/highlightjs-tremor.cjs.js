@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 // Copyright 2020, The Tremor Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +36,7 @@ function defineTremorGrammar(hljs) {
 
   const KEYWORDS = {
     keyword:
-      'emit drop const let for match of case when default end patch insert update erase move copy present absent' +
+      'emit drop const let for match of case when default end patch insert update upsert erase move copy present absent' +
       ' merge fn use mod recur with as intrinsic',
     meta:
       'event args state window group',
@@ -216,4 +218,4 @@ const main = {};
 main.defineTremorGrammar = defineTremorGrammar;
 main.defineTrickleGrammar = defineTrickleGrammar;
 
-module.exports = main;
+exports.default = main;

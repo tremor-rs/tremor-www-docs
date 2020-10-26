@@ -1,12 +1,11 @@
-<!-- .slide: data-background="#000000" -->
+## Tremor Script `match`
+<!-- .slide: data-background="#003300" -->
 
-# Tremor Script 
-
-A langauge designed for efficient extract, transform, load and filtering of well-formed nested data structures such as JSON in event stream processing engines..
+This tutorial introduces the `match` statement
 
 >>>
 
-### The `match` statement
+### `match` statement
 
 ![Match rule](https://docs.tremor.rs/tremor-script/grammar/diagram/Match.png)
 ![Case rule](https://docs.tremor.rs/tremor-script/grammar/diagram/MatchCaseClause.png)
@@ -33,14 +32,14 @@ Effectors are a comma separated list of expressions
 
 >>>
 
-### `match` Record
+### `match` record - 1
 
 ![Record Pattern](https://docs.tremor.rs/tremor-script/grammar/diagram/RecordPattern.png)
 ![Array Pattern Filter](https://docs.tremor.rs/tremor-script/grammar/diagram/ArrayPatternFilter.png)
 
 >>>
 
-### `match` Record
+### `match` record - 2
 
 <div style='font-size: 20px'>
 Testing fields against known literal value expressions
@@ -63,7 +62,7 @@ A record, with a field `field` with value <literal-expression>
 
 >>>
 
-### `match` Record
+### `match` record - 3
 
 <div style='font-size: 20px'>
 Testing for the presence or absence of a field
@@ -80,7 +79,7 @@ A record, with a field  `field` present or absent
 
 >>>
 
-### `match` Record
+### `match` record - 5
 
 <div style='font-size: 20px'>
 Extracting matched values for further processing
@@ -98,7 +97,7 @@ In the case of a json `extractor` the content is parsed into an expression.<br>
 
 >>>
 
-### `match` record
+### `match` record - 6
 
 <div style='font-size: 20px; text-align: left;'>
 Problem: Pass through incoming events where they are records with an `arr` array
@@ -122,14 +121,14 @@ than to write in plain english!
 
 >>>
 
-### `match` array
+### `match` array - 1
 
 ![Array Pattern](https://docs.tremor.rs/tremor-script/grammar/diagram/ArrayPattern.png)
 ![Array Pattern Filter](https://docs.tremor.rs/tremor-script/grammar/diagram/ArrayPatternFilter.png)
 
 >>>
 
-### `match` array
+### `match` array - 2
 
 ``` tremor [|1|2|3|4]
 case %[] => "target is an array"
@@ -169,6 +168,8 @@ Case guards allow extracted values to be further filtered for more refined match
 
 >>>
 
+### End of `match` guide
+<!-- .slide: data-background="#003333" -->
 
 This is the end of the `match` getting started guide
 

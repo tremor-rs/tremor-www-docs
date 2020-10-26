@@ -1,0 +1,63 @@
+{
+  "_from": "reveal.js-menu",
+  "_id": "reveal.js-menu@2.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-35zp4fHSMyWd15+3CvQ8LrpS+4Gj2qvlkxX3lo5LpITDe6ZkA4A9y1E5fE63YlQl5fp7W1mNgNJr4kCU0s14lA==",
+  "_location": "/reveal.js-menu",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "reveal.js-menu",
+    "name": "reveal.js-menu",
+    "escapedName": "reveal.js-menu",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/reveal.js-menu/-/reveal.js-menu-2.1.0.tgz",
+  "_shasum": "c9e2f6998a00e1f403015ee4210cde294dab271b",
+  "_spec": "reveal.js-menu",
+  "_where": "/Users/dennis/Code/oss/tremor-rs/reveal.js",
+  "author": {
+    "name": "Greg Denehy"
+  },
+  "bugs": {
+    "url": "https://github.com/denehyg/reveal.js-menu/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A slideout menu for navigating reveal.js presentations",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@rollup/plugin-babel": "^5.0.4",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "babel-plugin-transform-html-import-to-string": "0.0.1",
+    "core-js": "^3.6.5",
+    "gulp": "^4.0.2",
+    "rollup": "^2.21.0",
+    "rollup-plugin-terser": "^6.1.0"
+  },
+  "homepage": "https://github.com/denehyg/reveal.js-menu#readme",
+  "keywords": [
+    "reveal",
+    "menu"
+  ],
+  "license": "MIT, Copyright (C) 2020 Greg Denehy",
+  "name": "reveal.js-menu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denehyg/reveal.js-menu.git"
+  },
+  "scripts": {
+    "build": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "2.1.0"
+}

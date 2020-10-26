@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Training Course: tremor-script Language</title>
+		<title>Training Course Module: merge operation</title>
 
 		<link rel="stylesheet" href="./dist/reveal.css">
 		<link rel="stylesheet" href="./dist/theme/solarized.css" id="theme">
@@ -12,44 +12,26 @@
 		<link rel="stylesheet" href="./plugin/menu/menu.css">
 		<link rel="stylesheet" href="./plugin/toolbar/toolbar.css">
         <style type="text/css">
-#header-left {
-  position: absolute;
-  top: 0%;
-  left: 0%;
-}
-#header-right {
-  position: absolute;
-  top: 0%;
-  right: 0%;
-}
-#footer-left {
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-}
-#footer-right {
-  position: absolute;
-  bottom: 0%;
-  right: 0%;
-}
-
-div !span .fragment.current-visible.visible:not(.current-fragment) {
-    animation: removed-item-animation 1.5s cubic-bezier(0.6, -0.05, 0.9, 0.9) forwards;
-    transform-origin: 0% 100%;
-}
-div @keyframes removed-item-animation {
-    0% {
-        opacity: 1;
-        transform: rotateZ(0);
+   #header-left {
+        position: absolute;
+        top: 0%;
+        left: 0%;
     }
-
-    100% {
-        opacity: 0;
-        transform: translateY(900px) rotateZ(70deg);
-        line-height: 0px;
-        display: none;
+    #header-right {
+        position: absolute;
+        top: 0%;
+        right: 0%;
     }
-}
+    #footer-left {
+        position: absolute;
+        bottom: 0%;
+        left: 0%;
+    }
+    #footer-right {
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+    }
         </style>
 	</head>
 
@@ -69,10 +51,7 @@ div @keyframes removed-item-animation {
 			<div class="slides">
 
                 <!-- Use external markdown resource, separate slides by three newlines; vertical slides by two newlines -->
-                <section data-markdown="./tremor-script-expr.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
-                <section data-markdown="./tremor-script-match.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
                 <section data-markdown="./tremor-script-merge.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
-                <section data-markdown="./tremor-script-patch.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
 
             </div>
 		</div>

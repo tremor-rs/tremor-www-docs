@@ -280,8 +280,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#runtimetremor" class="md-nav__link">
-    runtime::tremor
+  <a href="#script" class="md-nav__link">
+    script
   </a>
   
 </li>
@@ -1769,8 +1769,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#runtimetremor" class="md-nav__link">
-    runtime::tremor
+  <a href="#script" class="md-nav__link">
+    script
   </a>
   
 </li>
@@ -1869,13 +1869,8 @@
 <span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">add</span><span class="err">;</span><span class="w"></span>
 <span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>The <code>config</code> object is optional and only required for some operators. The configuration consists of key / value pairs.</p>
-<h2 id="runtimetremor">runtime::tremor<a class="headerlink" href="#runtimetremor" title="Permanent link">&para;</a></h2>
-<p>The tremor script runtime that allows to modify events or their metadata. To learn more about Tremor Script please see the <a href="../../tremor-script/">related section</a>.</p>
-<p><strong>Configuration options</strong>:</p>
-<ul>
-<li><code>script</code> - The script to run.</li>
-</ul>
+<h2 id="script">script<a class="headerlink" href="#script" title="Permanent link">&para;</a></h2>
+<p>The tremor script runtime allows to modify events or their metadata. To learn more about Tremor Script please see the <a href="../../tremor-script/">related section</a>.</p>
 <p><strong>Outputs</strong>:</p>
 <ul>
 <li><code>out</code> (default output used with <code>emit</code>)</li>
@@ -1992,7 +1987,7 @@ itself triggers a CB event.</p>
 <li><code>*</code> (any named output is possible)</li>
 </ul>
 <p><strong>Example</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">roundrobin</span><span class="w"> </span><span class="kd">operator</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">roundrobin</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">roundrobin</span><span class="w"></span>
 <span class="kd">with</span><span class="w"></span>
 <span class="w">  </span><span class="nx">outputs</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">[</span><span class="s">&quot;round&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;robin&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;outputs&quot;</span><span class="err">]</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>

@@ -32,7 +32,7 @@ function defineTremorGrammar(hljs) {
 
   const KEYWORDS = {
     keyword:
-      'emit drop const let for match of case when default end patch insert update erase move copy present absent' +
+      'emit drop const let for match of case when default end patch insert update upsert erase move copy present absent' +
       ' merge fn use mod recur with as intrinsic',
     meta:
       'event args state window group',

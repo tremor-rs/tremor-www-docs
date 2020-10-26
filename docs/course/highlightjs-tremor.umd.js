@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global['highlightjs-tremor'] = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = global || self, factory(global['highlightjs-tremor'] = {}));
+}(this, (function (exports) { 'use strict';
 
   // Copyright 2020, The Tremor Team
   //
@@ -38,7 +38,7 @@
 
     const KEYWORDS = {
       keyword:
-        'emit drop const let for match of case when default end patch insert update erase move copy present absent' +
+        'emit drop const let for match of case when default end patch insert update upsert erase move copy present absent' +
         ' merge fn use mod recur with as intrinsic',
       meta:
         'event args state window group',
@@ -220,6 +220,8 @@
   main.defineTremorGrammar = defineTremorGrammar;
   main.defineTrickleGrammar = defineTrickleGrammar;
 
-  return main;
+  exports.default = main;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

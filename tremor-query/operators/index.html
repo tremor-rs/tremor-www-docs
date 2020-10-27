@@ -1859,12 +1859,14 @@
 <p>Operators are part of the pipeline configuration.</p>
 <p>Operators process events and signals in the context of a pipeline. An operator, upon receiving an event from an upstream operator or stream, MAY produce one or many events to one or many downstream directly connected operators. An operator MAY drop events which halts any further processing.</p>
 <p>Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behavior, concurrency, event ordering or other aspects of a running tremor system.</p>
-<p>Operators are created in the context of a pipeline and configured in the <code>nodes</code> section of each pipeline. An operator MUST have an identifier that is unique for its owning pipeline.</p>
+<p>Operators are created in the context of a pipeline and configured as part of <code>tremor-query</code> <a href="../#statements">statements</a>. An operator MUST have an identifier that is unique for its owning pipeline.</p>
 <p>Configuration is of the general form:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">add</span><span class="w"></span>
 <span class="kd">script</span><span class="w"></span>
 <span class="w">  </span><span class="kd">emit</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">create</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">add</span><span class="err">;</span><span class="w"></span>
 
 <span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">add</span><span class="err">;</span><span class="w"></span>
 <span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>

@@ -1730,6 +1730,9 @@ brew install mkdocs
 <div class="highlight"><pre><span></span><code>pip3 install -r requirements.txt
 </code></pre></div>
 <p>This installs the <code>mkdocs-material</code> theme which we use, along with other dependencies.</p>
+<p>To enable syntax-highlighting for tremor-script/trickle code snippets, install our mkdocs-specifc tremor lexer as well:</p>
+<div class="highlight"><pre><span></span><code>.github/scripts/install-lexer.sh
+</code></pre></div>
 <h2 id="generate-mkdocs-configuration">Generate mkdocs configuration<a class="headerlink" href="#generate-mkdocs-configuration" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>make
 </code></pre></div>
@@ -1741,7 +1744,7 @@ mkdocs (<code>mkdocs.yml</code>) file at the end (with the right navigation refe
 <h2 id="local-doc-service">Local doc service<a class="headerlink" href="#local-doc-service" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>mkdocs serve
 </code></pre></div>
-<p>Now the docs will be available at http://127.0.0.1:8000/ for reviewing as you edit them (supports live-reload).</p>
+<p>The doc site will be available at <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> for reviewing (supports live-reload, as you edit).</p>
                 
               
               

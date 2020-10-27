@@ -1,14 +1,14 @@
 # Tremor-Query
 
-The tremor query language, `tremor-query` or **trickle** is an interpreted statement-oriented language designed for continuous online structured queries with support filtering, extraction, transformation and streaming of structured data in a stream or event-based processing system.
+The tremor query language, `tremor-query` or **trickle** is an interpreted statement-oriented language designed for continuous online structured queries with support for filtering, extraction, transformation and streaming of structured data in a stream or event-based processing system.
 
-At its core, `tremor-query` supports the definition of windows operators, stream definitions and operations on those streams such as **select**, **operator** and script\_\_.
+At its core, `tremor-query` supports the definition of windows operators, stream definitions and operations on those streams such as **select**, **operator** and **script**.
 
 Structured queries in **trickle** consume unstructured data that are in and of themselves at least well-formed ( eg: such as JSON ) and produce synthetic events that are also well-formed and in and of themselves unstructured.
 
 The language does not impose schema based constraints on data flowing through the system, although this may produce runtime errors for badly written queries.
 
-The query language interpreter constructs a directed-acyclic-graph or **DAG** by analysing the dependencies of operators in a user defined query. The input and output streams are then calculated. The DAG model is the same as the pipeline model in previous versions of tremor, but with a rich query language replacing the depricated\*\* tremor yaml format for pipelines.
+The query language interpreter constructs a directed-acyclic-graph or **DAG** by analysing the dependencies of operators in a user defined query. The input and output streams are then calculated. The DAG model is the same as the pipeline model in previous versions of tremor, but with a rich query language replacing the deprecated tremor yaml format for pipelines.
 
 ## Principles
 
@@ -18,7 +18,7 @@ The language is explicitly not Turing-complete:
 
 - there are no unstructured `goto` grammar forms
 - there are no unbounded `for`, `while` or `do..while` looping constructs
-- the language is built on top of rust, inheriting its robustness and safety features, without the development overheads
+- the language is built on top of [Rust](https://www.rust-lang.org/), inheriting its robustness and safety features, without the development overheads
 
 ### Developer friendly
 
@@ -34,11 +34,11 @@ Tremor-query is designed to process unstructured ( but well-formed ) data events
 
 The SQL-like syntax enables a natural and familiar style whilst allowing the resulting statements to be compiled into a formal DAG for compile-time checks and to ensure correctness.
 
-Leveraging the tremor-query expression syntax allows rich filtering, transformation, patching, merging and object and array comprehensions to be programmed.
+Leveraging the tremor-query expression syntax allows rich filtering, transformation, patching, merging and object/array comprehensions to be programmed.
 
 The addition of aggregate functions, and windowing allows batches or a slice in time of events to be summarised or processed together to derive useful synthetic events.
 
-Like its sibling langauge `tremor-script`, `tremor-query` supports the same data-types is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet powerful and flexible.
+Like its sibling langauge `tremor-script`, `tremor-query` supports the same data-types and is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet it is powerful and flexible in its own right.
 
 ### Extensibility
 
@@ -54,7 +54,7 @@ In the future, `tremor-query` may be retargeted as a JIT-compiled language and o
 
 Data ingested into tremor-query is vectorized via SIMD-parallel instructions on x86-64 or other Intel processor architectures supporting ssev3/avx extensions. Processing streams of such event-data incurs some allocation overhead at this time, but these event-bound allocations are being written out of the interpreter.
 
-The current meaning of `performant` as documented here means that `tremor-query is more efficient at processing metrics-like data than the system it replaces ( telegraf / kapacitor / influx ) which do not support rich proactive and reactive back-pressure mechanisms or efficient asynchronous event-based data distribution between system components.
+The current meaning of `performant` as documented here means that `tremor-query` is more efficient at processing metrics-like data than the system it replaces ( telegraf / kapacitor / influx ) which do not support rich proactive and reactive back-pressure mechanisms or efficient asynchronous event-based data distribution between system components.
 
 ### Productive
 
@@ -73,7 +73,7 @@ same as in `tremor-script`.
 
 ### Queries
 
-Queries are one or many statements separated by `;`
+Queries are one or many statements separated by `;`.
 
 Queries are compiled into a DAG of operator nodes and validated at compile time. At runtime, the resulting executable tremor pipeline is evaluated/interpreted.
 
@@ -109,7 +109,9 @@ select event from passthrough into out; # select passthrough into default public
 
 Window definitions in `tremor-query` can be either tumbling or sliding.
 
-A tumbling window is a window configued with a fixed non-overlapping interval of time. The aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.
+A tumbling window is a window configured with a fixed non-overlapping interval of time. The window aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.
+
+Support for sliding windows has not been implemented yet (it has an [open RFC](https://rfcs.tremor.rs/0004-sliding-window-mechanism/) and it will be picked up for a future release).
 
 Window definition grammar:
 
@@ -124,9 +126,10 @@ with
 end;
 ```
 
-#### Customer Operator definitions
+#### Custom Operator definitions
 
-Custom operators allow legacy operators written before the query language was designed to be used with the query language. As the query langauge and legacy yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:
+FIXME
+Custom operators allow legacy operators written before the query language. As the query langauge and deprecated yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:
 
 Operator definition grammar:
 
@@ -150,7 +153,7 @@ select event from kfc into out;
 
 #### Embedded script definitions
 
-The tremor-script language can be embedded in the query language natively and this mirrors legacy usage where it was embedded within yaml-based pipeline configuration. However, the tooling that ships with `tremor-query` understands both the query language and scripting language dialects with better syntax highlighting and error checking built in for ease of operator productivity over the legacy yaml syntax.
+The tremor-script language can be embedded in the query language natively and this mirrors legacy usage (before v0.9) where it was embedded within yaml-based pipeline configuration. However, the tooling that ships with `tremor-query` understands both the query language and scripting language dialects with better syntax highlighting and error checking built in, for ease of operator productivity over the deprecated yaml syntax.
 
 Script definition grammar:
 
@@ -185,25 +188,25 @@ select event from kfc into out;
 
 #### Select queries
 
-The select query is a builtin operation that is the workhorse of the tremor-query` language.
+The select query is a builtin operation that is the workhorse of the `tremor-query` language.
 
 The select operation is of the general form:
 
 > ![select grammar](grammar/diagram/SelectStmt.png) > ![from grammar](grammar/diagram/FromClause.png) > ![where grammar](grammar/diagram/WhereClause.png) > ![group by grammar](grammar/diagram/GroupByClause.png) > ![group by dimensions grammar](grammar/diagram/GroupByDimension.png) > ![set group grammar](grammar/diagram/SetBasedGroup.png) > ![each group grammar](grammar/diagram/EachBasedGroup.png) > ![into grammar](grammar/diagram/IntoClause.png) > ![having grammar](grammar/diagram/HavingClause.png)
 
-A example select operation configured to pass through data from a pipelines default `in` stream to a pipelines default `out` stream:
+A example select operation configured to pass through data from a pipeline's default `in` stream to a pipeline's default `out` stream:
 
 ```trickle
 select event from in into out;
 ```
 
-Select operations can filter ingested data with the specification of a where` clause. The clause forms a predicate check on the inbound events before any further processing takes place.
+Select operations can filter ingested data with the specification of a `where` clause. The clause forms a predicate check on the inbound events before any further processing takes place.
 
 ```trickle
 select event from in where event.is_interesting into out;
 ```
 
-Select operations can filter data being forwarded to other operators with the specification of a `where` clause. The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
+Select operations can filter data being forwarded to other operators with the specification of a `having` clause. The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
 
 ```trickle
 select event from in into out having event.is_interesting;
@@ -220,9 +223,9 @@ end;
 select { "count": stats::count(event) } from in[fifteen_secs] into out having event.count > 0;
 ```
 
-In the above operation, we emit a synthetic count every fifteen seconds if ast least one event has been witnessed during a 15 second window of time.
+In the above operation, we emit a synthetic count every fifteen seconds if at least one event has been witnessed during a 15 second window of time.
 
-Select operations can be grouped through defining a `group by` clause
+Select operations can be grouped through defining a `group by` clause.
 
 ```trickle
 define tumbling window fifteen_secs
@@ -237,6 +240,6 @@ into out
 having event.count > 0;
 ```
 
-In the above operation, we partition the ingested events into groups defined by a required event.partition data field on the inbound event. Each of these groups maintains an independent fifteen second tumbling window, and each window upon closing gates outbound synthetic events by a count for that group.
+In the above operation, we partition the ingested events into groups defined by a required `event.partition` data field on the inbound event. Each of these groups maintains an independent fifteen second tumbling window, and each window upon closing gates outbound synthetic events by a count for that group.
 
 The current implementation of `select` allows set-based and each-based grouping. These can be composed concatenatively. However `cube` and `rollup` based grouping dimensions are not currently supported.

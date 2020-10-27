@@ -128,8 +128,7 @@ end;
 
 #### Custom Operator definitions
 
-FIXME
-Custom operators allow legacy operators written before the query language. As the query langauge and deprecated yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:
+Custom operators allow definition, configuration and usage of legacy operators, that have been around before tremor supported the query language. As the query language and deprecated yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:
 
 Operator definition grammar:
 
@@ -194,7 +193,7 @@ The select operation is of the general form:
 
 > ![select grammar](grammar/diagram/SelectStmt.png) > ![from grammar](grammar/diagram/FromClause.png) > ![where grammar](grammar/diagram/WhereClause.png) > ![group by grammar](grammar/diagram/GroupByClause.png) > ![group by dimensions grammar](grammar/diagram/GroupByDimension.png) > ![set group grammar](grammar/diagram/SetBasedGroup.png) > ![each group grammar](grammar/diagram/EachBasedGroup.png) > ![into grammar](grammar/diagram/IntoClause.png) > ![having grammar](grammar/diagram/HavingClause.png)
 
-A example select operation configured to pass through data from a pipeline's default `in` stream to a pipeline's default `out` stream:
+An example select operation configured to pass through data from a pipeline's default `in` stream to a pipeline's default `out` stream:
 
 ```trickle
 select event from in into out;

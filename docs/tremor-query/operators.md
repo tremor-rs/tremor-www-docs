@@ -6,7 +6,7 @@ Operators process events and signals in the context of a pipeline. An operator, 
 
 Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behavior, concurrency, event ordering or other aspects of a running tremor system.
 
-Operators are created in the context of a pipeline and configured in the `nodes` section of each pipeline. An operator MUST have an identifier that is unique for its owning pipeline.
+Operators are created in the context of a pipeline and configured as part of `tremor-query` [statements](index.md#statements). An operator MUST have an identifier that is unique for its owning pipeline.
 
 Configuration is of the general form:
 
@@ -15,6 +15,8 @@ define script add
 script
   emit + 1
 end;
+
+create script add;
 
 select event from in into add;
 select event from add into out;

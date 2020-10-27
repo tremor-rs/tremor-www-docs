@@ -20,6 +20,12 @@ pip3 install -r requirements.txt
 
 This installs the `mkdocs-material` theme which we use, along with other dependencies.
 
+To enable syntax-highlighting for tremor-script/trickle code snippets, install our mkdocs-specifc tremor lexer as well:
+
+```bash
+.github/scripts/install-lexer.sh
+```
+
 ## Generate mkdocs configuration
 
 ```
@@ -41,4 +47,4 @@ mkdocs build
 mkdocs serve
 ```
 
-Now the docs will be available at http://127.0.0.1:8000/ for reviewing as you edit them (supports live-reload).
+The doc site will be available at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) for reviewing (supports live-reload, as you edit).

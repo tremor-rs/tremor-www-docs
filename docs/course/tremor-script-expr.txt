@@ -131,7 +131,7 @@ Richer structural expression forms with separate courses:
 
 |Atom|Description|Guide|
 |---|---|---|
-|`for`|`for` comprehensions|
+|[`for`](./for.html)|`for` comprehensions|
 |`fn`|Function definitions|
 |`mod`|Module definitions|
 |[`match`](./match.html)|Data structure pattern matching|

@@ -4,34 +4,52 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Training Course Module: User defined modules</title>
+		<title>Training Course: tremor-script Language</title>
 
-		<link rel="stylesheet" href="./dist/reveal.css">
-		<link rel="stylesheet" href="./dist/theme/solarized.css" id="theme">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/solarized.css" id="theme">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/styles/solarized-dark.min.css">
-		<link rel="stylesheet" href="./plugin/menu/menu.css">
-		<link rel="stylesheet" href="./plugin/toolbar/toolbar.css">
+		<link rel="stylesheet" href="../plugin/menu/menu.css">
+		<link rel="stylesheet" href="../plugin/toolbar/toolbar.css">
         <style type="text/css">
-   #header-left {
-        position: absolute;
-        top: 0%;
-        left: 0%;
+#header-left {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+}
+#header-right {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+}
+#footer-left {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+}
+#footer-right {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+}
+
+div !span .fragment.current-visible.visible:not(.current-fragment) {
+    animation: removed-item-animation 1.5s cubic-bezier(0.6, -0.05, 0.9, 0.9) forwards;
+    transform-origin: 0% 100%;
+}
+div @keyframes removed-item-animation {
+    0% {
+        opacity: 1;
+        transform: rotateZ(0);
     }
-    #header-right {
-        position: absolute;
-        top: 0%;
-        right: 0%;
+
+    100% {
+        opacity: 0;
+        transform: translateY(900px) rotateZ(70deg);
+        line-height: 0px;
+        display: none;
     }
-    #footer-left {
-        position: absolute;
-        bottom: 0%;
-        left: 0%;
-    }
-    #footer-right {
-        position: absolute;
-        bottom: 0%;
-        right: 0%;
-    }
+}
         </style>
 	</head>
 
@@ -51,19 +69,26 @@
 			<div class="slides">
 
                 <!-- Use external markdown resource, separate slides by three newlines; vertical slides by two newlines -->
+                <section data-markdown="./index.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-expr.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-match.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-merge.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-patch.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-for.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-fn.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
                 <section data-markdown="./tremor-script-mod.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
 
             </div>
 		</div>
 
         <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/highlight.min.js"></script -->
-		<script src="./dist/reveal.js"></script>
-        <script src="./plugin/markdown/markdown.js"></script>
-        <script src="./plugin/highlight/highlight.js"></script>
-        <script src="./highlightjs-tremor.cjs.js"></script>
-        <!-- script src="./plugin/notes/notes.js"></script -->
+		<script src="../dist/reveal.js"></script>
+        <script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+        <script src="../highlightjs-tremor.cjs.js"></script>
+        <!-- script src="../plugin/notes/notes.js"></script -->
         <!-- script src="../plugin/spotlight/spotlight.js"></script -->
-        <script src="./plugin/menu/menu.js"></script>
+        <script src="../plugin/menu/menu.js"></script>
 
 		<script>
 			Reveal.initialize({
@@ -73,7 +98,7 @@
 				center: true,
 
                 dependencies: [
-                    { "src": "./plugin/toolbar/toolbar.js" }
+                    { "src": "../plugin/toolbar/toolbar.js" }
                 ],
 
 				plugins: [ RevealMarkdown, RevealHighlight, /* RevealNotes, RevealSpotlight, */, RevealMenu ],

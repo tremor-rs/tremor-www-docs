@@ -4,13 +4,13 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Training Course Module: patch operation</title>
+		<title>Training Course Module: User defined modules</title>
 
-		<link rel="stylesheet" href="./dist/reveal.css">
-		<link rel="stylesheet" href="./dist/theme/solarized.css" id="theme">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/solarized.css" id="theme">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/styles/solarized-dark.min.css">
-		<link rel="stylesheet" href="./plugin/menu/menu.css">
-		<link rel="stylesheet" href="./plugin/toolbar/toolbar.css">
+		<link rel="stylesheet" href="../plugin/menu/menu.css">
+		<link rel="stylesheet" href="../plugin/toolbar/toolbar.css">
         <style type="text/css">
    #header-left {
         position: absolute;
@@ -51,19 +51,19 @@
 			<div class="slides">
 
                 <!-- Use external markdown resource, separate slides by three newlines; vertical slides by two newlines -->
-                <section data-markdown="./tremor-script-patch.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
+                <section data-markdown="./tremor-script-mod.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
 
             </div>
 		</div>
 
         <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/highlight.min.js"></script -->
-		<script src="./dist/reveal.js"></script>
-        <script src="./plugin/markdown/markdown.js"></script>
-        <script src="./plugin/highlight/highlight.js"></script>
-        <script src="./highlightjs-tremor.cjs.js"></script>
-        <!-- script src="./plugin/notes/notes.js"></script -->
+		<script src="../dist/reveal.js"></script>
+        <script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+        <script src="../highlightjs-tremor.cjs.js"></script>
+        <!-- script src="../plugin/notes/notes.js"></script -->
         <!-- script src="../plugin/spotlight/spotlight.js"></script -->
-        <script src="./plugin/menu/menu.js"></script>
+        <script src="../plugin/menu/menu.js"></script>
 
 		<script>
 			Reveal.initialize({
@@ -73,7 +73,7 @@
 				center: true,
 
                 dependencies: [
-                    { "src": "./plugin/toolbar/toolbar.js" }
+                    { "src": "../plugin/toolbar/toolbar.js" }
                 ],
 
 				plugins: [ RevealMarkdown, RevealHighlight, /* RevealNotes, RevealSpotlight, */, RevealMenu ],

@@ -1,5 +1,5 @@
 ## Tremor Training
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 Web-based deep dives into tremor
 
@@ -12,8 +12,15 @@ language.
 
 >>>
 
+### `testing`
+
+A deep dive into [`testing`](./testing/index.html) using unit, command-line,
+integration and benchmark testing frameworks.
+
+>>>
+
 ### The End
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#33FF77" -->
 
 Watch this space for future guides as we develop
 more online self-guide and instructor led training

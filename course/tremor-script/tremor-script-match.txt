@@ -1,5 +1,5 @@
 ## Tremor Script `match`
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 This tutorial introduces the `match` statement
 
@@ -169,7 +169,7 @@ Case guards allow extracted values to be further filtered for more refined match
 >>>
 
 ### End of `match` guide
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#77FF33" -->
 
 This is the end of the `match` getting started guide
 

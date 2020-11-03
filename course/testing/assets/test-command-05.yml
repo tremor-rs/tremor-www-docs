@@ -1,0 +1,344 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: /bin/zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 78
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  # frameDelay: auto
+  frameDelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Tremor
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: /Users/dennis/Pictures/tremor_logo.png
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1311
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 66
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1459
+    content: t
+  - delay: 223
+    content: "\btr"
+  - delay: 60
+    content: e
+  - delay: 195
+    content: c
+  - delay: 73
+    content: k
+  - delay: 77
+    content: e
+  - delay: 105
+    content: r
+  - delay: 166
+    content: ' '
+  - delay: 119
+    content: t
+  - delay: 60
+    content: e
+  - delay: 166
+    content: s
+  - delay: 44
+    content: t
+  - delay: 136
+    content: ' '
+  - delay: 164
+    content: c
+  - delay: 210
+    content: o
+  - delay: 105
+    content: m
+  - delay: 150
+    content: m
+  - delay: 104
+    content: a
+  - delay: 91
+    content: 'n'
+  - delay: 90
+    content: d
+  - delay: 194
+    content: ' '
+  - delay: 390
+    content: /
+  - delay: 436
+    content: p
+  - delay: 75
+    content: w
+  - delay: 61
+    content: d
+  - delay: 209
+    content: /
+  - delay: 105
+    content: t
+  - delay: 29
+    content: e
+  - delay: 167
+    content: s
+  - delay: 89
+    content: t
+  - delay: 90
+    content: s
+  - delay: 105
+    content: ' '
+  - delay: 105
+    content: '-'
+  - delay: 255
+    content: i
+  - delay: 136
+    content: ' '
+  - delay: 329
+    content: c
+  - delay: 59
+    content: u
+  - delay: 122
+    content: r
+  - delay: 134
+    content: l
+  - delay: 90
+    content: ' '
+  - delay: 196
+    content: '-'
+  - delay: 165
+    content: e
+  - delay: 104
+    content: ' '
+  - delay: 2416
+    content: w
+  - delay: 104
+    content: h
+  - delay: 60
+    content: i
+  - delay: 88
+    content: c
+  - delay: 76
+    content: h
+  - delay: 496
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;trecker test command /pwd/tests -i curl -e which\a\e]1;trecker\a"
+  - delay: 358
+    content: "+ [ -n  ]\r\n+ [ 7 != 0 ]\r\n+ ARGS=test command /pwd/tests -i curl -e which\r\n+ exec /tremor test command /pwd/tests -i curl -e which\r\n"
+  - delay: 19
+    content: "\e[0m\e[1m\e[37mFramework\e[0m: Finding command-driven test scenarios\r\n"
+  - delay: 7
+    content: "\e[0m\e[0m\e[1m\e[37mCommand Suite: \e[0m: Find the env for this test environment\r\n\e[0m\r\n\e[0m\e[1m\e[37m  Command Test\e[0m: Use env to query the environment\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[32m command\e[0m\e[1m\e[30m example\e[0m\e[1m\e[30m cmd\e[0m\e[1m\e[30m env\e[0m\e[1m\e[30m all\r\n"
+  - delay: 8
+    content: "\e[0m\e[1m\e[32m      (+) Assert 0\e[0m: Status Use env to query the environment\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 1\e[0m:   Contains `TREMOR_PATH` in `/pwd/tests/command/env-example/fg.0.out.log`\r\n\e[0m\e[0m\e[1m\e[34m    Test Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 2 \r\n\e[0m\r\n\e[0m\e[1m\e[34mSuite Stats: \e[0m\e[1m\e[32mPass 2 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 4 \r\n\e[0m\r\n"
+  - delay: 6
+    content: "\e[0m\e[1m\e[37mCommand Suite: \e[0m: Download robots.txt from www.cncf.io\r\n\e[0m\r\n\e[0m\e[1m\e[37m  Command Test\e[0m: curl https://www.cncf.io/robots.txt\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[30m all\e[0m\e[1m\e[32m command\e[0m\e[1m\e[30m cncf.io\r\n"
+  - delay: 205
+    content: "\e[0m\e[1m\e[32m      (+) Assert 0\e[0m: Status curl https://www.cncf.io/robots.txt\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 1\e[0m:   Contains `Allow` in `/pwd/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 2\e[0m:   Contains `Disallow` in `/pwd/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 3\e[0m:   Contains `User-agent` in `/pwd/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 4\e[0m:   Contains `Sitemap` in `/pwd/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 5\e[0m:   Contains `HTTP/2 200` in `/pwd/tests/command/robot-example/fg.1.err.log`\r\n\e[0m\e[0m\e[1m\e[34m    Test Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 6 \r\n\e[0m\r\n\e[0m\e[1m\e[34mSuite Stats: \e[0m\e[1m\e[32mPass 2 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 12 \r\n\e[0m\r\n"
+  - delay: 8
+    content: "\e[0m\e[1m\e[37mCommand Suite: \e[0m: Find the env for this test environment\r\n\e[0m\r\n\e[0m\e[1m\e[37m  Command Test ( Skipping )\e[0m: Assert that the `tremor` binary is not on the path\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[30m example\e[0m\e[1m\e[32m command\e[0m\e[1m\e[31m which\e[0m\e[1m\e[30m all\e[0m\e[1m\e[30m cmd\r\n\r\n\e[0m\e[1m\e[34mCommand Stats: \e[0m\e[1m\e[32mPass 4 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 16 \r\n\e[0m\e[0m\e[1m\e[34mElapsed\e[0m: 243ms 4us\r\n\e[0m\r\n\r\n"
+  - delay: 12
+    content: "\r\n\r\n\e[0m\e[1m\e[34mAll Command Stats: \e[0m\e[1m\e[32mPass 4 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 16 \r\n\e[0m\e[0m\e[1m\e[34mTotal Stats: \e[0m\e[1m\e[32mPass 4 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 16 \r\n\e[0m\e[0m\e[1m\e[34mTotal Elapsed\e[0m: 257ms 974us\r\n\e[0m"
+  - delay: 130
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 56
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1102
+    content: t
+  - delay: 150
+    content: "\btr"
+  - delay: 29
+    content: e
+  - delay: 46
+    content: m
+  - delay: 60
+    content: o
+  - delay: 91
+    content: r
+  - delay: 149
+    content: ' '
+  - delay: 1321
+    content: t
+  - delay: 60
+    content: e
+  - delay: 193
+    content: s
+  - delay: 76
+    content: t
+  - delay: 135
+    content: ' '
+  - delay: 90
+    content: c
+  - delay: 45
+    content: o
+  - delay: 29
+    content: m
+  - delay: 181
+    content: m
+  - delay: 136
+    content: a
+  - delay: 73
+    content: 'n'
+  - delay: 77
+    content: d
+  - delay: 134
+    content: ' '
+  - delay: 89
+    content: t
+  - delay: 46
+    content: e
+  - delay: 195
+    content: s
+  - delay: 74
+    content: t
+  - delay: 120
+    content: s
+  - delay: 166
+    content: ' '
+  - delay: 526
+    content: '-'
+  - delay: 225
+    content: i
+  - delay: 119
+    content: ' '
+  - delay: 690
+    content: c
+  - delay: 61
+    content: u
+  - delay: 103
+    content: r
+  - delay: 105
+    content: l
+  - delay: 76
+    content: ' '
+  - delay: 195
+    content: '-'
+  - delay: 405
+    content: e
+  - delay: 89
+    content: ' '
+  - delay: 662
+    content: e
+  - delay: 89
+    content: 'n'
+  - delay: 76
+    content: v
+  - delay: 4319
+    content: "\b \b"
+  - delay: 180
+    content: "\b \b"
+  - delay: 179
+    content: "\b \b"
+  - delay: 300
+    content: w
+  - delay: 76
+    content: h
+  - delay: 60
+    content: i
+  - delay: 119
+    content: c
+  - delay: 331
+    content: h
+  - delay: 405
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;tremor test command tests -i curl -e which\a\e]1;tremor\a"
+  - delay: 99
+    content: "\e[0m\e[1m\e[37mFramework\e[0m: Finding command-driven test scenarios\r\n\e[0m\e[0m\e[1m\e[37mCommand Suite: \e[0m: Find the env for this test environment\r\n\e[0m\r\n\e[0m\e[1m\e[37m  Command Test\e[0m: Use env to query the environment\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[32m command\e[0m\e[1m\e[30m example\e[0m\e[1m\e[30m cmd\e[0m\e[1m\e[30m all\e[0m\e[1m\e[30m env\r\n"
+  - delay: 17
+    content: "\e[0m\e[1m\e[32m      (+) Assert 0\e[0m: Status Use env to query the environment\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 1\e[0m:   Contains `TREMOR_PATH` in `/Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/env-example/fg.0.out.log`\r\n\e[0m\e[0m\e[1m\e[34m    Test Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 2 \r\n\e[0m\r\n\e[0m\e[1m\e[34mSuite Stats: \e[0m\e[1m\e[32mPass 2 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 4 \r\n\e[0m\r\n\e[0m\e[1m\e[37mCommand Suite: \e[0m: Download robots.txt from www.cncf.io\r\n\e[0m\r\n\e[0m\e[1m\e[37m  Command Test\e[0m: curl https://www.cncf.io/robots.txt\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[30m cncf.io\e[0m\e[1m\e[30m all\e[0m\e[1m\e[32m command\r\n"
+  - delay: 165
+    content: "\e[0m\e[1m\e[32m      (+) Assert 0\e[0m: Status curl https://www.cncf.io/robots.txt\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 1\e[0m:   Contains `Allow` in `/Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 2\e[0m:   Contains `Disallow` in `/Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 3\e[0m:   Contains `User-agent` in `/Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 4\e[0m:   Contains `Sitemap` in `/Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/robot-example/fg.1.out.log`\r\n\e[0m\e[0m\e[1m\e[32m      (+) Assert 5\e[0m:   Contains `HTTP/2 200` in `/Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/robot-example/fg.1.err.log`\r\n\e[0m\e[0m\e[1m\e[34m    Test Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 6 \r\n\e[0m\r\n\e[0m\e[1m\e[34mSuite Stats: \e[0m\e[1m\e[32mPass 2 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 12 \r\n\e[0m\r\n\e[0m\e[1m\e[37mCommand Suite: \e[0m: Find the env for this test environment\r\n\e[0m\r\n\e[0m\e[1m\e[37m  Command Test ( Skipping )\e[0m: Assert that the `tremor` binary is not on the path\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[30m cmd\e[0m\e[1m\e[30m all\e[0m\e[1m\e[30m example\e[0m\e[1m\e[31m which\e[0m\e[1m\e[32m command\r\n\r\n\e[0m\e[1m\e[34mCommand Stats: \e[0m\e[1m\e[32mPass 4 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 16 \r\n\e[0m\e[0m\e[1m\e[34mElapsed\e[0m: 187ms 282us\r\n\e[0m\r\n\r\n\r\n\r\n\e[0m\e[1m\e[34mAll Command Stats: \e[0m\e[1m\e[32mPass 4 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 16 \r\n\e[0m\e[0m\e[1m\e[34mTotal Stats: \e[0m\e[1m\e[32mPass 4 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 16 \r\n\e[0m\e[0m\e[1m\e[34mTotal Elapsed\e[0m: 192ms 494us\r\n\e[0m\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 65
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1788
+    content: "\e[?2004l\r\r\n"

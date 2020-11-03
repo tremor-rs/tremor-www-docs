@@ -1,5 +1,5 @@
 ## Tremor Script `mod`
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 This course introduces user-defined modules
 
@@ -20,7 +20,7 @@ defined modules is essentially the same.
 ### Module Path - Physical
 
 The module path can be a mix of physical namespaces separated by sub-folders on the file system
-where each module root is exposed to tremo via the `TREMOR_PATH` environment variable.
+where each module root is exposed to tremor via the `TREMOR_PATH` environment variable.
 
 ```text
  +-- foo
@@ -106,7 +106,7 @@ The `use` clause leverages `TREMOR_PATH` to resolve external modular functions a
 >>>
 
 ### End of `mod` guide
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#77FF33" -->
 
 This is the end of the `mod` getting started guide
 

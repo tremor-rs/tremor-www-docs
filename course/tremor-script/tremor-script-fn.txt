@@ -1,5 +1,5 @@
 ## Tremor Script `fn`
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 This course introduces the user-defined functions
 
@@ -32,14 +32,14 @@ end
 ```
 
 <div style='font-size: 20px'>
-Intrinsic functions are runtiem provided and implemented in rust
+Intrinsic functions are runtime provided and implemented in rust
 </div>
 
 >>>
 
 ### Standard Functions
 
-![Simple Fn rule](https://docs.tremor.rs/tremor-script/grammar/diagram/SimpleFnDecl.png)
+![Standard Fn rule](https://docs.tremor.rs/tremor-script/grammar/diagram/SimpleFnDecl.png)
 
 ```tremor [|1-4|6-9]
 ## Summation
@@ -92,7 +92,7 @@ function references are covered in the [`mod`](./mod.html) course and guide.
 >>>
 
 ### End of `fn` guide
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#77FF33" -->
 
 This is the end of the `fn` getting started guide
 

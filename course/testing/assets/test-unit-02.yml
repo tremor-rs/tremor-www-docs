@@ -1,0 +1,262 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: /bin/zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 78
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  # frameDelay: auto
+  frameDelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Tremor
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: /Users/dennis/Pictures/tremor_logo.png
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 2044
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 99
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1564
+    content: T
+  - delay: 284
+    content: "\bTR"
+  - delay: 300
+    content: E
+  - delay: 210
+    content: M
+  - delay: 209
+    content: O
+  - delay: 150
+    content: R
+  - delay: 136
+    content: _
+  - delay: 284
+    content: P
+  - delay: 90
+    content: A
+  - delay: 91
+    content: T
+  - delay: 89
+    content: H
+  - delay: 330
+    content: '='
+  - delay: 405
+    content: /
+  - delay: 375
+    content: o
+  - delay: 74
+    content: p
+  - delay: 270
+    content: t
+  - delay: 435
+    content: /
+  - delay: 211
+    content: l
+  - delay: 300
+    content: o
+  - delay: 150
+    content: c
+  - delay: 45
+    content: a
+  - delay: 59
+    content: l
+  - delay: 286
+    content: /
+  - delay: 165
+    content: t
+  - delay: 224
+    content: r
+  - delay: 46
+    content: e
+  - delay: 449
+    content: m
+  - delay: 256
+    content: o
+  - delay: 164
+    content: r
+  - delay: 210
+    content: /
+  - delay: 255
+    content: l
+  - delay: 181
+    content: i
+  - delay: 120
+    content: b
+  - delay: 104
+    content: ' '
+  - delay: 241
+    content: t
+  - delay: 210
+    content: r
+  - delay: 60
+    content: a
+  - delay: 554
+    content: "\b \b"
+  - delay: 150
+    content: e
+  - delay: 241
+    content: c
+  - delay: 104
+    content: k
+  - delay: 165
+    content: e
+  - delay: 90
+    content: r
+  - delay: 151
+    content: ' '
+  - delay: 195
+    content: t
+  - delay: 45
+    content: e
+  - delay: 209
+    content: s
+  - delay: 60
+    content: t
+  - delay: 105
+    content: ' '
+  - delay: 166
+    content: u
+  - delay: 269
+    content: 'n'
+  - delay: 181
+    content: i
+  - delay: 89
+    content: t
+  - delay: 150
+    content: ' '
+  - delay: 301
+    content: /
+  - delay: 330
+    content: "p \r\e[K"
+  - delay: 44
+    content: w
+  - delay: 60
+    content: "\rwd"
+  - delay: 856
+    content: /
+  - delay: 269
+    content: t
+  - delay: 45
+    content: e
+  - delay: 256
+    content: s
+  - delay: 119
+    content: t
+  - delay: 120
+    content: s
+  - delay: 556
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;TREMOR_PATH=/opt/local/tremor/lib trecker test unit /pwd/tests\a\e]1;trecker\a"
+  - delay: 1167
+    content: "+ [ -n  ]\r\n+ [ 3 != 0 ]\r\n+ ARGS=test unit /pwd/tests\r\n+ exec /tremor test unit /pwd/tests\r\n"
+  - delay: 287
+    content: "\e[0m\e[1m\e[37mFramework\e[0m: Finding unit test scenarios\r\n\e[0m\e[0m\e[1m\e[37m  Unit Test Scenario\e[0m: /pwd/tests/unit/all.tremor\r\n"
+  - delay: 8
+    content: "\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[32m all\e[0m\e[1m\e[32m unit\r\n\r\n"
+  - delay: 50
+    content: "\e[0m\e[1m\e[37m    Suite\e[0m: name\r\n\e[0m\e[0m\e[1m\e[33m      Tags: \e[0m\e[1m\e[30m all\e[0m\e[1m\e[32m unit\r\n\e[0m\e[1m\e[37m      Test\e[0m: \r\n\e[0m\e[0m\e[1m\e[33m        Tags: \e[0m\e[1m\e[30m all\e[0m\e[1m\e[32m unit\r\n\e[0m\e[1m\e[32m\e[0m\e[1m\e[32m        (+) Executing test 1 of 1\r\n\e[0m\e[0m\e[1m          14 | \e[0m\e[0m      \e[0m\e[0m\e[38;5;11mtest\e[0m\e[0m\e[1m\e[38;5;15m::\e[0m\e[0m\e[38;5;11mtest\e[0m\e[0m\e[1m\e[38;5;15m(\e[0m\e[0m\e[1m\e[38;5;15m{\e[0m\e[0m\r\n\e[0m\e[0m\e[1m          15 | \e[0m\e[0m        \e[0m\e[0m\"\e[0m\e[0m\e[38;5;13mname\e[0m\e[0m\"\e[0m\e[0m\e[1m\e[38;5;15m:\e[0m\e[0m \e[0m\e[0m\"\e[0m\e[0m\e[38;5;13mTest our hello fn\e[0m\e[0m\"\e[0m\e[0m\e[1m\e[38;5;15m,\e[0m\e[0m\r\n\e[0m\e[0m\e[1m          16 | \e[0m\e[0m        \e[0m\e[0m\"\e[0m\e[0m\e[38;5;13mtest\e[0m\e[0m\"\e[0m\e[0m\e[1m\e[38;5;15m:\e[0m\e[0m \e[0m\e[0m\e[38;5;11mtest\e[0m\e[0m\e[1m\e[38;5;15m::\e[0m\e[0m\e[38;5;11massert\e[0m\e[0m\e[1m\e[38;5;15m(\e[0m\e[0m\"\e[0m\e[0m\e[38;5;13mhello test\e[0m\e[0m\"\e[0m\e[0m\e[1m\e[38;5;15m,\e[0m\e[0m \e[0m\e[0m\"\e[0m\e[0m\e[38;5;13mbadger\e[0m\e[0m\"\e[0m\e[0m\e[1m\e[38;5;15m,\e[0m\e[0m \e[0m\e[0m\e[38;5;11mhello\e[0m\e[0m\e[1m\e[38;5;15m(\e[0m\e[0m\"\e[0m\e[0m\e[38;5;13mbadger\e[0m\e[0m\"\e[0m\e[0m\e[1m\e[38;5;15m)\e[0m\e[0m\e[1m\e[38;5;15m)\e[0m\e[0m\e[1m\e[38;5;15m,\e[0m\e[0m\r\n\e[0m\e[0m\e[1m          17 | \e[0m\e[0m      \e[0m\e[0m\e[1m\e[38;5;15m}\e[0m\e[0m\e[1m\e[38;5;15m)\e[0m\e[0m\e[1m\e[38;5;15m,\e[0m\e[0m\r\n\e[0m\e[0m\r\n\r\n\e[0m\e[1m\e[34m   Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 1 \r\n\e[0m\e[0m\e[1m\e[34m    Elapsed\e[0m: 47ms 343us\r\n\e[0m\e[0m\e[1m\e[34m  Unit Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 1 \r\n\e[0m\r\n\r\n\r\n\e[0m\e[1m\e[34mAll Unit Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 1 \r\n\e[0m\e[0m\e[1m\e[34mTotal Stats: \e[0m\e[1m\e[32mPass 1 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 1 \r\n\e[0m\e[0m\e[1m\e[34mTotal Elapsed\e[0m: 96ms 878us\r\n\e[0m"
+  - delay: 228
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 83
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 3328
+    content: "\e[?2004l\r\r\n"

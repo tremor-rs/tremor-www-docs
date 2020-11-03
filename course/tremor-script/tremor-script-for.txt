@@ -1,5 +1,5 @@
 ## Tremor Script `for`
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 This course introduces the `for` statement
 
@@ -20,7 +20,7 @@ for <expression> of
   # non-guarded case variant
   case (index, value) => <expression>
   # guarded case variant
-  case (index, vlaue) when <predicate> => <expression>
+  case (index, value) when <predicate> => <expression>
 end
 ```
 
@@ -72,7 +72,7 @@ Use a case guard to discriminate even and odd indexes
 >>>
 
 ### End of `for` guide
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#77FF33" -->
 
 This is the end of the `for` getting started guide
 

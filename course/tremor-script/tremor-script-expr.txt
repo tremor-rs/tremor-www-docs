@@ -1,14 +1,14 @@
 ## Tremor Script expressions
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 <p style='font-size: 20px'>
 This course introduces the expression oriented `tremor-script` ( `tremor` for short )
-domain specific language. The `tremor-script` langauge is defined to work on continuous
+domain specific language. The `tremor-script` language is defined to work on continuous
 streams of data in the context of an event based data-distribution engine.
 </p>
 
 <p style='font-size: 20px'>
-The language can be used independantly of the tremor runtime, although it is primarily
+The language can be used independently of the tremor runtime, although it is primarily
 designed to be used inside the `tremor` runtime.
 </p>
 
@@ -35,7 +35,7 @@ Strings and heredocs support {foo} interpolation
 ### expressions - unary and binary
 
 <p style='font-size: 20px'>
-Tremor supports logical, bitwise, binary, equality, comparitive
+Tremor supports logical, bitwise, binary, equality, comparative
 shift, additive, multiplicative and unary operations in a similar
 way to other languages ( C/Java precedence ).
 </p>
@@ -105,14 +105,14 @@ foo['tremolo'] # the element named 'tremolo', assuming `foo` is a record-like va
 ```
 
 <div style='font-size: 20px'>
-The atoms `$`, `event`, `state`, `args` have special meaning in `tremor-script`. They can be
+The atoms `$`, `event`, `state`, `args` have specific meaning in `tremor-script`. They can be
 indexed against using path expressions but their values are context dependent and provided by
 the tremor runtime.
 </div>
 
 >>>
 
-### `<path>` special atoms
+### `<path>` specific atoms
 
 |Atom|Description|
 |---|---|
@@ -141,7 +141,7 @@ Richer structural expression forms with separate courses:
 >>>
 
 ### End of `expression` guide
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#77FF33" -->
 
 This is the end of the `expression` getting started guide
 

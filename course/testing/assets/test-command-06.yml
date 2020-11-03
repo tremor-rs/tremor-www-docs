@@ -1,0 +1,274 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: /bin/zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/structured/before
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 78
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  # frameDelay: auto
+  frameDelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Tremor
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: /Users/dennis/Pictures/tremor_logo.png
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 2097
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/structured/before\a\e]1;..ctured/before\a"
+  - delay: 86
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mbefore\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1552
+    content: t
+  - delay: 180
+    content: "\btr"
+  - delay: 46
+    content: e
+  - delay: 223
+    content: c
+  - delay: 60
+    content: k
+  - delay: 149
+    content: e
+  - delay: 106
+    content: r
+  - delay: 555
+    content: ' '
+  - delay: 60
+    content: s
+  - delay: 75
+    content: e
+  - delay: 60
+    content: r
+  - delay: 195
+    content: v
+  - delay: 119
+    content: e
+  - delay: 75
+    content: r
+  - delay: 137
+    content: ' '
+  - delay: 74
+    content: r
+  - delay: 120
+    content: u
+  - delay: 255
+    content: 'n'
+  - delay: 89
+    content: ' '
+  - delay: 121
+    content: '-'
+  - delay: 105
+    content: f
+  - delay: 89
+    content: ' '
+  - delay: 420
+    content: /
+  - delay: 300
+    content: p
+  - delay: 61
+    content: w
+  - delay: 105
+    content: d
+  - delay: 164
+    content: /
+  - delay: 150
+    content: c
+  - delay: 82
+    content: o
+  - delay: 84
+    content: 'n'
+  - delay: 45
+    content: f
+  - delay: 164
+    content: i
+  - delay: 70
+    content: g
+  - delay: 246
+    content: .
+  - delay: 285
+    content: 'y'
+  - delay: 105
+    content: a
+  - delay: 285
+    content: m
+  - delay: 75
+    content: l
+  - delay: 284
+    content: ' '
+  - delay: 271
+    content: /
+  - delay: 239
+    content: p
+  - delay: 106
+    content: w
+  - delay: 30
+    content: d
+  - delay: 345
+    content: /
+  - delay: 1365
+    content: s
+  - delay: 75
+    content: e
+  - delay: 75
+    content: r
+  - delay: 210
+    content: v
+  - delay: 150
+    content: e
+  - delay: 75
+    content: r
+  - delay: 149
+    content: .
+  - delay: 301
+    content: 'y'
+  - delay: 240
+    content: a
+  - delay: 119
+    content: m
+  - delay: 75
+    content: "l \r\e[K"
+  - delay: 195
+    content: ' '
+  - delay: 2115
+    content: "\r /"
+  - delay: 240
+    content: p
+  - delay: 75
+    content: w
+  - delay: 74
+    content: d
+  - delay: 271
+    content: /
+  - delay: 389
+    content: w
+  - delay: 301
+    content: s
+  - delay: 149
+    content: .
+  - delay: 150
+    content: t
+  - delay: 151
+    content: r
+  - delay: 104
+    content: i
+  - delay: 121
+    content: c
+  - delay: 105
+    content: k
+  - delay: 240
+    content: l
+  - delay: 180
+    content: e
+  - delay: 3044
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;trecker server run -f /pwd/config.yaml /pwd/server.yaml /pwd/ws.trickle\a\e]1;trecker\a"
+  - delay: 580
+    content: "+ [ -n  ]\r\n+ [ 6 != 0 ]\r\n+ ARGS=server run -f /pwd/config.yaml /pwd/server.yaml /pwd/ws.trickle\r\n+ exec /tremor server run -f /pwd/config.yaml /pwd/server.yaml /pwd/ws.trickle\r\n"
+  - delay: 15
+    content: "tremor version: 0.9.1\r\ntremor instance: tremor\r\nrd_kafka version: 0x000000ff, 1.5.0\r\nallocator: snmalloc\r\n"
+  - delay: 20
+    content: "Listening at: http://0.0.0.0:9898\r\n"
+  - delay: 109885
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing/tests/command/structured/before\a\e]1;..ctured/before\a"
+  - delay: 83
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;31m➜  \e[36mbefore\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 5830
+    content: "\e[?2004l\r\r\n"

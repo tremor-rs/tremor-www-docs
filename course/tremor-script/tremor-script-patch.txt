@@ -1,5 +1,5 @@
 ## Tremor Script `patch`
-<!-- .slide: data-background="#003300" -->
+<!-- .slide: data-background="#FF7733" -->
 
 This course introduces the `patch` statement
 
@@ -163,7 +163,7 @@ However, the `patch` operation is considerably more verbose than merge.
 >>>
 
 ### End of `patch` guide
-<!-- .slide: data-background="#003333" -->
+<!-- .slide: data-background="#77FF33" -->
 
 This is the end of the `patch` getting started guide
 

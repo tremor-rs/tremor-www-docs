@@ -8,6 +8,18 @@ appenders:
 
 # Write only warnings to stdout
 root:
-  level: info
+  level: warn
   appenders:
     - stdout
+
+loggers:
+  tremor_runtime:
+    level: info
+    appenders:
+      - stdout
+    additive: false
+  tremor:
+    level: info
+    appenders:
+      - stdout
+    additive: false

@@ -1,0 +1,194 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: /bin/zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 78
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  # frameDelay: auto
+  frameDelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Tremor
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: /Users/dennis/Pictures/tremor_logo.png
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 2025
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 78
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 6881
+    content: t
+  - delay: 180
+    content: "\btr"
+  - delay: 43
+    content: e
+  - delay: 60
+    content: m
+  - delay: 106
+    content: o
+  - delay: 104
+    content: r
+  - delay: 150
+    content: ' '
+  - delay: 451
+    content: t
+  - delay: 76
+    content: e
+  - delay: 223
+    content: s
+  - delay: 76
+    content: t
+  - delay: 134
+    content: ' '
+  - delay: 1590
+    content: b
+  - delay: 151
+    content: e
+  - delay: 119
+    content: 'n'
+  - delay: 76
+    content: c
+  - delay: 134
+    content: h
+  - delay: 150
+    content: ' '
+  - delay: 150
+    content: t
+  - delay: 76
+    content: e
+  - delay: 164
+    content: s
+  - delay: 45
+    content: t
+  - delay: 120
+    content: s
+  - delay: 195
+    content: ' '
+  - delay: 465
+    content: '-'
+  - delay: 210
+    content: i
+  - delay: 105
+    content: ' '
+  - delay: 285
+    content: l
+  - delay: 120
+    content: o
+  - delay: 105
+    content: c
+  - delay: 15
+    content: a
+  - delay: 89
+    content: l
+  - delay: 1095
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;tremor test bench tests -i local\a\e]1;tremor\a"
+  - delay: 49
+    content: "\e[0m\e[1m\e[37mFramework\e[0m: Finding benchmark test scenarios\r\n\e[0m\e[0m\e[1m\e[37m  Benchmark\e[0m: Running bench-baseline\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[32m bench\e[0m\e[1m\e[30m docker\e[0m\e[1m\e[30m baseline\e[0m\e[1m\e[30m all\r\n"
+  - delay: 61
+    content: "\e[0m\r\n\r\n\e[0m\e[1m\e[34m  Elapsed\e[0m: 59ms 578us\r\n\e[0m\r\n\e[0m\e[1m\e[37mFramework\e[0m: Finding benchmark test scenarios\r\n\e[0m\e[0m\e[1m\e[37m  Benchmark\e[0m: Running bench-baseline\r\n\e[0m\e[0m\e[1m\e[33m    Tags: \e[0m\e[1m\e[32m bench\e[0m\e[1m\e[32m local\e[0m\e[1m\e[30m baseline\e[0m\e[1m\e[30m all\r\n"
+  - delay: 110067
+    content: "\e[0m\r\n       | Value Percentile TotalCount 1/(1-Percentile)\r\n       | \r\n       | 1003 0.00000        877           1.00\r\n       | 10047 0.25000   15962426           1.33\r\n       | 15039 0.50000   31979001           2.00\r\n       | 19071 0.62500   39485392           2.67\r\n       | 26111 0.75000   47002434           4.00\r\n       | 32127 0.81250   50515915           5.33\r\n       | 43007 0.87500   54164583           8.00\r\n       | 53247 0.90625   56153274          10.67\r\n       | 69119 0.93750   58027746          16.00\r\n       | 85503 0.95312   58988099          21.33\r\n       | 124415 0.96875   59943401          32.00\r\n       | 166911 0.97656   60424356          42.67\r\n       | 237567 0.98438   60906898          64.00\r\n       | 292863 0.98828   61151454          85.33\r\n       | 370687 0.99219   61390768         128.00\r\n       | 425983 0.99414   61511087         170.67\r\n       | 503807 0.99609   61631979         256.00\r\n       | 557055 0.99707   61691832         341.33\r\n       | 630783 0.99805   61752162         512.00\r\n       | 684031 0.99854   61783666         682.67\r\n       | 757759 0.99902   61812421        1024.00\r\n       | 815103 0.99927   61828084        1365.33\r\n       | 888831 0.99951   61842859        2048.00\r\n       | 942079 0.99963   61850406        2730.67\r\n       | 1015807 0.99976   61857767        4096.00\r\n       | 1073151 0.99982   61861555        5461.33\r\n       | 1155071 0.99988   61865352        8192.00\r\n       | 1204223 0.99991   61867155       10922.67\r\n       | 1294335 0.99994   61868959       16384.00\r\n       | 1359871 0.99995   61869917       21845.33\r\n       | 1474559 0.99997   61870906       32768.00\r\n       | 1523711 0.99998   61871326       43690.67\r\n       | 1605631 0.99998   61871826       65536.00\r\n       | 1720319 0.99999   61872012       87381.33\r\n       | 1843199 0.99999   61872249      131072.00\r\n       | 1884159 0.99999   61872377      174762.67\r\n       | 2039807 1.00000   61872496      262144.00\r\n       | 2129919 1.00000   61872549      349525.33\r\n       | 2310143 1.00000   61872692      524288.00\r\n       | 2310143 1.00000   61872692      699050.67\r\n       | 2310143 1.00000   61872692     1048576.00\r\n       | 2310143 1.00000   61872692     1398101.33\r\n       | 2310143 1.00000   61872692     2097152.00\r\n       | 2326527 1.00000   61872720     2796202.67\r\n       | 2326527 1.00000   61872720            inf\r\n       | #[Mean       =     29420.55, StdDeviation   =     61217.53]\r\n       | #[Max        =      2326527, Total count    =     61872720]\r\n       | #[Buckets    =           30, SubBuckets     =         3968]\r\n       | \r\n       | \r\n       | Throughput: 10.6 MB/s\r\n\r\n\e[0m\e[1m\e[34m  Elapsed\e[0m: 1m 50s\r\n\e[0m\r\n\r\n\r\n\e[0m\e[1m\e[34mAll Benchmark Stats: \e[0m\e[1m\e[32mPass 2 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 0 \r\n\e[0m\e[0m\e[1m\e[34mTotal Stats: \e[0m\e[1m\e[32mPass 2 \e[0m\e[1m\e[30mFail 0 \e[0m\e[1m\e[30mSkip 0 \e[0m\e[1m\e[33m Asserts 0 \r\n\e[0m\e[0m\e[1m\e[34mTotal Elapsed\e[0m: 1m 50s\r\n\e[0m\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+  - delay: 93
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 32088
+    content: "\e[?2004l\r\r\n"

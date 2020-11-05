@@ -1,50 +1,49 @@
 # The configurations that used for the recording, feel free to edit them
 config:
-
   # Specify a command to be executed
   # like `/bin/bash -l`, `ls`, or any other commands
   # the default is bash for Linux
   # or powershell.exe for Windows
   command: /bin/zsh
-  
+
   # Specify the current working directory path
   # the default is the current working directory path
   cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing
-  
+
   # Export additional ENV variables
   env:
     recording: true
-  
+
   # Explicitly set the number of columns
   # or use `auto` to take the current
   # number of columns of your shell
   cols: 78
-  
+
   # Explicitly set the number of rows
   # or use `auto` to take the current
   # number of rows of your shell
   rows: 20
-  
+
   # Amount of times to repeat GIF
   # If value is -1, play once
   # If value is 0, loop indefinitely
   # If value is a positive number, loop n times
   repeat: 0
-  
+
   # Quality
   # 1 - 100
   quality: 100
-  
+
   # Delay between frames in ms
   # If the value is `auto` use the actual recording delays
   # frameDelay: auto
   frameDelay: 200
-  
+
   # Maximum delay between frames in ms
   # Ignored if the `frameDelay` isn't set to `auto`
   # Set to `auto` to prevent limiting the max idle time
   maxIdleTime: 2000
-  
+
   # The surrounding frame box
   # The `type` can be null, window, floating, or solid`
   # To hide the title use the value null
@@ -56,7 +55,7 @@ config:
       border: 0px black solid
       # boxShadow: none
       # margin: 0px
-  
+
   # Add a watermark image to the rendered gif
   # You need to specify an absolute path for
   # the image on your machine or a URL, and you can also
@@ -69,25 +68,25 @@ config:
       bottom: 15px
       width: 100px
       opacity: 0.9
-  
+
   # Cursor style can be one of
   # `block`, `underline`, or `bar`
   cursorStyle: block
-  
+
   # Font family
   # You can use any font that is installed on your machine
   # in CSS-like syntax
   fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
-  
+
   # The size of the font
   fontSize: 12
-  
+
   # The height of lines
   lineHeight: 1
-  
+
   # The spacing between letters
   letterSpacing: 0
-  
+
   # Theme
   theme:
     background: "transparent"
@@ -109,7 +108,7 @@ config:
     brightMagenta: "#ae89fe"
     brightCyan: "#b1c6ca"
     brightWhite: "#f9f9f4"
-  
+
 # Records, feel free to edit them
 records:
   - delay: 1874
@@ -129,7 +128,7 @@ records:
   - delay: 150
     content: t
   - delay: 105
-    content: ' '
+    content: " "
   - delay: 269
     content: T
   - delay: 256
@@ -155,7 +154,7 @@ records:
   - delay: 91
     content: E
   - delay: 283
-    content: '='
+    content: "="
   - delay: 120
     content: t
   - delay: 165
@@ -197,7 +196,7 @@ records:
   - delay: 120
     content: r
   - delay: 285
-    content: ':'
+    content: ":"
   - delay: 255
     content: l
   - delay: 165
@@ -211,7 +210,7 @@ records:
   - delay: 61
     content: t
   - delay: 660
-    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;export TREMOR_IMAGE=tremorproject/tremor:latest \a\e]1;export\a\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;export TREMOR_IMAGE=docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest \a\e]1;export\a\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
   - delay: 77
     content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtesting\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
   - delay: 1782
@@ -227,7 +226,7 @@ records:
   - delay: 45
     content: r
   - delay: 89
-    content: ' '
+    content: " "
   - delay: 136
     content: p
   - delay: 105
@@ -237,7 +236,7 @@ records:
   - delay: 180
     content: l
   - delay: 104
-    content: ' '
+    content: " "
   - delay: 196
     content: $
   - delay: 286
@@ -267,7 +266,7 @@ records:
   - delay: 496
     content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;docker pull $TREMOR_IMAGE\a\e]1;docker\a"
   - delay: 1862
-    content: "latest: Pulling from tremorproject/tremor\r\nDigest: sha256:7a5d0db28d60eb51783d1c35f28827fd84bc8c767cb7296c4cf68c1aa064d0e4\r\nStatus: Image is up to date for tremorproject/tremor:latest\r\ndocker.io/tremorproject/tremor:latest\r\n"
+    content: "latest: Pulling from tremorproject/tremor\r\nDigest: sha256:7a5d0db28d60eb51783d1c35f28827fd84bc8c767cb7296c4cf68c1aa064d0e4\r\nStatus: Image is up to date for docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest\r\ndocker.io/docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest\r\n"
   - delay: 5
     content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
   - delay: 67
@@ -283,7 +282,7 @@ records:
   - delay: 46
     content: s
   - delay: 120
-    content: ' '
+    content: " "
   - delay: 150
     content: t
   - delay: 150
@@ -299,9 +298,9 @@ records:
   - delay: 90
     content: r
   - delay: 570
-    content: '='
+    content: "="
   - delay: 570
-    content: ''''
+    content: "'"
   - delay: 570
     content: d
   - delay: 75
@@ -315,29 +314,29 @@ records:
   - delay: 75
     content: r
   - delay: 105
-    content: ' '
+    content: " "
   - delay: 105
     content: r
   - delay: 89
     content: u
   - delay: 226
-    content: 'n'
+    content: "n"
   - delay: 104
-    content: ' '
+    content: " "
   - delay: 166
-    content: '-'
+    content: "-"
   - delay: 255
     content: i
   - delay: 105
-    content: ' '
+    content: " "
   - delay: 134
-    content: '-'
+    content: "-"
   - delay: 136
     content: v
   - delay: 119
-    content: ' '
+    content: " "
   - delay: 1111
-    content: '`'
+    content: "`"
   - delay: 256
     content: p
   - delay: 44
@@ -345,9 +344,9 @@ records:
   - delay: 90
     content: d
   - delay: 389
-    content: '`'
+    content: "`"
   - delay: 450
-    content: ':'
+    content: ":"
   - delay: 885
     content: /
   - delay: 481
@@ -357,7 +356,7 @@ records:
   - delay: 74
     content: d
   - delay: 2025
-    content: ' '
+    content: " "
   - delay: 286
     content: $
   - delay: 299
@@ -385,13 +384,13 @@ records:
   - delay: 541
     content: "\rGE"
   - delay: 1184
-    content: ' '
+    content: " "
   - delay: 301
     content: $
   - delay: 149
-    content: '*'
+    content: "*"
   - delay: 1815
-    content: ''''
+    content: "'"
   - delay: 331
     content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;alias trecker='docker run -i -v `pwd`:/pwd $TREMOR_IMAGE $*'\a\e]1;alias\a\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/testing\a\e]1;..ourse/testing\a"
   - delay: 71
@@ -411,9 +410,9 @@ records:
   - delay: 74
     content: r
   - delay: 60
-    content: ' '
+    content: " "
   - delay: 120
-    content: '-'
+    content: "-"
   - delay: 210
     content: h
   - delay: 421

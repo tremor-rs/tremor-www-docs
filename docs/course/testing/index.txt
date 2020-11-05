@@ -17,7 +17,7 @@ $ tremor test # ... arguments
 This course assumes an installation of [docker](https://www.docker.com)
 
 ```shell [1|2|3|4-5]
-$ export TREMOR_IMAGE=tremorproject/tremor:latest # set to `edge` if you feel lucky
+$ export TREMOR_IMAGE=docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest # set to `edge` if you feel lucky
 $ docker pull $TREMOR_IMAGE
 alias trecker=
   'docker run -i -v `pwd`:/pwd $TREMOR_IMAGE $*'

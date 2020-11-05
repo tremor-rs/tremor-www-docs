@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   tremor-server:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     ports:
       - 9898:9898
       - 8139:8139
@@ -13,7 +13,7 @@ services:
       - ../31_servers_lt_ws/etc/tremor:/etc/tremor:rw
       - ../31_servers_lt_ws/var/log:/var/log:rw
   tremor-bridge:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     depends_on:
       - tremor-server
     ports:

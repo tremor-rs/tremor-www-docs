@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   tremor:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     ports:
       - 9898:9898
       - 8139:8139

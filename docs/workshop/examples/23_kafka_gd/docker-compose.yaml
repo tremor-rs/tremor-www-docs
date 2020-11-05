@@ -16,7 +16,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
   tremor_in:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     depends_on:
       - kafka
     environment:
@@ -28,7 +28,7 @@ services:
       - ./logs:/logs:rw
       - ./data:/data:ro
   tremor_out:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     depends_on:
       - kafka
     environment:

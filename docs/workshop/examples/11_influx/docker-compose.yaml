@@ -1,16 +1,16 @@
-version: '3.3'
+version: "3.3"
 services:
   influxdb:
     image: influxdb:1.7
     ports:
-      - '8086:8086'
-      - '8083:8083'
+      - "8086:8086"
+      - "8083:8083"
     environment:
-      INFLUXDB_DB: 'tremor'
+      INFLUXDB_DB: "tremor"
   chronograf:
     image: chronograf:1.7
     ports:
-      - '8888:8888'
+      - "8888:8888"
     depends_on:
       - influxdb
   telegraf:
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./etc/telegraf:/etc/telegraf:ro
   tremor:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     depends_on:
       - influxdb
     ports:

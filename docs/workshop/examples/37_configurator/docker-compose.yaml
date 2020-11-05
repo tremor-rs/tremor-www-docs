@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   configurator_tremor:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     depends_on:
       - quota_service_1
       - quota_service_2
@@ -18,7 +18,7 @@ services:
       - 9139:9139 # the configurator
 
   quota_service_1:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     container_name: quota_service_1
     environment:
       - RUST_BACKTRACE=full
@@ -28,7 +28,7 @@ services:
       - 8139:8139
 
   quota_service_2:
-    image: tremorproject/tremor:latest
+    image: docker.pkg.github.com/tremor-rs/tremor-runtime/tremor:latest
     container_name: quota_service_2
     environment:
       - RUST_BACKTRACE=full

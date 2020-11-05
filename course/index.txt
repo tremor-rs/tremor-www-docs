@@ -15,7 +15,14 @@ language.
 ### `testing`
 
 A deep dive into [`testing`](./testing/index.html) using unit, command-line,
-integration and benchmark testing frameworks.
+and integration testing frameworks.
+
+>>>
+
+### `benchmarking`
+
+A deep dive into [`benchmarking`](./testing/benchmark.html) and an introduction
+to benchmarking methodology in tremor.
 
 >>>
 

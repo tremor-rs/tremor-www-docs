@@ -115,14 +115,28 @@ Support for sliding windows has not been implemented yet (it has an [open RFC](h
 
 Window definition grammar:
 
-> ![window definition grammar](grammar/diagram/DefineWindowDefn.png) > ![with params grammar](grammar/diagram/WithParams.png) > ![with partial paraqms grammar](grammar/diagram/WithPartialParams.png) > ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
+> ![window definition grammar](grammar/diagram/DefineWindowDefn.png)
+> ![with params grammar](grammar/diagram/WithParams.png)
+> ![with partial paraqms grammar](grammar/diagram/WithPartialParams.png)
+> ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
 
 For example a 15 second tumbling window can be defined as follows
 
 ```trickle
 define tumbling window fifteen_secs
 with
-    interval = datetime::with_seconds(15),
+    interval = core::datetime::with_seconds(15),
+end;
+```
+
+The same window can be defined using a timestamp that is extracted from the message instead of the ingest time:
+
+```trickle
+define tumbling window fifteen_secs
+with
+    interval = core::datetime::with_seconds(15),
+script
+    event.timestamp
 end;
 ```
 
@@ -132,11 +146,13 @@ Custom operators allow definition, configuration and usage of legacy operators, 
 
 Operator definition grammar:
 
-> ![operator definition grammar](grammar/diagram/DefineOperatorDefn.png) > ![with params grammar](grammar/diagram/WithParams.png)
+> ![operator definition grammar](grammar/diagram/DefineOperatorDefn.png)
+> ![with params grammar](grammar/diagram/WithParams.png)
 
 Creating an operator:
 
-> ![create operator grammar](grammar/diagram/CreateOperatorDefn.png) > ![with params grammar](grammar/diagram/WithParams.png)
+> ![create operator grammar](grammar/diagram/CreateOperatorDefn.png)
+> ![with params grammar](grammar/diagram/WithParams.png)
 
 ```trickle
 # create a bucketing operator
@@ -156,11 +172,14 @@ The tremor-script language can be embedded in the query language natively and th
 
 Script definition grammar:
 
-> ![script definition grammar](grammar/diagram/DefineScriptDefn.png) > ![with partial params grammar](grammar/diagram/WithPartialParams.png) > ![embeded script grammar](grammar/diagram/EmbeddedScript.png)
+> ![script definition grammar](grammar/diagram/DefineScriptDefn.png)
+> ![with partial params grammar](grammar/diagram/WithPartialParams.png)
+> ![embeded script grammar](grammar/diagram/EmbeddedScript.png)
 
 Script an operator:
 
-> ![create script grammar](grammar/diagram/CreateScriptDefn.png) > ![with params grammar](grammar/diagram/WithParams.png)
+> ![create script grammar](grammar/diagram/CreateScriptDefn.png)
+> ![with params grammar](grammar/diagram/WithParams.png)
 
 ```trickle
 define grouper::bucket operator kfc;
@@ -191,7 +210,15 @@ The select query is a builtin operation that is the workhorse of the `tremor-que
 
 The select operation is of the general form:
 
-> ![select grammar](grammar/diagram/SelectStmt.png) > ![from grammar](grammar/diagram/FromClause.png) > ![where grammar](grammar/diagram/WhereClause.png) > ![group by grammar](grammar/diagram/GroupByClause.png) > ![group by dimensions grammar](grammar/diagram/GroupByDimension.png) > ![set group grammar](grammar/diagram/SetBasedGroup.png) > ![each group grammar](grammar/diagram/EachBasedGroup.png) > ![into grammar](grammar/diagram/IntoClause.png) > ![having grammar](grammar/diagram/HavingClause.png)
+> ![select grammar](grammar/diagram/SelectStmt.png)
+> ![from grammar](grammar/diagram/FromClause.png)
+> ![where grammar](grammar/diagram/WhereClause.png)
+> ![group by grammar](grammar/diagram/GroupByClause.png)
+> ![group by dimensions grammar](grammar/diagram/GroupByDimension.png)
+> ![set group grammar](grammar/diagram/SetBasedGroup.png)
+> ![each group grammar](grammar/diagram/EachBasedGroup.png)
+> ![into grammar](grammar/diagram/IntoClause.png)
+> ![having grammar](grammar/diagram/HavingClause.png)
 
 An example select operation configured to pass through data from a pipeline's default `in` stream to a pipeline's default `out` stream:
 

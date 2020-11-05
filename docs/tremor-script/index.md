@@ -710,7 +710,9 @@ Since the state storage lives for the lifetime of a pipeline, state will not be 
 
 ## Extractors
 
-> ![test expression grammar](grammar/diagram/TestExpr.png) > ![test literal grammar](grammar/diagram/TEST_LITERAL.png) > ![test literal escape grammar](grammar/diagram/TEST_ESCAPE.png)
+> ![test expression grammar](grammar/diagram/TestExpr.png)
+> ![test literal grammar](grammar/diagram/TEST_LITERAL.png)
+> ![test literal escape grammar](grammar/diagram/TEST_ESCAPE.png)
 
 The language has pluggable support for a number of microformats with two basic modes of operation that enable predicate tests ( does a particular value match the expected micro-format ) and elementization ( if a value does match a specific micro-format, then extract and elementize accordingly ).
 

@@ -5,20 +5,29 @@ appenders:
   # An appender named "stdout" that writes to stdout
   stdout:
     kind: console
+  file:
+    kind: file
+    path: "/var/log/tremor/tremor_in.log"
+    encoder:
+      pattern: "{d} - {m}{n}"
+
 
 root:
   level: warn
   appenders:
     - stdout
+    - file
 
 loggers:
   tremor_runtime:
     level: info
     appenders:
       - stdout
+      - file
     additive: false
   tremor:
     level: info
     appenders:
       - stdout
+      - file
     additive: false

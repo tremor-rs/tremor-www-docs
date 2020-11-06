@@ -12,6 +12,13 @@ language.
 
 >>>
 
+### `tremor-query`
+
+A deep dive into the [`tremor-query`](./tremor-query/index.html) domain specific
+language.
+
+>>>
+
 ### `testing`
 
 A deep dive into [`testing`](./testing/index.html) using unit, command-line,

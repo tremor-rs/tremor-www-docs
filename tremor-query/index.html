@@ -8,10 +8,11 @@
       
       
       
+      
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.3">
     
     
       
@@ -19,10 +20,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.19190aaf.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2cb7adb3.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.24b84193.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -2061,23 +2062,36 @@ same as in <code>tremor-script</code>.</p>
 <p>Support for sliding windows has not been implemented yet (it has an <a href="https://rfcs.tremor.rs/0004-sliding-window-mechanism/">open RFC</a> and it will be picked up for a future release).</p>
 <p>Window definition grammar:</p>
 <blockquote>
-<p><img alt="window definition grammar" src="grammar/diagram/DefineWindowDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /> &gt; <img alt="with partial paraqms grammar" src="grammar/diagram/WithPartialParams.png" /> &gt; <img alt="embedded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
+<p><img alt="window definition grammar" src="grammar/diagram/DefineWindowDefn.png" />
+<img alt="with params grammar" src="grammar/diagram/WithParams.png" />
+<img alt="with partial paraqms grammar" src="grammar/diagram/WithPartialParams.png" />
+<img alt="embedded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
 </blockquote>
 <p>For example a 15 second tumbling window can be defined as follows</p>
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">fifteen_secs</span><span class="w"></span>
 <span class="kd">with</span><span class="w"></span>
-<span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
+<span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">core</span><span class="err">::</span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>The same window can be defined using a timestamp that is extracted from the message instead of the ingest time:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">fifteen_secs</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">core</span><span class="err">::</span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
+<span class="kd">script</span><span class="w"></span>
+<span class="w">    </span><span class="kc">event</span><span class="err">.</span><span class="nx">timestamp</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <h4 id="custom-operator-definitions">Custom Operator definitions<a class="headerlink" href="#custom-operator-definitions" title="Permanent link">&para;</a></h4>
 <p>Custom operators allow definition, configuration and usage of legacy operators, that have been around before tremor supported the query language. As the query language and deprecated yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:</p>
 <p>Operator definition grammar:</p>
 <blockquote>
-<p><img alt="operator definition grammar" src="grammar/diagram/DefineOperatorDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
+<p><img alt="operator definition grammar" src="grammar/diagram/DefineOperatorDefn.png" />
+<img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
 </blockquote>
 <p>Creating an operator:</p>
 <blockquote>
-<p><img alt="create operator grammar" src="grammar/diagram/CreateOperatorDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
+<p><img alt="create operator grammar" src="grammar/diagram/CreateOperatorDefn.png" />
+<img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="c1"># create a bucketing operator</span>
 <span class="kd">define</span><span class="w"> </span><span class="nx">grouper</span><span class="err">::</span><span class="nx">bucket</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">kfc</span><span class="err">;</span><span class="w"></span>
@@ -2093,11 +2107,14 @@ same as in <code>tremor-script</code>.</p>
 <p>The tremor-script language can be embedded in the query language natively and this mirrors legacy usage (before v0.9) where it was embedded within yaml-based pipeline configuration. However, the tooling that ships with <code>tremor-query</code> understands both the query language and scripting language dialects with better syntax highlighting and error checking built in, for ease of operator productivity over the deprecated yaml syntax.</p>
 <p>Script definition grammar:</p>
 <blockquote>
-<p><img alt="script definition grammar" src="grammar/diagram/DefineScriptDefn.png" /> &gt; <img alt="with partial params grammar" src="grammar/diagram/WithPartialParams.png" /> &gt; <img alt="embeded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
+<p><img alt="script definition grammar" src="grammar/diagram/DefineScriptDefn.png" />
+<img alt="with partial params grammar" src="grammar/diagram/WithPartialParams.png" />
+<img alt="embeded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
 </blockquote>
 <p>Script an operator:</p>
 <blockquote>
-<p><img alt="create script grammar" src="grammar/diagram/CreateScriptDefn.png" /> &gt; <img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
+<p><img alt="create script grammar" src="grammar/diagram/CreateScriptDefn.png" />
+<img alt="with params grammar" src="grammar/diagram/WithParams.png" /></p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">grouper</span><span class="err">::</span><span class="nx">bucket</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">kfc</span><span class="err">;</span><span class="w"></span>
 
@@ -2124,7 +2141,15 @@ same as in <code>tremor-script</code>.</p>
 <p>The select query is a builtin operation that is the workhorse of the <code>tremor-query</code> language.</p>
 <p>The select operation is of the general form:</p>
 <blockquote>
-<p><img alt="select grammar" src="grammar/diagram/SelectStmt.png" /> &gt; <img alt="from grammar" src="grammar/diagram/FromClause.png" /> &gt; <img alt="where grammar" src="grammar/diagram/WhereClause.png" /> &gt; <img alt="group by grammar" src="grammar/diagram/GroupByClause.png" /> &gt; <img alt="group by dimensions grammar" src="grammar/diagram/GroupByDimension.png" /> &gt; <img alt="set group grammar" src="grammar/diagram/SetBasedGroup.png" /> &gt; <img alt="each group grammar" src="grammar/diagram/EachBasedGroup.png" /> &gt; <img alt="into grammar" src="grammar/diagram/IntoClause.png" /> &gt; <img alt="having grammar" src="grammar/diagram/HavingClause.png" /></p>
+<p><img alt="select grammar" src="grammar/diagram/SelectStmt.png" />
+<img alt="from grammar" src="grammar/diagram/FromClause.png" />
+<img alt="where grammar" src="grammar/diagram/WhereClause.png" />
+<img alt="group by grammar" src="grammar/diagram/GroupByClause.png" />
+<img alt="group by dimensions grammar" src="grammar/diagram/GroupByDimension.png" />
+<img alt="set group grammar" src="grammar/diagram/SetBasedGroup.png" />
+<img alt="each group grammar" src="grammar/diagram/EachBasedGroup.png" />
+<img alt="into grammar" src="grammar/diagram/IntoClause.png" />
+<img alt="having grammar" src="grammar/diagram/HavingClause.png" /></p>
 </blockquote>
 <p>An example select operation configured to pass through data from a pipeline's default <code>in</code> stream to a pipeline's default <code>out</code> stream:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>

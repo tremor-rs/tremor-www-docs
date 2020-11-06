@@ -4,29 +4,38 @@ refresh_rate: 30 seconds
 appenders:
   stdout:
     kind: console
+  file:
+    kind: file
+    path: "/var/log/tremor/tremor.log"
+    encoder:
+      pattern: "{d} - {m}{n}"
+
 
 
 root:
   level: warn
   appenders:
     - stdout
+    - file
 
 loggers:
   tremor_runtime:
     level: info
     appenders:
       - stdout
+      - file
     additive: false
   tremor:
     level: info
     appenders:
       - stdout
+      - file
     additive: false
   # FIXME resolve these repeated info logs. can then eliminate this override
   #Elastic search error: Err(Error(ElasticError(Client(ClientError { inner: Error(Response(400), State { next_error: Some(Parse(ParseError { inner: UnknownApiError({"reason": String("request body is required"), "root_cause": Array([Object({"reason": String("request body is required"), "type": String("parse_exception")})]), "type": String("parse_exception")}) })), backtrace: None }) })), State { next_error: None, backtrace: InternalBacktrace { backtrace: None } }))
   tremor_runtime::sink::elastic:
     level: warn
     appenders:
-      #- stdout
+      - stdout
       - file
     additive: false

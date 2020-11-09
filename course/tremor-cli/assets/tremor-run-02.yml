@@ -1,0 +1,268 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: /bin/zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/tremor-cli
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 78
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  # frameDelay: auto
+  frameDelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Tremor
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: /Users/dennis/Pictures/tremor_logo.png
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1665
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/tremor-cli\a\e]1;..se/tremor-cli\a"
+  - delay: 70
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtremor-cli\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 747
+    content: t
+  - delay: 177
+    content: "\btr"
+  - delay: 75
+    content: e
+  - delay: 225
+    content: c
+  - delay: 45
+    content: k
+  - delay: 134
+    content: e
+  - delay: 74
+    content: r
+  - delay: 136
+    content: ' '
+  - delay: 121
+    content: r
+  - delay: 104
+    content: u
+  - delay: 347
+    content: 'n'
+  - delay: 537
+    content: ' '
+  - delay: 270
+    content: '-'
+  - delay: 510
+    content: i
+  - delay: 151
+    content: ' '
+  - delay: 270
+    content: '-'
+  - delay: 213
+    content: ' '
+  - delay: 147
+    content: '-'
+  - delay: 149
+    content: d
+  - delay: 150
+    content: ' '
+  - delay: 361
+    content: j
+  - delay: 180
+    content: s
+  - delay: 105
+    content: o
+  - delay: 61
+    content: 'n'
+  - delay: 253
+    content: ' '
+  - delay: 2460
+    content: /
+  - delay: 75
+    content: w
+  - delay: 61
+    content: d
+  - delay: 255
+    content: /
+  - delay: 510
+    content: "\b \b"
+  - delay: 181
+    content: "\b \b"
+  - delay: 149
+    content: "\b \b"
+  - delay: 270
+    content: p
+  - delay: 44
+    content: w
+  - delay: 47
+    content: d
+  - delay: 278
+    content: /
+  - delay: 265
+    content: h
+  - delay: 85
+    content: e
+  - delay: 120
+    content: l
+  - delay: 184
+    content: l
+  - delay: 267
+    content: o
+  - delay: 303
+    content: .
+  - delay: 102
+    content: t
+  - delay: 194
+    content: r
+  - delay: 121
+    content: i
+  - delay: 75
+    content: c
+  - delay: 120
+    content: k
+  - delay: 194
+    content: l
+  - delay: 106
+    content: e
+  - delay: 1726
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;trecker run -i - -d json /pwd/hello.trickle\a\e]1;trecker\a"
+  - delay: 612
+    content: "+ [ -n  ]\r\n+ [ 6 != 0 ]\r\n+ ARGS=run -i - -d json /pwd/hello.trickle\r\n+ exec /tremor run -i - -d json /pwd/hello.trickle\r\n"
+  - delay: 5103
+    content: '{'
+  - delay: 525
+    content: ' '
+  - delay: 255
+    content: '"'
+  - delay: 1890
+    content: s
+  - delay: 76
+    content: 'n'
+  - delay: 133
+    content: o
+  - delay: 106
+    content: t
+  - delay: 238
+    content: '"'
+  - delay: 241
+    content: ':'
+  - delay: 106
+    content: ' '
+  - delay: 254
+    content: '"'
+  - delay: 345
+    content: b
+  - delay: 75
+    content: a
+  - delay: 150
+    content: d
+  - delay: 196
+    content: g
+  - delay: 180
+    content: e
+  - delay: 74
+    content: r
+  - delay: 362
+    content: '"'
+  - delay: 103
+    content: ' '
+  - delay: 164
+    content: '}'
+  - delay: 421
+    content: "\r\n{\"snot\":\"badger\"}\r\n"
+  - delay: 5109
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/tremor-cli\a\e]1;..se/tremor-cli\a"
+  - delay: 64
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtremor-cli\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 632
+    content: "\e[?2004l\r\r\n"

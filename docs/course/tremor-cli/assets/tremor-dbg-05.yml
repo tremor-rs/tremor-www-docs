@@ -1,0 +1,232 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: /bin/zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/dennis/Code/oss/tremor-rs/tremor-www-docs/docs/course/tremor-cli
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 78
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  # frameDelay: auto
+  frameDelay: 200
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Tremor
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: /Users/dennis/Pictures/tremor_logo.png
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 2611
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/tremor-cli\a\e]1;..se/tremor-cli\a"
+  - delay: 77
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtremor-cli\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 639
+    content: t
+  - delay: 149
+    content: "\btr"
+  - delay: 44
+    content: e
+  - delay: 225
+    content: c
+  - delay: 76
+    content: k
+  - delay: 104
+    content: e
+  - delay: 76
+    content: r
+  - delay: 88
+    content: ' '
+  - delay: 165
+    content: d
+  - delay: 241
+    content: b
+  - delay: 207
+    content: g
+  - delay: 157
+    content: ' '
+  - delay: 72
+    content: d
+  - delay: 90
+    content: o
+  - delay: 89
+    content: t
+  - delay: 135
+    content: ' '
+  - delay: 901
+    content: /
+  - delay: 239
+    content: p
+  - delay: 74
+    content: w
+  - delay: 48
+    content: d
+  - delay: 238
+    content: /
+  - delay: 241
+    content: h
+  - delay: 104
+    content: e
+  - delay: 151
+    content: l
+  - delay: 134
+    content: l
+  - delay: 270
+    content: o
+  - delay: 271
+    content: .
+  - delay: 133
+    content: t
+  - delay: 136
+    content: r
+  - delay: 110
+    content: i
+  - delay: 99
+    content: c
+  - delay: 106
+    content: k
+  - delay: 214
+    content: l
+  - delay: 87
+    content: e
+  - delay: 7433
+    content: ' '
+  - delay: 463
+    content: '|'
+  - delay: 165
+    content: ' '
+  - delay: 115
+    content: b
+  - delay: 164
+    content: a
+  - delay: 74
+    content: t
+  - delay: 96
+    content: ' '
+  - delay: 130
+    content: '-'
+  - delay: 299
+    content: l
+  - delay: 632
+    content: ' '
+  - delay: 43
+    content: d
+  - delay: 90
+    content: o
+  - delay: 105
+    content: t
+  - delay: 1831
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;trecker dbg dot /pwd/hello.trickle | bat -l dot\a\e]1;trecker\a"
+  - delay: 193
+    content: "\e[?1h\e=\r"
+  - delay: 728
+    content: "\e[38;5;238m───────┬──────────────────────────────────────────────────────────────────────\e[0m\e[m\n       \e[38;5;238m│ \e[0m\e[1mSTDIN\e[0m\e[m\n\e[38;5;238m───────┼──────────────────────────────────────────────────────────────────────\e[0m\e[m\n"
+  - delay: 5
+    content: "\e[38;5;238m   1\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m+ \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m -n  \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m   2\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m+ \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m 3 !\e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242m 0 \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m   3\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m+ ARGS\e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242mdbg dot /pwd/hello.trickle\e[0m\e[m\n\e[38;5;238m   4\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m+ exec /tremor dbg dot /pwd/hello.trickle\e[0m\e[m\n"
+  - delay: 16
+    content: "\e[38;5;238m   5\e[0m   \e[38;5;238m│\e[0m \e[m\n\e[38;5;238m   6\e[0m   \e[38;5;238m│\e[0m \e[38;2;102;217;239mdigraph\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;255;255;255m{\e[0m\e[m\n\e[38;5;238m   7\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    0 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;102;217;239mlabel\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;230;219;116m--> in\e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m   8\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    1 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;102;217;239mlabel\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;230;219;116merr -->\e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m   9\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    2 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;102;217;239mlabel\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;230;219;116mout -->\e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m  10\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    3 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;102;217;239mlabel\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;230;219;116mselect_0\e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m  11\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    4 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;102;217;239mlabel\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;249;38;114m=\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;230;219;116m_metrics -->\e[0m\e[38;2;230;219;116m\"\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m  12\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    0 \e[0m\e[38;2;248;248;242m->\e[0m\e[38;2;248;248;242m 3 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m  13\e[0m   \e[38;5;238m│\e[0m \e[38;2;248;248;242m    3 \e[0m\e[38;2;248;248;242m->\e[0m\e[38;2;248;248;242m 2 \e[0m\e[38;2;248;248;242m[\e[0m\e[38;2;248;248;242m \e[0m\e[38;2;248;248;242m]\e[0m\e[m\n\e[38;5;238m  14\e[0m   \e[38;5;238m│\e[0m \e[38;2;255;255;255m}\e[0m\e[m\n\e[38;5;238m  15\e[0m   \e[38;5;238m│\e[0m \e[m\n"
+  - delay: 176
+    content: "\e[38;5;238m───────┴──────────────────────────────────────────────────────────────────────\e[0m\e[m\r\n:\e[K"
+  - delay: 2903
+    content: "\r\e[K\e[?1l\e>"
+  - delay: 9
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                             \r \r\e]2;dennis@ALT01827: ~/Code/oss/tremor-rs/tremor-www-docs/docs/course/tremor-cli\a\e]1;..se/tremor-cli\a"
+  - delay: 125
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtremor-cli\e[00m \e[01;34mgit:(\e[31mmain\e[34m) \e[33m✗\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 2125
+    content: "\e[?2004l\r\r\n"

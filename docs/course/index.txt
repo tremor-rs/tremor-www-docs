@@ -33,6 +33,12 @@ to benchmarking methodology in tremor.
 
 >>>
 
+### `cli`
+
+A deep dive into [`command line interface`](./tremor-cli/index.html) tooling.
+
+>>>
+
 ### The End
 <!-- .slide: data-background="#33FF77" -->
 

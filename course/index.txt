@@ -33,9 +33,15 @@ to benchmarking methodology in tremor.
 
 >>>
 
-### `cli`
+### `tremor-cli`
 
 A deep dive into [`command line interface`](./tremor-cli/index.html) tooling.
+
+>>>
+
+### `contributing`
+
+An overview of [`how to contribute`](./contributing/index.html) to tremor.
 
 >>>
 

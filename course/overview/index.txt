@@ -579,9 +579,9 @@ select event from process into out;%
 
 >>>
 
-### End of `contributing` guide
+### End of `overview` guide
 <!-- .slide: data-background="#33FF77" -->
 
-This is the end of the contributors getting started guide
+This is the end of the overview
 
 Note: This will only appear in speaker notes window

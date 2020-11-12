@@ -6,15 +6,16 @@ of various events.
 
 ## Size
 
-When using stats functions size becomes an important factor. The exact size an window using
-aggregates  occupies in memory depends on a two main factors:
+When using stats aggregate functions size in memory becomes an important factor from a capacity
+planning perspective. The exact size of a window using aggregates depends on three main factors:
 
 * The size of the dimension identifier. I.e. if the window is identified by the string "window" it will
   require that amount of memory related to this. If it is identified by an array of 10.000 elements
   all reading "window" it will use (about) 10.0000 that size.
-* The size of each aggregate used in the window. We will try to give an estimate of size
+* The unit size of each aggregate used in the window. We will try to give an estimate of size
   for each aggregate but please be aware that those are not always exact as they can depend on
   the data they hold.
+* The number of groups, if grouping is configured. Each group will maintain a separate window of data
 
 For aggregates we'll provide an "order of magnitude" and a growth rate if applicable.
 

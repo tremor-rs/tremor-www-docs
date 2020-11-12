@@ -11,7 +11,7 @@ planning perspective. The exact size of a window using aggregates depends on thr
 
 * The size of the dimension identifier. I.e. if the window is identified by the string "window" it will
   require that amount of memory related to this. If it is identified by an array of 10.000 elements
-  all reading "window" it will use (about) 10.0000 that size.
+  all reading "window" it will use (about) 10.000 times that size.
 * The unit size of each aggregate used in the window. We will try to give an estimate of size
   for each aggregate but please be aware that those are not always exact as they can depend on
   the data they hold.

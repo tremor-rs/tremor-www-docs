@@ -3,9 +3,30 @@
 The `stats` module contains functions for aggregating statistical measures
 of various events.
 
+
+## Size
+
+When using stats functions size becomes an important factor. The exact size an window using
+aggregates  occupies in memory depends on a two main factors:
+
+* The size of the dimension identifier. I.e. if the window is identified by the string "window" it will
+  require that amount of memory related to this. If it is identified by an array of 10.000 elements
+  all reading "window" it will use (about) 10.0000 that size.
+* The size of each aggregate used in the window. We will try to give an estimate of size
+  for each aggregate but please be aware that those are not always exact as they can depend on
+  the data they hold.
+
+For aggregates we'll provide an "order of magnitude" and a growth rate if applicable.
+
+For example `Fixed, 10 bytes` indicate that the size doesn't grow and is in the order of two digit
+bytes. We try to give pessimistic estimates where possible.
+
+
 ## Functions
 
 ### stats::count() -> int
+
+* **size**: Fixed, 10 bytes
 
 Counts the number of events aggregated in the current windowed operation.
 
@@ -15,6 +36,8 @@ stats::count() # number of items in the window
 
 ### stats::min(int|float) -> int|float
 
+* **size**: Fixed, 10 bytes
+
 Determines the smallest event value in the current windowed operation.
 
 ```trickle
@@ -22,6 +45,9 @@ stats::min(event.value)
 ```
 
 ### stats::max(int|float) -> int|float
+
+* **size**: Fixed, 10 bytes
+
 
 Determines the largest event value in the current windowed operation.
 
@@ -31,6 +57,8 @@ stats::max(event.value)
 
 ### stats::sum(int|float) -> int|float
 
+* **size**: Fixed, 10 bytes
+
 Determines the arithmetic sum of event values in the current windowed operation.
 
 ```trickle
@@ -38,6 +66,8 @@ stats::sum(event.value)
 ```
 
 ### stats::var(int|float) -> float
+
+* **size**: Fixed, 100 bytes
 
 Calculates the sample variance of event values in the current windowed operation.
 
@@ -47,6 +77,8 @@ stats::var(event.value)
 
 ### stats::stdev(int|float) -> float
 
+* **size**: Fixed, 100 bytes
+
 Calculates the sample standard deviation of event values in the current windowed operation.
 
 ```trickle
@@ -55,6 +87,8 @@ stats::stdev(event.value)
 
 ### stats::mean(int|float) -> float
 
+* **size**: Fixed, 100 bytes
+
 Calculates the stastical mean of the event values in the current windowed operation.
 
 ```trickle
@@ -62,6 +96,8 @@ stats::mean(event.value)
 ```
 
 ### stats::hdr(int|float) -> record
+
+* **size**: Fixed, 100 Kilo Bytes (note: this strongly depends on configuration, and can be estimated more correctly [with this formula](https://github.com/HdrHistogram/HdrHistogram#footprint-estimation))
 
 Uses a High Dynamic Range ( HDR ) Histogram to calculate all basic statistics against the event values sin the current windowed operation. The function additionally interpolates percentiles or quartiles based on a configuration specification passed in as an argument to the aggregater function.
 
@@ -72,6 +108,8 @@ stats::hdr(event.value, ["0.5","0.75","0.9","0.99","0.999"])
 ```
 
 ### stats::dds(int|float) -> record
+
+* **size**: Fixed, 10 Kilo Bytes (estimate based on [this paper](https://arxiv.org/pdf/1908.10693.pdf))
 
 Uses a Distributed data-stream Sketch ( [DDS (paper)](http://www.vldb.org/pvldb/vol12/p2195-masson.pdf) Histogram to calculate count, min, max, mean and quartiles with quartile relative-error accurate over the range of points in the histogram. The DDS histogram trades off accuracy ( to a very low error and guaranteed low relative error ) and unlike HDR histograms does not need bounds specified.
 

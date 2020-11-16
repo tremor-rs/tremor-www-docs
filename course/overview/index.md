@@ -57,21 +57,30 @@ A high level overview of tremor-based systems architecture
 ![Tremor Node High Level Architecture](./assets/hla.png)
 
 ---
-
 ### Core concepts
 
-- Sources. Ingest data from the outside world ( onramps )
-- Sinks. Contribute data to the outside world ( offramps )
-- Linked Transports. Have `source` and `sink` natures
-- Pipelines. Business logic compiles to an event flow DAG
+![image](./assets/overview_arch.png)
+
+- __Sources__ (onramps). Ingest data from the outside world and deserialize to events ( onramps )
+- __Sinks__. Send serialized events to the outside world ( offramps )
+- __Pipelines__. Business logic compiles to an event flow DAG
 
 >>>
 
 ### Sources
 
-- Can be a connector that consumes data via poll.
-- Can be a connector that exposes a messaging consumer endpoint.
-- Implemented in the rust programming language.
+- Tap on an external data sources
+  - network (tcp, udp, http, websocket)
+  - file
+  - system clock (metronome, crononome)
+  - database (polling for changes)
+  - ...
+
+---
+### Sources
+
+- Define mapping between protocol data units and events (preprocessors, codec)
+- Implemented in the Rust programming language.
 - Configured in YAML
 
 ---
@@ -131,8 +140,18 @@ A high level overview of tremor-based systems architecture
 
 ### Sinks
 
-- Can be a connector that publishes data via RPC.
-- Can be a connector that exposes a messaging publicationendpoint.
+- Send events to external system:
+  - network (tcp, udp, http, websocket)
+  - database (postgresql)
+  - std streams
+  - file
+
+
+---
+
+### Sinks
+
+- Defines mapping for outgoing events and protocol data units (codec, postprocessors)
 - Implemented in the rust programming language.
 - Configured in YAML
 
@@ -168,43 +187,151 @@ A high level overview of tremor-based systems architecture
 
 ### Pipelines
 
-- Business logic is implemented in tremor-query
-- Tremor query embeds tremor-script - a functional expression language
-- Tremor query compiles to an event Pipeline Directed-Acyclic-Graph
-- The tremor runtime manages source, sink, peer and pipeline lifecycle
+- Define event flow in user defined business logic
+- Implemented in [tremor-query](https://docs.tremor.rs/tremor-query/)
+
+
+```trickle
+
+ # simplest passthrough pipeline
+ select event from in into out;
+
+ 
+```
 
 ---
 
-```trickle
-# postgres -> timescale
-select event from in into out;
-```
-<div style='font-size: 20px'>Poll postgres very 10seconds for updates</div>
+### Pipelines
 
-<br/>
+- Filter and Transform events
 
 ```trickle
-# cron -> timescale
-select event.trigger.payload into out;
+
+ use std::array;
+ use std::string;
+ use std::integer;
+ 
+ # transform using select
+ select {
+   "clean_key": string::lowercase(string::trim(event.key)),
+   "value": integer::parse(event.str_value)
+ }
+ from in
+ where  # filter using where clause
+   array::contains(event.tags, "important")
+ into out;
+
 ```
-<div style='font-size: 20px'>Periodic events via cron every 10 seconds</div>
+
+---
+### Pipelines
+
+- Event introspection
+- Rich extractors
+
+```tremor
+
+ define script extract_http_url
+ script
+   # validate a url
+   match event.url of
+     case http_url ~= re|^https?://.*/$| => http_url
+     default => drop "not a http url"
+   end;
+ end;
+  
+
+```
+
+---
+### Pipelines
+
+- grouping and windowing
+
+```trickle
+
+ # emits event every 15 secs
+ define tumbling window fifteen_secs
+ with
+   interval = datetime::with_seconds(15)
+ end;
+ 
+ # generates aggregated event per window and group
+ select {"count": aggr::stats::count() }
+ from in[fifteen_secs]
+ group by set(event.partition)
+ into out
+ having event.count > 0;
+
+
+```
+---
+
+### Pipelines
+
+- Powerful operators
+
+```trickle
+
+ # distribute events across outputs evenly
+ # stop traffic for unreachable/erroneous outputs
+ define qos::roundrobin operator h3_roundrobin
+ with
+   outputs = ["host01", "host02", "host03"]
+ end;
+
+ create operator my_h3_rr from h3_roundrobin;
+
+```
+---
+
+### Pipelines
+
+- Express complex logic in functional expression language [tremor-script](https://docs.tremor.rs/tremor-script/)
+
+<div style="font-size: 22px!important">
+
+```trickle
+
+ define script extract                                # define the script that parses our apache logs
+ script
+   match {"raw": event} of                            # we user the dissect extractor to parse the apache log
+     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}\\n| }
+             => r.raw                                 # this first case is hit if the log includes an execution time (cost) for the request
+     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{}\\n| }
+             => r.raw                                 # the second case is hit if the log does not includes an execution time (cost) for the request
+     default => emit => "bad"
+   end
+ end;
+
+```
+</div>
 
 ---
 
 ### Deployment Logic
 
+<div style="font-size: 28px!important">
+
 ```yaml
 binding:
   - id: app-template
     links:
-      '/onramp/postgres-input/{instance}/out': [ '/pipeline/measure-pg/{instance}/in' ]
-      '/onramp/crononome-input/{instance}/out': [ '/pipeline/measure-cron/{instance}/in' ]
-      '/pipeline/measure-pg/{instance}/out': [ '/offramp/timescale/{instance}/in', '/offramp/system::stdout/{instance}/in' ]
-      '/pipeline/measure-cron/{instance}/out': [ '/offramp/timescale/{instance}/in', '/offramp/system::stdout/{instance}/in' ]
+      '/onramp/postgres-input/{instance}/out':
+        - '/pipeline/measure-pg/{instance}/in'
+      '/onramp/crononome-input/{instance}/out':
+        - '/pipeline/measure-cron/{instance}/in'
+      '/pipeline/measure-pg/{instance}/out':
+        - '/offramp/timescale/{instance}/in'
+        - '/offramp/system::stdout/{instance}/in'
+      '/pipeline/measure-cron/{instance}/out':
+        - '/offramp/timescale/{instance}/in'
+        - '/offramp/system::stdout/{instance}/in'
 mapping:
   /binding/app-template/my-instance:
     instance: 'my-instance'
 ```
+
 
 ```shell
 tremor server run
@@ -214,6 +341,7 @@ tremor server run
     instance.yaml                   \ # instances
 ```
 
+</div>
 ---
 
 ### Deployment diagram

@@ -4,13 +4,13 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Training Course: tremor Command Line Interface</title>
+		<title>Tremor Training Courses</title>
 
-		<link rel="stylesheet" href="../dist/reveal.css">
-		<link rel="stylesheet" href="../dist/theme/solarized.css" id="theme">
+		<link rel="stylesheet" href="./dist/reveal.css">
+		<link rel="stylesheet" href="./dist/theme/solarized.css" id="theme">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/styles/solarized-dark.min.css">
-		<link rel="stylesheet" href="../plugin/menu/menu.css">
-		<link rel="stylesheet" href="../plugin/toolbar/toolbar.css">
+		<link rel="stylesheet" href="./plugin/menu/menu.css">
+		<link rel="stylesheet" href="./plugin/toolbar/toolbar.css">
         <style type="text/css">
 #header-left {
   position: absolute;
@@ -53,7 +53,7 @@ div @keyframes removed-item-animation {
         </style>
 	</head>
 
-	<body onload="WaveDrom.ProcessAll()">
+	<body>
 
 		<div class="reveal">
 
@@ -69,25 +69,18 @@ div @keyframes removed-item-animation {
 			<div class="slides">
 
                 <!-- Use external markdown resource, separate slides by three newlines; vertical slides by two newlines -->
-                <section data-markdown="./index.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
-<!--
-                <-- section data-markdown="./tremor-script-mod.txt" data-separator="^>>>" data-separator-vertical="^---"></section>
--->
-
+                <section data-markdown="./index.md" data-separator="^>>>" data-separator-vertical="^---"></section>
             </div>
 		</div>
 
         <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/highlight.min.js"></script -->
-		<script src="../dist/reveal.js"></script>
-		<script src="../dist/mermaid.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js" type="text/javascript"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js" type="text/javascript"></script>
-        <script src="../plugin/markdown/markdown.js"></script>
-        <script src="../plugin/highlight/highlight.js"></script>
-        <script src="../highlightjs-tremor.cjs.js"></script>
-        <!-- script src="../plugin/notes/notes.js"></script -->
+		<script src="./dist/reveal.js"></script>
+        <script src="./plugin/markdown/markdown.js"></script>
+        <script src="./plugin/highlight/highlight.js"></script>
+        <script src="./highlightjs-tremor.cjs.js"></script>
+        <!-- script src="./plugin/notes/notes.js"></script -->
         <!-- script src="../plugin/spotlight/spotlight.js"></script -->
-        <script src="../plugin/menu/menu.js"></script>
+        <script src="./plugin/menu/menu.js"></script>
 
 		<script>
 			Reveal.initialize({
@@ -97,7 +90,7 @@ div @keyframes removed-item-animation {
 				center: true,
 
                 dependencies: [
-                    { "src": "../plugin/toolbar/toolbar.js" }
+                    { "src": "./plugin/toolbar/toolbar.js" }
                 ],
 
 				plugins: [ RevealMarkdown, RevealHighlight, /* RevealNotes, RevealSpotlight, */, RevealMenu ],
@@ -138,7 +131,6 @@ div @keyframes removed-item-animation {
 
             var hljs = Reveal.getPlugin('highlight').hljs;
             hljs.registerLanguage('tremor', window.defineTremorGrammar);
-            hljs.registerLanguage('trickle', window.defineTrickleGrammar);
             hljs.initHighlighting();
 
             Reveal.sync();

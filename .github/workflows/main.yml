@@ -26,6 +26,8 @@ jobs:
         run: mkdocs build
       - name: Add CNAME
         run: cp CNAME.txt html/CNAME
+      - name: Add course
+        run: cp -r course html/course
       - name: Deploy docs
         uses: peaceiris/actions-gh-pages@v2
         env:

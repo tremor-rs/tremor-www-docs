@@ -382,16 +382,22 @@ tremor server run
 
 >>>
 
-### Peers
+### Linked Transports
 
-- Associates sources and sinks
-- Enables bridging, load balancing and routing RPC protocols
-- Allows request and response flows to be implemented in event logic
-- Allows service control and data abstractions to be adapted to event logic
+- Typical event processing flow is one direction only
+- But most network traffic is request-response
+
+![One Directional Event Flow](./assets/linked_one_direction.png)
 
 ---
 
-![Peer Example](./assets/peer-example.png)
+### Linked Transports
+
+![Request Response based Event Flow](./assets/linked_bidirectional.png)
+
+- Enables bridging, load balancing and routing RPC protocols
+- Allows request and response flows to be implemented in event logic
+- Allows service control and data abstractions to be adapted to event logic
 
 ---
 
@@ -399,7 +405,7 @@ tremor server run
 onramp:
   - id: http
     type: rest
-    linked: true    # enable linked peering
+    linked: true    # enable linked transport
     codec: string
     config:
       host: 0.0.0.0
@@ -419,60 +425,9 @@ binding:
       "/pipeline/request_processing/{instance}/out":
         ["/onramp/http/{instance}/in"]
 
-  - id: error
-    links:
-      "/onramp/http/{instance}/err":
-        ["/pipeline/internal_error_processing/{instance}/in"]
-
-      "/pipeline/request_processing/{instance}/err":
-        ["/pipeline/internal_error_processing/{instance}/in"]
-
-      # send back errors as response as well
-      "/pipeline/internal_error_processing/{instance}/out":
-        ["/onramp/http/{instance}/in"]
-
-      # respond on errors during error processing too
-      "/pipeline/internal_error_processing/{instance}/err":
-        ["/onramp/http/{instance}/in"]
 ```
 
----
-
-```trickle
-define script process
-script
-  # embed tremor-script logic ... our API implementation
-end;
-create script process;
-
-# request handling loop
-select event from in into process;
-select event from process into out;
-
-# logical request processing errors -> logical error responses
-select event from process/app_error into out;
-
-# tremor runtime errors -> internal server error
-select event from process/err into err;
-```
-
----
-
-```trickle
- # handlers
-  match $request.url.path of
-    # echo handler
-    case "/echo" =>
-      emit {
-        "body": event,
-        "meta": $request,
-      }
-
-    case "/ping" =>
-      emit "pong {ingest_ns()}"
-
-    # ...
-```
+More details in our [docs](https://docs.tremor.rs/operations/linked-transports/) and [workshops](https://docs.tremor.rs/workshop/examples/30_servers_lt_http/).
 
 >>>
 

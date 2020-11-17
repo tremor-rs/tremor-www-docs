@@ -267,8 +267,8 @@ A high level overview of tremor-based systems architecture
  script
    # validate a url
    match event.url of
-     case http_url ~= re|^https?://.*/$| => http_url
-     default => drop "not a http url"
+     case https_url ~= re|^https?://.*/$| => https_url
+     default => drop "not a https url"
    end;
  end;
 

@@ -2,34 +2,49 @@
 
 ## What is Tremor?
 
-Tremor is a distributed event based system designed for data distribution,
-routing and processing in 24x7x365 high frequency at scale environments.
+Tremor is a generic event based system designed for data distribution, routing
+and processing in 24x7x365 high frequency at scale environments.
+
+---
+
+## History
+
+- Running in continuous production at Wayfair since October 2018
+- Born out of a need for better traffic shaping, load shedding and backpressure
+  detection when shipping logs/metrics during peak eCommerce trading
+
+---
+
+## History
+
+- Evolved to tackle other processing needs (collection, transformation and
+  aggregation) for logs and metrics
+- Addressed gaps not fulfilled by exisiting tools in use (eg: logstash, telegraf, kapacitor)
+- 6 (and counting) distinct usecases at Wayfair now, with applications also
+  outside of the observability domain (eg: search data distribution)
+
+---
+
+## History
+
+- [Open sourced](https://github.com/tremor-rs/) on Feb 25, 2020
+- External adoption and interest
+- [CNCF sandbox project](https://www.cncf.io/sandbox-projects/) since September
+  2020!
+
+<img src="./assets/cncf-color.svg" alt="CNCF Logo" style="width:300px">
 
 ---
 
 ## Scale
 
-Tremor processes in excess of `20TB` per day in Wayfair's production estate
-where it was born out of a need for better traffic shaping, load shedding and
-backpressure detection during peak eCommerce trading.
+Tremor excels in large-scale environments with high frequency data-processing
+requirements.
 
----
+_Some numbers from Wayfair:_
 
-## Reliability
-
-Tremor is in continuous production for 2 years, with expanding use cases
-that span logging, metrics, data technologies  and kubernetes domains with
-a small core development team. Tremor has never had a serious incident in
-production.
-
----
-
-## Productivity
-
-Tremor replaces a eclectic range of in-house, commercial off the shelf and
-open source single purpose data transformation, processing and distribution
-infrastructure with a single, easier to operate solution designed for very
-high usability in at scale production environments
+- 10 terabytes of data per day, or 10 billion events per minute
+- 10x footprint reduction in bare metal infrastructure (in terms of no of hosts/cpu/memory)
 
 ---
 
@@ -37,11 +52,28 @@ high usability in at scale production environments
 
 Tremor has good UX. It doesnt <b>SUX</b> in many ways:
 
-- It doesn't barf stacktraces
-- It doesn't barf nested stacktraces
-- You don't program it in YAML ( not 100% true yet )
-- Tremor won't panic in production
-- Tremor is built in a safe programming language ( mostly )
+- Define core processing logic in a proper language with editor support (no YAML!)
+- Informative errors -- doesn't barf stacktraces
+- Won't panic in production. Built in a [safe programming language](https://www.rust-lang.org/) ( mostly )
+- Out-of-the-box support for multiple data sources
+- Reusable building blocks that can be composed flexibly for need at hand
+
+---
+
+## Productivity
+
+Tremor replaces an eclectic range of in-house, commercial off the shelf and
+open source tools with a single, easier to operate solution designed for very
+high usability in at scale production environments
+
+---
+
+## Reliability
+
+Tremor is in continuous production for 2 years, with expanding use cases
+that span logging, metrics, data technologies, kubernetes and search tech domains
+with a small core development team. Tremor has never had a serious incident in
+production.
 
 >>>
 
@@ -196,7 +228,7 @@ A high level overview of tremor-based systems architecture
  # simplest passthrough pipeline
  select event from in into out;
 
- 
+
 ```
 
 ---
@@ -210,7 +242,7 @@ A high level overview of tremor-based systems architecture
  use std::array;
  use std::string;
  use std::integer;
- 
+
  # transform using select
  select {
    "clean_key": string::lowercase(string::trim(event.key)),
@@ -239,7 +271,7 @@ A high level overview of tremor-based systems architecture
      default => drop "not a http url"
    end;
  end;
-  
+
 
 ```
 
@@ -255,7 +287,7 @@ A high level overview of tremor-based systems architecture
  with
    interval = datetime::with_seconds(15)
  end;
- 
+
  # generates aggregated event per window and group
  select {"count": aggr::stats::count() }
  from in[fifteen_secs]
@@ -593,7 +625,7 @@ select {
     "var_{event.class}":  event.stats.var,
     "p50_{event.class}":  event.stats.percentiles["0.5"],
     "p90_{event.class}":  event.stats.percentiles["0.9"],
-    "p99_{event.class}":  event.stats.percentiles["0.99"], 
+    "p99_{event.class}":  event.stats.percentiles["0.99"],
     "p99.9_{event.class}":  event.stats.percentiles["0.999"]
   }
 }
@@ -674,36 +706,36 @@ select event from process into out;%
 - [Configurator](https://docs.tremor.rs/workshop/examples/37_configurator/)
 - [Quota Service](https://docs.tremor.rs/workshop/examples/36_quota_service/)
 
-<div>From `v0.9` tremor can now be used to quickly build and deploy micro-services</div>
+<div style='font-size: 20px'>From `v0.9` tremor can now be used to quickly build and deploy solutions requiring request/response style semantics</div>
 
 >>>
 
 ### New in v0.9 ( `Experimental` )
 
-- Circuit breakers. Finer grained QoS
-- Linked Transports. Enable event-sourced micro-services
-- Task-based concurrency. Deploy 1000's of pipelines in 1 tremor node.
+- [Circuit breakers and guaranteed delivery](https://docs.tremor.rs/operations/gdcb/). Finer grained QoS.
+- [Linked Transports](https://docs.tremor.rs/operations/linked-transports/). Enable event-sourced micro-services.
+- [Task-based concurrency](https://www.tremor.rs/blog/2020-08-06-to-async-or-not-to-async/). Deploy 1000's of pipelines in 1 tremor node.
 
 >>>
 
 
-### Next major release
+### Future plans
 
-- Raft-based consensus mechanism and K/V storage
-- Ring based cluster topology
-- Riak-style V-Nodes
-- Tremor cluster-aware network protocol
-
+- Clustering based on Raft, enabling resiliency for pipelines as well as denser deployments
+- Improve deployment configuration (no YAML anywhere)
+- Sliding window mechanism for aggregations
 
 >>>
 
-### Further reading
+### Further reading/help
 
 - [WWW](https://www.tremor.rs)
 - [Docs](https://docs.tremor.rs)
 - [Rfcs](https://rfcs.tremor.rs)
 - [CNCF Landscape](https://landscape.cncf.io/selected=tremor)
+- [Github](https://github.com/tremor-rs/tremor-runtime)
 - [Twitter](https://twitter.com/tremordebs)
+- [Slack](https://cloud-native.slack.com/messages/tremor)
 
 >>>
 

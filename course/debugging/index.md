@@ -423,6 +423,33 @@ Note:
 We close with a reinforcement of the expectation linked to this example.
 
 >>>
+### Lab
+
+> Tremor isn't working!
+
+Requirements:
+
+1. docker-compose
+2. `xz` and `tar`
+2. the [lab file](lab.tar.xz)
+
+---
+
+### Lab: running
+
+1. uncompress the archive: `xz -d lab.tar.xz; tar xf lab.tar`
+2. enter the directory: `cd lab`
+3. look at the `README.md` for context
+4. run the lab: `docker-compose up`
+5. debug!
+
+---
+### Lab: Solution
+
+Please try to solve the lab yourself first but here is the [solution](lab-solved.tar.xz).
+
+
+>>>
 
 ### End of `debugging` guide
 <!-- .slide: data-background="#33FF77" -->

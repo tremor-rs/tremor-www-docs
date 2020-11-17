@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker run -it -v `pwd`:/pwd -e "TERM=xterm-256color" -e "TREMOR_PATH=/pwd/lib/:/opt/local/tremor/lib/"  tremorproject/courseware:latest $*

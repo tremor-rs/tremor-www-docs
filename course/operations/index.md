@@ -77,7 +77,7 @@ $ tremor server run -f pipeline.trickle -f artefacts.yaml
   - [Sources](https://docs.tremor.rs/artefacts/onramps/)
   - [Sinks](https://docs.tremor.rs/artefacts/offramps/)
   - [Pipelines](https://docs.tremor.rs/tremor-query/)
-  - [Bindings](https://docs.tremor.rs/operations/configuration-walkthrough/#write-a-binding-specification) (connections of the three former artefacts) 
+  - [Bindings](https://docs.tremor.rs/operations/configuration-walkthrough/#write-a-binding-specification) (connections of the three former artefacts)
 
 ---
 
@@ -93,7 +93,7 @@ preprocessors:
   - lines
 config:
   source: "/var/log/mail.log"
-``` 
+```
 
 <!-- .element: class="fragment" -->
 
@@ -162,9 +162,9 @@ mapping:
 <div style="font-size: 0.8em">
 
 ```json
-$ curl -X POST \ 
-    -H "Content-Type: application/yaml" \ 
-    --data-binary @metronome-onramp.yaml \ 
+$ curl -X POST \
+    -H "Content-Type: application/yaml" \
+    --data-binary @metronome-onramp.yaml \
     http://localhost:9898/onramp
 {
   "id":"ws",
@@ -342,11 +342,15 @@ After:
 ## Task 0: Setup trecker
 
 ```sh
+# directory where we will keep all the lab content
+$ mkdir tremor && cd tremor
+
 # download trecker
 curl https://docs.tremor.rs/course/scripts/trecker -o trecker
 chmod u+x trecker
 
 # validate. should give cli usage
+# optional: place the script somewhere in your $PATH for wider access
 $ ./trecker -h
 ```
 
@@ -355,9 +359,6 @@ $ ./trecker -h
 ## Task 1: Get test data
 
 ```sh
-# eg: from your home directory
-$ mkdir tremor && cd tremor
-
 # download and decompress
 $ curl -L -o apache_access_logs.xz "https://bit.ly/tremor-apache-logs"
 $ unxz apache_access_logs.xz
@@ -412,7 +413,7 @@ Try introducing a typo (eg: `selectt` instead of `select`) and see what happens.
 <hr/>
 
 ```
-$ trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 Error:
     1 | selectt event from in into out;
       | ^^^^^^^ Found the token `selectt` but expected one of `#!config`, `create`, `define`, `mod`, `select`
@@ -440,7 +441,7 @@ in -> process -> out
 ```sh
 # we decode the log lines as plain string (default is to treat them as json)
 # the `/pwd/` prefix is needed here to pick up these files from the container
-$ trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 ```
 
 
@@ -572,19 +573,6 @@ then process it via the pipeline we created in the last section.
 
 ---
 
-## Task 0: Setup trecker
-
-```sh
-$ curl https://docs.tremor.rs/course/scripts/trecker -o trecker
-$ chmod u+x trecker
-
-# since we are using docker need to expose the container port for trecker use
-$ export TRECKER_PORTS=4242:4242
-
-# validate. should give cli usage
-$ ./trecker -h
-```
-
 ## ✋ Task 1: Create a source
 
 <div style='font-size: 25px'>
@@ -607,7 +595,7 @@ onramp:
   - id: tcp-input # A unique id for binding/mapping
     type: tcp # The unique type descriptor for the onramp ( websocket server here)
     codec: string # The underlying data format expected for application payload data
-    preprocessors: # split of the
+    preprocessors: # Split incoming data by line
       - lines
     config:
       port: 4242 # The TCP port to listen on
@@ -702,8 +690,8 @@ to resolve to full names.
 
 ```yaml
 mapping:
-  /binding/lab02/validate:
-    instance: "validate"
+  /binding/lab02/01:
+    instance: "01"
 ```
 
 ---
@@ -716,7 +704,6 @@ Can be tested with the following commands. Note that once trecker is started you
 use `docker stop` to stop it again. `CTRL+C` has no effect.
 
 ```sh
-# assuming you have saved the config in `deploy.yaml`
 $ ./trecker server run -f /pwd/apache.trickle /pwd/source.yaml /pwd/sink.yaml /pwd/binding.yaml /pwd/mapping.yaml
 
 # send logs to the tremor tcp receiver

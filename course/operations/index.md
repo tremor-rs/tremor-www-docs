@@ -343,7 +343,7 @@ After:
 
 ```sh
 # directory where we will keep all the lab content
-$ mkdir tremor && cd tremor
+mkdir tremor && cd tremor
 
 # download trecker
 curl https://docs.tremor.rs/course/scripts/trecker -o trecker
@@ -351,7 +351,7 @@ chmod u+x trecker
 
 # validate. should give cli usage
 # optional: place the script somewhere in your $PATH for wider access
-$ ./trecker -h
+./trecker -h
 ```
 
 ---
@@ -360,8 +360,8 @@ $ ./trecker -h
 
 ```sh
 # download and decompress
-$ curl -L -o apache_access_logs.xz "https://bit.ly/tremor-apache-logs"
-$ unxz apache_access_logs.xz
+curl -L -o apache_access_logs.xz "https://bit.ly/tremor-apache-logs"
+unxz apache_access_logs.xz
 
 # inspect the logs
 cat apache_access_logs | less
@@ -382,12 +382,12 @@ That is, running the following should give the same output as running `cat apach
 ```sh
 # we decode the log lines as plain string (default is to treat them as json)
 # the `/pwd/` prefix is needed here to pick up these files from the container
-$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 ```
 
 Or if you have the tremor binary:
 ```sh
-$ cat apache_access_logs |
+cat apache_access_logs |
     tremor run apache.trickle --decoder string --encoder string
 ```
 
@@ -413,7 +413,7 @@ Try introducing a typo (eg: `selectt` instead of `select`) and see what happens.
 <hr/>
 
 ```
-$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 Error:
     1 | selectt event from in into out;
       | ^^^^^^^ Found the token `selectt` but expected one of `#!config`, `create`, `define`, `mod`, `select`
@@ -441,7 +441,7 @@ in -> process -> out
 ```sh
 # we decode the log lines as plain string (default is to treat them as json)
 # the `/pwd/` prefix is needed here to pick up these files from the container
-$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 ```
 
 
@@ -479,10 +479,10 @@ Using the <a href="https://docs.tremor.rs/tremor-script/extractors/dissect/">dis
 ```sh
 # get just one log line for testing the parsing logic:
 # 127.0.0.1 - - [19/Jun/1998:22:00:05 +0000] "GET /english/images/comp_bg2_hm.gif HTTP/1.0" 200 3785
-$ tail -1 apache_access_logs > test_log_line
+tail -1 apache_access_logs > test_log_line
 
 # ignore diagnostics from trecker and get the final line only
-$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/test_log_line | tail -n1 | jq
+./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/test_log_line | tail -n1 | jq
 ```
 
 Output should be:
@@ -704,10 +704,10 @@ Can be tested with the following commands. Note that once trecker is started you
 use `docker stop` to stop it again. `CTRL+C` has no effect.
 
 ```sh
-$ ./trecker server run -f /pwd/apache.trickle /pwd/source.yaml /pwd/sink.yaml /pwd/binding.yaml /pwd/mapping.yaml
+./trecker server run -f /pwd/apache.trickle /pwd/source.yaml /pwd/sink.yaml /pwd/binding.yaml /pwd/mapping.yaml
 
 # send logs to the tremor tcp receiver
-$ cat apache_access_logs | nc 127.0.0.1 4242
+cat apache_access_logs | nc 127.0.0.1 4242
 ```
 
 </div>

@@ -246,7 +246,7 @@ with
     interval = datetime::with_seconds(15),
 end;
 
-select { "count": stats::count(event) } from in[fifteen_secs] into out having event.count > 0;
+select { "count": aggr::stats::count(event) } from in[fifteen_secs] into out having event.count > 0;
 ```
 
 In the above operation, we emit a synthetic count every fifteen seconds if at least one event has been witnessed during a 15 second window of time.
@@ -259,7 +259,7 @@ with
     interval = datetime::with_seconds(15),
 end;
 
-select { "count": stats::count(event) }
+select { "count": aggr::stats::count(event) }
 from in[fifteen_secs]
 group by set(event.partition)
 into out

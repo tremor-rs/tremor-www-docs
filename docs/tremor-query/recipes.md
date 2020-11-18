@@ -13,7 +13,7 @@ end;
 select {
     "measurement": event.measurement,
     "tags": patch event.tags of insert "window" => "10s" end,
-    "stats": stats::hdr(event.fields[group[2]], [ "0.42", "0.5", "0.9", "0.99", "0.999" ]),
+    "stats": aggr::stats::hdr(event.fields[group[2]], [ "0.42", "0.5", "0.9", "0.99", "0.999" ]),
     "class": group[2]
 }
 from in[`10secs`]

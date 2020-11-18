@@ -552,9 +552,9 @@ create operator batch;
 select {
     "measurement": event.measurement,
     "tags": patch event.tags of insert "window" => window end,
-    "stats": stats::hdr(event.fields[group[2]], [ "0.5", "0.9", "0.99", "0.999" ]),
+    "stats": aggr::stats::hdr(event.fields[group[2]], [ "0.5", "0.9", "0.99", "0.999" ]),
     "class": group[2],
-    "timestamp": win::first(event.timestamp), # snot
+    "timestamp": aggr::win::first(event.timestamp), # snot
 }
 from in[`10secs`, `1min`, `10min`, `1h`]
 where event.measurement == "udp_lb_test"

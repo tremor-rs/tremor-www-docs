@@ -25,27 +25,27 @@ bytes. We try to give pessimistic estimates where possible.
 
 ## Functions
 
-### stats::count() -> int
+### aggr::stats::count() -> int
 
 * **size**: Fixed, 10 bytes
 
 Counts the number of events aggregated in the current windowed operation.
 
 ```trickle
-stats::count() # number of items in the window
+aggr::stats::count() # number of items in the window
 ```
 
-### stats::min(int|float) -> int|float
+### aggr::stats::min(int|float) -> int|float
 
 * **size**: Fixed, 10 bytes
 
 Determines the smallest event value in the current windowed operation.
 
 ```trickle
-stats::min(event.value)
+aggr::stats::min(event.value)
 ```
 
-### stats::max(int|float) -> int|float
+### aggr::stats::max(int|float) -> int|float
 
 * **size**: Fixed, 10 bytes
 
@@ -53,50 +53,50 @@ stats::min(event.value)
 Determines the largest event value in the current windowed operation.
 
 ```trickle
-stats::max(event.value)
+aggr::stats::max(event.value)
 ```
 
-### stats::sum(int|float) -> int|float
+### aggr::stats::sum(int|float) -> int|float
 
 * **size**: Fixed, 10 bytes
 
 Determines the arithmetic sum of event values in the current windowed operation.
 
 ```trickle
-stats::sum(event.value)
+aggr::stats::sum(event.value)
 ```
 
-### stats::var(int|float) -> float
+### aggr::stats::var(int|float) -> float
 
 * **size**: Fixed, 100 bytes
 
 Calculates the sample variance of event values in the current windowed operation.
 
 ```trickle
-stats::var(event.value)
+aggr::stats::var(event.value)
 ```
 
-### stats::stdev(int|float) -> float
+### aggr::stats::stdev(int|float) -> float
 
 * **size**: Fixed, 100 bytes
 
 Calculates the sample standard deviation of event values in the current windowed operation.
 
 ```trickle
-stats::stdev(event.value)
+aggr::stats::stdev(event.value)
 ```
 
-### stats::mean(int|float) -> float
+### aggr::stats::mean(int|float) -> float
 
 * **size**: Fixed, 100 bytes
 
 Calculates the stastical mean of the event values in the current windowed operation.
 
 ```trickle
-stats::mean(event.value)
+aggr::stats::mean(event.value)
 ```
 
-### stats::hdr(int|float) -> record
+### aggr::stats::hdr(int|float) -> record
 
 * **size**: Fixed, 100 Kilo Bytes (note: this strongly depends on configuration, and can be estimated more correctly [with this formula](https://github.com/HdrHistogram/HdrHistogram#footprint-estimation))
 
@@ -105,15 +105,15 @@ Uses a High Dynamic Range ( HDR ) Histogram to calculate all basic statistics ag
 The HDR Histogram trades off memory utilisation for accuracy and is configured internally to limit accuracy to 2 significant decimal places.
 
 ```trickle
-stats::hdr(event.value, ["0.5","0.75","0.9","0.99","0.999"])
+aggr::stats::hdr(event.value, ["0.5","0.75","0.9","0.99","0.999"])
 ```
 
-### stats::dds(int|float) -> record
+### aggr::stats::dds(int|float) -> record
 
 * **size**: Fixed, 10 Kilo Bytes (estimate based on [this paper](https://arxiv.org/pdf/1908.10693.pdf))
 
 Uses a Distributed data-stream Sketch ( [DDS (paper)](http://www.vldb.org/pvldb/vol12/p2195-masson.pdf) Histogram to calculate count, min, max, mean and quartiles with quartile relative-error accurate over the range of points in the histogram. The DDS histogram trades off accuracy ( to a very low error and guaranteed low relative error ) and unlike HDR histograms does not need bounds specified.
 
 ```trickle
-stats::dds(event.value, ["0.5","0.75","0.9","0.99","0.999"])
+aggr::stats::dds(event.value, ["0.5","0.75","0.9","0.99","0.999"])
 ```

@@ -236,12 +236,12 @@ define tumbling window `15secs`
 end;
 
 select {
-    "count": stats::count(), # Aggregate 'count' function
-    "min": stats::min(event.value),
-    "max": stats::max(event.value),
-    "mean": stats::mean(event.value),
-    "stdev": stats::stdev(event.value),
-    "var": stats::var(event.value),
+    "count": aggr::stats::count(), # Aggregate 'count' function
+    "min": aggr::stats::min(event.value),
+    "max": aggr::stats::max(event.value),
+    "mean": aggr::stats::mean(event.value),
+    "stdev": aggr::stats::stdev(event.value),
+    "var": aggr::stats::var(event.value),
 }
 from in[`15secs`] # We apply the window nominally to streams
 into out;
@@ -264,9 +264,9 @@ A more complete example:
 select {
     "measurement": event.measurement,
     "tags": patch event.tags of insert "window" => window end,
-    "stats": stats::hdr(event.fields[group[2]], [ "0.5", "0.9", "0.99", "0.999" ]),
+    "stats": aggr::stats::hdr(event.fields[group[2]], [ "0.5", "0.9", "0.99", "0.999" ]),
     "class": group[2],
-    "timestamp": win::first(event.timestamp),
+    "timestamp": aggr::win::first(event.timestamp),
 }
 from in[`10secs`, `1min`, `10min`, `1h`]
 where event.measurement == "udp_lb_test"
@@ -278,7 +278,7 @@ group by set(event.measurement, event.tags, each(record::keys(event.fields)))
 into normalize;
 ```
 
-In the above example we use a single aggregate function called `stats::hdr` which uses a high dynamic range
+In the above example we use a single aggregate function called `aggr::stats::hdr` which uses a high dynamic range
 or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
 set by the `group` clause. A group clause effectively partitions our operation by the group expressions provided
 by the trickle query programmer. In the example, we're using the field names of the nested 'fields' record on inbound
@@ -324,7 +324,7 @@ All the synthetic outputs of successive 5 minute windows that fit into a 15 minu
 into the 15 minute window. All the outputs of successive 15 minute intervals that fit into a 1 hour interval
 are **merged** into the 1 hour window. By chaining and merging, tremor can optimise ( reduce ) the amount
 of memory required across the chain when compared to multiple independent windows `select` expressions.
-In the case of aggregate functions like ` stats::hdr`` or `stats::dds``` the savings are significant.
+In the case of aggregate functions like ` aggr::stats::hdr`` or `aggr::stats::dds``` the savings are significant.
 
 If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15, 3.6B every hour.
 

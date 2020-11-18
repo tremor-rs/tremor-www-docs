@@ -61,7 +61,7 @@ by the tremor family of languages:
 
 #### Templating percentile estimates from HDR Histogram
 
-In this example, we restructure output from the tremor `stats::hdr` aggregate function
+In this example, we restructure output from the tremor `aggr::stats::hdr` aggregate function
 and use string interpolation to generate record templates with a field naming scheme and
 structure this is compatible with tremor's influx data offramp.
 

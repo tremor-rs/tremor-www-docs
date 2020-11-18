@@ -1,0 +1,38 @@
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor server.
+#
+onramp:
+  - id: tcp-input # A unique id for binding/mapping
+    type: tcp # The unique type descriptor for the onramp ( websocket server here)
+    codec: string # The underlying data format expected for application payload data
+    preprocessors: # split of the
+      - lines
+    config:
+      port: 4242 # The TCP port to listen on
+      host: "0.0.0.0" # The IP address to bind on ( all interfaces in this case )
+
+offramp:
+  - id: stdout-output # The unique id for binding/mapping
+    type: stdout # The unique type descriptor for the offramp ( stdout here )
+    codec: json # The underlying data format expected for application payload data
+    config:
+      prefix: ">> " # A prefix for data emitted on standard output by this offramp
+
+# A binding associates onramps and offramps with pipeline inputs and outputs
+# through their unique identifiers to create a deployment graph template. These
+# typically use variables that are incarnated using runtime mappings so that
+# bindings can be reused where appropriate.
+#
+binding:
+  - id: example                                     # The unique name of this binding template
+    links:
+      '/onramp/tcp-input/{instance}/out':            # Connect the input to the pipeline
+       - '/pipeline/apache/{instance}/in'
+      '/pipeline/apache/{instance}/out':           # Connect the pipeline to the output
+       - '/offramp/stdout-output/{instance}/in'
+      '/pipeline/apache/{instance}/err':           # Direct pipeline errors to stdout as well
+       - '/offramp/stdout-output/{instance}/in'
+
+mapping:
+  /binding/example/validate:
+    instance: "validate"

@@ -1,0 +1,16 @@
+define script process
+script
+  match {"log": event} of
+    case dissect_result = %{ log ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}| } =>
+      dissect_result.log
+    default =>
+      emit {"error": "Malformed log line", "event": event} => "err"
+  end;
+end;
+
+create script process;
+
+select event from in into process;
+select event from process into out;
+
+select event from process/err into err;

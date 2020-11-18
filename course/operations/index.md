@@ -1,13 +1,10 @@
 <!-- .slide: data-background="#333333" -->
 
-## Operations and Development
+## Operations and Development - 1
 
 - Installation & Deployment
 - Configuration
 - Pipeline Development
-- Example use cases
-- Monitoring
-- Performance Tuning
 
 ---
 
@@ -34,7 +31,7 @@ __From source:__
 ```bash
 
  cargo build --release --all --verbose
- 
+
 
 ```
 
@@ -184,7 +181,7 @@ tremor server run -f onramp.yaml
 ## Pipeline Development
 
 - [tremor language server](https://github.com/tremor-rs/tremor-language-server):
-- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=tremorproject.tremor-language-features
+- [VS Code extension](https://marketplace.visualstudio.com/items?itemName=tremorproject.tremor-language-features)
 - [VIM plugin](https://github.com/tremor-rs/tremor-vim) (There are no other valid editors!)
 
 ---
@@ -197,7 +194,7 @@ tremor server run -f onramp.yaml
   - more expressive
   - IDE support
 
---- 
+---
 
 ## Quick Iterative Testing
 
@@ -221,598 +218,303 @@ select event from in into example;
 select from example into out;
 ```
 
+>>>
+
+## Lab Exercise
+
+<div style='font-size: 20px'>
+In this section, we will gradually build a solution for processing apache logs
+with tremor.
+<br/><br/>
+Time to wake up!
+</div>
+
 ---
 
-## Quick Iterative Testing
+## Goal
 
-```bash
- $ tremor run example.trickle
- Error: 
-    2 | script
-    3 |   match event of
-    4 |     case %{ "not_a_badger" == true } => emit event
-      |             ^ Found the token `"` but expected one of `<ident>`, `absent`, `present`, `}`
-      |               NOTE: Did you mean to use `}`?
-    5 |     default =>
-    6 |       let event["snot"] = "badger"
+Before:
+```
+127.0.0.1 - - [19/Jun/1998:22:00:05 +0000] "GET /english/images/comp_bg2_hm.gif HTTP/1.0" 200 3785
 ```
 
-Nice!
----
+After:
+```json
+{
+  "ip": "127.0.0.1",
+  "timestamp": "19/Jun/1998:22:00:05 +0000",
+  "method": "GET",
+  "path": "/english/images/comp_bg2_hm.gif",
+  "proto": "HTTP/1.0",
+  "code": 200,
+  "cost": 3785
+}
+```
 
 ---
 
-## Quick Iterative Testing
+## Task 0: Setup trecker
+
+```sh
+$ export TREMOR_IMAGE=tremorproject/tremor:latest
+
+# assuming docker is already installed
+$ docker pull $TREMOR_IMAGE
+
+# convenient alias to run docker-based tremor
+$ alias trecker='docker run -it -v `pwd`:/pwd $TREMOR_IMAGE $*'
+
+# validate. should give cli usage
+$ trecker -h
+```
+
+---
+
+## Task 1: Get test data
+
+```sh
+# eg: from your home directory
+$ mkdir tremor && cd tremor
+
+# download and decompress
+$ curl -L -o apache_access_logs.xz "https://github.com/tremor-rs/tremor-runtime/blob/main/demo/data/apache_access_logs.xz?raw=true"
+$ unxz apache_access_logs.xz
+
+# inspect the logs
+cat apache_access_logs | less
+```
+
+---
+
+## Task 2: Passthrough pipeline
+
+<div style='font-size: 25px'>
+Write a passthrough trickle pipeline `apache.trickle` that passes each log line as is.
+
+That is, running the following should give the same output as running `cat apache_access_logs`.
+
+```sh
+# we decode the log lines as plain string (default is to treat them as json)
+# the `/pwd/` prefix is needed here to pick up these files from the container
+$ trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+```
+
+Or if you have the tremor binary:
+```sh
+$ cat apache_access_logs |
+    tremor run apache.trickle --decoder string --encoder string
+```
+
+You can use these commands throughout this lab to iterate on the pipeline code.
+</div>
+
+---
+
+## Task 2: Solution
 
 ```trickle
-
-## Reliability
-
-Tremor is in continuous production for 2 years, with expanding use cases
-that span logging, metrics, data technologies  and kubernetes domains with
-a small core development team. Tremor has never had a serious incident in
-production.
-
----
-
-## Productivity
-
-Tremor replaces a eclectic range of in-house, commercial off the shelf and
-open source single purpose data transformation, processing and distribution
-infrastructure with a single, easier to operate solution designed for very
-high usability in at scale production environments
-
----
-
-## UX
-
-Tremor has good UX. It doesnt <b>SUX</b> in many ways:
-
-- It doesn't barf stacktraces
-- It doesn't barf nested stacktraces
-- You don't program it in YAML ( not 100% true yet )
-- Tremor won't panic in production
-- Tremor is built in a safe programming language ( mostly )
-
->>>
-
-
-### Architecture Overview
-
-A high level overview of tremor-based systems architecture
-
----
-
-### Tremor Nodes
-
-![Tremor Node High Level Architecture](./assets/hla.png)
-
----
-
-### Core concepts
-
-- Sources. Ingest data from the outside world ( onramps )
-- Sinks. Contribute data to the outside world ( offramps )
-- Linked Transports. Have `source` and `sink` natures
-- Pipelines. Business logic compiles to an event flow DAG
-
->>>
-
-### Sources
-
-- Can be a connector that consumes data via poll.
-- Can be a connector that exposes a messaging consumer endpoint.
-- Implemented in the rust programming language.
-- Configured in YAML
-
----
-
-```yaml
-  - id: postgres-input
-    type: postgres          # Use postgres/timescale connector
-    codec: json             # Specify data format as json
-    config:
-      host: postgres        # Domain hostname
-      port: 5432            # TCP port
-      user: postgres        # Username
-      password: example     # Password
-      dbname: products      # Database
-      interval_ms: 10000    # Polling interval ( 10 seconds )
-      query: "SELECT * FROM transactions WHERE created_at >= $1 AND created_at < $2;"
-      consume_from: "2019-12-01 00:00:00.000000 +00:00"
-      cache:
-        path: "/etc/tremor/cache.json"      # Track continuation/resume point
-        size: 4096                          # Retention ( number of documents )
-```
-
-<div style='font-size: 20px'>TimescaleDB source ( periodic polling )</div>
-
----
-
-```yaml
-  - id: crononome-input
-    type: crononome
-    codec: json
-    config:
-      entries:
-        - name: 5s                 # label
-          expr: "0/5 * * * * *"    # cron-like schedule specification
-          payload:                 # payload data
-            user_id:
-              fieldType: "INT8"
-              name: "user_id"
-              value: 12345
-            product_id:
-              fieldType: "VARCHAR"
-              name: "product_id"
-              value: jdwa2djh2
-            quantity:
-              fieldType: "INT8"
-              name: "quantity"
-              value: 2
-            created_at:
-              fieldType: "TIMESTAMPTZ"
-              name: "created_at"
-              value: "2020-04-08 00:00:00.000000 +00:00"
-```
-
-<div style='font-size: 20px'>Cron-like scheduled events</div>
-
->>>
-
-### Sinks
-
-- Can be a connector that publishes data via RPC.
-- Can be a connector that exposes a messaging publicationendpoint.
-- Implemented in the rust programming language.
-- Configured in YAML
-
----
-
-```yaml
-  - id: timescaledb-output
-    type: postgres
-    codec: json
-    config:
-      host: timescaledb
-      port: 5432
-      user: postgres
-      password: example
-      dbname: measurements
-      table: events
-```
-
-<div style='font-size: 20px'>Postgres database sink ( event driven persistence )</div>
-
----
-
-```yaml
-  - id: debug
-    type: stdout
-    codec: json
-```
-
-
-<div style='font-size: 20px'>Development convenience for interactive debugging</div>
-
->>>
-
-### Pipelines
-
-- Business logic is implemented in tremor-query
-- Tremor query embeds tremor-script - a functional expression language
-- Tremor query compiles to an event Pipeline Directed-Acyclic-Graph
-- The tremor runtime manages source, sink, peer and pipeline lifecycle
-
----
-
-```trickle
-# postgres -> timescale
 select event from in into out;
 ```
-<div style='font-size: 20px'>Poll postgres very 10seconds for updates</div>
-
-<br/>
-
-```trickle
-# cron -> timescale
-select event.trigger.payload into out;
-```
-<div style='font-size: 20px'>Periodic events via cron every 10 seconds</div>
 
 ---
 
-### Deployment Logic
+## Task 2.5: Error test
 
-```yaml
-binding:
-  - id: app-template
-    links:
-      '/onramp/postgres-input/{instance}/out': [ '/pipeline/measure-pg/{instance}/in' ]
-      '/onramp/crononome-input/{instance}/out': [ '/pipeline/measure-cron/{instance}/in' ]
-      '/pipeline/measure-pg/{instance}/out': [ '/offramp/timescale/{instance}/in', '/offramp/system::stdout/{instance}/in' ]
-      '/pipeline/measure-cron/{instance}/out': [ '/offramp/timescale/{instance}/in', '/offramp/system::stdout/{instance}/in' ]
-mapping:
-  /binding/app-template/my-instance:
-    instance: 'my-instance'
+Try introducing a typo (eg: `selectt` instead of `select`) and see what happens.
+
+```
+Error:
+    1 | selectt event from in into out;
+      | ^^^^^^^ Found the token `selectt` but expected one of `#!config`, `create`, `define`, `mod`, `select`
+      |         NOTE Did you mean to use `select`?
+
 ```
 
-```shell
-tremor server run
-  -f postgres.trickle cron.trickle  \ # logic
-    postgres.yaml cron.yaml         \ # sources
-    timescale.yaml                  \ # sinks
-    instance.yaml                   \ # instances
+Yay nice errors!
+
+---
+
+## Task 3: Passthrough pipeline v2
+
+<div style='font-size: 25px'>
+Introduce a new node called `process` in `apache.trickle`, based on the <a href="https://docs.tremor.rs/tremor-query/operators/#script">tremor-script operator</a>. The script will also pass in the log line as is, for now.
+
+
 ```
-
----
-
-### Deployment diagram
-
-![Timescale Example Deployment](./assets/timescale-example.png)
-
->>>
-
-### Peers
-
-- Associates sources and sinks
-- Enables bridging, load balancing and routing RPC protocols
-- Allows request and response flows to be implemented in event logic
-- Allows service control and data abstractions to be adapted to event logic
-
----
-
-![Peer Example](./assets/peer-example.png)
-
----
-
-```yaml
-onramp:
-  - id: http
-    type: rest
-    linked: true    # enable linked peering
-    codec: string
-    config:
-      host: 0.0.0.0
-      port: 8139
+in -> process -> out
 ```
+</div>
 
 ---
 
-```yaml
-binding:
-  - id: main
-    links:
-      "/onramp/http/{instance}/out":
-        ["/pipeline/request_processing/{instance}/in"]
-
-      # process incoming requests and send back the response
-      "/pipeline/request_processing/{instance}/out":
-        ["/onramp/http/{instance}/in"]
-
-  - id: error
-    links:
-      "/onramp/http/{instance}/err":
-        ["/pipeline/internal_error_processing/{instance}/in"]
-
-      "/pipeline/request_processing/{instance}/err":
-        ["/pipeline/internal_error_processing/{instance}/in"]
-
-      # send back errors as response as well
-      "/pipeline/internal_error_processing/{instance}/out":
-        ["/onramp/http/{instance}/in"]
-
-      # respond on errors during error processing too
-      "/pipeline/internal_error_processing/{instance}/err":
-        ["/onramp/http/{instance}/in"]
-```
-
----
+## Task 3: Solution
 
 ```trickle
 define script process
 script
-  # embed tremor-script logic ... our API implementation
+  event;
 end;
+
 create script process;
 
-# request handling loop
 select event from in into process;
 select event from process into out;
 
-# logical request processing errors -> logical error responses
-select event from process/app_error into out;
-
-# tremor runtime errors -> internal server error
 select event from process/err into err;
 ```
 
 ---
 
-```trickle
- # handlers
-  match $request.url.path of
-    # echo handler
-    case "/echo" =>
-      emit {
-        "body": event,
-        "meta": $request,
-      }
+## Task 4: Parse a log line
 
-    case "/ping" =>
-      emit "pong {ingest_ns()}"
+<div style='font-size: 25px'>
+Using the <a href="https://docs.tremor.rs/tremor-script/extractors/dissect/">dissect extractor</a>, convert the log string into a structured record.
 
-    # ...
+```sh
+# get just one log line for testing the parsing logic:
+# 127.0.0.1 - - [19/Jun/1998:22:00:05 +0000] "GET /english/images/comp_bg2_hm.gif HTTP/1.0" 200 3785
+$ tail -1 apache_access_logs > test_log_line
+
+# ignore diagnostics from trecker and get the final line only
+$ trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/test_log_line | tail -n1 | jq
 ```
 
->>>
+Output should be:
 
-### API
-
-- The tremor API is used for monitoring, deployment and administration
-- Publish, find and bind sources, sinks, pipelines
-- Sources and Sinks are automatically removed upon quiescence
-- Connect sources to pipelines
-- Connect pipelines to sinks
-
----
-
-- [API documentation](https://docs.tremor.rs/api/)
-- [API cli](https://docs.tremor.rs/operations/cli/#api)
-
-
-<div style='font-size: 20px'>You can proxy the API using linked transports</div>
-
->>>
-
-### Solutions
-
-<div style='font-size: 20px'>
-In this section we look at some examples of existing production
-solutions based on tremor.
+```json
+{
+  "ip": "127.0.0.1",
+  "timestamp": "19/Jun/1998:22:00:05 +0000",
+  "method": "GET",
+  "path": "/english/images/comp_bg2_hm.gif",
+  "proto": "HTTP/1.0",
+  "code": 200,
+  "cost": 3785
+}
+```
 </div>
 
-<br/>
-
 ---
 
-### Wayfair Platform Logging Service
-
-![Basic Logging Architecture](./assets/logging-arch-basic.png)
-<div style='font-size: 20px'>A simplified high level view of logging systems architecture at Wayfair</div>
-
-
----
-
-### Possible Target Logging Architecture
-
-![Target Logging Architecture](./assets/logging-arch-next-maybe.png)
-<div style='font-size: 20px'>A simplified high level view of one potential future logging systems architecture at Wayfair. Moving the transformation tier logic upstream to the source tiers allows greater flexibility, reduced traffic volumetric, and reduces deployment footprint and associated costs. Tremor as a sidecar is already in production in Kubernetes use cases</div>
-
----
-
-### Aggregation and Metrics
-
-![Aggregation of Metrics](./assets/metrics-arch-basic.png)
-
-<div style='font-size: 20px'>Source tier collects metrics and partitions measures into partitions. Partitions are streamed to the aggregation tier with partition affinity. Aggregation tier summarises and forwards to distribution tier for downstream consumers.</div>
-
----
-
-### Static Partitioning
+## Task 4: Solution
 
 ```trickle
-define script distribute
-with
-  hosts = ["g1", "g2", "g3"]
-script
-  use tremor::chash;
-  let g = event.tags["__TREMOR_GROUP__"];
-  let event.tags = patch event.tags of
-    erase "__TREMOR_GROUP__"
-  end;
-  match args.hosts[chash::jump(g, array::len(args.hosts))] of
-    case "g1" => emit => "g1"
-    case "g2" => emit => "g2"
-    case "g3" => emit => "g3"
-    default => emit => "err"
-  end
-end;
-
-create script distribute;
-
-select
-  patch event of
-    update "fields" => { "{group[2]}": event.fields[group[2]] },
-    merge "tags" => { "__TREMOR_GROUP__": group[3] }
-  end
-from in
-group by set(event.measurement, event.tags, each(record::keys(event.fields)))
-into distribute;
-
-select event from distribute/error into err;
-select event from distribute/g1 into out/g1;
-select event from distribute/g2 into out/g2;
-select event from distribute/g3 into out/g3;
-```
-
----
-
-### Aggregator
-
-```trickle
-define tumbling window `10secs`
-with
-   interval = datetime::with_seconds(10),
-end;
-define tumbling window `1min`
-with
-   interval = datetime::with_minutes(1),
-end;
-define tumbling window `10min`
-with
-   interval = datetime::with_minutes(10),
-end;
-define tumbling window `1h`
-with
-   interval = datetime::with_hours(1),
-end;
-
-define generic::batch operator batch
-with
-  count = 8000,
-  timeout = 10000
-end;
-create operator batch;
-
-select {
-    "measurement": event.measurement,
-    "tags": patch event.tags of insert "window" => window end,
-    "stats": stats::hdr(event.fields[group[2]], [ "0.5", "0.9", "0.99", "0.999" ]),
-    "class": group[2],
-    "timestamp": win::first(event.timestamp), # snot
-}
-from in[`10secs`, `1min`, `10min`, `1h`]
-where event.measurement == "udp_lb_test"
-   or event.measurement == "kafka-proxy.endpoints"
-   or event.measurement == "burrow_group"
-   or event.measurement == "burrow_partition"
-   or event.measurement == "burrow_topic"
-group by set(event.measurement, event.tags, each(record::keys(event.fields)))
-into normalize;
-
-create stream normalize;
-
-select {
-  "measurement":  event.measurement,
-  "tags":  event.tags,
-  "timestamp": event.timestamp, #asdf
-  "fields":  {
-    "count_{event.class}":  event.stats.count, # "
-    "min_{event.class}":  event.stats.min,
-    "max_{event.class}":  event.stats.max,
-    "mean_{event.class}":  event.stats.mean,
-    "stdev_{event.class}":  event.stats.stdev,
-    "var_{event.class}":  event.stats.var,
-    "p50_{event.class}":  event.stats.percentiles["0.5"],
-    "p90_{event.class}":  event.stats.percentiles["0.9"],
-    "p99_{event.class}":  event.stats.percentiles["0.99"], 
-    "p99.9_{event.class}":  event.stats.percentiles["0.999"]
-  }
-}
-from normalize
-into batch;
-
-select event from batch into out;
-
-```
-
----
-
-### Alerting via Alerta Integration
-
-```trickle
-# A 2019 berlin hackathon entry by Ernad Halilovic ( cyclopes )
-
-# normalize
-let severity = match event of
-  case %{ status == 0 } => "ok"
-  case %{ status == 1 } => "warning"
-  case %{ status == 2 } => "critical"
-  default => "ok"
-end;
-
-# Alert to be sent to alerta ( uses http/rest sink )
-{
-  "attributes": {
-    "region": "bo1"
-  },
-  "correlate": [ "ReplicationError", "ReplicationOK" ],
-    "environment": "Production",
-    "event": "ReplicationError",
-    "group": "Infra",
-    "origin": "tremor",
-    "resource": "githubc1n1.host.bo1.csnzoo.com",
-    "service": [ "github" ],
-    "severity": severity,
-    "tags": [ "releng" ],
-    "text": "Github replication is problematic.",
-    "type": "tremorAlert",
-    "value": ""
-}
-```
----
-
-### AI - Twitter Sentiment Analysis
-
-```trickle
-# A 2020 berlin hackaton entry by Christian Rehm et al
-
-define bert::summarization operator s # Bert NLP operator
-with
-  file = "bla"
-end;
-
 define script process
 script
-  use std::string;
-  {
-      "summary": $summary,
-      "text": string::replace(event, "\n", " ")
-  }
+  match {"log": event} of
+    case dissect_result = %{ log ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}| } =>
+      dissect_result.log
+    default =>
+      emit {"error": "Malformed log line", "event": event} => "err"
+  end;
 end;
 
-create operator s;
 create script process;
 
-select event from in into s;
-select event from s into process;
-select event from process into out;%
+select event from in into process;
+select event from process into out;
+
+select event from process/err into err;
 ```
 
 ---
 
-### A distributed configuration micro-service
+## Task 5: Parse all log lines
 
-- [Configurator](https://docs.tremor.rs/workshop/examples/37_configurator/)
-- [Quota Service](https://docs.tremor.rs/workshop/examples/36_quota_service/)
+<div style='font-size: 25px'>
+See if there's any error events when running the above script for all the logs.
 
-<div>From `v0.9` tremor can now be used to quickly build and deploy micro-services</div>
+```
+trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+```
+
+For logs with malformed errors, we can try to add a dissect pattern that would match it (leave as an exercise for later).
+
+Also try switching the encoder to something like `yaml`.
+</div>
+
+---
+
+## Task 6: Full tremor deployment
+
+<div style='font-size: 25px'>
+Configure tremor with a <a href="https://docs.tremor.rs/artefacts/onramps/#tcp">tcp source</a> to listen on port 4242 for incoming events.
+
+Direct events from the source to our working `apache` pipeline.
+
+And from pipeline, direct the events to <a href="https://docs.tremor.rs/artefacts/offramps/#stdout">stdout sink</a>
+
+Can be tested via:
+
+```sh
+# since we are using docker need to expose the container port for trecker use
+$ alias trecker='docker run -it -v `pwd`:/pwd -p 4242:4242 $TREMOR_IMAGE $*'
+
+# assuming you have saved the config in `deploy.yaml`
+$ trecker server run -f /pwd/deploy.yaml -f /pwd/apache.trickle
+
+# send logs to the tremor tcp receiver
+$ cat apache_access_logs | nc 127.0.0.1 4242
+```
+</div>
+
+---
+
+## Task 6: Solution
+
+```yaml
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor server.
+#
+onramp:
+  - id: tcp-input # A unique id for binding/mapping
+    type: tcp # The unique type descriptor for the onramp ( websocket server here)
+    codec: string # The underlying data format expected for application payload data
+    preprocessors: # split of the
+      - lines
+    config:
+      port: 4242 # The TCP port to listen on
+      host: "0.0.0.0" # The IP address to bind on ( all interfaces in this case )
+
+offramp:
+  - id: stdout-output # The unique id for binding/mapping
+    type: stdout # The unique type descriptor for the offramp ( stdout here )
+    codec: json # The underlying data format expected for application payload data
+    config:
+      prefix: ">> " # A prefix for data emitted on standard output by this offramp
+
+# A binding associates onramps and offramps with pipeline inputs and outputs
+# through their unique identifiers to create a deployment graph template. These
+# typically use variables that are incarnated using runtime mappings so that
+# bindings can be reused where appropriate.
+#
+binding:
+  - id: example                                     # The unique name of this binding template
+    links:
+      '/onramp/tcp-input/{instance}/out':            # Connect the input to the pipeline
+       - '/pipeline/apache/{instance}/in'
+      '/pipeline/apache/{instance}/out':           # Connect the pipeline to the output
+       - '/offramp/stdout-output/{instance}/in'
+      '/pipeline/apache/{instance}/err':           # Direct pipeline errors to stdout as well
+       - '/offramp/stdout-output/{instance}/in'
+
+mapping:
+  /binding/example/validate:
+    instance: "validate"
+```
+
+---
+
+## Extra-credit
+
+* Filter out logs with status code < 400 (i.e. only pass error logs)
+* Throttle logs such that output is just 10 logs per second
 
 >>>
 
-### New in v0.9 ( `Experimental` )
-
-- Circuit breakers. Finer grained QoS
-- Linked Transports. Enable event-sourced micro-services
-- Task-based concurrency. Deploy 1000's of pipelines in 1 tremor node.
-
->>>
-
-
-### Next major release
-
-- Raft-based consensus mechanism and K/V storage
-- Ring based cluster topology
-- Riak-style V-Nodes
-- Tremor cluster-aware network protocol
-
-
->>>
-
-### Further reading
-
-- [WWW](https://www.tremor.rs)
-- [Docs](https://docs.tremor.rs)
-- [Rfcs](https://rfcs.tremor.rs)
-- [CNCF Landscape](https://landscape.cncf.io/selected=tremor)
-- [Twitter](https://twitter.com/tremordebs)
-
->>>
-
-### End of `overview` guide
+### End of `operations` guide
 <!-- .slide: data-background="#33FF77" -->
 
-This is the end of the overview
+This is the end of the operations guide
 
 Note: This will only appear in speaker notes window

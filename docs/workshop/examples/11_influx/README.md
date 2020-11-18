@@ -55,7 +55,7 @@ select
 {
     "measurement": event.measurement,
     "tags": patch event.tags of insert "window" => window end,
-    "stats":aggr::stats::hdr(event.value, [ "0.5", "0.9", "0.99", "0.999" ]),
+    "stats": aggr::stats::hdr(event.value, [ "0.5", "0.9", "0.99", "0.999" ]),
     "field": event.field,
     "timestamp": aggr::win::first(event.timestamp), # we can't use min since it's a float
 }

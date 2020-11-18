@@ -382,29 +382,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#winfirst-event" class="md-nav__link">
-    win::first() -&gt; event
+  <a href="#aggrwinfirst-event" class="md-nav__link">
+    aggr::win::first() -&gt; event
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#winlast-event" class="md-nav__link">
-    win::last() -&gt; event
+  <a href="#aggrwinlast-event" class="md-nav__link">
+    aggr::win::last() -&gt; event
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#wincollect_flattened-event" class="md-nav__link">
-    win::collect_flattened() -&gt; [event]
+  <a href="#aggrwincollect_flattened-event" class="md-nav__link">
+    aggr::win::collect_flattened() -&gt; [event]
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#wincollect_nested-eventevent" class="md-nav__link">
-    win::collect_nested() -&gt; [[event]]|[event]
+  <a href="#aggrwincollect_nested-eventevent" class="md-nav__link">
+    aggr::win::collect_nested() -&gt; [[event]]|[event]
   </a>
   
 </li>
@@ -1736,29 +1736,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#winfirst-event" class="md-nav__link">
-    win::first() -&gt; event
+  <a href="#aggrwinfirst-event" class="md-nav__link">
+    aggr::win::first() -&gt; event
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#winlast-event" class="md-nav__link">
-    win::last() -&gt; event
+  <a href="#aggrwinlast-event" class="md-nav__link">
+    aggr::win::last() -&gt; event
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#wincollect_flattened-event" class="md-nav__link">
-    win::collect_flattened() -&gt; [event]
+  <a href="#aggrwincollect_flattened-event" class="md-nav__link">
+    aggr::win::collect_flattened() -&gt; [event]
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#wincollect_nested-eventevent" class="md-nav__link">
-    win::collect_nested() -&gt; [[event]]|[event]
+  <a href="#aggrwincollect_nested-eventevent" class="md-nav__link">
+    aggr::win::collect_nested() -&gt; [[event]]|[event]
   </a>
   
 </li>
@@ -1788,23 +1788,23 @@
                 <h1 id="the-win-namespace">The <code>win</code> namespace<a class="headerlink" href="#the-win-namespace" title="Permanent link">&para;</a></h1>
 <p>The <code>win</code> module contains functions for aggregating over the current active window in a window of events. The functions can also be used in tilt frames where events emitting from a window are chained across multiple window frames in sequence.</p>
 <h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h2>
-<h3 id="winfirst-event">win::first() -&gt; event<a class="headerlink" href="#winfirst-event" title="Permanent link">&para;</a></h3>
+<h3 id="aggrwinfirst-event">aggr::win::first() -&gt; event<a class="headerlink" href="#aggrwinfirst-event" title="Permanent link">&para;</a></h3>
 <p>Capture and return the first event that hits a window upon/after opening.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">win</span><span class="err">::</span><span class="nx">first</span><span class="err">()</span><span class="w"> </span><span class="c1"># first event in a window</span>
+<div class="highlight"><pre><span></span><code><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">first</span><span class="err">()</span><span class="w"> </span><span class="c1"># first event in a window</span>
 </code></pre></div>
-<h3 id="winlast-event">win::last() -&gt; event<a class="headerlink" href="#winlast-event" title="Permanent link">&para;</a></h3>
+<h3 id="aggrwinlast-event">aggr::win::last() -&gt; event<a class="headerlink" href="#aggrwinlast-event" title="Permanent link">&para;</a></h3>
 <p>Capture and return the last event that hits a window upon/after opening.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">win</span><span class="err">::</span><span class="nx">last</span><span class="err">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">last</span><span class="err">()</span><span class="w"></span>
 </code></pre></div>
-<h3 id="wincollect_flattened-event">win::collect_flattened() -&gt; [event]<a class="headerlink" href="#wincollect_flattened-event" title="Permanent link">&para;</a></h3>
+<h3 id="aggrwincollect_flattened-event">aggr::win::collect_flattened() -&gt; [event]<a class="headerlink" href="#aggrwincollect_flattened-event" title="Permanent link">&para;</a></h3>
 <p>Captures all events in a window into an array of events.</p>
 <p>In the case of tilt frames,  flattens out any tilt frame sub-arrays</p>
-<div class="highlight"><pre><span></span><code><span class="nx">win</span><span class="err">::</span><span class="nx">collect_flattened</span><span class="err">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">collect_flattened</span><span class="err">()</span><span class="w"></span>
 </code></pre></div>
-<h3 id="wincollect_nested-eventevent">win::collect_nested() -&gt; [[event]]|[event]<a class="headerlink" href="#wincollect_nested-eventevent" title="Permanent link">&para;</a></h3>
+<h3 id="aggrwincollect_nested-eventevent">aggr::win::collect_nested() -&gt; [[event]]|[event]<a class="headerlink" href="#aggrwincollect_nested-eventevent" title="Permanent link">&para;</a></h3>
 <p>Captures all events in a window into an array of events.</p>
 <p>In the case of tilt frames, each frame is preserved as a nested array of arrays. For a tilt frame of 3 windows, the inner-most leaf array contains events, and higher levels are arrays of arrays.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">win</span><span class="err">::</span><span class="nx">collect_nested</span><span class="err">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">collect_nested</span><span class="err">()</span><span class="w"></span>
 </code></pre></div>
                 
               

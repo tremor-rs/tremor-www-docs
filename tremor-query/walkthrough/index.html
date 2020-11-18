@@ -2093,12 +2093,12 @@ indirect looping cycles.</p>
 end;
 
 select {
-    &quot;count&quot;: stats::count(), # Aggregate &#39;count&#39; function
-    &quot;min&quot;: stats::min(event.value),
-    &quot;max&quot;: stats::max(event.value),
-    &quot;mean&quot;: stats::mean(event.value),
-    &quot;stdev&quot;: stats::stdev(event.value),
-    &quot;var&quot;: stats::var(event.value),
+    &quot;count&quot;: aggr::stats::count(), # Aggregate &#39;count&#39; function
+    &quot;min&quot;: aggr::stats::min(event.value),
+    &quot;max&quot;: aggr::stats::max(event.value),
+    &quot;mean&quot;: aggr::stats::mean(event.value),
+    &quot;stdev&quot;: aggr::stats::stdev(event.value),
+    &quot;var&quot;: aggr::stats::var(event.value),
 }
 from in[`15secs`] # We apply the window nominally to streams
 into out;
@@ -2115,9 +2115,9 @@ data-drive or fully programmatic.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">select</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;measurement&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">measurement</span><span class="err">,</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;tags&quot;</span><span class="err">:</span><span class="w"> </span><span class="kd">patch</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">tags</span><span class="w"> </span><span class="kd">of</span><span class="w"> </span><span class="kd">insert</span><span class="w"> </span><span class="s">&quot;window&quot;</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">window</span><span class="w"> </span><span class="kd">end</span><span class="err">,</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;stats&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">stats</span><span class="err">::</span><span class="nx">hdr</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">fields</span><span class="err">[</span><span class="nx">group</span><span class="err">[</span><span class="mi">2</span><span class="err">]],</span><span class="w"> </span><span class="err">[</span><span class="w"> </span><span class="s">&quot;0.5&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;0.9&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;0.99&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;0.999&quot;</span><span class="w"> </span><span class="err">]),</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;stats&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">stats</span><span class="err">::</span><span class="nx">hdr</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">fields</span><span class="err">[</span><span class="nx">group</span><span class="err">[</span><span class="mi">2</span><span class="err">]],</span><span class="w"> </span><span class="err">[</span><span class="w"> </span><span class="s">&quot;0.5&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;0.9&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;0.99&quot;</span><span class="err">,</span><span class="w"> </span><span class="s">&quot;0.999&quot;</span><span class="w"> </span><span class="err">]),</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;class&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">group</span><span class="err">[</span><span class="mi">2</span><span class="err">],</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;timestamp&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">win</span><span class="err">::</span><span class="nx">first</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">timestamp</span><span class="err">),</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;timestamp&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">first</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">timestamp</span><span class="err">),</span><span class="w"></span>
 <span class="err">}</span><span class="w"></span>
 <span class="nx">from</span><span class="w"> </span><span class="nx">in</span><span class="err">[`</span><span class="mi">10</span><span class="nx">secs</span><span class="err">`,</span><span class="w"> </span><span class="err">`</span><span class="mi">1</span><span class="nx">min</span><span class="err">`,</span><span class="w"> </span><span class="err">`</span><span class="mi">10</span><span class="nx">min</span><span class="err">`,</span><span class="w"> </span><span class="err">`</span><span class="mi">1</span><span class="nx">h</span><span class="err">`]</span><span class="w"></span>
 <span class="nx">where</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">measurement</span><span class="w"> </span><span class="err">==</span><span class="w"> </span><span class="s">&quot;udp_lb_test&quot;</span><span class="w"></span>
@@ -2128,7 +2128,7 @@ data-drive or fully programmatic.</p>
 <span class="nx">group</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">set</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">measurement</span><span class="err">,</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">tags</span><span class="err">,</span><span class="w"> </span><span class="nx">each</span><span class="err">(</span><span class="nx">record</span><span class="err">::</span><span class="nx">keys</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">fields</span><span class="err">)))</span><span class="w"></span>
 <span class="nx">into</span><span class="w"> </span><span class="nx">normalize</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>In the above example we use a single aggregate function called <code>stats::hdr</code> which uses a high dynamic range
+<p>In the above example we use a single aggregate function called <code>aggr::stats::hdr</code> which uses a high dynamic range
 or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
 set by the <code>group</code> clause. A group clause effectively partitions our operation by the group expressions provided
 by the trickle query programmer. In the example, we're using the field names of the nested 'fields' record on inbound
@@ -2160,7 +2160,7 @@ all events in the illustration.</p>
 into the 15 minute window. All the outputs of successive 15 minute intervals that fit into a 1 hour interval
 are <strong>merged</strong> into the 1 hour window. By chaining and merging, tremor can optimise ( reduce ) the amount
 of memory required across the chain when compared to multiple independent windows <code>select</code> expressions.
-In the case of aggregate functions like <code>stats::hdr`` or</code>stats::dds``` the savings are significant.</p>
+In the case of aggregate functions like <code>aggr::stats::hdr`` or</code>aggr::stats::dds``` the savings are significant.</p>
 <p>If we imagine 1M events per second, that is 300M events every 5 minutes. 900M every 15, 3.6B every hour.</p>
 <p>By using tilt frames we can maximally minimize internal memory consumption, whilst reducing the volume of
 incremental computation ( per event, per frame ), and further whilst preserving relative accuracy for

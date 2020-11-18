@@ -12,11 +12,8 @@
 
 __Docker:__
 
-```bash
-
- docker pull tremorproject/tremor:latest
- docker run tremorproject/tremor:latest
-
+```
+docker run --rm -t tremorproject/tremor:latest
 ```
 
 ---
@@ -26,13 +23,11 @@ __Docker:__
 __From source:__
 
 1. [Install Requirements](https://docs.tremor.rs/development/quick-start/#without-docker)
-2. Compile the `tremor` binary:
+2. Get a coffee!
+3. Compile the `tremor` binary:
 
 ```bash
-
- cargo build --release --all --verbose
-
-
+cargo build --release --all --verbose
 ```
 
 >>>
@@ -47,12 +42,20 @@ One binary to rule them all:
 
 ## Starting Tremor
 
+Getting help
+
+```bash
+$ tremor --help
+```
+
+---
+
+## Starting Tremor
+
 Start a naked tremor instance:
 
 ```bash
-
- tremor server run
-
+$ tremor server run
 ```
 
 ---
@@ -62,21 +65,19 @@ Start a naked tremor instance:
 Start tremor and deploy provided static artefacts:
 
 ```bash
-
- tremor server run -f pipeline.trickle -f artefacts.yaml
-
+$ tremor server run -f pipeline.trickle -f artefacts.yaml
 ```
 
 >>>
 
 ## Repositories and Artefacts
 
-- Tremor is made out of building blocks you can publish, connect and instantiate independently
-- Artefacts are configurations that are available and addressable within tremor
+- Tremor is made out of building blocks you can publish, connect and instantiate independently <!-- .element: class="fragment" data-fragment-index="1" -->
+- Artefacts are configurations that are available and addressable within tremor  <!-- .element: class="fragment" data-fragment-index="2" -->
   - [Sources](https://docs.tremor.rs/artefacts/onramps/)
   - [Sinks](https://docs.tremor.rs/artefacts/offramps/)
   - [Pipelines](https://docs.tremor.rs/tremor-query/)
-  - [Bindings](https://docs.tremor.rs/operations/configuration-walkthrough/#write-a-binding-specification) (connections of the three former artefacts)
+  - [Bindings](https://docs.tremor.rs/operations/configuration-walkthrough/#write-a-binding-specification) (connections of the three former artefacts) 
 
 ---
 
@@ -92,11 +93,15 @@ preprocessors:
   - lines
 config:
   source: "/var/log/mail.log"
-```
+``` 
+
+<!-- .element: class="fragment" -->
 
 ```bash
 tremor server run -f onramp.yaml
 ```
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -113,74 +118,81 @@ tremor server run -f onramp.yaml
 - can be templates, interpolated:
 
 ```yaml
-
- id: my-binding
- links:
-   '/onramp/onramp-artefact-id/{instance}/out': ['/pipeline/my-pipeline/{instance}/in']
-   '/pipeline/my-pipeline/{instance}/out': ['/offramp/offramp-artefact-id/{instance}/in']
-
+id: my-binding
+links:
+  '/onramp/onramp-artefact-id/{instance}/out':
+    - '/pipeline/my-pipeline/{instance}/in'
+  '/pipeline/my-pipeline/{instance}/out':
+    - '/offramp/offramp-artefact-id/{instance}/in'
 ```
 
 >>>
 
 ## Registry and Instances
 
-- Connected pipelines are instantiated/started by instantiating a binding
+- Connected pipelines are started by instantiating a binding
 - filling in the missing interpolations
 
 ```yaml
- mapping:
-   instance_01:
-     instance: "01"
-   instance_02:
-     instance: "02"
-
+mapping:
+  instance_01:
+    instance: "01"
+  instance_02:
+    instance: "02"
 ```
+
+<!-- .element: class="fragment" -->
 
 ---
 
-# Registry and Instances
+## Registry and Instances
 
-- for each referenced artefact an instance is created (if necessary)
-- instances live in the registry
-- binding instances represent connected event flows
-- runtime starts artefacts and events can flow
+- for each referenced artefact an instance is created (if necessary) <!-- .element: class="fragment" -->
+- instances live in the registry <!-- .element: class="fragment" -->
+- bindings represent connected event flows <!-- .element: class="fragment" -->
+- runtime starts artefacts and events can flow <!-- .element: class="fragment" -->
 
 >>>
 
 ## Changing Configuration at Runtime
 
 - via [REST API](https://docs.tremor.rs/api/)
-- publishing artefacts
-- creating instances
+- publish, unpublish artefacts, instantiate bindings
 
-```bash
+<div style="font-size: 0.8em">
 
- $ curl -X POST -H "Content-Type: application/yaml" --data-binary @metronome-onramp.yaml http://localhost:9898/onramp
- {
-   "id":"ws",
-   "type":"rest",
-   "description":"",
-   "linked":false,
-   "codec":"string",
-   "config":{
-     "host":"127.0.0.1",
-     "port":8080
-   }
- }
+```json
+$ curl -X POST \ 
+    -H "Content-Type: application/yaml" \ 
+    --data-binary @metronome-onramp.yaml \ 
+    http://localhost:9898/onramp
+{
+  "id":"ws",
+  "type":"rest",
+  "description":"",
+  "linked":false,
+  "codec":"string",
+  "config":{
+    "host":"127.0.0.1",
+    "port":8080
+  }
+}
 ```
+
+</div>
+
+<!-- .element: class="fragment" -->
+
 
 ---
 
-## Changing Configuration at Runtime
-
-- Bindings can only be deleted and redeployed, not changed dynamically
+### Bindings can only be deleted and redeployed, not changed dynamically
 
 >>>
 
 ## Pipeline Development
 
-- [tremor language server](https://github.com/tremor-rs/tremor-language-server):
+- [tremor language server](https://github.com/tremor-rs/tremor-language-server)
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=tremorproject.tremor-language-features)
 - [VIM plugin](https://github.com/tremor-rs/tremor-vim) (There are no other valid editors!)
 
@@ -188,17 +200,20 @@ tremor server run -f onramp.yaml
 
 ## Look ma, no YAML! (almost)
 
-- Proper language means:
-  - powerful parser/interpreter
-  - helpful errors beyond syntax
-  - more expressive
-  - IDE support
+- Proper language means: <!-- .element: class="fragment" -->
+  - powerful parser/interpreter <!-- .element: class="fragment" -->
+  - helpful errors beyond syntax <!-- .element: class="fragment" -->
+  - more expressive <!-- .element: class="fragment" -->
+  - IDE support <!-- .element: class="fragment" -->
+
 
 ---
 
 ## Quick Iterative Testing
 
 Example Pipeline
+
+<div style="font-size: 0.8em;">
 
 ```trickle
 # example.trickle
@@ -218,6 +233,50 @@ select event from in into example;
 select from example into out;
 ```
 
+</div>
+
+---
+
+## Quick Iterative Testing
+
+- Catch errors far before production
+
+```bash
+tremor run example.trickle
+```
+
+![Error message](./assets/script-error.png) <!-- .element: class="fragment" -->
+
+---
+
+## Quick Iterative Testing
+
+- Test your pipeline against synthetic events
+
+<div style="font-size: 0.7em;">
+
+```bash
+$ echo \{\"type\": \"sneaky\", \"not_a_badger\": false\} | tremor run example.trickle
+{"not_a_badger":false,"snot":"badger","type":"sneaky"}
+```
+
+```json
+tremor run example.trickle -i input_events.json -d json
+{"cute":0.5,"snotty":true,"filthy":false,"snot":"badger"}
+{"snot":"badger"}
+{"not_a_badger":true,"type":"sneaky"}
+```
+
+<!-- .element: class="fragment" -->
+
+</div>
+
+---
+
+## Quick Iterative Testing
+
+For more see: [Testing Deep Dive](../testing/index.html)
+
 >>>
 
 ## Lab Exercise
@@ -226,6 +285,8 @@ select from example into out;
 In this section, we will gradually build a solution for processing apache logs
 with tremor.
 <br/><br/>
+</div>
+<div style="font-size: 42px; font-weight: bold;" class="fragment">
 Time to wake up!
 </div>
 
@@ -234,6 +295,7 @@ Time to wake up!
 ## Goal
 
 Before:
+
 ```
 127.0.0.1 - - [19/Jun/1998:22:00:05 +0000] "GET /english/images/comp_bg2_hm.gif HTTP/1.0" 200 3785
 ```
@@ -398,6 +460,9 @@ Output should be:
 
 ## Task 4: Solution
 
+
+<div style='font-size: 0.75em;'>
+
 ```trickle
 define script process
 script
@@ -416,6 +481,8 @@ select event from process into out;
 
 select event from process/err into err;
 ```
+
+</div>
 
 ---
 

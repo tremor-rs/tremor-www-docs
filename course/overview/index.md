@@ -117,6 +117,8 @@ A high level overview of tremor-based systems architecture
 
 ---
 
+<div style="font-size: 0.8em;">
+
 ```yaml
 - id: postgres-input
   type: postgres          # Use postgres/timescale connector
@@ -135,9 +137,13 @@ A high level overview of tremor-based systems architecture
       size: 4096                          # Retention ( number of documents )
 ```
 
+</div>
+
 <div style='font-size: 20px'>TimescaleDB source ( periodic polling )</div>
 
 ---
+
+<div style="font-size: 0.8em;">
 
 ```yaml
 - id: crononome-input
@@ -165,6 +171,8 @@ A high level overview of tremor-based systems architecture
             name: "created_at"
             value: "2020-04-08 00:00:00.000000 +00:00"
 ```
+
+</div>
 
 <div style='font-size: 20px'>Cron-like scheduled events</div>
 
@@ -293,16 +301,14 @@ having event.count > 0;
 - Powerful operators
 
 ```trickle
+# distribute events across outputs evenly
+# stop traffic for unreachable/erroneous outputs
+define qos::roundrobin operator h3_roundrobin
+with
+  outputs = ["host01", "host02", "host03"]
+end;
 
- # distribute events across outputs evenly
- # stop traffic for unreachable/erroneous outputs
- define qos::roundrobin operator h3_roundrobin
- with
-   outputs = ["host01", "host02", "host03"]
- end;
-
- create operator my_h3_rr from h3_roundrobin;
-
+create operator my_h3_rr from h3_roundrobin;
 ```
 ---
 
@@ -313,18 +319,16 @@ having event.count > 0;
 <div style="font-size: 22px!important">
 
 ```trickle
-
- define script extract                                # define the script that parses our apache logs
- script
-   match {"raw": event} of                            # we user the dissect extractor to parse the apache log
-     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}\\n| }
-             => r.raw                                 # this first case is hit if the log includes an execution time (cost) for the request
-     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{}\\n| }
-             => r.raw                                 # the second case is hit if the log does not includes an execution time (cost) for the request
-     default => emit => "bad"
-   end
- end;
-
+define script extract                                # define the script that parses our apache logs
+script
+  match {"raw": event} of                            # we user the dissect extractor to parse the apache log
+    case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}\\n| }
+            => r.raw                                 # this first case is hit if the log includes an execution time (cost) for the request
+    case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{}\\n| }
+            => r.raw                                 # the second case is hit if the log does not includes an execution time (cost) for the request
+    default => emit => "bad"
+  end
+end;
 ```
 </div>
 
@@ -413,7 +417,6 @@ binding:
       # process incoming requests and send back the response
       "/pipeline/request_processing/{instance}/out":
         ["/onramp/http/{instance}/in"]
-
 ```
 
 More details in our [docs](https://docs.tremor.rs/operations/linked-transports/) and [workshops](https://docs.tremor.rs/workshop/examples/30_servers_lt_http/).

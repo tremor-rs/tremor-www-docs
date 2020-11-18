@@ -1,0 +1,11 @@
+define script process
+script
+  event;
+end;
+
+create script process;
+
+select event from in into process;
+select event from process into out;
+
+select event from process/err into err;

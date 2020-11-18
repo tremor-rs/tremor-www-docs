@@ -191,14 +191,19 @@ html * {
 
 .reveal code {
   font-family: monospace;
-  text-transform: none; }
+  text-transform: none; 
+  line-height: 1.5;
+}
 
 .reveal pre code {
   display: block;
-  padding: 5px;
+  padding: 1rem;
+  padding-left: 1.5rem;
   overflow: auto;
   max-height: 400px;
-  word-wrap: normal; }
+  word-wrap: normal; 
+  border-radius: .5em;
+}
 
 .reveal table {
   margin: auto;

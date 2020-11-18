@@ -324,7 +324,7 @@ $ export TREMOR_IMAGE=tremorproject/tremor:latest
 $ docker pull $TREMOR_IMAGE
 
 # convenient alias to run docker-based tremor
-$ alias trecker='docker run -it -v `pwd`:/pwd $TREMOR_IMAGE $*'
+$ alias trecker='docker run -it -v `pwd`:/pwd -e "TREMOR_PATH=/pwd/lib/:/opt/local/tremor/lib/" $TREMOR_IMAGE $*'
 
 # validate. should give cli usage
 $ trecker -h
@@ -576,6 +576,7 @@ mapping:
 
 * Filter out logs with status code < 400 (i.e. only pass error logs)
 * Throttle logs such that output is just 10 logs per second
+* Each 10 seconds output request duration percentiles by HTTP status code
 
 >>>
 

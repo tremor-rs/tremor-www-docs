@@ -26,7 +26,7 @@ __From source:__
 2. Get a coffee!
 3. Compile the `tremor` binary:
 
-```bash
+```sh
 cargo build --release --all --verbose
 ```
 
@@ -44,7 +44,7 @@ One binary to rule them all:
 
 Getting help
 
-```bash
+```sh
 $ tremor --help
 ```
 
@@ -54,7 +54,7 @@ $ tremor --help
 
 Start a naked tremor instance:
 
-```bash
+```sh
 $ tremor server run
 ```
 
@@ -64,7 +64,7 @@ $ tremor server run
 
 Start tremor and deploy provided static artefacts:
 
-```bash
+```sh
 $ tremor server run -f pipeline.trickle -f artefacts.yaml
 ```
 
@@ -97,7 +97,7 @@ config:
 
 <!-- .element: class="fragment" -->
 
-```bash
+```sh
 tremor server run -f onramp.yaml
 ```
 
@@ -260,7 +260,7 @@ select from example into out;
 
 - Catch errors far before production
 
-```bash
+```sh
 tremor run example.trickle
 ```
 
@@ -274,7 +274,7 @@ tremor run example.trickle
 
 <div style="font-size: 0.7em;">
 
-```bash
+```sh
 $ echo \{\"type\": \"sneaky\", \"not_a_badger\": false\} | tremor run example.trickle
 {"not_a_badger":false,"snot":"badger","type":"sneaky"}
 ```

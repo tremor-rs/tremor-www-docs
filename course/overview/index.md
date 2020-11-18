@@ -118,21 +118,21 @@ A high level overview of tremor-based systems architecture
 ---
 
 ```yaml
-  - id: postgres-input
-    type: postgres          # Use postgres/timescale connector
-    codec: json             # Specify data format as json
-    config:
-      host: postgres        # Domain hostname
-      port: 5432            # TCP port
-      user: postgres        # Username
-      password: example     # Password
-      dbname: products      # Database
-      interval_ms: 10000    # Polling interval ( 10 seconds )
-      query: "SELECT * FROM transactions WHERE created_at >= $1 AND created_at < $2;"
-      consume_from: "2019-12-01 00:00:00.000000 +00:00"
-      cache:
-        path: "/etc/tremor/cache.json"      # Track continuation/resume point
-        size: 4096                          # Retention ( number of documents )
+- id: postgres-input
+  type: postgres          # Use postgres/timescale connector
+  codec: json             # Specify data format as json
+  config:
+    host: postgres        # Domain hostname
+    port: 5432            # TCP port
+    user: postgres        # Username
+    password: example     # Password
+    dbname: products      # Database
+    interval_ms: 10000    # Polling interval ( 10 seconds )
+    query: "SELECT * FROM transactions WHERE created_at >= $1 AND created_at < $2;"
+    consume_from: "2019-12-01 00:00:00.000000 +00:00"
+    cache:
+      path: "/etc/tremor/cache.json"      # Track continuation/resume point
+      size: 4096                          # Retention ( number of documents )
 ```
 
 <div style='font-size: 20px'>TimescaleDB source ( periodic polling )</div>
@@ -140,30 +140,30 @@ A high level overview of tremor-based systems architecture
 ---
 
 ```yaml
-  - id: crononome-input
-    type: crononome
-    codec: json
-    config:
-      entries:
-        - name: 5s                 # label
-          expr: "0/5 * * * * *"    # cron-like schedule specification
-          payload:                 # payload data
-            user_id:
-              fieldType: "INT8"
-              name: "user_id"
-              value: 12345
-            product_id:
-              fieldType: "VARCHAR"
-              name: "product_id"
-              value: jdwa2djh2
-            quantity:
-              fieldType: "INT8"
-              name: "quantity"
-              value: 2
-            created_at:
-              fieldType: "TIMESTAMPTZ"
-              name: "created_at"
-              value: "2020-04-08 00:00:00.000000 +00:00"
+- id: crononome-input
+  type: crononome
+  codec: json
+  config:
+    entries:
+      - name: 5s                 # label
+        expr: "0/5 * * * * *"    # cron-like schedule specification
+        payload:                 # payload data
+          user_id:
+            fieldType: "INT8"
+            name: "user_id"
+            value: 12345
+          product_id:
+            fieldType: "VARCHAR"
+            name: "product_id"
+            value: jdwa2djh2
+          quantity:
+            fieldType: "INT8"
+            name: "quantity"
+            value: 2
+          created_at:
+            fieldType: "TIMESTAMPTZ"
+            name: "created_at"
+            value: "2020-04-08 00:00:00.000000 +00:00"
 ```
 
 <div style='font-size: 20px'>Cron-like scheduled events</div>
@@ -190,16 +190,16 @@ A high level overview of tremor-based systems architecture
 ---
 
 ```yaml
-  - id: timescaledb-output
-    type: postgres
-    codec: json
-    config:
-      host: timescaledb
-      port: 5432
-      user: postgres
-      password: example
-      dbname: measurements
-      table: events
+- id: timescaledb-output
+  type: postgres
+  codec: json
+  config:
+    host: timescaledb
+    port: 5432
+    user: postgres
+    password: example
+    dbname: measurements
+    table: events
 ```
 
 <div style='font-size: 20px'>Postgres database sink ( event driven persistence )</div>
@@ -207,9 +207,9 @@ A high level overview of tremor-based systems architecture
 ---
 
 ```yaml
-  - id: debug
-    type: stdout
-    codec: json
+- id: debug
+  type: stdout
+  codec: json
 ```
 
 
@@ -224,11 +224,8 @@ A high level overview of tremor-based systems architecture
 
 
 ```trickle
-
- # simplest passthrough pipeline
- select event from in into out;
-
-
+# simplest passthrough pipeline
+select event from in into out;
 ```
 
 ---
@@ -238,21 +235,19 @@ A high level overview of tremor-based systems architecture
 - Filter and Transform events
 
 ```trickle
+use std::array;
+use std::string;
+use std::integer;
 
- use std::array;
- use std::string;
- use std::integer;
-
- # transform using select
- select {
-   "clean_key": string::lowercase(string::trim(event.key)),
-   "value": integer::parse(event.str_value)
- }
- from in
- where  # filter using where clause
-   array::contains(event.tags, "important")
- into out;
-
+# transform using select
+select {
+  "clean_key": string::lowercase(string::trim(event.key)),
+  "value": integer::parse(event.str_value)
+}
+from in
+where  # filter using where clause
+  array::contains(event.tags, "important")
+into out;
 ```
 
 ---
@@ -262,17 +257,14 @@ A high level overview of tremor-based systems architecture
 - Rich extractors
 
 ```tremor
-
- define script extract_http_url
- script
-   # validate a url
-   match event.url of
-     case https_url ~= re|^https?://.*/$| => https_url
-     default => drop "not a https url"
-   end;
- end;
-
-
+define script extract_http_url
+script
+  # validate a url
+  match event.url of
+    case https_url ~= re|^https?://.*/$| => https_url
+    default => drop "not a https url"
+  end;
+end;
 ```
 
 ---
@@ -281,21 +273,18 @@ A high level overview of tremor-based systems architecture
 - grouping and windowing
 
 ```trickle
+# emits event every 15 secs
+define tumbling window fifteen_secs
+with
+  interval = datetime::with_seconds(15)
+end;
 
- # emits event every 15 secs
- define tumbling window fifteen_secs
- with
-   interval = datetime::with_seconds(15)
- end;
-
- # generates aggregated event per window and group
- select {"count": aggr::stats::count() }
- from in[fifteen_secs]
- group by set(event.partition)
- into out
- having event.count > 0;
-
-
+# generates aggregated event per window and group
+select {"count": aggr::stats::count() }
+from in[fifteen_secs]
+group by set(event.partition)
+into out
+having event.count > 0;
 ```
 ---
 

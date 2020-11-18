@@ -193,6 +193,25 @@ $ curl -X POST \
 ## Pipeline Development
 
 - [tremor language server](https://github.com/tremor-rs/tremor-language-server)
+---
+
+### Tremor Language Server
+
+1. Install rust via rustup:
+
+```sh
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+2. Setup cargo and install `tremor-language-server`:
+
+```sh
+$ export PATH="~/.cargo/bin:$PATH"
+$ cargo install tremor-language-server
+```
+
+### IDE/Editor Integration
+
 - [VS Code extension](https://marketplace.visualstudio.com/items?itemName=tremorproject.tremor-language-features)
 - [VIM plugin](https://github.com/tremor-rs/tremor-vim) (There are no other valid editors!)
 
@@ -301,6 +320,7 @@ Before:
 ```
 
 After:
+
 ```json
 {
   "ip": "127.0.0.1",
@@ -318,16 +338,12 @@ After:
 ## Task 0: Setup trecker
 
 ```sh
-$ export TREMOR_IMAGE=tremorproject/tremor:latest
-
-# assuming docker is already installed
-$ docker pull $TREMOR_IMAGE
-
-# convenient alias to run docker-based tremor
-$ alias trecker='docker run -it -v `pwd`:/pwd -e "TREMOR_PATH=/pwd/lib/:/opt/local/tremor/lib/" $TREMOR_IMAGE $*'
+# download trecker
+curl https://docs.tremor.rs/course/scripts/trecker -o trecker
+chmod u+x trecker
 
 # validate. should give cli usage
-$ trecker -h
+$ ./trecker -h
 ```
 
 ---
@@ -358,7 +374,7 @@ That is, running the following should give the same output as running `cat apach
 ```sh
 # we decode the log lines as plain string (default is to treat them as json)
 # the `/pwd/` prefix is needed here to pick up these files from the container
-$ trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 ```
 
 Or if you have the tremor binary:
@@ -392,7 +408,7 @@ Error:
 
 ```
 
-Yay nice errors!
+Yay nice errors! <!-- .element: class="fragment" -->
 
 ---
 
@@ -438,7 +454,7 @@ Using the <a href="https://docs.tremor.rs/tremor-script/extractors/dissect/">dis
 $ tail -1 apache_access_logs > test_log_line
 
 # ignore diagnostics from trecker and get the final line only
-$ trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/test_log_line | tail -n1 | jq
+$ ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/test_log_line | tail -n1 | jq
 ```
 
 Output should be:
@@ -492,7 +508,7 @@ select event from process/err into err;
 See if there's any error events when running the above script for all the logs.
 
 ```
-trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
+./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/apache_access_logs
 ```
 
 For logs with malformed errors, we can try to add a dissect pattern that would match it (leave as an exercise for later).
@@ -515,10 +531,10 @@ Can be tested via:
 
 ```sh
 # since we are using docker need to expose the container port for trecker use
-$ alias trecker='docker run -it -v `pwd`:/pwd -p 4242:4242 $TREMOR_IMAGE $*'
+$ export TRECKER_PORTS=4242:4242
 
 # assuming you have saved the config in `deploy.yaml`
-$ trecker server run -f /pwd/deploy.yaml -f /pwd/apache.trickle
+$ ./trecker server run -f /pwd/deploy.yaml -f /pwd/apache.trickle
 
 # send logs to the tremor tcp receiver
 $ cat apache_access_logs | nc 127.0.0.1 4242
@@ -577,6 +593,15 @@ mapping:
 * Filter out logs with status code < 400 (i.e. only pass error logs)
 * Throttle logs such that output is just 10 logs per second
 * Each 10 seconds output request duration percentiles by HTTP status code
+
+>>>
+
+### You made it through the lab!!! 
+
+![yeah](./assets/rickmorty.gif)
+
+---
+# Good Job!
 
 >>>
 

@@ -11,6 +11,12 @@ A very high level summary [`overview`](./overview/index.html) of tremor.
 
 >>>
 
+### `operations and development`
+
+How to [operate](./operations/index.html) tremor and develop your very own production ready event processing pipeline.
+
+>>>
+
 ### `tremor-script`
 
 A deep dive into the [`tremor-script`](./tremor-script/index.html) domain specific

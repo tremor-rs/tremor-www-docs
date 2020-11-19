@@ -6,8 +6,20 @@ This course is a basic introduction to debugging. The techniques described here 
 
 > This course uses the `speaker view` to provide additional information
 > when it is consumed without an instructor.
-> 
+>
 > Press 'S' to open the speaker's view.
+
+
+>>>
+
+### The (lofty) Goal
+
+Be able to:
+* debug complex systems
+* reduce a moderately hard bug
+* report that finding
+* get that issue resolved
+* make friends on the way
 
 >>>
 

@@ -608,7 +608,7 @@ end;
     "event": "ReplicationError",
     "group": "Infra",
     "origin": "tremor",
-    "resource": "githubc1n1.host.bo1.csnzoo.com",
+    "resource": "github.infra.network",
     "service": [ "github" ],
     "severity": severity,
     "tags": [ "releng" ],

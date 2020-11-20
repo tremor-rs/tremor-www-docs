@@ -29,8 +29,7 @@ Be able to:
 * Complexity can generally be reduced
 
 Note:
-Debugging complex systems is non-trivial and it's easy to get lost.
-This complexity can be reduced by applying the practices we will discuss here.
+Debugging complex systems is non-trivial and it's easy to get lost. This complexity can be reduced by applying the practices we will discuss here.
 
 Look in the slides below to see some key factors that make debugging so hard.
 
@@ -42,8 +41,7 @@ Look in the slides below to see some key factors that make debugging so hard.
 * Main goal: reduce complexity
 
 Note:
-The single biggest problem when debugging complex systems is that they are,
-well, complex. So reducing complexity is key.
+The single biggest problem when debugging complex systems is that they are, well, complex. So reducing complexity is key.
 
 ---
 
@@ -54,15 +52,14 @@ well, complex. So reducing complexity is key.
 * Hardest to replicate
 
 Note:
-The second factor that makes debugging complex systems hard is that issues
-are often first spotted in a live environment and in interaction with other
+The second factor that makes debugging complex systems hard is that issues are often first spotted in a live environment and in interaction with other
 systems.
 
 ---
 
 ### Data characteristics
 
-* Is the problem data dependent?
+* Is the problem data-dependent?
 * Patterns
 * Volumetric
 * Throughput
@@ -82,8 +79,7 @@ Like the previous dimensions, issues can surface based on specific characteristi
 * etc.
 
 Note:
-While tests are usually run in a very controlled environment, issues often surface in a living, chaotic environment with a wide number of external conditions. Networking, DNS, CPU load,
-noisy neighbors, other applications and external tasks, scheduling, IO constraints to name a few.
+While tests are usually run in a very controlled environment, issues often surface in a living, chaotic environment with a wide number of external conditions. Networking, DNS, CPU load, noisy neighbors, other applications and external tasks, scheduling, IO constraints to name a few.
 
 >>>
 
@@ -94,8 +90,7 @@ noisy neighbors, other applications and external tasks, scheduling, IO constrain
 * Debugging is a **team** sport
 
 Note:
-Empathy is key to efficient debugging. After all nobody likes being told they're wrong, so it's worth approaching debugging with some care. Understanding context is key to communicating across disciplines whilst
-debugging across people or teams.
+Empathy is key to efficient debugging. After all nobody likes being told they're wrong, so it's worth approaching debugging with some care. Understanding context is key to communicating across disciplines whilst debugging across people or teams.
 
 ---
 
@@ -107,9 +102,7 @@ debugging across people or teams.
 * Tracks valuable insights and assumptions
 
 Note:
-This one is uncomfortable to get used to but extremely powerful. The basic idea is to
-always start with the assumption "I did something wrong" and try to prove this. There
-are some aspects to that:
+This one is uncomfortable to get used to but extremely powerful. The basic idea is to always start with the assumption "I did something wrong" and try to prove this. There are some aspects to that:
 
 1. It is a good starting point (as good as any other)
 2. It shows humbleness and make any discussion more pleasant
@@ -123,12 +116,10 @@ are some aspects to that:
 * Prevent duplicate work
 * Helps learning and teaching
 
-Note: 
-The more effort put into documenting debugging process and steps the easier
-and more helpful it will be for others. It will save everyone's time and save duplication of effort so that the same path doesn't need to be followed again.
+Note:
+The more effort put into documenting debugging process and steps the easier and more helpful it will be for others. It will save everyone's time and save duplication of effort so that the same path doesn't need to be followed again.
 
-Additionally a good record of a debugging session can also be a wonderful teaching tool for helping others improve their debugging skills. For example,
-capture an incident and debugging report for each occurrence.
+Additionally a good record of a debugging session can also be a wonderful teaching tool for helping others improve their debugging skills. For example, capture an incident and debugging report for each occurrence.
 
 We'll cover a bit more about this in a later section when we talk about how to file reports in an efficient way.
 
@@ -142,6 +133,52 @@ We'll cover a bit more about this in a later section when we talk about how to f
 
 Note:
 Once you start an investigation try to see it through, when seeking help be inquisitive and try to stay informed. More often then not the path of the journey to a resolution is more important than the outcome.
+
+>>>
+
+### The business side
+
+* Tension between MTTR and throw investation
+* No right answer
+* Needs compromise
+
+Note:
+When in a life situation there are opposing interests. Often the primary business interest is to keep the MTTR (mean time to recover) low while we might want to investigate carefully.
+
+---
+
+### recover
+
+* recovery can destroy evidence
+* makes debugging hard or impossible
+* can lead to never fixed bugs
+
+Note:
+If we recover to satisfy the business need we can loose evidence and end up in a repeating cycle of reoccurring incidents.
+
+---
+
+### investigate
+
+* can destroy the business
+* makes production hard or impossible
+* can lead to never fixed bugs
+
+Note:
+If we only focus on investigating the issue we can end up killing the business, which is not great, and makes it also impossible to fix a bug.
+
+### compromise
+
+* negotiate
+* preserve evidence
+* prepare
+
+Note:
+So what can we do, there are a few things. Understand the business impact and negotiate a middle ground, we need both continuity and a long term resolution.
+
+The second part is preserve as much evidence as possible. Can we store logs? can we make a machine snapshot? can we perhaps move production load to a fresh system?
+
+Prepare: make sure that the next time the incident pops up you are prepared, have a standby instance to fail over, do additional debugging, have spare capacity. That takes away the pressure.
 
 >>>
 
@@ -199,8 +236,7 @@ In the next sections we'll talk about two methods to achieve this.
 * Good if you're unsure about the cause
 
 Note:
-The first method we're going to talk about is a method that can be seen as 'tearing down' the system until only the relevant parts are left. This is a good process point if you have a large system and are not sure what is relevant. It is also the simpler process but it requires more
-effort.
+The first method we're going to talk about is a method that can be seen as 'tearing down' the system until only the relevant parts are left. This is a good process point if you have a large system and are not sure what is relevant. It is also the simpler process but it requires more effort.
 
 What we're going to do is remove one element at a time until there is nothing left to remove without resolving the issue.
 
@@ -229,8 +265,7 @@ Next we would look at scripts and finally operators.
 * Not distilling fully
 
 Note:
-Once we found something that when removed will resolve the issue it is important to not just stop. Just because we found **an** element that when removed resolves the issue doesn't mean we have
-a minimal case, nor does it mean we have isolated the issue.
+Once we found something that when removed will resolve the issue it is important to not just stop. Just because we found **an** element that when removed resolves the issue doesn't mean we have a minimal case, nor does it mean we have isolated the issue.
 
 ---
 
@@ -255,8 +290,7 @@ So in tremor we couldn't remove all the sinks, as that would make the reproducti
 * Simplify scripts
 
 Note:
-For tremor one of the things to remember is that in a script we also have layers of complexity, and depending on other elements still in the reproduction we can remove some of them simplifying the
-script as much as possible.
+For tremor one of the things to remember is that in a script we also have layers of complexity, and depending on other elements still in the reproduction we can remove some of them simplifying the script as much as possible.
 
 >>>
 
@@ -305,6 +339,71 @@ For tremor we like using the tremor image along with a metronome or file onramp 
 
 >>>
 
+### Change tracking
+
+* Requires full control & a long-running/evolving system
+* If possible, highly effective as a starting point
+* Risky and easy to get wrong
+* Quick way to form a first hypothesis
+
+Note:
+If it is possible to pin an incident to a specific change in the system that can provide a starting point. This is only possible if we have a changing evolving system and full control and understanding of all involved components.
+
+---
+
+### What changed
+
+* Figure out what changed
+* See if rolling back that change resolves the issue
+* Repeat
+
+Note:
+What we do is a binary search between the last known good state and try to find at what point things went bad. This allows for a quick first idea what we're dealing with.
+
+---
+
+### Common mistakes pt. 1
+
+* Ignores interactions between systems
+* Is often not sufficient to find the origins of an incident
+* Assume change equals cause
+
+Note:
+If only looking for the triggering change the it can ignore interactions between parts of the system. Stopping at that point assumes that the change is the cause which isn't always true and rarely ever enough information to debug the issue.
+
+---
+
+### Common mistakes pt. 2
+
+* Ignores the principle of internalisation
+* Can leads to blame instead of debugging
+* Can be an 'easy win' without seeing it through
+
+Note:
+By looking for the change we ignore the `principle of internalisation` and it can quickly lead to the impression we are looking for blame not a resolution. It is tempting to call it a 'win' without following through on the debugging exercise.
+
+---
+
+### Common mistakes pt. 3
+
+* Assuming the system was 'correct' before
+* Can lead to bug compatibility instead of correctness
+* Changes can be too big
+
+Note:
+This can lead to the wrong assumption that a system was correct only because we didn't see something before. Following this path can lead to creating 'bug compatible' systems that get more and more out of hand instead of finding the problem and correcting it. Changes can often be massive, this makes the change on it's own not a very good indicator of a cause.
+
+### Mitigation
+
+* Use with a lot of care
+* Always follow up with creating a reproduction to the minimal case
+* Only ever use as a starting point
+
+Note:
+Despite it's shortcomings this method can be very effective when used with care. To prevent falling into one of the pitfalls it's important to understand that the triggering change isn't the end but only the beginning of debugging. We should never straight out assume that the change the cause it may only be what makes the symptoms visible.
+
+>>>
+
 ### Reporting
 
 * Tickets are better than messages
@@ -317,8 +416,7 @@ For tremor we like using the tremor image along with a metronome or file onramp 
 Note:
 Once we have found the issue, debugged it to the point of a minimal reproduction we're nearly done but not entirely. Next we'll take a quick look in how to report an issue effectively.
 
-We'll structure this in three sections and a fourth with the supporting material that we've gathered
-as we have been debugging.
+We'll structure this in three sections and a fourth with the supporting material that we've gathered as we have been debugging.
 
 Tickets are the preferable way to sharing issues and debugging results as they guarantee search-ability and are themselves part of the documentation.
 
@@ -374,8 +472,7 @@ Lets look at an, intentionally short, example of this:
 * Components
 
 Note:
-This sets the scene with an introduction to the setup, some intent behind it and the related
-components
+This sets the scene with an introduction to the setup, some intent behind it and the related components
 
 ---
 
@@ -384,8 +481,7 @@ components
 > When one of the endpoints has a failure all messages stop.
 
 Note:
-This is the observation that makes us believe there is an issue, it includes some insight of our
-debugging, namely that a single endpoint failure is enough to make all message flow stop.
+This is the observation that makes us believe there is an issue, it includes some insight of our debugging, namely that a single endpoint failure is enough to make all message flow stop.
 
 ---
 
@@ -395,9 +491,7 @@ debugging, namely that a single endpoint failure is enough to make all message f
 > a degree of resiliency and fault-tolerance.
 
 Note:
-The expectation explains what we expected to happen in contrast to our observation, in this example
-it also explains our intent as to why we expected this. The intent here can be important since
-it gives information about our needs and can open a conversation.
+The expectation explains what we expected to happen in contrast to our observation, in this example it also explains our intent as to why we expected this. The intent here can be important since it gives information about our needs and can open a conversation.
 
 ---
 
@@ -459,7 +553,6 @@ Requirements:
 ### Lab: Solution
 
 Please try to solve the lab yourself first but here is the [solution](lab-solved.tar.xz).
-
 
 >>>
 

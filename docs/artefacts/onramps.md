@@ -32,6 +32,8 @@ onramp:
 
 The [`codec`](codecs.md) field is optional and if not provided will use onramps default codec.
 
+The `err_required` field can set to `true` if the source only should start once both `out` and `err` are connected to at least one pipeline.
+
 The `config` contains a map (key-value pairs) specific to the onramp type.
 
 ## Delivery Properties

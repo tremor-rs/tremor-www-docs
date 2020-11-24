@@ -12,7 +12,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6910b76c.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
@@ -1035,6 +1035,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#lines-no-buffer" class="md-nav__link">
+    lines-no-buffer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lines-cr-no-buffer" class="md-nav__link">
+    lines-cr-no-buffer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#base64" class="md-nav__link">
     base64
   </a>
@@ -1098,8 +1112,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#length-prefixerd" class="md-nav__link">
-    length-prefixerd
+  <a href="#length-prefixed" class="md-nav__link">
+    length-prefixed
   </a>
   
 </li>
@@ -1818,6 +1832,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#lines-no-buffer" class="md-nav__link">
+    lines-no-buffer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lines-cr-no-buffer" class="md-nav__link">
+    lines-cr-no-buffer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#base64" class="md-nav__link">
     base64
   </a>
@@ -1881,8 +1909,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#length-prefixerd" class="md-nav__link">
-    length-prefixerd
+  <a href="#length-prefixed" class="md-nav__link">
+    length-prefixed
   </a>
   
 </li>
@@ -1910,20 +1938,31 @@
                 
                 
                 <h1 id="preprocessors">Preprocessors<a class="headerlink" href="#preprocessors" title="Permanent link">&para;</a></h1>
-<p>Preprocessors operate on the raw data stream and transform it. They are run before data reaches the codec and do not know or care about tremors internal representation.</p>
+<p>Preprocessors operate on the raw data stream and transform it. They are run before data reaches the codec and do not know or care about tremor's internal representation.</p>
 <p>Online codecs, preprocessors can be chained to perform multiple operations in succession.</p>
 <h2 id="supported-preprocessors">Supported Preprocessors<a class="headerlink" href="#supported-preprocessors" title="Permanent link">&para;</a></h2>
 <h3 id="lines">lines<a class="headerlink" href="#lines" title="Permanent link">&para;</a></h3>
-<p>Splits the input into lines (character 13 <code>\n</code> as line separator)</p>
+<p>Splits the input into lines, using character 10 <code>\n</code> as the line separator.</p>
+<p>Buffers any line fragment that may be present (after the last line separator), till more data arrives. This makes it ideal for use with streaming onramps like <a href="../onramps/#tcp">tcp</a>, to break down incoming data into distinct events.</p>
+<p>Any empty lines present are forwarded as is -- if you want to remove them, please chain the <a href="#remove-empty">remove-empty</a> preprocessor with this preprocessor. An example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">preprocessors</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">lines</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">remove-empty</span>
+</code></pre></div>
+<p>Note: the proliferation of various lines preprocessors here will go away once preprocessors <a href="https://github.com/tremor-rs/tremor-rfcs/pull/31">support configuration</a>.</p>
 <h3 id="lines-null">lines-null<a class="headerlink" href="#lines-null" title="Permanent link">&para;</a></h3>
-<p>Splits the input into lines (null byte <code>\0</code> as line separator)</p>
+<p>Variant of the <a href="#lines">lines</a> preprocessor, that uses null byte <code>\0</code> as the line separator.</p>
 <h3 id="lines-pipe">lines-pipe<a class="headerlink" href="#lines-pipe" title="Permanent link">&para;</a></h3>
-<p>Splits the input into lines (pipe <code>|</code> as line separator)</p>
+<p>Variant of the <a href="#lines">lines</a> preprocessor, that uses pipe character <code>|</code> as the line separator.</p>
+<h3 id="lines-no-buffer">lines-no-buffer<a class="headerlink" href="#lines-no-buffer" title="Permanent link">&para;</a></h3>
+<p>Variant of the <a href="#lines">lines</a> preprocessor, that does <em>not</em> buffer any data that may be present after the last line separator -- the fragment is forwarded as is (i.e. treated as a full event).</p>
+<h3 id="lines-cr-no-buffer">lines-cr-no-buffer<a class="headerlink" href="#lines-cr-no-buffer" title="Permanent link">&para;</a></h3>
+<p>Variant of the <a href="#lines-no-buffer">lines-no-buffer</a> preprocessor, that uses character 13 <code>\r</code> (<a href="https://en.wikipedia.org/wiki/Carriage_return#Computers">carriage return</a>) as the line separator.</p>
 <h3 id="base64">base64<a class="headerlink" href="#base64" title="Permanent link">&para;</a></h3>
 <p>Decodes base64 encoded data to the raw bytes.</p>
 <h3 id="decompress">decompress<a class="headerlink" href="#decompress" title="Permanent link">&para;</a></h3>
-<p>Decompresses a data stream, it is assumed that each message reaching the decompressor is a complete compressed entity.</p>
-<p>The compression algorithm is detected automatically from the supported formats, if it can't be detected the assumption is that the data was decompressed and will be send on. Errors then can be transparently handled in the codec.</p>
+<p>Decompresses a data stream. It is assumed that each message reaching the decompressor is a complete compressed entity.</p>
+<p>The compression algorithm is detected automatically from the supported formats. If it can't be detected, the assumption is that the data was decompressed and will be sent on. Errors then can be transparently handled in the codec.</p>
 <p>Supported formats:</p>
 <ul>
 <li>gzip</li>
@@ -1933,21 +1972,22 @@
 <li>lz4</li>
 </ul>
 <h3 id="gzip">gzip<a class="headerlink" href="#gzip" title="Permanent link">&para;</a></h3>
-<p>Decompress GZ compressed payload</p>
+<p>Decompress GZ compressed payload.</p>
 <h3 id="zlib">zlib<a class="headerlink" href="#zlib" title="Permanent link">&para;</a></h3>
-<p>Decompress Zlib ( deflate ) compressed payload</p>
+<p>Decompress Zlib ( deflate ) compressed payload.</p>
 <h3 id="xz">xz<a class="headerlink" href="#xz" title="Permanent link">&para;</a></h3>
-<p>Decompress Xz2 ( 7z ) compressed payload</p>
+<p>Decompress Xz2 ( 7z ) compressed payload.</p>
 <h3 id="snappy">snappy<a class="headerlink" href="#snappy" title="Permanent link">&para;</a></h3>
-<p>Decompress framed snappy compressed payload ( does not support raw snappy )</p>
+<p>Decompress framed snappy compressed payload ( does not support raw snappy ).</p>
 <h3 id="lz4">lz4<a class="headerlink" href="#lz4" title="Permanent link">&para;</a></h3>
-<p>Decompress Lz4 compressed payload</p>
+<p>Decompress Lz4 compressed payload.</p>
 <h3 id="gelf-chunking">gelf-chunking<a class="headerlink" href="#gelf-chunking" title="Permanent link">&para;</a></h3>
-<p>Reassembles messages that were split apart using the <a href="https://docs.graylog.org/en/3.0/pages/gelf.html#gelf-via-udp">GELF chunking protocol</a>. The message content is decompressed after reassembly so no additional decompression is needed.</p>
+<p>Reassembles messages that were split apart using the <a href="https://docs.graylog.org/en/3.0/pages/gelf.html#chunking">GELF chunking protocol</a>.</p>
+<p>If the GELF messages were sent compressed, you can decompress them by chaining the <a href="#decompress">decompress</a> preprocessor. An example is documented <a href="../onramps/#udp-onramp-example-for-gelf">here</a> -- you may need to apply <code>decompress</code> either before and/or after the reassembly here, depending on how your GELF client(s) behave.</p>
 <h3 id="remove-empty">remove-empty<a class="headerlink" href="#remove-empty" title="Permanent link">&para;</a></h3>
 <p>Removes empty messages (aka zero len).</p>
-<h3 id="length-prefixerd">length-prefixerd<a class="headerlink" href="#length-prefixerd" title="Permanent link">&para;</a></h3>
-<p>Seperates a continous stream of data based on length prefixing. The lenght for each package in a stream is based on the first 64 bit decoded as a unsigned big endian value.</p>
+<h3 id="length-prefixed">length-prefixed<a class="headerlink" href="#length-prefixed" title="Permanent link">&para;</a></h3>
+<p>Seperates a continous stream of data based on length prefixing. The length for each package in a stream is based on the first 64 bit decoded as an unsigned big endian value.</p>
                 
               
               
@@ -2014,8 +2054,8 @@
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

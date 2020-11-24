@@ -12,7 +12,7 @@
         <meta name="author" content="The Tremor Team">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.5">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.21aed14c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6910b76c.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
@@ -1047,6 +1047,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gelf-chunking" class="md-nav__link">
+    gelf-chunking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#compression" class="md-nav__link">
     compression
   </a>
@@ -1755,6 +1762,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gelf-chunking" class="md-nav__link">
+    gelf-chunking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#compression" class="md-nav__link">
     compression
   </a>
@@ -1793,6 +1807,8 @@
 <p>Encodes raw data into base64 encoded bytes.</p>
 <h3 id="length-prefixed">length-prefixed<a class="headerlink" href="#length-prefixed" title="Permanent link">&para;</a></h3>
 <p>Prefixes the data with a network byte order (big endian) lenght of the data in bytes.</p>
+<h3 id="gelf-chunking">gelf-chunking<a class="headerlink" href="#gelf-chunking" title="Permanent link">&para;</a></h3>
+<p>Splits the data using <a href="https://docs.graylog.org/en/3.0/pages/gelf.html#chunking">GELF chunking protocol</a>.</p>
 <h3 id="compression">compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h3>
 <p>Compresses event data.</p>
 <p>Unlike decompression processors, the compression algorithm must be selected. The following compression post-processors are supported. Each format can be configured as a postprocessor.</p>
@@ -1870,8 +1886,8 @@
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
-      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

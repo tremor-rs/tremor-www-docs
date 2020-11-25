@@ -1959,6 +1959,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
       <span class="nt">&lt;key&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
 </code></pre></div>
 <p>The <a href="../codecs/"><code>codec</code></a> field is optional and if not provided will use onramps default codec.</p>
+<p>The <code>err_required</code> field can be set to <code>true</code> if the source should not start unless both <code>out</code> and <code>err</code> ports are connected to at least one pipeline.</p>
 <p>The <code>config</code> contains a map (key-value pairs) specific to the onramp type.</p>
 <h2 id="delivery-properties">Delivery Properties<a class="headerlink" href="#delivery-properties" title="Permanent link">&para;</a></h2>
 <p>Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:</p>

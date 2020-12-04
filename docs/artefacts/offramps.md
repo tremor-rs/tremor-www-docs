@@ -58,12 +58,15 @@ Each tremor runtime comes with some pre-configured offramps that can be used.
 ### system::stdout
 
 The offramp `/offramp/system::stdout/system` can be used to print to STDOUT. Data will be formatted as JSON.
-
 ### system::sderr
 
 The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Data will be formatted as JSON.
 
+
 ## Supported Offramps
+
+
+
 
 ### elastic
 
@@ -73,6 +76,8 @@ Supported configuration options are:
 
 - `endpoints` - A list of elastic search endpoints to send to.
 - `concurrency` - Maximum number of parallel requests (default: 4).
+
+The configuration options `codec` and `postprocess` are not used, as elastic requires a json payload anyways.
 
 Used metadata variables:
 
@@ -159,7 +164,7 @@ The UDP offramp sends data to a given host and port as UDP datagram.
 
 The default [codec](codecs.md#json) is `json`.
 
-When the UDP onramp gets a batch of messages it will send each element of the batch as an own UDP datagram.
+When the UDP onramp gets a batch of messages it will send each element of the batch as a distinct UDP datagram.
 
 Supported configuration options are:
 
@@ -174,6 +179,8 @@ Example:
 offramp:
   - id: udp-out
     type: udp
+    postprocessors:
+      - base64
     config:
       host: "10.11.12.13"
       port: 1234
@@ -300,12 +307,13 @@ name in the database and must contain following fields:
 - `name` - field name as represented by database table schema
 - `value` - the value of the field
 
+`codec` and `postprocessors` config values are ignored as they cannot apply to this offramp, since the event is transformed into a SQL query.
+
 Example:
 
 ```yml
 id: db
 type: postgres
-codec: json
 config:
   host: localhost
   port: 5432
@@ -337,17 +345,60 @@ offramp:
 
 ### stdout
 
-The standard out offramp prints each event to the stdout output.
+A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with `system::stdout`.
 
-This operator does not support configuration.
+The default codec is [json](codecs.md#json).
+
+The stdout offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
+
+If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If `raw` is set to true, the event data will be put on stdout as is.
+
+Supported configuration options:
+
+- `prefix` - A prefix written before each event (optional string).
+- `raw` - Write evcent data bytes as is to stdout.
 
 Example:
 
 ```yaml
 offramp:
-  - id: console
+  - id: like_a_python_repl
     type: stdout
+    config:
+      prefix: ">>> "
 ```
+
+### stderr
+
+A custom stderr offramp can be configured by using this offramp type. But beware that this will share the single stderr stream with `system::stderr`.
+
+The default codec is [json](codecs.md#json).
+
+The stderr offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
+
+If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If `raw` is set to true, the event data will be put on stderr as is.
+
+Supported configuration options:
+
+- `prefix` - A prefix written before each event (optional string).
+- `raw` - Write evcent data bytes as is to stderr.
+
+Example:
+
+```yaml
+offramp:
+  - id: raw_stuff
+    type: stderr
+    codec: json
+    postprocessors:
+      - snappy
+    config:
+      raw: true
+```
+
+
 
 ### blackhole
 
@@ -474,7 +525,7 @@ offramp:
 
 Send events to [New Relic](https://newrelic.com/) platform, using it's log apis (variable by region).
 
-The default [codec](codecs.md#json) is `json`.
+This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.
 
 Supported configuration options are:
 

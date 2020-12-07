@@ -1165,6 +1165,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#stderr" class="md-nav__link">
+    stderr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#blackhole" class="md-nav__link">
     blackhole
   </a>
@@ -1947,6 +1954,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#stderr" class="md-nav__link">
+    stderr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#blackhole" class="md-nav__link">
     blackhole
   </a>
@@ -2120,6 +2134,7 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <li><code>endpoints</code> - A list of elastic search endpoints to send to.</li>
 <li><code>concurrency</code> - Maximum number of parallel requests (default: 4).</li>
 </ul>
+<p>The configuration options <code>codec</code> and <code>postprocess</code> are not used, as elastic requires a json payload anyways.</p>
 <p>Used metadata variables:</p>
 <ul>
 <li><code>index</code> - The index to write to (required).</li>
@@ -2186,7 +2201,7 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <h3 id="udp">udp<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h3>
 <p>The UDP offramp sends data to a given host and port as UDP datagram.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
-<p>When the UDP onramp gets a batch of messages it will send each element of the batch as an own UDP datagram.</p>
+<p>When the UDP onramp gets a batch of messages it will send each element of the batch as a distinct UDP datagram.</p>
 <p>Supported configuration options are:</p>
 <ul>
 <li><code>host</code> - the local host to send data from</li>
@@ -2198,6 +2213,8 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">udp-out</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">udp</span>
+    <span class="nt">postprocessors</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">base64</span>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;10.11.12.13&quot;</span>
       <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1234</span>
@@ -2313,10 +2330,10 @@ name in the database and must contain following fields:</p>
 <li><code>name</code> - field name as represented by database table schema</li>
 <li><code>value</code> - the value of the field</li>
 </ul>
+<p><code>codec</code> and <code>postprocessors</code> config values are ignored as they cannot apply to this offramp, since the event is transformed into a SQL query.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code>id: db
 type: postgres
-codec: json
 config:
   host: localhost
   port: 5432
@@ -2340,12 +2357,43 @@ config:
       <span class="nt">file</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/my/path/to/a/file.json</span>
 </code></pre></div>
 <h3 id="stdout">stdout<a class="headerlink" href="#stdout" title="Permanent link">&para;</a></h3>
-<p>The standard out offramp prints each event to the stdout output.</p>
-<p>This operator does not support configuration.</p>
+<p>A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with <code>system::stdout</code>.</p>
+<p>The default codec is <a href="../codecs/#json">json</a>.</p>
+<p>The stdout offramp will write a <code>\n</code> right after each event, and optionally prefix every event with a configurable <code>prefix</code>.</p>
+<p>If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If <code>raw</code> is set to true, the event data will be put on stdout as is.</p>
+<p>Supported configuration options:</p>
+<ul>
+<li><code>prefix</code> - A prefix written before each event (optional string).</li>
+<li><code>raw</code> - Write evcent data bytes as is to stdout.</li>
+</ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">console</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">like_a_python_repl</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">prefix</span><span class="p">:</span> <span class="s">&quot;&gt;&gt;&gt;</span><span class="nv"> </span><span class="s">&quot;</span>
+</code></pre></div>
+<h3 id="stderr">stderr<a class="headerlink" href="#stderr" title="Permanent link">&para;</a></h3>
+<p>A custom stderr offramp can be configured by using this offramp type. But beware that this will share the single stderr stream with <code>system::stderr</code>.</p>
+<p>The default codec is <a href="../codecs/#json">json</a>.</p>
+<p>The stderr offramp will write a <code>\n</code> right after each event, and optionally prefix every event with a configurable <code>prefix</code>.</p>
+<p>If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If <code>raw</code> is set to true, the event data will be put on stderr as is.</p>
+<p>Supported configuration options:</p>
+<ul>
+<li><code>prefix</code> - A prefix written before each event (optional string).</li>
+<li><code>raw</code> - Write evcent data bytes as is to stderr.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">raw_stuff</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stderr</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">postprocessors</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">snappy</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">raw</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <h3 id="blackhole">blackhole<a class="headerlink" href="#blackhole" title="Permanent link">&para;</a></h3>
 <p>The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) <a href="http://hdrhistogram.org/">histogram</a>.</p>
@@ -2458,7 +2506,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 </code></pre></div>
 <h3 id="newrelic">newrelic<a class="headerlink" href="#newrelic" title="Permanent link">&para;</a></h3>
 <p>Send events to <a href="https://newrelic.com/">New Relic</a> platform, using it's log apis (variable by region).</p>
-<p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
+<p>This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.</p>
 <p>Supported configuration options are:</p>
 <ul>
 <li><code>license_key</code> - New Relic's license (or insert only) key</li>

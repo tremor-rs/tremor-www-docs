@@ -154,6 +154,7 @@ Supported configuration options are:
 
 - `source` - The file to read from.
 - `close_on_done` - Terminates tremor once the file is processed.
+- `sleep_on_done` - Waits for the given number of milliseconds, before terminating tremor. Intended to be used with `close_on_done`.
 
 Example:
 
@@ -163,6 +164,8 @@ onramp:
     type: file
     config:
       source: /my/path/to/a/file.json
+      close_on_done: true
+      sleep_on_done: 1000 # wait for a second before terminating
 ```
 
 ### metronome

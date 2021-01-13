@@ -105,10 +105,9 @@ Open the [Chronograf](http://localhost:8888) and connect the database.
 
 ## Visualization with Grafana
 
-The docker compose file deploys a grafana image that can be used with the
+The docker compose file deploys a [grafana image](http://localhost:3000) that can be used with the
 influx data source configured to make a server connection to `http://influxdb:8086`
 and explored via the logs or metrics explorer modes.
-
 
 ### Discussion
 

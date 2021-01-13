@@ -83,6 +83,7 @@ nav:
       - Logstash: workshop/examples/10_logstash/README.md
       - Influx: workshop/examples/11_influx/README.md
       - Timescale: workshop/examples/12_postgres_timescaledb/README.md
+      - Grafana : workshop/examples/13_grafana/README.md
     - Delivery Guarantees:
       - Transient GD: workshop/examples/20_transient_gd/README.md
       - Persistent GD: workshop/examples/21_persistent_gd/README.md

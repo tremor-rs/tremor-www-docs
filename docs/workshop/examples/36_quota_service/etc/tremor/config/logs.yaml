@@ -13,7 +13,7 @@ offramp:
     type: elastic
     codec: json
     config:
-      endpoints:
+      nodes:
         - http://elasticsearch:9200
 
 # TODO link bucketing metrics to stdout as well

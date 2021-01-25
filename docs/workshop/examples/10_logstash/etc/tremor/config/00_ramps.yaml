@@ -13,5 +13,5 @@ offramp:
   - id: es-output
     type: elastic # an elastic search offramp
     config:
-      endpoints: # this is the eleastic search host started by docker compose
+      nodes: # this is the eleastic search host started by docker compose
         - http://elastic:9200

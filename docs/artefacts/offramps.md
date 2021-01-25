@@ -4,7 +4,7 @@ Specify how tremor connects to the outside world in order to publish to external
 
 For example, the Elastic offramp pushes data to ElasticSearch via its bulk upload REST/HTTP API endpoint.
 
-All offramps are specified of the form:
+All offramps are specified in the following form:
 
 ```yaml
 offramp:
@@ -70,30 +70,124 @@ The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Dat
 
 ### elastic
 
-The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested with ES v6.
+The elastic offramp writes to one or more ElasticSearch nodes. This is currently tested with ES v6 and v7.
 
 Supported configuration options are:
 
-- `endpoints` - A list of elastic search endpoints to send to.
+- `nodes` - A list of elastic search nodes to contact.
 - `concurrency` - Maximum number of parallel requests (default: 4).
 
-The configuration options `codec` and `postprocess` are not used, as elastic requires a json payload anyways.
+Events will be sent to the connected elasticsearch cluster via the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) using the `index` action.
+It is recommended to batch events sent to this sink using the [generic::batch operator](../tremor-query/operators.d#genericbatch) to reduce the overhead
+introduced by the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html).
 
-Used metadata variables:
+The configuration options `codec` and `postprocessors` are not used, as elastic will always serialize event payloads as JSON.
+
+The following metadata variables can be specified on a per event basis:
 
 - `index` - The index to write to (required).
-- `doc_type` - The document type for elastic (required).
+- `doc_type` - The document type for elastic (optional), deprecated in ES 7.
+- `doc_id`   - The document id for elastic (optional).
 - `pipeline` - The elastic search pipeline to use (optional).
 
-Example:
+#### Linked Transport
+
+If used as a linked transport, the sink will emit events in case of errors sending data to ES or if the incoming event is malformed via the `err` port.
+Also, upon a returned ES Bulk request, it will emit an event for each bulk item, denoting success or failure.
+
+Events denoting success are sent via the `out` port and have the following format:
+
+```json
+{
+  "success": true,
+  "source": {
+    "event_id": "1:2:3",
+    "origin": "file:///tmp/input.json.xz"
+  },
+  "payload": {}
+}
+```
+
+The event metdata will contain the following:
+
+```json
+{
+  "elastic": {
+    "id": "ES document id",
+    "type": "ES document type",
+    "index": "ES index",
+    "version": "ES document version"
+  }
+}
+```
+
+Events denoting bulk item failure are sent via the `err` port and have the following format:
+
+```json
+{
+  "success": false,
+  "source": {
+    "event_id": "2:3:4",
+    "origin": null
+  },
+  "error": {},
+  "payload": {}
+}
+```
+
+`error` will contain the error description object returned from ES.
+
+The event metadata for failed events looks as follows:
+
+```json
+{
+  "elastic": {
+    "id": "ES document id",
+    "type": "ES document type",
+    "index": "ES index",
+  }
+}
+```
+
+For both event types `payload` is the event payload that was sent to ES.
+
+Example Configuration:
 
 ```yaml
 offramp:
   - id: es
     type: elastic
     config:
-      endpoints:
+      nodes:
         - http://elastic:9200
+```
+
+Example Configuration for linked transport (including binding):
+
+```yaml
+offramp:
+  - id: es-linked
+    type: elastic
+    linked: true
+    config:
+      nodes:
+        - http://elastic1:9200
+        - http://elastic2:9200
+      concurrency: 8
+
+binding:
+  id: "es-linked-binding"
+  links:
+    "/onramp/example/{instance}/out": ["/pipeline/to_elastic/{instance}/in"]
+    "/pipeline/to_elastic/{instance}/in": ["/offramp/es-linked/{instance}/in"]
+    
+    # handle success and error messages with different pipelines
+    "/offramp/es-linked/{instance}/out": ["/pipeline/handle-es-success/{instance}/in"]
+    "/offramp/es-linked/{instance}/err": ["/pipeline/handle-es-error/{instance}/in"]
+
+    # more links...
+    ...
+
 ```
 
 ### kafka

@@ -135,7 +135,7 @@ It is possible to ignore the current event by emitting `0`.
 
 #### Windows based on time
 
-Time based tumbling windows close when a certain duration has been elapsed. The source for measuring the duration
+Time based tumbling windows close when a certain duration has elapsed. The source for measuring the duration
 is the `ingest` timestamp of the events flowing through by default. The provided embedded script can be used to customize the
 source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 
 This way windows using other timestamps than event ingest time can be built.

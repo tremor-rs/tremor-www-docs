@@ -1144,6 +1144,19 @@
     elastic
   </a>
   
+    <nav class="md-nav" aria-label="elastic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linked-transport" class="md-nav__link">
+    Linked Transport
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1990,6 +2003,19 @@
     elastic
   </a>
   
+    <nav class="md-nav" aria-label="elastic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linked-transport" class="md-nav__link">
+    Linked Transport
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2121,7 +2147,7 @@
                 <h1 id="offramps">Offramps<a class="headerlink" href="#offramps" title="Permanent link">&para;</a></h1>
 <p>Specify how tremor connects to the outside world in order to publish to external systems.</p>
 <p>For example, the Elastic offramp pushes data to ElasticSearch via its bulk upload REST/HTTP API endpoint.</p>
-<p>All offramps are specified of the form:</p>
+<p>All offramps are specified in the following form:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;unique offramp id&gt;</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;offramp name&gt;</span>
@@ -2229,26 +2255,99 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <p>The offramp <code>/offramp/system::stderr/system</code> can be used to print to STDERR. Data will be formatted as JSON.</p>
 <h2 id="supported-offramps">Supported Offramps<a class="headerlink" href="#supported-offramps" title="Permanent link">&para;</a></h2>
 <h3 id="elastic">elastic<a class="headerlink" href="#elastic" title="Permanent link">&para;</a></h3>
-<p>The elastic offramp writes to one or more ElasticSearch hosts. This is currently tested with ES v6.</p>
+<p>The elastic offramp writes to one or more ElasticSearch nodes. This is currently tested with ES v6 and v7.</p>
 <p>Supported configuration options are:</p>
 <ul>
-<li><code>endpoints</code> - A list of elastic search endpoints to send to.</li>
+<li><code>endpoints</code> - A list of elastic search nodes to contact.</li>
 <li><code>concurrency</code> - Maximum number of parallel requests (default: 4).</li>
 </ul>
-<p>The configuration options <code>codec</code> and <code>postprocess</code> are not used, as elastic requires a json payload anyways.</p>
-<p>Used metadata variables:</p>
+<p>Events will be sent to the connected elasticsearch cluster via the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a> using the <code>index</code> action.
+It is recommended to batch events sent to this sink using the <a href="../tremor-query/operators.d#genericbatch">generic::batch operator</a> to reduce the overhead
+introduced by the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a>.</p>
+<p>The configuration options <code>codec</code> and <code>postprocessors</code> are not used, as elastic will always serialize event payloads as JSON.</p>
+<p>The following metadata variables can be specified on a per event basis:</p>
 <ul>
 <li><code>index</code> - The index to write to (required).</li>
-<li><code>doc_type</code> - The document type for elastic (required).</li>
+<li><code>doc_type</code> - The document type for elastic (optional), deprecated in ES 7.</li>
+<li><code>doc_id</code>   - The document id for elastic (optional).</li>
 <li><code>pipeline</code> - The elastic search pipeline to use (optional).</li>
 </ul>
-<p>Example:</p>
+<h4 id="linked-transport">Linked Transport<a class="headerlink" href="#linked-transport" title="Permanent link">&para;</a></h4>
+<p>If used as a linked transport, the sink will emit events in case of errors sending data to ES or if the incoming event is malformed via the <code>err</code> port.
+Also, upon a returned ES Bulk request, it will emit an event for each bulk item, denoting success or failure.</p>
+<p>Events denoting success are sent via the <code>out</code> port and have the following format:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;event_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1:2:3&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="s2">&quot;file:///tmp/input.json.xz&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The event metdata will contain the following:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;elastic&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document type&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;ES index&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document version&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Events denoting bulk item failure are sent via the <code>err</code> port and have the following format:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;event_id&quot;</span><span class="p">:</span> <span class="s2">&quot;2:3:4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="kc">null</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>error</code> will contain the error description object returned from ES.</p>
+<p>The event metadata for failed events looks as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;elastic&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document type&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;ES index&quot;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>For both event types <code>payload</code> is the event payload that was sent to ES.</p>
+<p>Example Configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">es</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">endpoints</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://elastic:9200</span>
+</code></pre></div>
+<p>Example Configuration for linked transport (including binding):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">es-linked</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
+    <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">endpoints</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://elastic1:9200</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://elastic2:9200</span>
+      <span class="nt">concurrency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+
+<span class="nt">binding</span><span class="p">:</span>
+  <span class="nt">id</span><span class="p">:</span> <span class="s">&quot;es-linked-binding&quot;</span>
+  <span class="nt">links</span><span class="p">:</span>
+    <span class="s">&quot;/onramp/example/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/to_elastic/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+    <span class="s">&quot;/pipeline/to_elastic/{instance}/in&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/offramp/es-linked/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+
+    <span class="c1"># handle success and error messages with different pipelines</span>
+    <span class="s">&quot;/offramp/es-linked/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/handle-es-success/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+    <span class="s">&quot;/offramp/es-linked/{instance}/err&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/handle-es-error/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
+
+    <span class="c1"># more links...</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
 <p>The Kafka offramp connects sends events to Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkaka 1.5.0 configuration options</a>.</p>

@@ -113,14 +113,49 @@ A tumbling window is a window configured with a fixed non-overlapping interval o
 
 Support for sliding windows has not been implemented yet (it has an [open RFC](https://rfcs.tremor.rs/0004-sliding-window-mechanism/) and it will be picked up for a future release).
 
+### Tumbling Windows
+
+Tremor supports tumbling windows by number of events or by time.
+
+General configuration Parameters:
+
+* `eviction_period`: duration in nanoseconds without events arriving, after which to close an existing window, if it is full or not.
+
+#### Windows based on number of events
+
+Size based tumbling windows close when a certain number of aggregated events has been reached.
+
+Configuration Parameters:
+
+- `size`: Number of events until this window closes and emits a downstream event (The ).
+
+The size increment for each event defaults to `1` but can be customized by the embedded script in the window definition.
+This script needs to return an unsigned integer denoting the number of events to use for this event.
+It is possible to ignore the current event by emitting `0`.
+
+#### Windows based on time
+
+Time based tumbling windows close when a certain duration has been elapsed. The source for measuring the duration
+is the `ingest` timestamp of the events flowing through by default. The provided embedded script can be used to customize the
+source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 
+This way windows using other timestamps than event ingest time can be built.
+
+Only windows using the event ingest timestamp can be closed when the time in `interval` is elapsed measured by wall-clock time
+independent from event flow with a granularity of `100ms`. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them or when the `eviction_period` hits.
+
+Configuration Parameters:
+
+- `interval`: Time interval in nanoseconds after which the window closes.
+
+
 Window definition grammar:
 
 > ![window definition grammar](grammar/diagram/DefineWindowDefn.png)
 > ![with params grammar](grammar/diagram/WithParams.png)
-> ![with partial paraqms grammar](grammar/diagram/WithPartialParams.png)
+> ![with partial params grammar](grammar/diagram/WithPartialParams.png)
 > ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
 
-For example a 15 second tumbling window can be defined as follows
+For example a 15 second tumbling window based on the event ingest timestamp can be defined as follows
 
 ```trickle
 define tumbling window fifteen_secs
@@ -137,6 +172,16 @@ with
     interval = core::datetime::with_seconds(15),
 script
     event.timestamp
+end;
+```
+
+A tumbling window based on number of events that will close when 2 hours have been passed if it is filled or not:
+
+```trickle
+define tumbling window with_size
+with
+    size = 1000,
+    eviction_period = core::datetime::with_hours(2)
 end;
 ```
 

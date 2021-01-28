@@ -390,6 +390,33 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tumbling-windows" class="md-nav__link">
+    Tumbling Windows
+  </a>
+  
+    <nav class="md-nav" aria-label="Tumbling Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-based-on-number-of-events" class="md-nav__link">
+    Windows based on number of events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-based-on-time" class="md-nav__link">
+    Windows based on time
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#custom-operator-definitions" class="md-nav__link">
     Custom Operator definitions
@@ -2028,6 +2055,33 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tumbling-windows" class="md-nav__link">
+    Tumbling Windows
+  </a>
+  
+    <nav class="md-nav" aria-label="Tumbling Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-based-on-number-of-events" class="md-nav__link">
+    Windows based on number of events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-based-on-time" class="md-nav__link">
+    Windows based on time
+  </a>
+  
+</li>
+        
           <li class="md-nav__item">
   <a href="#custom-operator-definitions" class="md-nav__link">
     Custom Operator definitions
@@ -2146,14 +2200,40 @@ same as in <code>tremor-script</code>.</p>
 <p>Window definitions in <code>tremor-query</code> can be either tumbling or sliding.</p>
 <p>A tumbling window is a window configured with a fixed non-overlapping interval of time. The window aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.</p>
 <p>Support for sliding windows has not been implemented yet (it has an <a href="https://rfcs.tremor.rs/0004-sliding-window-mechanism/">open RFC</a> and it will be picked up for a future release).</p>
+<h3 id="tumbling-windows">Tumbling Windows<a class="headerlink" href="#tumbling-windows" title="Permanent link">&para;</a></h3>
+<p>Tremor supports tumbling windows by number of events or by time.</p>
+<p>General configuration Parameters:</p>
+<ul>
+<li><code>eviction_period</code>: duration in nanoseconds without events arriving, after which to close an existing window, if it is full or not.</li>
+</ul>
+<h4 id="windows-based-on-number-of-events">Windows based on number of events<a class="headerlink" href="#windows-based-on-number-of-events" title="Permanent link">&para;</a></h4>
+<p>Size based tumbling windows close when a certain number of aggregated events has been reached.</p>
+<p>Configuration Parameters:</p>
+<ul>
+<li><code>size</code>: Number of events until this window closes and emits a downstream event.</li>
+</ul>
+<p>The size increment for each event defaults to <code>1</code> but can be customized by the embedded script in the window definition.
+This script needs to return an unsigned integer denoting the number of events to use for this event.
+It is possible to ignore the current event by emitting <code>0</code>.</p>
+<h4 id="windows-based-on-time">Windows based on time<a class="headerlink" href="#windows-based-on-time" title="Permanent link">&para;</a></h4>
+<p>Time based tumbling windows close when a certain duration has elapsed. The source for measuring the duration
+is the <code>ingest</code> timestamp of the events flowing through by default. The provided embedded script can be used to customize the
+source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 
+This way windows using timestamps other than the event ingest time can be built.</p>
+<p>Only windows using the event ingest timestamp can be closed when the time in <code>interval</code> is elapsed measured by wall-clock time
+independent from event flow with a granularity of <code>100ms</code>. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them or when the <code>eviction_period</code> hits.</p>
+<p>Configuration Parameters:</p>
+<ul>
+<li><code>interval</code>: Time interval in nanoseconds after which the window closes.</li>
+</ul>
 <p>Window definition grammar:</p>
 <blockquote>
 <p><img alt="window definition grammar" src="grammar/diagram/DefineWindowDefn.png" />
 <img alt="with params grammar" src="grammar/diagram/WithParams.png" />
-<img alt="with partial paraqms grammar" src="grammar/diagram/WithPartialParams.png" />
+<img alt="with partial params grammar" src="grammar/diagram/WithPartialParams.png" />
 <img alt="embedded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
 </blockquote>
-<p>For example a 15 second tumbling window can be defined as follows</p>
+<p>For example a 15 second tumbling window based on the event ingest timestamp can be defined as follows</p>
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">fifteen_secs</span><span class="w"></span>
 <span class="kd">with</span><span class="w"></span>
 <span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">core</span><span class="err">::</span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
@@ -2165,6 +2245,13 @@ same as in <code>tremor-script</code>.</p>
 <span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">core</span><span class="err">::</span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
 <span class="kd">script</span><span class="w"></span>
 <span class="w">    </span><span class="kc">event</span><span class="err">.</span><span class="nx">timestamp</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>A tumbling window based on number of events that will close when 2 hours have been passed if it is filled or not:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">with_size</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">    </span><span class="nx">size</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">1000</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="nx">eviction_period</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">core</span><span class="err">::</span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_hours</span><span class="err">(</span><span class="mi">2</span><span class="err">)</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <h4 id="custom-operator-definitions">Custom Operator definitions<a class="headerlink" href="#custom-operator-definitions" title="Permanent link">&para;</a></h4>

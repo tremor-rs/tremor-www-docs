@@ -127,7 +127,7 @@ Size based tumbling windows close when a certain number of aggregated events has
 
 Configuration Parameters:
 
-- `size`: Number of events until this window closes and emits a downstream event (The ).
+- `size`: Number of events until this window closes and emits a downstream event.
 
 The size increment for each event defaults to `1` but can be customized by the embedded script in the window definition.
 This script needs to return an unsigned integer denoting the number of events to use for this event.
@@ -138,7 +138,7 @@ It is possible to ignore the current event by emitting `0`.
 Time based tumbling windows close when a certain duration has elapsed. The source for measuring the duration
 is the `ingest` timestamp of the events flowing through by default. The provided embedded script can be used to customize the
 source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 
-This way windows using other timestamps than event ingest time can be built.
+This way windows using timestamps other than the event ingest time can be built.
 
 Only windows using the event ingest timestamp can be closed when the time in `interval` is elapsed measured by wall-clock time
 independent from event flow with a granularity of `100ms`. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them or when the `eviction_period` hits.

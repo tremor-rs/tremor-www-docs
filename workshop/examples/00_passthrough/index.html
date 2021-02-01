@@ -12,7 +12,7 @@
       
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
     
     
       
@@ -1869,9 +1869,9 @@
 </code></pre></div>
 <p>The <a href="etc/tremor/config/01_binding.yaml">binding</a> expresses those relations and gives the graph of onramp, pipeline and offramp.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">binding</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">passthrough</span> <span class="c1"># The unique name of this binding template</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span> <span class="c1"># The unique name of this binding template</span>
     <span class="nt">links</span><span class="p">:</span>
-      <span class="s">&quot;/onramp/ws-input/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="c1"># Connect the inpunt to the pipeline</span>
+      <span class="s">&quot;/onramp/ws-input/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="c1"># Connect the input to the pipeline</span>
         <span class="p p-Indicator">-</span> <span class="s">&quot;/pipeline/example/{instance}/in&quot;</span>
       <span class="s">&quot;/pipeline/example/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="c1"># Connect the pipeline to the output</span>
         <span class="p p-Indicator">-</span> <span class="s">&quot;/offramp/stdout-output/{instance}/in&quot;</span>

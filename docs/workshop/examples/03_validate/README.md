@@ -1,6 +1,6 @@
 # Transform
 
-The `validate` exmaple adds the concept of scripts to the trickle file. In this script we validate the schema of the input json against some requirements and only let events through that do satisfy them. Other evetns are dropped. Those changes are entirely inside the [`example.trickle`](etc/tremor/config/example.trickle).
+The `validate` example adds the concept of scripts to the trickle file. In this script we validate the schema of the input json against some requirements and only let events through that do satisfy them. Other events are dropped. Those changes are entirely inside the [`example.trickle`](etc/tremor/config/example.trickle).
 
 ## Environment
 
@@ -60,4 +60,4 @@ $ cat invalids.txt | websocat ws://localhost:4242
 We introduce the `declare script` and `create script` query language features. `delcare script` lets declare a template for a script to be run while `create script` instanciates it as a part of the graph. `create script` takes an additional `as <name>` argument if it is omitted the operator will have the same name as the declaration.
 
 !!! tip
-    Scripts themselfs can not connect to elements inside the graph, a `select` statement is needed to glue scripts and other logic together.
+    Scripts themselves can not connect to elements inside the graph, a `select` statement is needed to glue scripts and other logic together.

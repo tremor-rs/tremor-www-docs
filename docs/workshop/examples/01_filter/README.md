@@ -53,7 +53,7 @@ Events are selected on the inbound event if the `numeric` field on the inbound e
 ```trickle
 select event
 from in
-where event.numeric <= 10 or >= 100
+where event.numeric <= 10 or event.numeric >= 100
 into out
 ```
 
@@ -71,12 +71,12 @@ having event.selected
 #### Where and Having clauses
 
 Events are selected on the inbound event if the `numeric` field on the inbound event is less than or equal to `10` or
-greater than or equal to `100` and after procerssing them the `selected` field on the outbound event is true.
+greater than or equal to `100` and after processing them, the `selected` field on the outbound event is true.
 
 ```trickle
 select event
 from in
-where event.numeric_filed <= 10 or >= 100
+where event.numeric <= 10 or event.numeric >= 100
 into out
 having event.selected
 ```

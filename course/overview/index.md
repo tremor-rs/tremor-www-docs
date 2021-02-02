@@ -9,19 +9,17 @@ and processing in 24x7x365 high frequency at scale environments.
 
 ## History
 
-- Running in continuous production at Wayfair since October 2018
-- Born out of a need for better traffic shaping, load shedding and backpressure
-  detection when shipping logs/metrics during peak eCommerce trading
+- Running in continuous production at Wayfair since October 2018 <!-- .element: class="fragment" -->
+- Born out of a need for better traffic shaping, load shedding and backpressure detection when shipping logs/metrics during peak eCommerce trading <!-- .element: class="fragment" -->
+
 
 ---
 
 ## History
 
-- Evolved to tackle other processing needs (collection, transformation and
-  aggregation) for logs and metrics
-- Addressed gaps not fulfilled by exisiting tools in use (eg: logstash, telegraf, kapacitor)
-- 6 (and counting) distinct usecases at Wayfair now, with applications also
-  outside of the observability domain (eg: search data distribution)
+- Evolved to tackle other processing needs (collection, transformation and aggregation) for logs and metrics <!-- .element: class="fragment" -->
+- Addressed gaps not fulfilled by exisiting tools in use (eg: logstash, telegraf, kapacitor) <!-- .element: class="fragment" -->
+- 6 (and counting) distinct usecases at Wayfair now, with applications also outside of the observability domain (eg: search data distribution) <!-- .element: class="fragment" -->
 
 ---
 
@@ -29,8 +27,7 @@ and processing in 24x7x365 high frequency at scale environments.
 
 - [Open sourced](https://github.com/tremor-rs/) on Feb 25, 2020
 - External adoption and interest
-- [CNCF sandbox project](https://www.cncf.io/sandbox-projects/) since September
-  2020!
+- [CNCF sandbox project](https://www.cncf.io/sandbox-projects/) since September 2020!
 
 <img src="./assets/cncf-color.svg" alt="CNCF Logo" style="width:300px">
 
@@ -93,7 +90,7 @@ A high level overview of tremor-based systems architecture
 
 ![image](./assets/overview_arch.png)
 
-- __Sources__ (onramps). Ingest data from the outside world and deserialize to events ( onramps )
+- __Sources__. Ingest data from the outside world and deserialize to events ( onramps )
 - __Sinks__. Send serialized events to the outside world ( offramps )
 - __Pipelines__. Business logic compiles to an event flow DAG
 
@@ -102,18 +99,40 @@ A high level overview of tremor-based systems architecture
 ### Sources
 
 - Tap on an external data sources
-  - network (tcp, udp, http, websocket)
-  - file
-  - system clock (metronome, crononome)
-  - database (polling for changes)
-  - ...
+  - network (tcp, udp, http, websocket) <!-- .element: class="fragment" -->
+  - file <!-- .element: class="fragment" -->
+  - system clock (metronome, crononome) <!-- .element: class="fragment" -->
+  - database (polling for changes) <!-- .element: class="fragment" -->
+  - ... <!-- .element: class="fragment" -->
 
 ---
 ### Sources
 
-- Define mapping between protocol data units and events (preprocessors, codec)
-- Implemented in the Rust programming language.
-- Configured in YAML
+- Define mapping between protocol data units and events (preprocessors, codec) <!-- .element: class="fragment" -->
+- Implemented in the Rust programming language. <!-- .element: class="fragment" -->
+- Configured in YAML <!-- .element: class="fragment" -->
+
+---
+
+<div style="font-size: 0.8em;">
+
+```yaml
+- id: kafka-in
+  type: kafka
+  codec: json
+  config:
+    brokers:
+      - kafka:9092
+    topics:
+      - tremor
+    group_id: demo
+    rdkafka_options:
+      message.max.bytes: 1000
+```
+
+</div>
+
+<div style='font-size: 20px'>Kafka source</div>
 
 ---
 
@@ -139,78 +158,41 @@ A high level overview of tremor-based systems architecture
 
 </div>
 
-<div style='font-size: 20px'>TimescaleDB source ( periodic polling )</div>
-
----
-
-<div style="font-size: 0.8em;">
-
-```yaml
-- id: crononome-input
-  type: crononome
-  codec: json
-  config:
-    entries:
-      - name: 5s                 # label
-        expr: "0/5 * * * * *"    # cron-like schedule specification
-        payload:                 # payload data
-          user_id:
-            fieldType: "INT8"
-            name: "user_id"
-            value: 12345
-          product_id:
-            fieldType: "VARCHAR"
-            name: "product_id"
-            value: jdwa2djh2
-          quantity:
-            fieldType: "INT8"
-            name: "quantity"
-            value: 2
-          created_at:
-            fieldType: "TIMESTAMPTZ"
-            name: "created_at"
-            value: "2020-04-08 00:00:00.000000 +00:00"
-```
-
-</div>
-
-<div style='font-size: 20px'>Cron-like scheduled events</div>
+<div style='font-size: 20px'>TimescaleDB source (periodic polling)</div>
 
 >>>
 
 ### Sinks
 
 - Send events to external system:
-  - network (tcp, udp, http, websocket)
-  - database (postgresql)
-  - std streams
-  - file
+  - network (tcp, udp, http, websocket) <!-- .element: class="fragment" -->
+  - database (postgresql) <!-- .element: class="fragment" -->
+  - std streams <!-- .element: class="fragment" -->
+  - file <!-- .element: class="fragment" -->
+
 
 
 ---
 
 ### Sinks
 
-- Defines mapping for outgoing events and protocol data units (codec, postprocessors)
-- Implemented in the rust programming language.
-- Configured in YAML
+- Defines mapping for outgoing events and protocol data units (codec, postprocessors) <!-- .element: class="fragment" -->
+- Implemented in the rust programming language. <!-- .element: class="fragment" -->
+- Configured in YAML <!-- .element: class="fragment" -->
 
 ---
 
 ```yaml
-- id: timescaledb-output
-  type: postgres
-  codec: json
+- id: elastic-output
+  type: elastic
   config:
-    host: timescaledb
-    port: 5432
-    user: postgres
-    password: example
-    dbname: measurements
-    table: events
+    endpoints:
+      - elastic01:9200
+      - elastic02:9200
+    concurrency: 8
 ```
 
-<div style='font-size: 20px'>Postgres database sink ( event driven persistence )</div>
+<div style='font-size: 20px'>Elastic Sink</div>
 
 ---
 

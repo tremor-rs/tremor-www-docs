@@ -23,11 +23,11 @@ docker run --rm -t tremorproject/tremor:latest
 __From source:__
 
 1. [Install Requirements](https://docs.tremor.rs/development/quick-start/#without-docker)
-2. Get a coffee!
+2. Get a  **huge** cup of coffee!
 3. Compile the `tremor` binary:
 
 ```sh
-cargo build --release --all --verbose
+cargo build --release --all
 ```
 
 >>>
@@ -72,12 +72,12 @@ $ tremor server run -f pipeline.trickle -f artefacts.yaml
 
 ## Repositories and Artefacts
 
-- Tremor is made out of building blocks you can publish, connect and instantiate independently <!-- .element: class="fragment" data-fragment-index="1" -->
-- Artefacts are configurations that are available and addressable within tremor  <!-- .element: class="fragment" data-fragment-index="2" -->
+- Artefacts are configurations that are available and addressable within tremor  <!-- .element: class="fragment" data-fragment-index="1" -->
   - [Sources](https://docs.tremor.rs/artefacts/onramps/)
   - [Sinks](https://docs.tremor.rs/artefacts/offramps/)
   - [Pipelines](https://docs.tremor.rs/tremor-query/)
   - [Bindings](https://docs.tremor.rs/operations/configuration-walkthrough/#write-a-binding-specification) (connections of the three former artefacts)
+- Artefacts will be instantiated and connected to form event flows <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -90,7 +90,7 @@ $ tremor server run -f pipeline.trickle -f artefacts.yaml
 id: my-onramp
 type: file
 preprocessors:
-  - lines
+  - remove-empty
 config:
   source: "/var/log/mail.log"
 ```
@@ -107,7 +107,7 @@ tremor server run -f onramp.yaml
 
 ## Repositories and Artefacts
 
-- Artefacts are available for creation
+- Artefacts are available for instantiation
 - Fully deploying a connected pipeline is a 2-step process
 
 ---
@@ -572,6 +572,7 @@ Create a deployment for tremor that listens on tcp port `4242` and reads a log p
 then process it via the pipeline we created in the last section.
 
 ---
+
 
 ## ✋ Task 1: Create a source
 

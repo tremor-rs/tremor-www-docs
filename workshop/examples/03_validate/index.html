@@ -1873,7 +1873,7 @@
                 
                 
                 <h1 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h1>
-<p>The <code>validate</code> exmaple adds the concept of scripts to the trickle file. In this script we validate the schema of the input json against some requirements and only let events through that do satisfy them. Other evetns are dropped. Those changes are entirely inside the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a>.</p>
+<p>The <code>validate</code> example adds the concept of scripts to the trickle file. In this script we validate the schema of the input json against some requirements and only let events through that do satisfy them. Other events are dropped. Those changes are entirely inside the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a>.</p>
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
 <p>In the <a href="etc/tremor/config/example.trickle"><code>example.trickle</code></a> we define a script that validates the schema that the field <code>hello</code> is a string and the field <code>selected</code> is a boolean. If both conditions are true we pass it on, otherwise it'll drop.</p>
 <p>All other configuration is the same as per the previous example, and is elided here for brevity.</p>
@@ -1913,7 +1913,7 @@
 <p>We introduce the <code>declare script</code> and <code>create script</code> query language features. <code>delcare script</code> lets declare a template for a script to be run while <code>create script</code> instanciates it as a part of the graph. <code>create script</code> takes an additional <code>as &lt;name&gt;</code> argument if it is omitted the operator will have the same name as the declaration.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Scripts themselfs can not connect to elements inside the graph, a <code>select</code> statement is needed to glue scripts and other logic together.</p>
+<p>Scripts themselves can not connect to elements inside the graph, a <code>select</code> statement is needed to glue scripts and other logic together.</p>
 </div>
                 
               

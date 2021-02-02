@@ -180,7 +180,7 @@ Branch data into 3 different output stream ports
 ```tremor
 select event from in into out/a;
 select event from in into out/b;
-select event from in inout out/c;
+select event from in into out/c;
 ```
 
 Branch data into 3 different intermediate streams
@@ -206,7 +206,7 @@ Combine 3 data streams into a single output stream
 
 select event from a into out;
 select event from b into out;
-select event from c inout out;
+select event from c into out;
 ```
 
 Combine 3 data stream ports from 1 or many streams into a single output stream
@@ -216,7 +216,7 @@ Combine 3 data stream ports from 1 or many streams into a single output stream
 
 select event from a/1 into out;
 select event from a/2 into out;
-select event from b inout out;
+select event from b into out;
 ```
 
 ## Aggregations

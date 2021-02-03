@@ -29,17 +29,17 @@ select {
   "measurement":  event.measurement,
   "tags":  event.tags,
   "fields":  {
-    "count_{event.class}":  event.stats.count,
-    "min_{event.class}":  event.stats.min,
-    "max_{event.class}":  event.stats.max,
-    "mean_{event.class}":  event.stats.mean,
-    "stdev_{event.class}":  event.stats.stdev,
-    "var_{event.class}":  event.stats.var,
-    "p42_{event.class}":  event.stats.percentiles["0.42"],
-    "p50_{event.class}":  event.stats.percentiles["0.5"],
-    "p90_{event.class}":  event.stats.percentiles["0.9"],
-    "p99_{event.class}":  event.stats.percentiles["0.99"],
-    "p99.9_{event.class}":  event.stats.percentiles["0.999"]
+    "count_#{event.class}":  event.stats.count,
+    "min_#{event.class}":  event.stats.min,
+    "max_#{event.class}":  event.stats.max,
+    "mean_#{event.class}":  event.stats.mean,
+    "stdev_#{event.class}":  event.stats.stdev,
+    "var_#{event.class}":  event.stats.var,
+    "p42_#{event.class}":  event.stats.percentiles["0.42"],
+    "p50_#{event.class}":  event.stats.percentiles["0.5"],
+    "p90_#{event.class}":  event.stats.percentiles["0.9"],
+    "p99_#{event.class}":  event.stats.percentiles["0.99"],
+    "p99.9_#{event.class}":  event.stats.percentiles["0.999"]
   }
 }
 from normalize

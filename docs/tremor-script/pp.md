@@ -47,7 +47,7 @@ const badger = "boop";
 end;
 #!line 41 1 0 0 script.tremor
 
-let c = "{snot::snot}{badger::badger}";
+let c = "#{snot::snot}#{badger::badger}";
 
 emit c
 ```

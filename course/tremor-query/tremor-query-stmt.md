@@ -293,7 +293,7 @@ select {
   "received": event,
   "extracting": event.record.array[10],
   "computing": for event.record.array of
-     case (i, e) => { "{i}", e }
+     case (i, e) => { "#{i}": e }
   end
 } into out;
 ```

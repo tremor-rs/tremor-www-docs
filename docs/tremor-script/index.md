@@ -116,8 +116,11 @@ The language does not support literal character or Unicode code-points at this t
 For strings tremor allows string interpolation, this means embedding code directly into strings to create strings out of them. This is a convenience as an alternative of using the string::format function.
 
 ```tremor
-"I am a { "string with {1} interpolation." }"
+"I am a #{ "string with #{1} interpolation." }"
 ```
+
+A hash sign followed by a curly bracket needs to be escaped `\#{` hash signs themselves do not need to be escaped.
+
 
 ##### HereDocs
 
@@ -129,11 +132,11 @@ To deal with pre formatted strings in tremor script we allow for **heredocs** th
    a
     long
     multi-line
-    string with { "{1} interpolation" }
+    string with #{ "#{1} interpolation" }
 """
 ```
 
-Since Tremor 0.9 Heredocs also support [String Interpolation](#string-interpolation). Literal curly braces thus need to be escaped as `{{` or `\{`.
+Since Tremor 0.9 Heredocs also support [String Interpolation](#string-interpolation). A hash sign followed by a curly bracket needs to be escaped `\#{` hash signs themselves do not need to be escaped.
 
 #### Arrays
 

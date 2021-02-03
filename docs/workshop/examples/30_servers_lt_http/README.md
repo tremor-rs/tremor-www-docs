@@ -81,10 +81,10 @@ Example section of the `process` script here, demonstrating how the index page f
       # serve html!
       let $response.headers["content-type"] = "text/html",
       emit """
-      <h1>Hello, {name}!</h1>
+      <h1>Hello, #{name}!</h1>
       <p>Your request:</p>
       <pre>
-        {json::encode_pretty(request_data)}
+        #{json::encode_pretty(request_data)}
       </pre>
       """
 ```

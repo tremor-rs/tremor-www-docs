@@ -9,7 +9,7 @@ script
     default =>
       # can send this to a different port than the default err port too
       emit {
-        "error": "Unsupported url path: {$request.url.path}",
+        "error": "Unsupported url path: #{$request.url.path}",
         "event": event
       } => "err"
   end;

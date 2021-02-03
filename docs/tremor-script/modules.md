@@ -43,7 +43,7 @@ The modules can be used using the `use` clause as follows:
 use foo::bar::snot; # snot is a ref to 'foo/bar/snot.tremor'
 use foo::baz::badger; # badger is a ref to 'foo/bar/badger.tremor'
 
-"{snot::snot}{badger::badger}"; # emits an interpolated string
+"#{snot::snot}#{badger::badger}"; # emits an interpolated string
 ```
 
 The same modular hierarchy can be defined as nested module declarations as follows:
@@ -61,7 +61,7 @@ end;
 let snot = foo::bar::snot;
 let badger = foo::baz::badger;
 
-"{snot}-{badger}";
+"#{snot}-#{badger}";
 ```
 
 Modules can be loaded via the `use` clause which in turn loads a module from the physical file system via the module path.
@@ -73,7 +73,7 @@ Where there are existing references a module can be aliased to avoid clashes in 
 ```tremor
 use foo::bar as fleek;
 
-"Hello {fleek::snot}"
+"Hello #{fleek::snot}"
 ```
 
 It is to be noted that inclusion via use will prevent circular inclusion as in file `a.tremor` can use `b.tremor` but beyond

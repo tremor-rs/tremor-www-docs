@@ -664,7 +664,8 @@ select event from process into out;%
 - [CNCF Landscape](https://landscape.cncf.io/selected=tremor)
 - [Github](https://github.com/tremor-rs/tremor-runtime)
 - [Twitter](https://twitter.com/tremordebs)
-- [Slack](https://cloud-native.slack.com/messages/tremor)
+- [Announcements](https://cloud-native.slack.com/messages/tremor)
+- [Community Chat](https://bit.ly/tremor-discord)
 
 >>>
 

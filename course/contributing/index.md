@@ -57,7 +57,7 @@ repository. For significant contributions, we follow an open RFC Process.
 
 1. Read the [RFC Process](https://github.com/tremor-rs/tremor-rfcs/blob/main/README.md)
 2. Familarise with [existing RFCs](https://github.com/tremor-rs/tremor-rfcs)
-3. Talk to the maintainers via [Tremor slack](https://cloud-native.slack.com/archives/C01AWNYNM36)
+3. Talk to the maintainers via [Tremor discord](https://bit.ly/tremor-discord)
 
 ---
 

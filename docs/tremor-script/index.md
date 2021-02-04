@@ -189,11 +189,20 @@ Parts of each field are: `<value>:<size>/<type>` where both `size` and `type` ar
 The types currently supported are:
 
 * `binary` - this can handle both binaries and strings, `size` here refers to the number of bytes
-* `integer` - this can represent integers, `size` here means size in bits. In addition the type can be specified with `big` and `little` for indianness and `singed` and `unsigned` for singedness.
+* `integer` - this can represent integers, `size` here means size in bits. In addition the type can be prefixed with `big` and `little` for indianness and `signed` and `unsigned` for signedness.
+
+Some examples would be:
+
+* `<<1:1, 42:7>>`
+* `<<(1 + 1)/unsigned-big-integer>>`
+* `<<1:4, "badger"/binary, -2:4/signed-little-integer>>`
+
+
+We could construct a TCP package this way:
 
 ```tremor
 # constructing a TCP package
-# using made up, non correct values
+# using made up, non-correct values
 
 let event = {
   "src": {"port": 1234},
@@ -220,24 +229,25 @@ let event = {
 
 ```
 
+
 #### Operators
 
 List of binary and unary operators in `tremor-script`, ordered by precedence (from low to high):
 
-| Symbol       | Name                                                  | Example                                                 |
-| ------------ | ----------------------------------------------------- | ------------------------------------------------------- |
-| or           | Logical OR                                            | `true or false`                                         |
-| and          | Logical AND                                           | `true and false`                                        |
-| \|           | Bitwise OR                                            | _Bitwise OR has not been implemented yet_               |
-| ^            | Bitwise XOR                                           | `42 ^ 42, true ^ true`                                  |
-| &            | Bitwise AND                                           | `42 & 0, true & false`                                  |
-| ==, !=       | Equality, Inequality                                  | `"snot" != "badger"`                                    |
-| <, <=, >, >= | Comparison Operators                                  | `42 > 0`                                                |
-| <<, >>, >>>  | Bitwise shift -- Left, Right(signed), Right(unsigned) | `42 >> 2`                                               |
-| +, -         | Addition, Subtraction                                 | `42 + 0`                                                |
-| \*, /, %     | Multiplication, Division, Modulus                     | `42 * 1`                                                |
-| +, -         | Unary Plus, Unary Minus                               | `+42`                                                   |
-| not , !      | Unary Logical NOT, Unary Bitwise NOT                  | `not false`, _Bitwise NOT has not been implemented yet_ |
+| Symbol       | Name                                                  | Example                                                 | Types                          |
+| ------------ | ----------------------------------------------------- | ------------------------------------------------------- |------------------------------- |
+| or           | Logical OR                                            | `true or false`                                         | bool                           |
+| and          | Logical AND                                           | `true and false`                                        | bool                           |
+| \|           | Bitwise OR                                            | _Bitwise OR has not been implemented yet_               | -                              |
+| ^            | Bitwise XOR                                           | `42 ^ 42, true ^ true`                                  | integer, bool                  |
+| &            | Bitwise AND                                           | `42 & 0, true & false`                                  | integer, bool                  |
+| ==, !=       | Equality, Inequality                                  | `"snot" != "badger"`                                    | all                            |
+| <, <=, >, >= | Comparison Operators                                  | `42 > 0`                                                | integer, float, string, binary |
+| <<, >>, >>>  | Bitwise shift -- Left, Right(signed), Right(unsigned) | `42 >> 2`                                               | integer                        |
+| +, -         | Addition, Subtraction                                 | `42 + 0`                                                | integer, float, string         |
+| \*, /, %     | Multiplication, Division, Modulus                     | `42 * 1`                                                | integer, float (no modulo)     |
+| +, -         | Unary Plus, Unary Minus                               | `+42`                                                   | integer, float, string         |
+| not , !      | Unary Logical NOT, Unary Bitwise NOT                  | `not false`, _Bitwise NOT has not been implemented yet_ | bool                           |
 
 ### Paths
 

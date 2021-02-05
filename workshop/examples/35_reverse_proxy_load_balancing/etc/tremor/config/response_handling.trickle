@@ -3,7 +3,7 @@ script
     use std::array;
     use tremor::system;
     # see: https://tools.ietf.org/html/rfc7230#section-5.7.1
-    let via_value = "1.1 {system::hostname()}/tremor";
+    let via_value = "1.1 #{system::hostname()}/tremor";
     match $response.headers of
         case %{ present via } =>
             let $response.headers.via = array::push($response.headers.via, via_value)

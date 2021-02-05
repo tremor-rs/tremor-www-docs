@@ -46,7 +46,7 @@ $ tremor test unit tests
 use std::test;
 
 fn hello(world) with
-  "{world}"
+  "#{world}"
 end
 
 test::suite({
@@ -133,7 +133,7 @@ $ vim lib/myproject/mylib.tremor
 
 ## A simple `tremor-script` function
 fn hello(world) with
-  "{world}"
+  "#{world}"
 end
 ```
 

@@ -1,4 +1,8 @@
 /**
+ * Color: #4D88FF
+ */
+
+/**
  * Literal documentation support
  */
 
@@ -17,7 +21,7 @@ DocCommentLine ::=
     '##' ( [^\n] )* '\n'
 
 /**
-  * Tremor Script Language v0.8
+  * Tremor Script Language v0.10
   */
 
 Script ::=
@@ -64,7 +68,16 @@ SimpleExpr ::= Literal | '(' Expr ')' | Path | Record | Match | Patch |
     ModuleExpr | Drop | Emit
 
 Literal ::=
-    'null' | Bool | INTEGER | FLOAT | String | Array
+    'null' | Bool | INTEGER | FLOAT | String | Array | Binary
+
+
+Binary ::= '<<' BinaryFields '>>'  | '<<' '>>' 
+
+BinaryFields ::= BinaryFields ',' BinaryFields | BinaryField 
+
+BinaryField ::= SimpleExpr | SimpleExpr ':' INTEGER | SimpleExpr '/' BinaryType | SimpleExpr ':' INTEGER '/' BinaryType
+
+BinaryType ::= Ident | Ident '-' Ident | Ident '-' Ident '-' Ident
 
 Record ::= '{' Fields '}'
 

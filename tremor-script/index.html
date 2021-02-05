@@ -12,7 +12,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -608,6 +608,13 @@
           <li class="md-nav__item">
   <a href="#records" class="md-nav__link">
     Records
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binary" class="md-nav__link">
+    Binary
   </a>
   
 </li>
@@ -2257,6 +2264,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#binary" class="md-nav__link">
+    Binary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#operators" class="md-nav__link">
     Operators
   </a>
@@ -2483,9 +2497,10 @@ scripts to simplify fixing such scripts.</p>
 <div class="highlight"><pre><span></span><code><span class="s">&quot;I am a string&quot;</span><span class="w"></span>
 </code></pre></div>
 <h5 id="string-interpolation">String Interpolation<a class="headerlink" href="#string-interpolation" title="Permanent link">&para;</a></h5>
-<p>For strings tremor allows string interpolation, this means embedding code directly into strings to create strings out of them. This is a convenience as an alternative of using the string::format function.</p>
-<div class="highlight"><pre><span></span><code><span class="s">&quot;I am a { &quot;</span><span class="nx">string</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="err">{</span><span class="mi">1</span><span class="err">}</span><span class="w"> </span><span class="nx">interpolation</span><span class="err">.</span><span class="s">&quot; }&quot;</span><span class="w"></span>
+<p>For strings tremor allows string interpolation, this means embedding code directly into strings to create strings out of them.</p>
+<div class="highlight"><pre><span></span><code><span class="s">&quot;I am a #{ &quot;</span><span class="nx">string</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="c1">#{1} interpolation.&quot; }&quot;</span>
 </code></pre></div>
+<p>A hash sign followed by a curly bracket needs to be escaped <code>\#{</code> hash signs themselves do not need to be escaped.</p>
 <h5 id="heredocs">HereDocs<a class="headerlink" href="#heredocs" title="Permanent link">&para;</a></h5>
 <p>To deal with pre formatted strings in tremor script we allow for <strong>heredocs</strong> they are started by using triple quotes <code>"""</code> that terminate the line (aka <code>"""bla</code> isn't legal). Heredocs do not truncate leading indentation, only the first leading linebreak after the leading triple-quote <code>"""</code> stripped.</p>
 <div class="highlight"><pre><span></span><code><span class="s">&quot;&quot;&quot;</span>
@@ -2493,10 +2508,10 @@ scripts to simplify fixing such scripts.</p>
 <span class="s">   a</span>
 <span class="s">    long</span>
 <span class="s">    multi-line</span>
-<span class="s">    string with { &quot;</span><span class="err">{</span><span class="mi">1</span><span class="err">}</span><span class="w"> </span><span class="nx">interpolation</span><span class="s">&quot; }</span>
-<span class="s">&quot;&quot;&quot;</span><span class="w"></span>
+<span class="s">    string with #{ &quot;</span><span class="c1">#{1} interpolation&quot; }</span>
+<span class="s">&quot;&quot;&quot;</span>
 </code></pre></div>
-<p>Since Tremor 0.9 Heredocs also support <a href="#string-interpolation">String Interpolation</a>. Literal curly braces thus need to be escaped as <code>{{</code> or <code>\{</code>.</p>
+<p>Since Tremor 0.9 Heredocs also support <a href="#string-interpolation">String Interpolation</a>. A hash sign followed by a curly bracket needs to be escaped <code>\#{</code> hash signs themselves do not need to be escaped.</p>
 <h4 id="arrays">Arrays<a class="headerlink" href="#arrays" title="Permanent link">&para;</a></h4>
 <p>Array grammar:</p>
 <blockquote>
@@ -2521,6 +2536,59 @@ scripts to simplify fixing such scripts.</p>
 <span class="w">  </span><span class="s">&quot;field3&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="s">&quot;field4&quot;</span><span class="err">:</span><span class="w"> </span><span class="s">&quot;field5&quot;</span><span class="w"> </span><span class="err">}</span><span class="w"></span>
 <span class="err">}</span><span class="w"></span>
 </code></pre></div>
+<h4 id="binary">Binary<a class="headerlink" href="#binary" title="Permanent link">&para;</a></h4>
+<p>Binaries are based on the <a href="https://erlang.org/doc/programming_examples/bit_syntax.html">Erlang bit syntax</a>.</p>
+<p>Binary grammar:</p>
+<blockquote>
+<p><img alt="record grammar" src="grammar/diagram/Binary.png" /></p>
+</blockquote>
+<p>Binaryfields grammar:</p>
+<blockquote>
+<p><img alt="fields grammar" src="grammar/diagram/BinaryFields.png" /></p>
+</blockquote>
+<p>Binaryfield grammar:</p>
+<blockquote>
+<p><img alt="field grammar" src="grammar/diagram/BinaryField.png" /></p>
+</blockquote>
+<p>Parts of each field are: <code>&lt;value&gt;:&lt;size&gt;/&lt;type&gt;</code> where both <code>size</code> and <code>type</code> are optional.</p>
+<p>The types currently supported are:</p>
+<ul>
+<li><code>binary</code> - this can handle both binaries and strings, <code>size</code> here refers to the number of bytes</li>
+<li><code>integer</code> - this can represent integers, <code>size</code> here means size in bits. In addition the type can be prefixed with <code>big</code> and <code>little</code> for indianness and <code>signed</code> and <code>unsigned</code> for signedness.</li>
+</ul>
+<p>Some examples would be:</p>
+<ul>
+<li><code>&lt;&lt;1:1, 42:7&gt;&gt;</code></li>
+<li><code>&lt;&lt;(1 + 1)/unsigned-big-integer&gt;&gt;</code></li>
+<li><code>&lt;&lt;1:4, "badger"/binary, -2:4/signed-little-integer&gt;&gt;</code></li>
+</ul>
+<p>We could construct a TCP package this way:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># constructing a TCP package</span>
+<span class="c1"># using made up, non-correct values</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;src&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">{</span><span class="s">&quot;port&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">1234</span><span class="err">},</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;dst&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">{</span><span class="s">&quot;port&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">2345</span><span class="err">},</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;seq&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;ack&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">4567</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;offset&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;res&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;flags&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">3</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;win&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">4</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;checksum&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">5</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;urgent&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">6</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;data&quot;</span><span class="err">:</span><span class="w"> </span><span class="s">&quot;snot badger!&quot;</span><span class="w"></span>
+<span class="err">};</span><span class="w"></span>
+
+<span class="err">&lt;&lt;</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">src</span><span class="err">.</span><span class="nx">port</span><span class="err">:</span><span class="mi">16</span><span class="err">,</span><span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">dst</span><span class="err">.</span><span class="nx">port</span><span class="err">:</span><span class="mi">16</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">seq</span><span class="err">:</span><span class="mi">32</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">ack</span><span class="err">:</span><span class="mi">32</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">offset</span><span class="err">:</span><span class="mi">4</span><span class="err">,</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">res</span><span class="err">:</span><span class="mi">4</span><span class="err">,</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">flags</span><span class="err">:</span><span class="mi">8</span><span class="err">,</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">win</span><span class="err">:</span><span class="mi">16</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">checksum</span><span class="err">:</span><span class="mi">16</span><span class="err">,</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">urgent</span><span class="err">:</span><span class="mi">16</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="err">.</span><span class="nx">data</span><span class="err">/</span><span class="nx">binary</span><span class="w"></span>
+<span class="err">&gt;&gt;</span><span class="w"></span>
+</code></pre></div>
 <h4 id="operators">Operators<a class="headerlink" href="#operators" title="Permanent link">&para;</a></h4>
 <p>List of binary and unary operators in <code>tremor-script</code>, ordered by precedence (from low to high):</p>
 <table>
@@ -2529,6 +2597,7 @@ scripts to simplify fixing such scripts.</p>
 <th>Symbol</th>
 <th>Name</th>
 <th>Example</th>
+<th>Types</th>
 </tr>
 </thead>
 <tbody>
@@ -2536,61 +2605,73 @@ scripts to simplify fixing such scripts.</p>
 <td>or</td>
 <td>Logical OR</td>
 <td><code>true or false</code></td>
+<td>bool</td>
 </tr>
 <tr>
 <td>and</td>
 <td>Logical AND</td>
 <td><code>true and false</code></td>
+<td>bool</td>
 </tr>
 <tr>
 <td>|</td>
 <td>Bitwise OR</td>
 <td><em>Bitwise OR has not been implemented yet</em></td>
+<td>-</td>
 </tr>
 <tr>
 <td>^</td>
 <td>Bitwise XOR</td>
 <td><code>42 ^ 42, true ^ true</code></td>
+<td>integer, bool</td>
 </tr>
 <tr>
 <td>&amp;</td>
 <td>Bitwise AND</td>
 <td><code>42 &amp; 0, true &amp; false</code></td>
+<td>integer, bool</td>
 </tr>
 <tr>
 <td>==, !=</td>
 <td>Equality, Inequality</td>
 <td><code>"snot" != "badger"</code></td>
+<td>all</td>
 </tr>
 <tr>
 <td>&lt;, &lt;=, &gt;, &gt;=</td>
 <td>Comparison Operators</td>
 <td><code>42 &gt; 0</code></td>
+<td>integer, float, string, binary</td>
 </tr>
 <tr>
 <td>&lt;&lt;, &gt;&gt;, &gt;&gt;&gt;</td>
 <td>Bitwise shift -- Left, Right(signed), Right(unsigned)</td>
 <td><code>42 &gt;&gt; 2</code></td>
+<td>integer</td>
 </tr>
 <tr>
 <td>+, -</td>
 <td>Addition, Subtraction</td>
 <td><code>42 + 0</code></td>
+<td>integer, float, string</td>
 </tr>
 <tr>
 <td>*, /, %</td>
 <td>Multiplication, Division, Modulus</td>
 <td><code>42 * 1</code></td>
+<td>integer, float (no modulo)</td>
 </tr>
 <tr>
 <td>+, -</td>
 <td>Unary Plus, Unary Minus</td>
 <td><code>+42</code></td>
+<td>integer, float, string</td>
 </tr>
 <tr>
 <td>not , !</td>
 <td>Unary Logical NOT, Unary Bitwise NOT</td>
 <td><code>not false</code>, <em>Bitwise NOT has not been implemented yet</em></td>
+<td>bool</td>
 </tr>
 </tbody>
 </table>
@@ -3200,8 +3281,8 @@ scripts to simplify fixing such scripts.</p>
       
     </div>
     
-      <script src="../assets/javascripts/vendor.53cc9318.min.js"></script>
-      <script src="../assets/javascripts/bundle.e9c9f54f.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

@@ -12,7 +12,7 @@
       
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -1838,7 +1838,7 @@
 <p>When used with <code>~</code>, the predicate will pass if the input is a valid JSON</p>
 <h2 id="extraction">Extraction<a class="headerlink" href="#extraction" title="Permanent link">&para;</a></h2>
 <p>If the predicate passes, the extractor will return the JSON representation of the target.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">match</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="s">&quot;{ foo:bar, snot:badger }&quot;</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">match</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="s">&quot;{ </span><span class="se">\&quot;</span><span class="s">foo</span><span class="se">\&quot;</span><span class="s">:</span><span class="se">\&quot;</span><span class="s">bar</span><span class="se">\&quot;</span><span class="s">, &quot;</span><span class="err">\</span><span class="nx">snot</span><span class="s">&quot;\:&quot;</span><span class="err">\</span><span class="nx">badger</span><span class="s">&quot;\ }&quot;</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
 <span class="w">   </span><span class="kd">case</span><span class="w"> </span><span class="nx">foo</span><span class="w">  </span><span class="err">=</span><span class="w"> </span><span class="err">%{</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="err">~=</span><span class="w"> </span><span class="nx">json</span><span class="err">||</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">foo</span><span class="w"></span>
 <span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;ko&quot;</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
@@ -1909,8 +1909,8 @@
       
     </div>
     
-      <script src="../../../assets/javascripts/vendor.53cc9318.min.js"></script>
-      <script src="../../../assets/javascripts/bundle.e9c9f54f.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

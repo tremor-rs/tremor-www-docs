@@ -11,13 +11,13 @@
       <style type="text/css">
     ::-moz-selection
     {
-      color: #F0FAFF;
-      background: #000A0F;
+      color: #F0F5FF;
+      background: #00050F;
     }
     ::selection
     {
-      color: #F0FAFF;
-      background: #000A0F;
+      color: #F0F5FF;
+      background: #00050F;
     }
     .ebnf a, .grammar a
     {
@@ -25,50 +25,50 @@
     }
     .ebnf a:hover, .grammar a:hover
     {
-      color: #000305;
+      color: #000205;
       text-decoration: underline;
     }
     .signature
     {
-      color: #005580;
+      color: #002B80;
       font-size: 11px;
       text-align: right;
     }
     body
     {
       font: normal 12px Verdana, sans-serif;
-      color: #000A0F;
-      background: #F0FAFF;
+      color: #00050F;
+      background: #F0F5FF;
     }
     a:link, a:visited
     {
-      color: #000A0F;
+      color: #00050F;
     }
     a:link.signature, a:visited.signature
     {
-      color: #005580;
+      color: #002B80;
     }
     a.button, #tabs li a
     {
       padding: 0.25em 0.5em;
-      border: 1px solid #005580;
-      background: #C6E2F1;
-      color: #005580;
+      border: 1px solid #002B80;
+      background: #C6D4F1;
+      color: #002B80;
       text-decoration: none;
       font-weight: bold;
     }
     a.button:hover, #tabs li a:hover
     {
-      color: #000305;
-      background: #D1F0FF;
-      border-color: #000305;
+      color: #000205;
+      background: #D1E0FF;
+      border-color: #000205;
     }
     #tabs
     {
       padding: 3px 10px;
       margin-left: 0;
       margin-top: 58px;
-      border-bottom: 1px solid #000A0F;
+      border-bottom: 1px solid #00050F;
     }
     #tabs li
     {
@@ -78,14 +78,14 @@
     }
     #tabs li a
     {
-      border-bottom: 1px solid #000A0F;
+      border-bottom: 1px solid #00050F;
     }
     #tabs li a.active
     {
-      color: #000A0F;
-      background: #F0FAFF;
-      border-color: #000A0F;
-      border-bottom: 1px solid #F0FAFF;
+      color: #00050F;
+      background: #F0F5FF;
+      border-color: #00050F;
+      border-bottom: 1px solid #F0F5FF;
       outline: none;
     }
     #divs div
@@ -99,9 +99,9 @@
     }
     #text
     {
-      border-color: #005580;
-      background: #FAFDFF;
-      color: #000305;
+      border-color: #002B80;
+      background: #FAFCFF;
+      color: #000205;
     }
     .small
     {
@@ -126,18 +126,18 @@
     div.download
     {
       display: none;
-      background: #F0FAFF;
+      background: #F0F5FF;
       position: absolute;
       right: 34px;
       top: 94px;
       padding: 10px;
-      border: 1px dotted #000A0F;
+      border: 1px dotted #00050F;
     }
     #divs div.ebnf, .ebnf code
     {
       display: block;
       padding: 10px;
-      background: #D1F0FF;
+      background: #D1E0FF;
       width: 992px;
     }
     #divs div.grammar
@@ -146,7 +146,7 @@
       padding-left: 16px;
       padding-top: 2px;
       padding-bottom: 2px;
-      background: #D1F0FF;
+      background: #D1E0FF;
     }
     pre
     {
@@ -171,14 +171,14 @@
     }
     table.palette
     {
-      border-top: 1px solid #000305;
-      border-right: 1px solid #000305;
+      border-top: 1px solid #000205;
+      border-right: 1px solid #000205;
       margin-bottom: 4px
     }
     td.palette
     {
-      border-bottom: 1px solid #000305;
-      border-left: 1px solid #000305;
+      border-bottom: 1px solid #000205;
+      border-left: 1px solid #000205;
     }
     a.palette
     {
@@ -196,7 +196,7 @@
   </style>
    </head>
    
-   <body>
+   <body data-new-gr-c-s-check-loaded="8.868.0" data-gr-ext-installed="">
       
       <p style="font-size: 14px; font-weight:bold"><a name="ModCommentLine">ModCommentLine:</a></p><img border="0" src="diagram/ModCommentLine.png" height="69" width="329"><p>
          
@@ -542,6 +542,8 @@
          
          <ul>
             
+            <li><a href="#BinaryField" title="BinaryField">BinaryField</a></li>
+            
             <li><a href="#Const" title="Const">Const</a></li>
             
             <li><a href="#Let" title="Let">Let</a></li>
@@ -550,7 +552,7 @@
             
             <li><a href="#RecordPatternFields" title="RecordPatternFields">RecordPatternFields</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Literal">Literal:</a></p><img border="0" src="diagram/Literal.png" height="257" width="173" usemap="#Literal.map"><map name="Literal.map"><area shape="rect" coords="49,45,97,77" href="#Bool" title="Bool"><area shape="rect" coords="49,89,123,121" href="#INTEGER" title="INTEGER"><area shape="rect" coords="49,133,107,165" href="#FLOAT" title="FLOAT"><area shape="rect" coords="49,177,107,209" href="#String" title="String"><area shape="rect" coords="49,221,103,253" href="#Array" title="Array"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Literal">Literal:</a></p><img border="0" src="diagram/Literal.png" height="301" width="173" usemap="#Literal.map"><map name="Literal.map"><area shape="rect" coords="49,45,97,77" href="#Bool" title="Bool"><area shape="rect" coords="49,89,123,121" href="#INTEGER" title="INTEGER"><area shape="rect" coords="49,133,107,165" href="#FLOAT" title="FLOAT"><area shape="rect" coords="49,177,107,209" href="#String" title="String"><area shape="rect" coords="49,221,103,253" href="#Array" title="Array"><area shape="rect" coords="49,265,109,297" href="#Binary" title="Binary"></map><p>
          
          <div class="ebnf"><code>
                
@@ -564,7 +566,9 @@
                
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#String" title="String">String</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Array" title="Array">Array</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Array" title="Array">Array</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Binary" title="Binary">Binary</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -572,6 +576,68 @@
          <ul>
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Binary">Binary:</a></p><img border="0" src="diagram/Binary.png" height="69" width="315" usemap="#Binary.map"><map name="Binary.map"><area shape="rect" coords="109,33,205,65" href="#BinaryFields" title="BinaryFields"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Binary" title="Binary">Binary</a>&nbsp;&nbsp;&nbsp;::= '&lt;&lt;' <a href="#BinaryFields" title="BinaryFields">BinaryFields</a>? '&gt;&gt;'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Literal" title="Literal">Literal</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinaryFields">BinaryFields:</a></p><img border="0" src="diagram/BinaryFields.png" height="81" width="355" usemap="#BinaryFields.map"><map name="BinaryFields.map"><area shape="rect" coords="49,1,145,33" href="#BinaryFields" title="BinaryFields"><area shape="rect" coords="209,1,305,33" href="#BinaryFields" title="BinaryFields"><area shape="rect" coords="49,45,137,77" href="#BinaryField" title="BinaryField"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#BinaryFields" title="BinaryFields">BinaryFields</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#BinaryFields" title="BinaryFields">BinaryFields</a> ',' <a href="#BinaryFields" title="BinaryFields">BinaryFields</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#BinaryField" title="BinaryField">BinaryField</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Binary" title="Binary">Binary</a></li>
+            
+            <li><a href="#BinaryFields" title="BinaryFields">BinaryFields</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinaryField">BinaryField:</a></p><img border="0" src="diagram/BinaryField.png" height="69" width="525" usemap="#BinaryField.map"><map name="BinaryField.map"><area shape="rect" coords="29,1,119,33" href="#SimpleExpr" title="SimpleExpr"><area shape="rect" coords="203,33,277,65" href="#INTEGER" title="INTEGER"><area shape="rect" coords="385,33,475,65" href="#BinaryType" title="BinaryType"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#BinaryField" title="BinaryField">BinaryField</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a> ( ':' <a href="#INTEGER" title="INTEGER">INTEGER</a> )? ( '/' <a href="#BinaryType" title="BinaryType">BinaryType</a> )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#BinaryFields" title="BinaryFields">BinaryFields</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinaryType">BinaryType:</a></p><img border="0" src="diagram/BinaryType.png" height="101" width="433" usemap="#BinaryType.map"><map name="BinaryType.map"><area shape="rect" coords="29,1,83,33" href="#Ident" title="Ident"><area shape="rect" coords="169,33,223,65" href="#Ident" title="Ident"><area shape="rect" coords="309,65,363,97" href="#Ident" title="Ident"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#BinaryType" title="BinaryType">BinaryType</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Ident" title="Ident">Ident</a> ( '-' <a href="#Ident" title="Ident">Ident</a> ( '-' <a href="#Ident" title="Ident">Ident</a> )? )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#BinaryField" title="BinaryField">BinaryField</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="Record">Record:</a></p><img border="0" src="diagram/Record.png" height="81" width="245" usemap="#Record.map"><map name="Record.map"><area shape="rect" coords="97,45,147,77" href="#Field" title="Field"></map><p>
          
@@ -1367,6 +1433,8 @@
          
          <ul>
             
+            <li><a href="#BinaryField" title="BinaryField">BinaryField</a></li>
+            
             <li><a href="#Literal" title="Literal">Literal</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="DECIMAL">DECIMAL:</a></p><img border="0" src="diagram/DECIMAL.png" height="71" width="327"><p>
@@ -1406,7 +1474,7 @@
       
       <p>
          
-         <table border="0" class="signature">
+         <table class="signature" border="0">
             
             <tr>
                

@@ -26,7 +26,7 @@ true false   # boolean
 { "k": "v" } # record-like
 
 """
-Strings and heredocs support {foo} interpolation
+Strings and heredocs support #{foo} interpolation
 """
 ```
 

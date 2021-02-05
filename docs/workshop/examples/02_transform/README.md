@@ -12,7 +12,7 @@ All other configuration is the same as per the passthrough example, and is elide
 
 ```trickle
 select {                                    # 1. We can inline new json-like document structures
-    "hello": "hi there ${event.hello}",      # 2. Tremor supports flexible string interpolation useful for templating
+    "hello": "hi there #{event.hello}",      # 2. Tremor supports flexible string interpolation useful for templating
     "world": event.hello
 } from in where event.selected into out
 ```

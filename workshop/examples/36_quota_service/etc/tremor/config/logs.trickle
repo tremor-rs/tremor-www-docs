@@ -72,8 +72,8 @@ script
   # (eg: when set via the quota service)
   # TODO make bucketing operator update rate value on each event
   let $dimensions = match present $dimensions of
-    case true => "#{$dimensions}_#{$rate}"
-    default => "_#{$rate}"
+    case true => "{$dimensions}_{$rate}"
+    default => "_{$rate}"
   end;
 
   # --------------------------------------------------------------------------

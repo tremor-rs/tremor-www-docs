@@ -54,8 +54,8 @@ Array comprehension returning an array of index/value records
 ### `for` example - guarded
 ```tremor
 for [ "foo", "bar" ] of
-  case (index, element) when index % 2 == 0 => { "even #{index}": element },
-  case (index, element) => { "odd #{index}": element },
+  case (index, element) when index % 2 == 0 => { "even {index}": element },
+  case (index, element) => { "odd {index}": element },
 end
 ```
 

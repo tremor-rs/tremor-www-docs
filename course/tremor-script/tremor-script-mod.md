@@ -79,7 +79,7 @@ end;
 let snot = foo::bar::snot;
 let badger = foo::baz::badger;
 
-"#{snot}-#{badger}";
+"{snot}-{badger}";
 ```
 
 >>>
@@ -96,7 +96,7 @@ use foo as tremolo; # alias renaming
 let snot = bar::snot;
 let badger = tremolo::baz::badger;
 
-"#{snot}-#{badger}";
+"{snot}-{badger}";
 ```
 
 <div style='font-size: 20px'>

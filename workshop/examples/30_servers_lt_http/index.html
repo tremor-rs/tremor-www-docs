@@ -2049,10 +2049,10 @@
       # serve html!
       let $response.headers[&quot;content-type&quot;] = &quot;text/html&quot;,
       emit &quot;&quot;&quot;
-      &lt;h1&gt;Hello, #{name}!&lt;/h1&gt;
+      &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
       &lt;p&gt;Your request:&lt;/p&gt;
       &lt;pre&gt;
-        #{json::encode_pretty(request_data)}
+        {json::encode_pretty(request_data)}
       &lt;/pre&gt;
       &quot;&quot;&quot;
 </code></pre></div>

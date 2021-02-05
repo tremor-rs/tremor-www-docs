@@ -110,7 +110,7 @@ script
     default =>
       let $response.status = 404,
       emit {
-        "error": "Path '#{$request.url.path}' not found for method #{$request.method}",
+        "error": "Path '{$request.url.path}' not found for method {$request.method}",
         "event": event,
       } => "app_error"
   end;

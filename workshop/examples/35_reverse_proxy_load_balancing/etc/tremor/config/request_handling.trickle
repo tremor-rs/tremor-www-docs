@@ -4,7 +4,7 @@ script
       case %{ present host } => $request.headers.host[0]
       default => "UNDEFINED"
     end;
-    let forwarded = "by=localhost:65535;host=#{host};proto=http";
+    let forwarded = "by=localhost:65535;host={host};proto=http";
     let $request.headers["Forwarded"] = forwarded;
 
     # fiddle with the event

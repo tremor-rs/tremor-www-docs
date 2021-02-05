@@ -39,7 +39,7 @@ script
 
   let request_path_parts = match $request.url of
     case r = %{path ~= dissect|/%{base}/%{rest}|} =>
-      [ "/#{r.path.base}", r.path.rest ]
+      [ "/{r.path.base}", r.path.rest ]
     default =>
       [ $request.url.path ]
   end;
@@ -80,7 +80,7 @@ script
       let $response.status = 202,
       # TODO add common event structure and validate
       # also check if it's one of the registered services
-      emit event => "#{service_id}"
+      emit event => "{service_id}"
 
     case ["HEAD", "/ping"] =>
       emit ""
@@ -107,7 +107,7 @@ script
     default =>
       let $response.status = 404,
       emit {
-        "error": "Path '#{$request.url.path}' not found for method #{$request.method}",
+        "error": "Path '{$request.url.path}' not found for method {$request.method}",
         "event": event,
       } => "app_error"
   end;

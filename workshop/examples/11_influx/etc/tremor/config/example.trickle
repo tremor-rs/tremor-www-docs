@@ -52,16 +52,16 @@ select {
   "measurement":  event.measurement,
   "tags":  event.tags,
   "fields":  {
-    "count_#{event.field}":  event.stats.count,
-    "min_#{event.field}":  event.stats.min,
-    "max_#{event.field}":  event.stats.max,
-    "mean_#{event.field}":  event.stats.mean,
-    "stdev_#{event.field}":  event.stats.stdev,
-    "var_#{event.field}":  event.stats.var,
-    "p50_#{event.field}":  event.stats.percentiles["0.5"],
-    "p90_#{event.field}":  event.stats.percentiles["0.9"],
-    "p99_#{event.field}":  event.stats.percentiles["0.99"],
-    "p99.9_#{event.field}":  event.stats.percentiles["0.999"]
+    "count_{event.field}":  event.stats.count,
+    "min_{event.field}":  event.stats.min,
+    "max_{event.field}":  event.stats.max,
+    "mean_{event.field}":  event.stats.mean,
+    "stdev_{event.field}":  event.stats.stdev,
+    "var_{event.field}":  event.stats.var,
+    "p50_{event.field}":  event.stats.percentiles["0.5"],
+    "p90_{event.field}":  event.stats.percentiles["0.9"],
+    "p99_{event.field}":  event.stats.percentiles["0.99"],
+    "p99.9_{event.field}":  event.stats.percentiles["0.999"]
   },
   "timestamp": event.timestamp,
 }

@@ -49,7 +49,7 @@ end;
 
 ## Token pasting
 fn paste(a, b) with
-  "#{a}#{b}"
+  "{a}{b}"
 end;
 ```
 

@@ -11,7 +11,7 @@ script
 
   # can choose to not include the actual event error here, if we don't want
   # to send it back to the client
-  let event.error = "Oh no, we ran into something unexpected :(\n #{event.error}";
+  let event.error = "Oh no, we ran into something unexpected :(\n {event.error}";
 
   event;
 end;

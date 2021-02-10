@@ -481,7 +481,7 @@ create script distribute;
 
 select
   patch event of
-    update "fields" => { "{group[2]}": event.fields[group[2]] },
+    update "fields" => { "#{group[2]}": event.fields[group[2]] },
     merge "tags" => { "__TREMOR_GROUP__": group[3] }
   end
 from in
@@ -546,16 +546,16 @@ select {
   "tags":  event.tags,
   "timestamp": event.timestamp, #asdf
   "fields":  {
-    "count_{event.class}":  event.stats.count, # "
-    "min_{event.class}":  event.stats.min,
-    "max_{event.class}":  event.stats.max,
-    "mean_{event.class}":  event.stats.mean,
-    "stdev_{event.class}":  event.stats.stdev,
-    "var_{event.class}":  event.stats.var,
-    "p50_{event.class}":  event.stats.percentiles["0.5"],
-    "p90_{event.class}":  event.stats.percentiles["0.9"],
-    "p99_{event.class}":  event.stats.percentiles["0.99"],
-    "p99.9_{event.class}":  event.stats.percentiles["0.999"]
+    "count_#{event.class}":  event.stats.count, # "
+    "min_#{event.class}":  event.stats.min,
+    "max_#{event.class}":  event.stats.max,
+    "mean_#{event.class}":  event.stats.mean,
+    "stdev_#{event.class}":  event.stats.stdev,
+    "var_#{event.class}":  event.stats.var,
+    "p50_#{event.class}":  event.stats.percentiles["0.5"],
+    "p90_#{event.class}":  event.stats.percentiles["0.9"],
+    "p99_#{event.class}":  event.stats.percentiles["0.99"],
+    "p99.9_#{event.class}":  event.stats.percentiles["0.999"]
   }
 }
 from normalize

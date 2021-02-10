@@ -2497,9 +2497,10 @@ scripts to simplify fixing such scripts.</p>
 <div class="highlight"><pre><span></span><code><span class="s">&quot;I am a string&quot;</span><span class="w"></span>
 </code></pre></div>
 <h5 id="string-interpolation">String Interpolation<a class="headerlink" href="#string-interpolation" title="Permanent link">&para;</a></h5>
-<p>For strings tremor allows string interpolation, this means embedding code directly into strings to create strings out of them. This is a convenience as an alternative of using the string::format function.</p>
-<div class="highlight"><pre><span></span><code><span class="s">&quot;I am a { &quot;</span><span class="nx">string</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="err">{</span><span class="mi">1</span><span class="err">}</span><span class="w"> </span><span class="nx">interpolation</span><span class="err">.</span><span class="s">&quot; }&quot;</span><span class="w"></span>
+<p>For strings tremor allows string interpolation, this means embedding code directly into strings to create strings out of them.</p>
+<div class="highlight"><pre><span></span><code><span class="s">&quot;I am a #{ &quot;</span><span class="nx">string</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="c1">#{1} interpolation.&quot; }&quot;</span>
 </code></pre></div>
+<p>A hash sign followed by a curly bracket needs to be escaped <code>\#{</code> hash signs themselves do not need to be escaped.</p>
 <h5 id="heredocs">HereDocs<a class="headerlink" href="#heredocs" title="Permanent link">&para;</a></h5>
 <p>To deal with pre formatted strings in tremor script we allow for <strong>heredocs</strong> they are started by using triple quotes <code>"""</code> that terminate the line (aka <code>"""bla</code> isn't legal). Heredocs do not truncate leading indentation, only the first leading linebreak after the leading triple-quote <code>"""</code> stripped.</p>
 <div class="highlight"><pre><span></span><code><span class="s">&quot;&quot;&quot;</span>
@@ -2507,10 +2508,10 @@ scripts to simplify fixing such scripts.</p>
 <span class="s">   a</span>
 <span class="s">    long</span>
 <span class="s">    multi-line</span>
-<span class="s">    string with { &quot;</span><span class="err">{</span><span class="mi">1</span><span class="err">}</span><span class="w"> </span><span class="nx">interpolation</span><span class="s">&quot; }</span>
-<span class="s">&quot;&quot;&quot;</span><span class="w"></span>
+<span class="s">    string with #{ &quot;</span><span class="c1">#{1} interpolation&quot; }</span>
+<span class="s">&quot;&quot;&quot;</span>
 </code></pre></div>
-<p>Since Tremor 0.9 Heredocs also support <a href="#string-interpolation">String Interpolation</a>. Literal curly braces thus need to be escaped as <code>{{</code> or <code>\{</code>.</p>
+<p>Since Tremor 0.9 Heredocs also support <a href="#string-interpolation">String Interpolation</a>. A hash sign followed by a curly bracket needs to be escaped <code>\#{</code> hash signs themselves do not need to be escaped.</p>
 <h4 id="arrays">Arrays<a class="headerlink" href="#arrays" title="Permanent link">&para;</a></h4>
 <p>Array grammar:</p>
 <blockquote>

@@ -390,11 +390,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#tumbling-windows" class="md-nav__link">
     Tumbling Windows
@@ -414,6 +409,11 @@
   <a href="#windows-based-on-time" class="md-nav__link">
     Windows based on time
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2055,11 +2055,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#tumbling-windows" class="md-nav__link">
     Tumbling Windows
@@ -2079,6 +2074,11 @@
   <a href="#windows-based-on-time" class="md-nav__link">
     Windows based on time
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2200,13 +2200,13 @@ same as in <code>tremor-script</code>.</p>
 <p>Window definitions in <code>tremor-query</code> can be either tumbling or sliding.</p>
 <p>A tumbling window is a window configured with a fixed non-overlapping interval of time. The window aggregates events once opened, and continues aggregating until it closes. The window can emit synthetic events upon closing. The window reopens for its next cycle when it closes.</p>
 <p>Support for sliding windows has not been implemented yet (it has an <a href="https://rfcs.tremor.rs/0004-sliding-window-mechanism/">open RFC</a> and it will be picked up for a future release).</p>
-<h3 id="tumbling-windows">Tumbling Windows<a class="headerlink" href="#tumbling-windows" title="Permanent link">&para;</a></h3>
+<h4 id="tumbling-windows">Tumbling Windows<a class="headerlink" href="#tumbling-windows" title="Permanent link">&para;</a></h4>
 <p>Tremor supports tumbling windows by number of events or by time.</p>
 <p>General configuration Parameters:</p>
 <ul>
-<li><code>eviction_period</code>: duration in nanoseconds without events arriving, after which to close an existing window, if it is full or not.</li>
+<li><code>eviction_period</code>: duration in nanoseconds without events arriving, after which to evict / remove the current window data for a single group.</li>
 </ul>
-<h4 id="windows-based-on-number-of-events">Windows based on number of events<a class="headerlink" href="#windows-based-on-number-of-events" title="Permanent link">&para;</a></h4>
+<h5 id="windows-based-on-number-of-events">Windows based on number of events<a class="headerlink" href="#windows-based-on-number-of-events" title="Permanent link">&para;</a></h5>
 <p>Size based tumbling windows close when a certain number of aggregated events has been reached.</p>
 <p>Configuration Parameters:</p>
 <ul>
@@ -2215,7 +2215,7 @@ same as in <code>tremor-script</code>.</p>
 <p>The size increment for each event defaults to <code>1</code> but can be customized by the embedded script in the window definition.
 This script needs to return an unsigned integer denoting the number of events to use for this event.
 It is possible to ignore the current event by emitting <code>0</code>.</p>
-<h4 id="windows-based-on-time">Windows based on time<a class="headerlink" href="#windows-based-on-time" title="Permanent link">&para;</a></h4>
+<h5 id="windows-based-on-time">Windows based on time<a class="headerlink" href="#windows-based-on-time" title="Permanent link">&para;</a></h5>
 <p>Time based tumbling windows close when a certain duration has elapsed. The source for measuring the duration
 is the <code>ingest</code> timestamp of the events flowing through by default. The provided embedded script can be used to customize the
 source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 

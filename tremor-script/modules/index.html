@@ -1800,7 +1800,7 @@ by setting the <code>TREMOR_PATH</code> environment variable</p>
 <div class="highlight"><pre><span></span><code><span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">bar</span><span class="err">::</span><span class="nx">snot</span><span class="err">;</span><span class="w"> </span><span class="c1"># snot is a ref to &#39;foo/bar/snot.tremor&#39;</span>
 <span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">baz</span><span class="err">::</span><span class="nx">badger</span><span class="err">;</span><span class="w"> </span><span class="c1"># badger is a ref to &#39;foo/bar/badger.tremor&#39;</span>
 
-<span class="s">&quot;{snot::snot}{badger::badger}&quot;</span><span class="err">;</span><span class="w"> </span><span class="c1"># emits an interpolated string</span>
+<span class="s">&quot;#{snot::snot}#{badger::badger}&quot;</span><span class="err">;</span><span class="w"> </span><span class="c1"># emits an interpolated string</span>
 </code></pre></div>
 <p>The same modular hierarchy can be defined as nested module declarations as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">mod</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="kd">with</span><span class="w"></span>
@@ -1815,14 +1815,14 @@ by setting the <code>TREMOR_PATH</code> environment variable</p>
 <span class="kd">let</span><span class="w"> </span><span class="nx">snot</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">bar</span><span class="err">::</span><span class="nx">snot</span><span class="err">;</span><span class="w"></span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">badger</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">baz</span><span class="err">::</span><span class="nx">badger</span><span class="err">;</span><span class="w"></span>
 
-<span class="s">&quot;{snot}-{badger}&quot;</span><span class="err">;</span><span class="w"></span>
+<span class="s">&quot;#{snot}-#{badger}&quot;</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <p>Modules can be loaded via the <code>use</code> clause which in turn loads a module from the physical file system via the module path.</p>
 <p>Inline and externalized modules can be used separately or together as appropriate.</p>
 <p>Where there are existing references a module can be aliased to avoid clashes in the local scope:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">bar</span><span class="w"> </span><span class="kd">as</span><span class="w"> </span><span class="nx">fleek</span><span class="err">;</span><span class="w"></span>
 
-<span class="s">&quot;Hello {fleek::snot}&quot;</span><span class="w"></span>
+<span class="s">&quot;Hello #{fleek::snot}&quot;</span><span class="w"></span>
 </code></pre></div>
 <p>It is to be noted that inclusion via use will prevent circular inclusion as in file <code>a.tremor</code> can use <code>b.tremor</code> but beyond
 that point <code>b.tremor</code> can no longer use <code>a.tremor</code> as this would create a dependency cycle. This is a restriction of the

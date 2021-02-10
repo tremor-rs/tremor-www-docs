@@ -74,7 +74,7 @@ The elastic offramp writes to one or more ElasticSearch nodes. This is currently
 
 Supported configuration options are:
 
-- `endpoints` - A list of elastic search nodes to contact.
+- `nodes` - A list of elastic search nodes to contact.
 - `concurrency` - Maximum number of parallel requests (default: 4).
 
 Events will be sent to the connected elasticsearch cluster via the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) using the `index` action.
@@ -158,7 +158,7 @@ offramp:
   - id: es
     type: elastic
     config:
-      endpoints:
+      nodes:
         - http://elastic:9200
 ```
 
@@ -170,7 +170,7 @@ offramp:
     type: elastic
     linked: true
     config:
-      endpoints:
+      nodes:
         - http://elastic1:9200
         - http://elastic2:9200
       concurrency: 8

@@ -186,7 +186,7 @@ A high level overview of tremor-based systems architecture
 - id: elastic-output
   type: elastic
   config:
-    endpoints:
+    nodes:
       - elastic01:9200
       - elastic02:9200
     concurrency: 8

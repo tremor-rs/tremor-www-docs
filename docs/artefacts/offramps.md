@@ -74,7 +74,7 @@ The elastic offramp writes to one or more ElasticSearch nodes. This is currently
 
 Supported configuration options are:
 
-- `nodes` - A list of elastic search nodes to contact.
+- `nodes` - A list of elastic search nodes to contact. These are the nodes to which tremor will send traffic to.
 - `concurrency` - Maximum number of parallel requests (default: 4).
 
 Events will be sent to the connected elasticsearch cluster via the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) using the `index` action.

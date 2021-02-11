@@ -2258,7 +2258,7 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <p>The elastic offramp writes to one or more ElasticSearch nodes. This is currently tested with ES v6 and v7.</p>
 <p>Supported configuration options are:</p>
 <ul>
-<li><code>endpoints</code> - A list of elastic search nodes to contact.</li>
+<li><code>nodes</code> - A list of elastic search nodes to contact. These are the nodes to which tremor will send traffic to.</li>
 <li><code>concurrency</code> - Maximum number of parallel requests (default: 4).</li>
 </ul>
 <p>Events will be sent to the connected elasticsearch cluster via the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a> using the <code>index</code> action.
@@ -2322,7 +2322,7 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">es</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">endpoints</span><span class="p">:</span>
+      <span class="nt">nodes</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://elastic:9200</span>
 </code></pre></div>
 <p>Example Configuration for linked transport (including binding):</p>
@@ -2331,7 +2331,7 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
     <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">endpoints</span><span class="p">:</span>
+      <span class="nt">nodes</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://elastic1:9200</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">http://elastic2:9200</span>
       <span class="nt">concurrency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>

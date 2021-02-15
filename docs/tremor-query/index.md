@@ -137,11 +137,11 @@ It is possible to ignore the current event by emitting `0`.
 
 Time based tumbling windows close when a certain duration has elapsed. The source for measuring the duration
 is the `ingest` timestamp of the events flowing through by default. The provided embedded script can be used to customize the
-source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 
+source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds.
 This way windows using timestamps other than the event ingest time can be built.
 
 Only windows using the event ingest timestamp can be closed when the time in `interval` is elapsed measured by wall-clock time
-independent from event flow with a granularity of `100ms`. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them or when the `eviction_period` hits.
+independent from event flow with a granularity of `100ms`. It is thus possible that empty windows are emitted. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them.
 
 Configuration Parameters:
 
@@ -175,7 +175,7 @@ script
 end;
 ```
 
-A tumbling window based on number of events that will close when 2 hours have been passed if it is filled or not:
+A tumbling window based on number of events that will discard windows when 2 hours have been passed:
 
 ```trickle
 define tumbling window with_size

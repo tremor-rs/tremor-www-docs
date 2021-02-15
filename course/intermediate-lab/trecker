@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ ${TRECKER_PORTS+x} ]
+then
+    TRECKER_PORTS="-p ${TRECKER_PORTS}"
+else
+    TRECKER_PORTS=""
+fi
+docker run -it -v `pwd`:/pwd -e "TERM=xterm-256color" -e "TREMOR_PATH=/pwd/lib/:/opt/local/tremor/lib/" $TRECKER_PORTS tremorproject/courseware:latest $*

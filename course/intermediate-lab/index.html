@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Tremor Intermediate Workshop</title>
+
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/solarized.css" id="theme">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/styles/solarized-dark.min.css">
+    <link rel="stylesheet" href="../plugin/menu/menu.css">
+    <link rel="stylesheet" href="../plugin/toolbar/toolbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitgraph.js/1.13.0/gitgraph.min.css">
+    <style type="text/css">
+        #header-left {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+        }
+
+        #header-right {
+            position: absolute;
+            top: 0%;
+            right: 0%;
+        }
+
+        #footer-left {
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+        }
+
+        #footer-right {
+            position: absolute;
+            bottom: 0%;
+            right: 0%;
+        }
+
+        div !span .fragment.current-visible.visible:not(.current-fragment) {
+            animation: removed-item-animation 1.5s cubic-bezier(0.6, -0.05, 0.9, 0.9) forwards;
+            transform-origin: 0% 100%;
+        }
+
+        div @keyframes removed-item-animation {
+            0% {
+                opacity: 1;
+                transform: rotateZ(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(900px) rotateZ(70deg);
+                line-height: 0px;
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body onload="WaveDrom.ProcessAll()">
+
+    <div class="reveal">
+
+        <div class="hidden" style="display:none;">
+            <div id='branding'>
+                <div id='header-left'></div>
+                <div id='header-right'></div>
+                <div id='footer-left'></div>
+                <div id='footer-right'><img src='https://docs.tremor.rs/img/logo.png'
+                        style='height: 60px; width: 60px;'></div>
+            </div>
+        </div>
+
+        <div class="slides">
+
+            <!-- Use external markdown resource, separate slides by three newlines; vertical slides by two newlines -->
+            <section data-markdown="./index.md" data-separator="^>>>" data-separator-vertical="^---"></section>
+            <!--
+                <-- section data-markdown="./tremor-script-mod.md" data-separator="^>>>" data-separator-vertical="^---"></section>
+-->
+
+        </div>
+    </div>
+
+    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/highlight.min.js"></script -->
+    <script src="../dist/reveal.js"></script>
+    <script src="../dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js"
+        type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js" type="text/javascript"></script>
+    <script src="../plugin/markdown/markdown.js"></script>
+    <script src="../plugin/highlight/highlight.js"></script>
+    <script src="../highlightjs-tremor.cjs.js"></script>
+    <!-- script src="../plugin/notes/notes.js"></script -->
+    <!-- script src="../plugin/spotlight/spotlight.js"></script -->
+    <script src="../plugin/menu/menu.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gitgraph.js/1.13.0/gitgraph.min.js"></script>
+
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            dependencies: [
+                { "src": "../plugin/toolbar/toolbar.js" }
+            ],
+
+            plugins: [RevealMarkdown, RevealHighlight, /* RevealNotes, RevealSpotlight, */, RevealMenu],
+
+            menu: {
+                side: 'left',
+                width: 'normal',
+                numbers: true,
+                titleSelector: 'h1, h2, h3, h4, h5, h6',
+                useTextContentForMissingTitles: false,
+                hideMissingTitles: false,
+                markers: true,
+                custom: false,
+                themes: true,
+                themesPath: 'dist/theme/',
+                transitions: false,
+                openButton: true,
+                openSlideNumber: false,
+                keyboard: true,
+                sticky: false,
+                autoOpen: true,
+                delayInit: false,
+                openOnInit: false,
+                loadIcons: true
+            },
+            toolbar: {
+                position: 'bottom',
+                fullscreen: true,
+                overview: true,
+                pause: true,
+                notes: false,
+                help: true,
+                captureMenu: true,
+                capturePlaybackControl: true,
+                loadIcons: true
+            }
+        });
+
+        var hljs = Reveal.getPlugin('highlight').hljs;
+        hljs.registerLanguage('tremor', window.defineTremorGrammar);
+        hljs.registerLanguage('trickle', window.defineTrickleGrammar);
+        hljs.initHighlighting();
+
+        const git1 = new GitGraph({ elementId: 'git1' });
+        git1.branch().commit().commit();
+        Reveal.sync();
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    <script type="text/javascript">
+        var branding = $('#branding').html();
+        if (window.location.search.match(/print-pdf/gi)) {
+            $('slides > section').prepend(branding);
+        } else {
+            $('.slides').prepend(branding);
+        };
+    </script>
+
+</body>
+
+</html>

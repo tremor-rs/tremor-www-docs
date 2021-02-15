@@ -2218,10 +2218,10 @@ It is possible to ignore the current event by emitting <code>0</code>.</p>
 <h5 id="windows-based-on-time">Windows based on time<a class="headerlink" href="#windows-based-on-time" title="Permanent link">&para;</a></h5>
 <p>Time based tumbling windows close when a certain duration has elapsed. The source for measuring the duration
 is the <code>ingest</code> timestamp of the events flowing through by default. The provided embedded script can be used to customize the
-source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds. 
+source of time measurement. The embedded script must return a number representing a timestamp in nanoseconds.
 This way windows using timestamps other than the event ingest time can be built.</p>
 <p>Only windows using the event ingest timestamp can be closed when the time in <code>interval</code> is elapsed measured by wall-clock time
-independent from event flow with a granularity of <code>100ms</code>. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them or when the <code>eviction_period</code> hits.</p>
+independent from event flow with a granularity of <code>100ms</code>. It is thus possible that empty windows are emitted. Windows using scripts to determine the window elapsed time are considered to deviate from wall clock time and will only close and emit when events flow through them.</p>
 <p>Configuration Parameters:</p>
 <ul>
 <li><code>interval</code>: Time interval in nanoseconds after which the window closes.</li>
@@ -2247,7 +2247,7 @@ independent from event flow with a granularity of <code>100ms</code>. Windows us
 <span class="w">    </span><span class="kc">event</span><span class="err">.</span><span class="nx">timestamp</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>A tumbling window based on number of events that will close when 2 hours have been passed if it is filled or not:</p>
+<p>A tumbling window based on number of events that will discard windows when 2 hours have been passed:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">with_size</span><span class="w"></span>
 <span class="kd">with</span><span class="w"></span>
 <span class="w">    </span><span class="nx">size</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">1000</span><span class="err">,</span><span class="w"></span>

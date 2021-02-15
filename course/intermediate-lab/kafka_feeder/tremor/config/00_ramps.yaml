@@ -2,10 +2,6 @@
 # to an instance of tremor server.
 #
 onramp:
-  - id: metronome
-    type: metronome
-    config:
-      interval: 1000 # Every second
   - id: data-input
     type: blaster
     codec: json

@@ -47,25 +47,14 @@ cp ../scripts/trecker .
 
 __Preparation__
 
-Start kafka and kafka_feeder:
+Start kafka and kafka_feeder (this will occupy your shell):
 
 ```sh
-cd kafka_feeder
-docker-compose up
+make start-kafka
 ```
 
 <div style='font-size: 20px'>
 This feeds the sample data continuously to a topic named `tremor` in the kafka cluster.
-</div>
-
-Get docker IP:
-
-```sh
-docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kafka_feeder_kafka_1
-```
-
-<div style='font-size: 20px'>
-This will be useful for establishing outside connections to the kafka cluster.
 </div>
 
 ---
@@ -79,10 +68,10 @@ Configure the tremor instance in `./etc/tremor` to read from topic `tremor` in t
 <hr/>
 
 ```sh
-./trecker server run -l /pwd/etc/tremor/logger.yaml -f /pwd/etc/tremor/config/config.yaml /pwd/etc/tremor/config/main.trickle
+make start-tremor # watch the shell where you started the compose
 ```
 
-`docker kill ...` from another shell to stop.
+`make stop-tremor` to stop.
 </div>
 
 ---
@@ -96,7 +85,7 @@ onramp:
     codec: json
     config:
       brokers:
-        - <YOUR_DOCKER_IP>:9092
+        - kafka:9092
       topics:
         - tremor
       group_id: lab
@@ -308,7 +297,7 @@ Rate-Limit all events down to a maximum rate of 1 event per second, using the [`
 
 ```sh
 # validate - events should appear at much slower rate
-./trecker server run -l /pwd/etc/tremor/logger.yaml -f /pwd/etc/tremor/config/config.yaml /pwd/etc/tremor/config/main.trickle
+make restart-tremor
 ```
 
 </div>
@@ -376,7 +365,7 @@ Rate-limit events differently based on the value of `event.class` field (which w
 
 ```sh
 # validate - events should appear at much faster rate (compared to that in 3a)
-./trecker server run -l /pwd/etc/tremor/logger.yaml -f /pwd/etc/tremor/config/config.yaml /pwd/etc/tremor/config/main.trickle
+make restart-tremor
 ```
 
 </div>
@@ -392,7 +381,7 @@ Tip: You may modify the `classify` script to conditionally assign the `$rate` va
 <div style='font-size: 0.75em;'>
 
 ```trickle
-# defintion for cleanup and tag scripts redacted for length (see task 2a, 2b)
+# definition for cleanup and tag scripts redacted for length (see task 2a, 2b)
 
 define script classify
 script
@@ -452,13 +441,7 @@ select event from tag/err into err;
 Send rate-limited events to Elastic via [elastic offramp](https://docs.tremor.rs/artefacts/offramps/#elastic) and investigate response events on stdout/stderr.
 
 ```sh
-docker-compose -f elastic-compose.yaml up
-```
-
-Get docker IP:
-
-```
-docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' intermediate-lab_elasticsearch_1
+make start-elastic
 ```
 
 </div>
@@ -474,7 +457,7 @@ offramp:
     linked: true
     config:
       nodes:
-        - http://<DOCKER_IP>:9200
+        - http://elastic:9200
   - id: es_stderr
     type: stderr
     config:

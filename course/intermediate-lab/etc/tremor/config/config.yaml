@@ -1,0 +1,23 @@
+onramp:
+  - id: placeholder
+    type: metronome
+    config:
+      interval: 1000
+
+offramp:
+  - id: stdout
+    type: stdout
+
+binding:
+  - id: intermediate_lab
+    links:
+      "/onramp/placeholder/{instance}/out":
+        - "/pipeline/main/{instance}/in"
+      "/pipeline/main/{instance}/out":
+        - "/offramp/stdout/{instance}/in"
+      "/pipeline/main/{instance}/err":
+        - "/offramp/system::stderr/{instance}/in"
+
+mapping:
+  /binding/intermediate_lab/01:
+    instance: "01"

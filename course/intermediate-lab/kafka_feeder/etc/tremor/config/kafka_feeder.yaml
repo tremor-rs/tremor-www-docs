@@ -1,0 +1,39 @@
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor server.
+#
+onramp:
+  - id: data-input
+    type: blaster
+    codec: json
+    config:
+      source: /data/input.json
+      #interval: 1000000000 # 1 second
+      interval: 100000000 # 10 events per second
+
+offramp:
+  - id: kafka-out
+    type: kafka
+    codec: json
+    config:
+      brokers:
+        - kafka:9092
+      topic: tremor
+
+# A binding associates onramps and offramps with pipeline inputs and outputs
+# through their unique identifiers to create a deployment graph template. These
+# typically use variables that are incarnated using runtime mappings so that
+# bindings can be reused where appropriate.
+#
+binding:
+  - id: feeder # The unique name of this binding template
+    links:
+      "/onramp/data-input/{instance}/out": # Connect the input to the pipeline
+        - "/pipeline/system::passthrough/{instance}/in"
+      "/pipeline/system::passthrough/{instance}/out": # Connect the pipeline to the output
+        - "/offramp/kafka-out/{instance}/in"
+        # for debugging
+        #- "/offramp/system::stdout/{instance}/in"
+
+mapping:
+  /binding/feeder/01:
+    instance: "feeder"

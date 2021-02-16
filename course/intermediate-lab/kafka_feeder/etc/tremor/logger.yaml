@@ -5,8 +5,7 @@ appenders:
   # An appender named "stdout" that writes to stdout
   stdout:
     kind: console
-  
-# Write only warnings to stdout
+
 root:
   level: info
   appenders:

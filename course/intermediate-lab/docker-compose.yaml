@@ -35,7 +35,7 @@ services:
     depends_on:
       - kafka
     environment:
-      - SLEEP=10
+      - SLEEP=2
       - RUST_BACKTRACE=1
       - RUST_LOG=info
     volumes:
@@ -52,6 +52,7 @@ services:
       - xpack.license.self_generated.type=basic
       - xpack.monitoring.collection.enabled=false
       - discovery.type=single-node
+      - action.auto_create_index=true
     ulimits:
       # disabling swapping for performance and node stability
       memlock:

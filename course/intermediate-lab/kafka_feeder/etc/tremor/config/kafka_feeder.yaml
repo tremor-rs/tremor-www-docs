@@ -8,7 +8,7 @@ onramp:
     config:
       source: /data/input.json
       #interval: 1000000000 # 1 second
-      interval: 10000000 # 100 events per second
+      interval: 100000000 # 10 events per second
 
 offramp:
   - id: kafka-out

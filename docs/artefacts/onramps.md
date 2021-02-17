@@ -318,6 +318,8 @@ onramp:
 
 ### rest
 
+**This source can be linked**
+
 The rest onramp listens on a specified port for inbound RESTful ( http ) data, treating the decoded and preprocessed http body as event data (and attaching other request attributes as event metadata).
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
@@ -435,6 +437,8 @@ config:
 
 ### ws
 
+**This source can be linked**
+
 Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: `ws://<host>:<port>/`
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
@@ -466,4 +470,99 @@ onramp:
     config:
       port: 12201
       host: "127.0.0.1"
+```
+
+### discord
+
+**This source can be linked**
+
+The `discord` connector allows consuming events from the [Discord API](https://discord.com/developers/docs/intro). It uses the event structure as provided by [serenity](https://docs.rs/serenity/0.10.2/serenity/) wrapped in event-named records.
+
+Replies send to this connector can perform multiple operations:
+
+#### Guild related
+```json
+{"guild": {
+  "id": 1234,         // guild id, required
+  // member section required
+  "member": {
+    "id": 2345,      // member id, required
+
+    // Roles to remove, optional
+    "remove_roles": [
+      3456, // ... role ids
+    ],
+    // Roles to add, optional
+    "add_roles": [
+      4567, // ... role ids
+    ],
+    "deafen": true, // (un)deafen the member, optional
+    "mute": true, // (un)deafen the member, optional
+  },
+
+}}
+```
+#### Message related
+```json
+{"message": {
+  "channel_id": 1234, // channel id, required
+  // Update message section, optional
+  "update": {
+    "message_id": 2345, // message id to update, required
+    // Reactions to add
+    "add_reactions": [
+      "😀", // emoji reaction
+      {  // custom reaction
+        "id": 3456, // emoji id, required
+        "name": "seal-of-approval" // emoji name, optional
+        "animated": true, // animated, optional
+       }
+       // ...
+    ],
+  },
+  // Send section, optional
+  "send": {
+    "content": "hello!", // message content, optional,
+    "reference_message": 4567, // Reference to other message, optional
+    "reference_channel": 5678, // reference channel, optional, default is `channel_id` (ignored w/o `reference_message`)
+    "tts": false, // use text to speech, optional
+    // Embed section, optional
+    "embed": {
+
+      // Author section, optional
+      "author": {
+        "icon_url": "https://...", // url of the author icon, optional
+        "name": "Snottus Badgerus", // name of the author, optional
+        "url": "https://...", // url of the author profile, optional
+      },
+      "colour": 0, // color (as number) of the embed, optional (hint: use hex in tremor script it makes it easier)\
+      "description": "This is an embed", // A description for the embed, optional
+      // Embedded fields, optional
+      "fields": [
+        {
+          "name": "field 1", // name of the field, required
+          "value": "explenation", // 'body' of the field, required
+          "inline": true, // if the field should be inlined, optional, default: false
+        }
+        // ...
+      ],
+      "footer": "look at my feet!", // simple footer, optional
+      // Footer section, optional, alternative to simple footer
+      "footer": {
+        "text": "look at my feet!", // footer text, optional
+        "icon_url": "https://...", // footer icon, optional
+      }
+    },
+    // Reactions to add
+    "reactions": [
+      "😀", // emoji reaction
+      {  // custom reaction
+        "id": 3456, // emoji id, required
+        "name": "seal-of-approval" // emoji name, optional
+        "animated": true, // animated, optional
+       }
+       // ...
+    ],
+  }
+}}
 ```

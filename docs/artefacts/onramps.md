@@ -32,7 +32,7 @@ onramp:
 
 The [`codec`](codecs.md) field is optional and if not provided will use onramps default codec.
 
-The `err_required` field can be set to `true` if the source should not start unless both `out` and `err` ports are connected to at least one pipeline.
+The `err_required` field can be set to `true` if the onramp should not start unless both `out` and `err` ports are connected to at least one pipeline.
 
 The `config` contains a map (key-value pairs) specific to the onramp type.
 
@@ -318,7 +318,7 @@ onramp:
 
 ### rest
 
-**This source can be linked**
+**This onramp can be linked**
 
 The rest onramp listens on a specified port for inbound RESTful ( http ) data, treating the decoded and preprocessed http body as event data (and attaching other request attributes as event metadata).
 
@@ -437,7 +437,7 @@ config:
 
 ### ws
 
-**This source can be linked**
+**This onramp can be linked**
 
 Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: `ws://<host>:<port>/`
 
@@ -474,11 +474,11 @@ onramp:
 
 ### discord
 
-**This source can be linked**
+**This onramp can be linked**
 
-The `discord` connector allows consuming events from the [Discord API](https://discord.com/developers/docs/intro). It uses the event structure as provided by [serenity](https://docs.rs/serenity/0.10.2/serenity/) wrapped in event-named records.
+The `discord` onramp allows consuming events from the [Discord API](https://discord.com/developers/docs/intro). It uses the event structure as provided by [serenity](https://docs.rs/serenity/0.10.2/serenity/) wrapped in event-named records.
 
-Replies send to this connector can perform multiple operations:
+Replies send to this onramp can perform multiple operations:
 
 #### Guild related
 ```json

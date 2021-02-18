@@ -223,10 +223,13 @@ end;
 
 The batch operator is used to batch multiple events and send them in a bulk fashion. It also allows to set a timeout of how long the operator should wait for a batch to be filled.
 
+If used with the `timeout` it is possible that the `batch` operator emits empty batches.
+
 Supported configuration options are:
 
 - `count` - Elements per batch
 - `timeout` - Maximum delay between the first element of a batch and the last element of a batch.
+- `allow_empty_batches` - If set to `false`, empty batches are not sent downstream.
 
 **Outputs**:
 

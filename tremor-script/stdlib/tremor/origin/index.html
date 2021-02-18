@@ -1952,12 +1952,12 @@ host as tremor:
 <p>Returns the full origin URI as a record, or null value if URI is not set.
 For example, with udp onramp receiving events on port 12202 from the same
 host as tremor:
-<div class="highlight"><pre><span></span><code><span class="nx">origin</span><span class="err">::</span><span class="nx">as_uri_record</span><span class="err">()</span><span class="w"> </span><span class="err">==</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">origin</span><span class="err">::</span><span class="nx">as_uri_record</span><span class="err">()</span><span class="w"> </span><span class="err">==</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
 <span class="s">&quot;scheme&quot;</span><span class="err">:</span><span class="w"> </span><span class="s">&quot;tremor-udp&quot;</span><span class="err">,</span><span class="w"></span>
 <span class="s">&quot;host&quot;</span><span class="err">:</span><span class="s">&quot;127.0.0.1&quot;</span><span class="err">,</span><span class="w"></span>
 <span class="s">&quot;port&quot;</span><span class="err">:</span><span class="mi">41371</span><span class="err">,</span><span class="w"> </span><span class="c1"># where 41371 is the ephemeral port on the sending side</span>
 <span class="s">&quot;path&quot;</span><span class="err">:[</span><span class="s">&quot;12202&quot;</span><span class="err">]</span><span class="w"></span>
-<span class="err">}</span><span class="w"></span>
+<span class="nx">}</span><span class="w"></span>
 </code></pre></div></p>
                 
               

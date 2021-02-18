@@ -1866,7 +1866,7 @@ the data to connected downstream sinks.</p>
 <span class="kd">create</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">roundrobin</span><span class="err">;</span><span class="w"></span>
 
 <span class="kd">select</span><span class="w"> </span><span class="kd">merge</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
-<span class="w">  </span><span class="err">{</span><span class="w"> </span><span class="s">&quot;hostname&quot;</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nx">system</span><span class="err">::</span><span class="nx">hostname</span><span class="err">()</span><span class="w"> </span><span class="err">}</span><span class="w"></span>
+<span class="w">  </span><span class="nx">{</span><span class="w"> </span><span class="s">&quot;hostname&quot;</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nx">system</span><span class="err">::</span><span class="nx">hostname</span><span class="err">()</span><span class="w"> </span><span class="nx">}</span><span class="w"></span>
 <span class="kd">end</span><span class="w"></span>
 <span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">in_memory_wal</span><span class="err">;</span><span class="w"></span>
 

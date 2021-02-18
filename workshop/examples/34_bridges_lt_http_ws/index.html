@@ -1947,10 +1947,10 @@
 <span class="w">      </span><span class="kc">null</span><span class="w"></span>
 <span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"></span>
 <span class="w">      </span><span class="c1"># can send this to a different port than the default err port too</span>
-<span class="w">      </span><span class="kd">emit</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">      </span><span class="kd">emit</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
 <span class="w">        </span><span class="s">&quot;error&quot;</span><span class="err">:</span><span class="w"> </span><span class="s">&quot;Unsupported url path: {$request.url.path}&quot;</span><span class="err">,</span><span class="w"></span>
 <span class="w">        </span><span class="s">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="w"></span>
-<span class="w">      </span><span class="err">}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;err&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nx">}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;err&quot;</span><span class="w"></span>
 <span class="w">  </span><span class="kd">end</span><span class="err">;</span><span class="w"></span>
 <span class="w">  </span><span class="kc">event</span><span class="err">;</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
@@ -1968,12 +1968,12 @@
 <div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">process</span><span class="w"></span>
 <span class="kd">script</span><span class="w"></span>
 <span class="w">  </span><span class="c1"># defaults for the server response</span>
-<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">response</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">response</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;status&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">200</span><span class="err">,</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;headers&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;headers&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
 <span class="w">      </span><span class="s">&quot;x-powered-by&quot;</span><span class="err">:</span><span class="w"> </span><span class="s">&quot;Tremor&quot;</span><span class="err">,</span><span class="w"></span>
-<span class="w">    </span><span class="err">}</span><span class="w"></span>
-<span class="w">  </span><span class="err">};</span><span class="w"></span>
+<span class="w">    </span><span class="nx">}</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="err">;</span><span class="w"></span>
 <span class="w">  </span><span class="kc">event</span><span class="err">;</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 

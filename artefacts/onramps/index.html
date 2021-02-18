@@ -1196,6 +1196,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#discord" class="md-nav__link">
+    discord
+  </a>
+  
+    <nav class="md-nav" aria-label="discord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guild-related" class="md-nav__link">
+    Guild related
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-related" class="md-nav__link">
+    Message related
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2012,6 +2039,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#discord" class="md-nav__link">
+    discord
+  </a>
+  
+    <nav class="md-nav" aria-label="discord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guild-related" class="md-nav__link">
+    Guild related
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-related" class="md-nav__link">
+    Message related
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2060,7 +2114,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
       <span class="nt">&lt;key&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
 </code></pre></div>
 <p>The <a href="../codecs/"><code>codec</code></a> field is optional and if not provided will use onramps default codec.</p>
-<p>The <code>err_required</code> field can be set to <code>true</code> if the source should not start unless both <code>out</code> and <code>err</code> ports are connected to at least one pipeline.</p>
+<p>The <code>err_required</code> field can be set to <code>true</code> if the onramp should not start unless both <code>out</code> and <code>err</code> ports are connected to at least one pipeline.</p>
 <p>The <code>config</code> contains a map (key-value pairs) specific to the onramp type.</p>
 <h2 id="delivery-properties">Delivery Properties<a class="headerlink" href="#delivery-properties" title="Permanent link">&para;</a></h2>
 <p>Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:</p>
@@ -2303,6 +2357,7 @@ to pipelines.</p>
       <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12201</span>
 </code></pre></div>
 <h3 id="rest">rest<a class="headerlink" href="#rest" title="Permanent link">&para;</a></h3>
+<p><strong>This onramp can be linked</strong></p>
 <p>The rest onramp listens on a specified port for inbound RESTful ( http ) data, treating the decoded and preprocessed http body as event data (and attaching other request attributes as event metadata).</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-rest://&lt;tremor-rest-client-host.remote&gt;
@@ -2405,6 +2460,7 @@ config:
     size: 4096
 </code></pre></div>
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
+<p><strong>This onramp can be linked</strong></p>
 <p>Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-ws://&lt;tremor-ws-client-host.remote&gt;
@@ -2430,6 +2486,94 @@ config:
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12201</span>
       <span class="nt">host</span><span class="p">:</span> <span class="s">&quot;127.0.0.1&quot;</span>
+</code></pre></div>
+<h3 id="discord">discord<a class="headerlink" href="#discord" title="Permanent link">&para;</a></h3>
+<p><strong>This onramp can be linked</strong></p>
+<p>The <code>discord</code> onramp allows consuming events from the <a href="https://discord.com/developers/docs/intro">Discord API</a>. It uses the event structure as provided by <a href="https://docs.rs/serenity/0.10.2/serenity/">serenity</a> wrapped in event-named records.</p>
+<p>Replies send to this onramp can perform multiple operations:</p>
+<h4 id="guild-related">Guild related<a class="headerlink" href="#guild-related" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;guild&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>         <span class="err">//</span> <span class="err">guild</span> <span class="err">id</span><span class="p">,</span> <span class="err">required</span>
+  <span class="err">//</span> <span class="err">member</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="err">required</span>
+  <span class="nt">&quot;member&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2345</span><span class="p">,</span>      <span class="err">//</span> <span class="err">member</span> <span class="err">id</span><span class="p">,</span> <span class="err">required</span>
+
+    <span class="err">//</span> <span class="err">Roles</span> <span class="kc">t</span><span class="err">o</span> <span class="err">remove</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+    <span class="nt">&quot;remove_roles&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="mi">3456</span><span class="p">,</span> <span class="err">//</span> <span class="err">...</span> <span class="err">role</span> <span class="err">ids</span>
+    <span class="p">],</span>
+    <span class="err">//</span> <span class="err">Roles</span> <span class="kc">t</span><span class="err">o</span> <span class="err">add</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+    <span class="nt">&quot;add_roles&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="mi">4567</span><span class="p">,</span> <span class="err">//</span> <span class="err">...</span> <span class="err">role</span> <span class="err">ids</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;deafen&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">//</span> <span class="err">(u</span><span class="kc">n</span><span class="err">)dea</span><span class="kc">fen</span> <span class="kc">t</span><span class="err">he</span> <span class="err">member</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+    <span class="nt">&quot;mute&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">//</span> <span class="err">(u</span><span class="kc">n</span><span class="err">)dea</span><span class="kc">fen</span> <span class="kc">t</span><span class="err">he</span> <span class="err">member</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+  <span class="p">},</span>
+
+<span class="p">}}</span>
+</code></pre></div>
+<h4 id="message-related">Message related<a class="headerlink" href="#message-related" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nt">&quot;channel_id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span> <span class="err">//</span> <span class="err">cha</span><span class="kc">nnel</span> <span class="err">id</span><span class="p">,</span> <span class="err">required</span>
+  <span class="err">//</span> <span class="err">Upda</span><span class="kc">te</span> <span class="err">message</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+  <span class="nt">&quot;update&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;message_id&quot;</span><span class="p">:</span> <span class="mi">2345</span><span class="p">,</span> <span class="err">//</span> <span class="err">message</span> <span class="err">id</span> <span class="kc">t</span><span class="err">o</span> <span class="err">upda</span><span class="kc">te</span><span class="p">,</span> <span class="err">required</span>
+    <span class="err">//</span> <span class="err">Reac</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span> <span class="kc">t</span><span class="err">o</span> <span class="err">add</span>
+    <span class="nt">&quot;add_reactions&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;😀&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">emoji</span> <span class="err">reac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+      <span class="p">{</span>  <span class="err">//</span> <span class="err">cus</span><span class="kc">t</span><span class="err">om</span> <span class="err">reac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3456</span><span class="p">,</span> <span class="err">//</span> <span class="err">emoji</span> <span class="err">id</span><span class="p">,</span> <span class="err">required</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;seal-of-approval&quot;</span> <span class="err">//</span> <span class="err">emoji</span> <span class="kc">na</span><span class="err">me</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+        <span class="nt">&quot;animated&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">//</span> <span class="err">a</span><span class="kc">n</span><span class="err">ima</span><span class="kc">te</span><span class="err">d</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+       <span class="p">}</span>
+       <span class="err">//</span> <span class="err">...</span>
+    <span class="p">],</span>
+  <span class="p">},</span>
+  <span class="err">//</span> <span class="err">Se</span><span class="kc">n</span><span class="err">d</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+  <span class="nt">&quot;send&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;hello!&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">message</span> <span class="err">co</span><span class="kc">ntent</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="p">,</span>
+    <span class="nt">&quot;reference_message&quot;</span><span class="p">:</span> <span class="mi">4567</span><span class="p">,</span> <span class="err">//</span> <span class="err">Re</span><span class="kc">feren</span><span class="err">ce</span> <span class="kc">t</span><span class="err">o</span> <span class="err">o</span><span class="kc">t</span><span class="err">her</span> <span class="err">message</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+    <span class="nt">&quot;reference_channel&quot;</span><span class="p">:</span> <span class="mi">5678</span><span class="p">,</span> <span class="err">//</span> <span class="err">re</span><span class="kc">feren</span><span class="err">ce</span> <span class="err">cha</span><span class="kc">nnel</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="p">,</span> <span class="err">de</span><span class="kc">fault</span> <span class="err">is</span> <span class="err">`cha</span><span class="kc">nnel</span><span class="err">_id`</span> <span class="err">(ig</span><span class="kc">n</span><span class="err">ored</span> <span class="err">w/o</span> <span class="err">`re</span><span class="kc">feren</span><span class="err">ce_message`)</span>
+    <span class="nt">&quot;tts&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="err">//</span> <span class="err">use</span> <span class="kc">te</span><span class="err">x</span><span class="kc">t</span> <span class="kc">t</span><span class="err">o</span> <span class="err">speech</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+    <span class="err">//</span> <span class="err">Embed</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+    <span class="nt">&quot;embed&quot;</span><span class="p">:</span> <span class="p">{</span>
+
+      <span class="err">//</span> <span class="err">Au</span><span class="kc">t</span><span class="err">hor</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+      <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;icon_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://...&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">url</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">au</span><span class="kc">t</span><span class="err">hor</span> <span class="err">ico</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Snottus Badgerus&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="kc">na</span><span class="err">me</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">au</span><span class="kc">t</span><span class="err">hor</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+        <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://...&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">url</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">au</span><span class="kc">t</span><span class="err">hor</span> <span class="err">pro</span><span class="kc">f</span><span class="err">ile</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;colour&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="err">//</span> <span class="err">color</span> <span class="err">(as</span> <span class="kc">nu</span><span class="err">mber)</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">embed</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span> <span class="err">(hi</span><span class="kc">nt</span><span class="p">:</span> <span class="err">use</span> <span class="err">hex</span> <span class="err">i</span><span class="kc">n</span> <span class="kc">tre</span><span class="err">mor</span> <span class="err">scrip</span><span class="kc">t</span> <span class="err">i</span><span class="kc">t</span> <span class="err">makes</span> <span class="err">i</span><span class="kc">t</span> <span class="err">easier)\</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This is an embed&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">A</span> <span class="err">descrip</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="kc">f</span><span class="err">or</span> <span class="kc">t</span><span class="err">he</span> <span class="err">embed</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+      <span class="err">//</span> <span class="err">Embedded</span> <span class="kc">f</span><span class="err">ields</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+      <span class="nt">&quot;fields&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;field 1&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="kc">na</span><span class="err">me</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="kc">f</span><span class="err">ield</span><span class="p">,</span> <span class="err">required</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;explenation&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">&#39;body&#39;</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="kc">f</span><span class="err">ield</span><span class="p">,</span> <span class="err">required</span>
+          <span class="nt">&quot;inline&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">//</span> <span class="err">i</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="kc">f</span><span class="err">ield</span> <span class="err">should</span> <span class="err">be</span> <span class="err">i</span><span class="kc">nl</span><span class="err">i</span><span class="kc">ne</span><span class="err">d</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="p">,</span> <span class="err">de</span><span class="kc">fault</span><span class="p">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+        <span class="err">//</span> <span class="err">...</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;footer&quot;</span><span class="p">:</span> <span class="s2">&quot;look at my feet!&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">simple</span> <span class="kc">f</span><span class="err">oo</span><span class="kc">ter</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+      <span class="err">//</span> <span class="err">Foo</span><span class="kc">ter</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="p">,</span> <span class="err">al</span><span class="kc">ternat</span><span class="err">ive</span> <span class="kc">t</span><span class="err">o</span> <span class="err">simple</span> <span class="kc">f</span><span class="err">oo</span><span class="kc">ter</span>
+      <span class="nt">&quot;footer&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;look at my feet!&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="kc">f</span><span class="err">oo</span><span class="kc">ter</span> <span class="kc">te</span><span class="err">x</span><span class="kc">t</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+        <span class="nt">&quot;icon_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://...&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="kc">f</span><span class="err">oo</span><span class="kc">ter</span> <span class="err">ico</span><span class="kc">n</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="err">//</span> <span class="err">Reac</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span> <span class="kc">t</span><span class="err">o</span> <span class="err">add</span>
+    <span class="nt">&quot;reactions&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;😀&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">emoji</span> <span class="err">reac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+      <span class="p">{</span>  <span class="err">//</span> <span class="err">cus</span><span class="kc">t</span><span class="err">om</span> <span class="err">reac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3456</span><span class="p">,</span> <span class="err">//</span> <span class="err">emoji</span> <span class="err">id</span><span class="p">,</span> <span class="err">required</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;seal-of-approval&quot;</span> <span class="err">//</span> <span class="err">emoji</span> <span class="kc">na</span><span class="err">me</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+        <span class="nt">&quot;animated&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">//</span> <span class="err">a</span><span class="kc">n</span><span class="err">ima</span><span class="kc">te</span><span class="err">d</span><span class="p">,</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span>
+       <span class="p">}</span>
+       <span class="err">//</span> <span class="err">...</span>
+    <span class="p">],</span>
+  <span class="p">}</span>
+<span class="p">}}</span>
 </code></pre></div>
                 
               

@@ -76,6 +76,8 @@ Supported configuration options are:
 - `topics` - A list of topics to subscribe to.
 - `brokers` - Broker servers to connect to. (Kafka nodes)
 - `rdkafka_options` - A optional map of an option to value, where both sides need to be strings.
+- `retry_failed_events` - If set to `false` the source will **not** seek back the consumer offset upon a failed events and thus not retry those when `enable.auto.commit` is set to `false` in `rdkafka_options`. (default `true`)
+- `poll_interval` - Duration to wait until we poll again if no message is in the kafka queue. (default: `100`)
 
 Example:
 
@@ -91,6 +93,28 @@ onramp:
         - demo
         - snotbadger
       group_id: demo
+```
+
+A more involved example, only committing on successful circuit breaker event and not retrying failed events, while also decreasing the poll interval to 10ms to get notified of new messages faster:
+
+```yaml
+onramp:
+  - id: involved-kafka
+    type: kafka
+    codec: msgpack
+    preprocessors:
+      - lines
+    config:
+      brokers:
+        - kafka01:9092
+        - kafka02:9092
+      topics:
+        - my_topic
+      group_id: my_group_id
+      retry_failed_events: false
+      poll_interval: 10
+      rdkafka_options:
+        'enable.auto.commit': false
 ```
 
 ### udp

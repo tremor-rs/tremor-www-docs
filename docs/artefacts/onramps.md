@@ -117,6 +117,18 @@ onramp:
         'enable.auto.commit': false
 ```
 
+#### Semantics with `enable.auto.commit`
+
+If `enable.auto.commit: false` is set in `rdkafka_options`, the consumer offset in kafka will only be committed when the event has been successfully reached the other end of the pipeline (typically some [offramp](offramps.md#offramps) ).
+If an event failed during processing within the pipeline or at a downstream offramp, the consumer offset will be reset to the offset of the failed event, so it will be retried. This has some consequences worth mentioning:
+
+* Already processed kafka messages (that have succeeded before the failed message failed) might be seen again multiple times.
+* If the message is persistently failing (e.g. due to an illegal payload or similar), tremor will retry those messages infinitely.
+
+If persistent failures are tp be expected (e.g. due to invalid event payloads) or if repeating messages in general are a problem for, avoiding retries with `retry_failed_events: false` is advised.
+
+If `enable.auto.commit: true` is set in `rdkafka_options`, this is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the kafka message as event in tremor.
+
 ### udp
 
 The UDP onramp allows receiving data via UDP datagrams.

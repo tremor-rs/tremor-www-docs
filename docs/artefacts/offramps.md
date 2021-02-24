@@ -37,19 +37,20 @@ The column `Disconnect events` describes under which circumstances this offramp 
 
 | Offramp   | Disconnect events | Delivery acknowledgements |
 | --------- | ----------------- | ------------------------- |
-| kafka     | see librdkafka    | see librdkafka            |
-| elastic   | connection loss   | on 200 replies            |
-| rest      | connection loss   | on non 4xx/5xx replies    |
-| ws        | connection loss   | on send                   |
-| udp       | local socket loss | on send                   |
-| tcp       | connection loss   | on send                   |
-| Postgres  | never             | always                    |
-| file      | never             | always                    |
 | blackhole | never             | always                    |
 | debug     | never             | always                    |
+| elastic   | connection loss   | on 200 replies            |
 | exit      | never             | always                    |
+| file      | never             | always                    |
+| kafka     | see librdkafka    | see librdkafka            |
+| newrelic  | never             | never                     |
+| Postgres  | never             | always                    |
+| rest      | connection loss   | on non 4xx/5xx replies    |
+| stderr    | never             | always                    |
 | stdout    | never             | always                    |
-| sderr     | never             | always                    |
+| tcp       | connection loss   | on send                   |
+| udp       | local socket loss | on send                   |
+| ws        | connection loss   | on send                   |
 
 ## System Offramps
 
@@ -65,6 +66,44 @@ The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Dat
 
 ## Supported Offramps
 
+
+### blackhole
+
+The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) [histogram](http://hdrhistogram.org/).
+
+Supported configuration options are:
+
+- `warmup_secs` - Number of seconds after startup in which latency won't be measured to allow for a warmup delay.
+- `stop_after_secs` - Stop tremor after a given number of seconds and print the histogram.
+- `significant_figures` - Significant figures for the HDR histogram. (the first digits of each measurement that are kept as precise values)
+
+Example:
+
+```yaml
+offramp:
+  - id: bh
+    type: blackhole
+    config:
+      warmup_secs: 10
+      stop_after_secs: 40
+```
+### debug
+
+The debug offramp is used to get an overview of how many events are put in wich classification.
+
+This operator does not support configuration.
+
+Used metadata variables:
+
+- `$class` - Class of the event to count by. (optional)
+
+Example:
+
+```yaml
+offramp:
+  - id: dbg
+    type: debug
+```
 
 
 
@@ -180,7 +219,7 @@ binding:
   links:
     "/onramp/example/{instance}/out": ["/pipeline/to_elastic/{instance}/in"]
     "/pipeline/to_elastic/{instance}/in": ["/offramp/es-linked/{instance}/in"]
-    
+
     # handle success and error messages with different pipelines
     "/offramp/es-linked/{instance}/out": ["/pipeline/handle-es-success/{instance}/in"]
     "/offramp/es-linked/{instance}/err": ["/pipeline/handle-es-error/{instance}/in"]
@@ -189,6 +228,77 @@ binding:
     ...
 
 ```
+
+### exit
+
+The exit offramp terminates the runtime with a system exit status.
+
+The offramp accepts events via its standard input port and responds
+to events with a record structure containing a numeric exit field.
+
+To indicate successful termination, an `exit` status of zero may be used:
+
+```json
+{ "exit": 0 }
+```
+
+To indicate non-succesful termination, a non-zero `exit` status may be used:
+
+```json
+{ "exit": 1 }
+```
+
+Exit codes should follow standard UNIX/Linux guidelines when being integrated
+with `bash` or other shell-based environments, as follows:
+
+<!--alex ignore illegal-->
+
+| Code | Meaning                                                        |
+| ---- | -------------------------------------------------------------- |
+| 0    | Success                                                        |
+| 1    | General errors                                                 |
+| 2    | Misuse of builtins                                             |
+| 126  | Command invoked cannot run due to credentials/auth constraints |
+| 127  | Command not understood, not well-formed or illegal             |
+
+To delay the exit (to allow flushing of other offramps) the `delay` key can be used to delay the exit by a number of milliseconds:
+
+```json
+{
+  "exit": 1,
+  "delay": 1000
+}
+```
+
+Example:
+
+```yaml
+offramp:
+  - id: terminate
+    type: exit
+```
+
+### file
+
+The file offramp writes events to a file, one event per line. The file is overwritten if it exists.
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration options are:
+
+- `file` - The file to write to.
+
+Example:
+
+```yaml
+offramp:
+  - id: in
+    type: file
+    config:
+      file: /my/path/to/a/file.json
+```
+
+
 
 ### kafka
 
@@ -220,66 +330,66 @@ offramp:
       topic: demo
 ```
 
-### ws
+### newrelic
 
-Sends events over a WebSocket connection. Each event is a WebSocket message.
+Send events to [New Relic](https://newrelic.com/) platform, using it's log apis (variable by region).
 
-The default [codec](codecs.md#json) is `json`.
-
-Supported configuration options are:
-
-- `url` - WebSocket endpoint to send data to.
-- `binary` - If data should be send as binary instead of text (default: `false`).
-
-Used metadata variables:
-
-- `$url` - same as config `url` (optional. overrides related config param when present)
-- `$binary` - same as config `binary` (optional. overrides related config param when present)
-
-Set metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
-
-- `$binary` - `true` if the websocket message reply came as binary (`false` otherwise)
-
-When used as a linked offramp, batched events are rejected by the offramp.
-
-Example:
-
-```yaml
-onramp:
-  - id: ws
-    type: ws
-    config:
-      url: "ws://localhost:1234"
-```
-
-### udp
-
-The UDP offramp sends data to a given host and port as UDP datagram.
-
-The default [codec](codecs.md#json) is `json`.
-
-When the UDP onramp gets a batch of messages it will send each element of the batch as a distinct UDP datagram.
+This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.
 
 Supported configuration options are:
 
-- `host` - the local host to send data from
-- `port` - the local port to send data from
-- `dst_host` - the destination host to send data to
-- `dst_port` - the destination port to send data to.
+- `license_key` - New Relic's license (or insert only) key
+- `compress_logs` - Whther logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
+- `region` - Region to use to send logs. Available choices: usa, europe (default: usa)
 
 Example:
 
 ```yaml
 offramp:
-  - id: udp-out
-    type: udp
-    postprocessors:
-      - base64
+  - id: newrelic
+    type: newrelic
     config:
-      host: "10.11.12.13"
-      port: 1234
-      dst_host: "20.21.22.23"
-      dst_port: 2345
+      license_key: keystring
+      compress_logs: true
+      region: europe
+```
+
+### PostgreSQL
+
+PostgreSQL offramp.
+
+Supported configuration options are:
+
+- `host` - PostgreSQL database hostname
+- `port` - PostgresSQL database port
+- `user` - Username for authentication
+- `password` - Password for authentication
+- `dbname` - Database name
+- `table` - Database table name
+
+Data that comes in will be used to run an `INSERT` statement. It is required
+that data comes in objects representing columns. The object key must represent field
+name in the database and must contain following fields:
+
+- `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
+  etc.)
+- `name` - field name as represented by database table schema
+- `value` - the value of the field
+
+`codec` and `postprocessors` config values are ignored as they cannot apply to this offramp, since the event is transformed into a SQL query.
+
+Example:
+
+```yml
+id: db
+type: postgres
+config:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: example
+  dbname: sales
+  table: transactions
 ```
 
 ### rest
@@ -379,90 +489,6 @@ offramp:
         "Client": "Tremor"
 ```
 
-### PostgreSQL
-
-PostgreSQL offramp.
-
-Supported configuration options are:
-
-- `host` - PostgreSQL database hostname
-- `port` - PostgresSQL database port
-- `user` - Username for authentication
-- `password` - Password for authentication
-- `dbname` - Database name
-- `table` - Database table name
-
-Data that comes in will be used to run an `INSERT` statement. It is required
-that data comes in objects representing columns. The object key must represent field
-name in the database and must contain following fields:
-
-- `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
-  etc.)
-- `name` - field name as represented by database table schema
-- `value` - the value of the field
-
-`codec` and `postprocessors` config values are ignored as they cannot apply to this offramp, since the event is transformed into a SQL query.
-
-Example:
-
-```yml
-id: db
-type: postgres
-config:
-  host: localhost
-  port: 5432
-  user: postgres
-  password: example
-  dbname: sales
-  table: transactions
-```
-
-### file
-
-The file offramp writes events to a file, one event per line. The file is overwritten if it exists.
-
-The default [codec](codecs.md#json) is `json`.
-
-Supported configuration options are:
-
-- `file` - The file to write to.
-
-Example:
-
-```yaml
-offramp:
-  - id: in
-    type: file
-    config:
-      file: /my/path/to/a/file.json
-```
-
-### stdout
-
-A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with `system::stdout`.
-
-The default codec is [json](codecs.md#json).
-
-The stdout offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
-
-If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
-If `raw` is set to true, the event data will be put on stdout as is.
-
-Supported configuration options:
-
-- `prefix` - A prefix written before each event (optional string).
-- `raw` - Write evcent data bytes as is to stdout.
-
-Example:
-
-```yaml
-offramp:
-  - id: like_a_python_repl
-    type: stdout
-    config:
-      prefix: ">>> "
-```
-
 ### stderr
 
 A custom stderr offramp can be configured by using this offramp type. But beware that this will share the single stderr stream with `system::stderr`.
@@ -492,45 +518,30 @@ offramp:
       raw: true
 ```
 
+### stdout
 
+A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with `system::stdout`.
 
-### blackhole
+The default codec is [json](codecs.md#json).
 
-The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) [histogram](http://hdrhistogram.org/).
+The stdout offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
 
-Supported configuration options are:
+If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If `raw` is set to true, the event data will be put on stdout as is.
 
-- `warmup_secs` - Number of seconds after startup in which latency won't be measured to allow for a warmup delay.
-- `stop_after_secs` - Stop tremor after a given number of seconds and print the histogram.
-- `significant_figures` - Significant figures for the HDR histogram. (the first digits of each measurement that are kept as precise values)
+Supported configuration options:
+
+- `prefix` - A prefix written before each event (optional string).
+- `raw` - Write evcent data bytes as is to stdout.
 
 Example:
 
 ```yaml
 offramp:
-  - id: bh
-    type: blackhole
+  - id: like_a_python_repl
+    type: stdout
     config:
-      warmup_secs: 10
-      stop_after_secs: 40
-```
-
-### debug
-
-The debug offramp is used to get an overview of how many events are put in wich classification.
-
-This operator does not support configuration.
-
-Used metadata variables:
-
-- `$class` - Class of the event to count by. (optional)
-
-Example:
-
-```yaml
-offramp:
-  - id: dbg
-    type: debug
+      prefix: ">>> "
 ```
 
 ### tcp
@@ -566,75 +577,70 @@ offramp:
       port: 9000
 ```
 
-### exit
+### udp
 
-The exit offramp terminates the runtime with a system exit status.
+The UDP offramp sends data to a given host and port as UDP datagram.
 
-The offramp accepts events via its standard input port and responds
-to events with a record structure containing a numeric exit field.
+The default [codec](codecs.md#json) is `json`.
 
-To indicate successful termination, an `exit` status of zero may be used:
-
-```json
-{ "exit": 0 }
-```
-
-To indicate non-succesful termination, a non-zero `exit` status may be used:
-
-```json
-{ "exit": 1 }
-```
-
-Exit codes should follow standard UNIX/Linux guidelines when being integrated
-with `bash` or other shell-based environments, as follows:
-
-<!--alex ignore illegal-->
-
-| Code | Meaning                                                        |
-| ---- | -------------------------------------------------------------- |
-| 0    | Success                                                        |
-| 1    | General errors                                                 |
-| 2    | Misuse of builtins                                             |
-| 126  | Command invoked cannot run due to credentials/auth constraints |
-| 127  | Command not understood, not well-formed or illegal             |
-
-To delay the exit (to allow flushing of other offramps) the `delay` key can be used to delay the exit by a number of milliseconds:
-
-```json
-{
-  "exit": 1,
-  "delay": 1000
-}
-```
-
-Example:
-
-```yaml
-offramp:
-  - id: terminate
-    type: exit
-```
-
-### newrelic
-
-Send events to [New Relic](https://newrelic.com/) platform, using it's log apis (variable by region).
-
-This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.
+When the UDP onramp gets a batch of messages it will send each element of the batch as a distinct UDP datagram.
 
 Supported configuration options are:
 
-- `license_key` - New Relic's license (or insert only) key
-- `compress_logs` - Whther logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
-- `region` - Region to use to send logs. Available choices: usa, europe (default: usa)
+- `host` - the local host to send data from
+- `port` - the local port to send data from
+- `dst_host` - the destination host to send data to
+- `dst_port` - the destination port to send data to.
 
 Example:
 
 ```yaml
 offramp:
-  - id: newrelic
-    type: newrelic
+  - id: udp-out
+    type: udp
+    postprocessors:
+      - base64
     config:
-      license_key: keystring
-      compress_logs: true
-      region: europe
+      host: "10.11.12.13"
+      port: 1234
+      dst_host: "20.21.22.23"
+      dst_port: 2345
 ```
+
+
+### ws
+
+Sends events over a WebSocket connection. Each event is a WebSocket message.
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration options are:
+
+- `url` - WebSocket endpoint to send data to.
+- `binary` - If data should be send as binary instead of text (default: `false`).
+
+Used metadata variables:
+
+- `$url` - same as config `url` (optional. overrides related config param when present)
+- `$binary` - same as config `binary` (optional. overrides related config param when present)
+
+Set metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
+
+- `$binary` - `true` if the websocket message reply came as binary (`false` otherwise)
+
+When used as a linked offramp, batched events are rejected by the offramp.
+
+Example:
+
+```yaml
+onramp:
+  - id: ws
+    type: ws
+    config:
+      url: "ws://localhost:1234"
+```
+
+
+
+
+

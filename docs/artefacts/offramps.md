@@ -38,6 +38,7 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | Offramp   | Disconnect events | Delivery acknowledgements |
 | --------- | ----------------- | ------------------------- |
 | blackhole | never             | always                    |
+| cb        | never             | always                    |
 | debug     | never             | always                    |
 | elastic   | connection loss   | on 200 replies            |
 | exit      | never             | always                    |
@@ -87,6 +88,45 @@ offramp:
       warmup_secs: 10
       stop_after_secs: 40
 ```
+
+### cb
+
+`cb` is short for circuit breaker. This offramp can be used to trigger certain circuit breaker events manually by sending the intended circuit breaker event in the event metadata or the event data.
+Supported payloads are:
+
+ - `ack`
+ - `fail`
+ - `trigger` or `close`
+ - `open` or `restore`
+
+ No matter how many `ack` and `fail` strings the `cb` key contains, only ever one `ack` or `fail` CB event will be emitted, to stay within the CB protocol.
+ The same is true for `trigger`/`close` and `open`/`restore` strings, only one of those two will be emitted, never more.
+
+ Example config:
+
+```yaml
+ offramp:
+   - id: cb_tester
+     type: cb
+```
+
+Example payloads:
+
+```json
+{
+  "cb": "ack",
+  "some_other_field": true
+}
+```
+
+```json
+{
+  "cb": ["fail", "close"]
+}
+```
+
+Such an event or metadata will result in two CB insight events be sent back, one `fail` event, and one `close` event.
+
 ### debug
 
 The debug offramp is used to get an overview of how many events are put in wich classification.

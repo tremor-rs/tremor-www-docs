@@ -77,7 +77,7 @@ Supported configuration options are:
 - `brokers` - Broker servers to connect to. (Kafka nodes)
 - `rdkafka_options` - A optional map of an option to value, where both sides need to be strings.
 - `retry_failed_events` - If set to `false` the source will **not** seek back the consumer offset upon a failed events and thus not retry those when `enable.auto.commit` is set to `false` in `rdkafka_options`. (default `true`)
-- `poll_interval` - Duration to wait until we poll again if no message is in the kafka queue. (default: `100`)
+- `poll_interval` - Duration in milliseconds to wait until we poll again if no message is in the kafka queue. (default: `100`)
 
 Example:
 

@@ -1,4 +1,4 @@
-TREMOR_VSN=v0.9.0
+TREMOR_VSN=v0.10.2
 
 mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib docs/operations/cli.md
 	files=`find docs/tremor-script/stdlib -type f`;\

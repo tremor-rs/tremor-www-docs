@@ -370,6 +370,115 @@ offramp:
       topic: demo
 ```
 
+### KV
+
+The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.
+
+Events send to the KV offramp are commands the following commands are supported:
+
+Example:
+```yaml
+  - id: kv
+    type: kv
+    linked: true     # this needs to be true
+    codec: json
+    config:
+      dir: "temp/kv" # directory to store data in
+```
+
+#### get
+
+Fetches the data for a given key.
+
+**Request**:
+```json
+{"get": {"key": "<string|binary>"}}
+```
+
+**Response**:
+```json
+{"ok": "<decoded>"} // key was found, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not found
+```
+
+#### put
+
+Writes a value to a key, returns the old value if there was any.
+
+**Request**:
+```json
+{"put": {
+  "key": "<string|binary>",
+  "value": "<to encode>" // the format of value depends on the codec (does NOT have to be a string)
+}}
+```
+
+**Response**:
+```json
+{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not used before
+```
+
+#### delete
+
+Deletes a key, returns the old value if there was any.
+
+**Request**:
+```json
+{"delete": {"key": "<string|binary>"}}
+```
+
+**Response**:
+```json
+{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not used before
+```
+
+
+#### scan
+
+Reads a range of keys
+
+**Request**:
+```json
+{"scan": {
+   "start": "<string|binary>", // optional, if not set will start with the first key
+   "end": "<string|binary>", // optional, if not set will read to the end key
+}
+```
+**Response**:
+```json
+{"ok": [
+  {
+    "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
+    "value": "<decoded>" // the value, the format of decoded depends on the codec (does NOT have to be a string)
+  } // repeated, may be empty
+]}
+```
+
+#### cas
+
+Compare And Swap operation. Those operations require old values to match what it is compared to
+
+**Request**:
+```json
+{"cas": {
+   "key": "<string|binary>", // The key to operate on
+   "old": "<to encode|not-set>", // The old value, if not set means "this value wasn't present"
+   "new": "<to encode|not-set>", // The new value, if not set it means it gets deleted
+}}
+```
+**Response**:
+
+```json
+{"ok": null} // The operation succeeded
+{"error": {  // the operation failed
+  "current": "<decoded>", // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)
+  "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
+}}
+```
+
+
 ### newrelic
 
 Send events to [New Relic](https://newrelic.com/) platform, using it's log apis (variable by region).
@@ -684,8 +793,4 @@ onramp:
     config:
       url: "ws://localhost:1234"
 ```
-
-
-
-
 

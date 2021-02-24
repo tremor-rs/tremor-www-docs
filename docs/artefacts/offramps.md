@@ -44,6 +44,7 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | exit      | never             | always                    |
 | file      | never             | always                    |
 | kafka     | see librdkafka    | see librdkafka            |
+| kv        | never             | always
 | newrelic  | never             | never                     |
 | Postgres  | never             | always                    |
 | rest      | connection loss   | on non 4xx/5xx replies    |

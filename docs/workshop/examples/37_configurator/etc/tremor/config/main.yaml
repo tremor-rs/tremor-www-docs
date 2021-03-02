@@ -13,13 +13,19 @@ offramp:
     linked: true
     codec: string
     config:
-      endpoint: "http://quota_service_1:8139/quotas"
+      endpoint:
+        host: quota_service_1
+        port: 8139
+        path: /quotas
   - id: quota_service_2
     type: rest
     linked: true
     codec: string
     config:
-      endpoint: "http://quota_service_2:8139/quotas"
+      endpoint:
+        host: quota_service_2
+        port: 8139
+        path: /quotas
 
 binding:
   - id: main

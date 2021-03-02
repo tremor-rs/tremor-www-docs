@@ -27,7 +27,9 @@ offramp:
     linked: true
     codec: string
     config:
-      endpoint: "http://tremor-server:8139"
+      endpoint:
+        host: tremor-server
+        port: 8139
 ```
 
 ### Request flow

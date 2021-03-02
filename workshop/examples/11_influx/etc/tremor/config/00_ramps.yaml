@@ -16,10 +16,13 @@ offramp:
     type: rest # an influxdb offramp
     codec: influx
     config:
-      endpoints:
-        - http://influxdb:8086/write?db=tremor
-      headers:
-        "Client": "Tremor"
+      endpoint:
+        host: influxdb
+        port: 8086
+        path: /write
+        query: db=tremor
+        headers:
+          "Client": "Tremor"
   - id: debug
     type: stdout
     codec: influx

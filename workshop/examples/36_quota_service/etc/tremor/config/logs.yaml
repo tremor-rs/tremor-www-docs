@@ -16,7 +16,6 @@ offramp:
       nodes:
         - elasticsearch:9200
 
-# TODO link bucketing metrics to stdout as well
 binding:
   - id: logs
     links:
@@ -28,6 +27,9 @@ binding:
         #- "/offramp/system::stdout/system/in"
       "/pipeline/logs/{instance}/err":
         - "/offramp/system::stderr/system/in"
+      # for debugging (inspect tremor metrics)
+      #"/pipeline/system::metrics/system/out":
+      #  - "/offramp/system::stdout/system/in"
 
 mapping:
   /binding/logs/01:

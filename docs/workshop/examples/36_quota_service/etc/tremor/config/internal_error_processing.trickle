@@ -2,7 +2,7 @@ define script process
 script
   let $response = match present $response of
     case true =>
-      merge event of #{"status": 500} end
+      merge event of {"status": 500} end
     default =>
       {"status": 500}
   end;

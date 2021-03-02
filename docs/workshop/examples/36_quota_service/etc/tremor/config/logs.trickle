@@ -1,3 +1,5 @@
+#!config metrics_interval_s = 10
+
 define script process
 script
   use std::math;

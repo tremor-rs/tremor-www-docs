@@ -508,7 +508,9 @@ offramp:
       "text/html": "string"
       "application/vnd.stuff": "string"
     config:
-      endpoint: "http://httpbin.org/patch"
+      endpoint:
+        host: httpbin.org
+        path: /patch
       method: PATCH
 ```
 
@@ -524,7 +526,10 @@ offramp:
     postprocessors:
       - lines
     config:
-      endpoint: http://influx/write?db=metrics
+      endpoint:
+        host: influx
+        path: /write
+        query: db=metrics
       headers:
         "Client": "Tremor"
 ```

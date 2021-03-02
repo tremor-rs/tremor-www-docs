@@ -40,21 +40,24 @@ offramp:
       linked: true
       codec: json
       config:
-        endpoint: http://webserver01
+        endpoint:
+          host: webserver01
         concurrency: 9 # allo max 9 concurrent in-flight requests
     - id: upstream02
       type: rest
       linked: true
       codec: json
       config:
-        endpoint: http://webserver02
+        endpoint:
+          host: webserver02
         method: POST # set a default method if no $request.method is set
     - id: upstream03
       type: rest
       linked: true
       codec: json
       config:
-        endpoint: http://webserver03
+        endpoint:
+          host: webserver03
         headers: # add some headers
           "X-Upstream": "upstream03"
 ```

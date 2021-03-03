@@ -512,6 +512,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tremor-script/stdlib/std/base64/" class="md-nav__link">
+        std::base64
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tremor-script/stdlib/std/binary/" class="md-nav__link">
+        std::binary
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tremor-script/stdlib/std/float/" class="md-nav__link">
         std::float
       </a>
@@ -1194,6 +1218,54 @@
   <a href="#kafka" class="md-nav__link">
     kafka
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kv" class="md-nav__link">
+    KV
+  </a>
+  
+    <nav class="md-nav" aria-label="KV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    get
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put" class="md-nav__link">
+    put
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    scan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cas" class="md-nav__link">
+    cas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2056,6 +2128,54 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#kv" class="md-nav__link">
+    KV
+  </a>
+  
+    <nav class="md-nav" aria-label="KV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    get
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put" class="md-nav__link">
+    put
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    scan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cas" class="md-nav__link">
+    cas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#newrelic" class="md-nav__link">
     newrelic
   </a>
@@ -2216,6 +2336,11 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <td>kafka</td>
 <td>see librdkafka</td>
 <td>see librdkafka</td>
+</tr>
+<tr>
+<td>kv</td>
+<td>never</td>
+<td>always</td>
 </tr>
 <tr>
 <td>newrelic</td>
@@ -2508,6 +2633,79 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
       <span class="nt">brokers</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">kafka:9092</span>
       <span class="nt">topic</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">demo</span>
+</code></pre></div>
+<h3 id="kv">KV<a class="headerlink" href="#kv" title="Permanent link">&para;</a></h3>
+<p>The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.</p>
+<p>Events send to the KV offramp are commands the following commands are supported:</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code>  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
+    <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>     <span class="c1"># this needs to be true</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">dir</span><span class="p">:</span> <span class="s">&quot;temp/kv&quot;</span> <span class="c1"># directory to store data in</span>
+</code></pre></div></p>
+<h4 id="get">get<a class="headerlink" href="#get" title="Permanent link">&para;</a></h4>
+<p>Fetches the data for a given key.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;get&quot;: {&quot;key&quot;: &quot;&lt;string|binary&gt;&quot;}}
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;ok&quot;: &quot;&lt;decoded&gt;&quot;} // key was found, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not found
+</code></pre></div></p>
+<h4 id="put">put<a class="headerlink" href="#put" title="Permanent link">&para;</a></h4>
+<p>Writes a value to a key, returns the old value if there was any.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;put&quot;: {
+  &quot;key&quot;: &quot;&lt;string|binary&gt;&quot;,
+  &quot;value&quot;: &quot;&lt;to encode&gt;&quot; // the format of value depends on the codec (does NOT have to be a string)
+}}
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;ok&quot;: &quot;&lt;decoded&gt;&quot;} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not used before
+</code></pre></div></p>
+<h4 id="delete">delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h4>
+<p>Deletes a key, returns the old value if there was any.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;delete&quot;: {&quot;key&quot;: &quot;&lt;string|binary&gt;&quot;}}
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;ok&quot;: &quot;&lt;decoded&gt;&quot;} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not used before
+</code></pre></div></p>
+<h4 id="scan">scan<a class="headerlink" href="#scan" title="Permanent link">&para;</a></h4>
+<p>Reads a range of keys</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;scan&quot;: {
+   &quot;start&quot;: &quot;&lt;string|binary&gt;&quot;, // optional, if not set will start with the first key
+   &quot;end&quot;: &quot;&lt;string|binary&gt;&quot;, // optional, if not set will read to the end key
+}
+</code></pre></div>
+<strong>Response</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;ok&quot;: [
+  {
+    &quot;key&quot;: &quot;&lt;binary&gt;&quot;, // keys are ALWAYS encoded as binary since we don&#39;t know if it&#39;s a string or binary
+    &quot;value&quot;: &quot;&lt;decoded&gt;&quot; // the value, the format of decoded depends on the codec (does NOT have to be a string)
+  } // repeated, may be empty
+]}
+</code></pre></div></p>
+<h4 id="cas">cas<a class="headerlink" href="#cas" title="Permanent link">&para;</a></h4>
+<p>Compare And Swap operation. Those operations require old values to match what it is compared to</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code>{&quot;cas&quot;: {
+   &quot;key&quot;: &quot;&lt;string|binary&gt;&quot;, // The key to operate on
+   &quot;old&quot;: &quot;&lt;to encode|not-set&gt;&quot;, // The old value, if not set means &quot;this value wasn&#39;t present&quot;
+   &quot;new&quot;: &quot;&lt;to encode|not-set&gt;&quot;, // The new value, if not set it means it gets deleted
+}}
+</code></pre></div>
+<strong>Response</strong>:</p>
+<div class="highlight"><pre><span></span><code>{&quot;ok&quot;: null} // The operation succeeded
+{&quot;error&quot;: {  // the operation failed
+  &quot;current&quot;: &quot;&lt;decoded&gt;&quot;, // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)
+  &quot;proposed&quot;: &quot;&lt;decoded&gt;&quot; // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
+}}
 </code></pre></div>
 <h3 id="newrelic">newrelic<a class="headerlink" href="#newrelic" title="Permanent link">&para;</a></h3>
 <p>Send events to <a href="https://newrelic.com/">New Relic</a> platform, using it's log apis (variable by region).</p>

@@ -516,6 +516,30 @@
   
   
     <li class="md-nav__item">
+      <a href="../base64/" class="md-nav__link">
+        std::base64
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../binary/" class="md-nav__link">
+        std::binary
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../float/" class="md-nav__link">
         std::float
       </a>
@@ -736,6 +760,20 @@
         <li class="md-nav__item">
   <a href="#containsinput-string" class="md-nav__link">
     contains(input, string)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from_utf8_lossybytes" class="md-nav__link">
+    from_utf8_lossy(bytes)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#into_binarybytes" class="md-nav__link">
+    into_binary(bytes)
   </a>
   
 </li>
@@ -1971,6 +2009,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#from_utf8_lossybytes" class="md-nav__link">
+    from_utf8_lossy(bytes)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#into_binarybytes" class="md-nav__link">
+    into_binary(bytes)
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2012,11 +2064,11 @@ escapedby adding another parenthesis of the same type.</p>
 <h3 id="leninput">len(input)<a class="headerlink" href="#leninput" title="Permanent link">&para;</a></h3>
 <p>Returns the length of the input string (counted as utf8 characters not
 bytes!).</p>
-<p>Retrusn an <code>int</code></p>
+<p>Returns an <code>integer</code></p>
 <h3 id="bytesinput">bytes(input)<a class="headerlink" href="#bytesinput" title="Permanent link">&para;</a></h3>
 <p>Returns the number of bytes composing the input string (may not be equivalent
 to the number of characters!).</p>
-<p>Returns an <code>int</code></p>
+<p>Returns an <code>integer</code></p>
 <h3 id="replaceinput-from-to">replace(input, from, to)<a class="headerlink" href="#replaceinput-from-to" title="Permanent link">&para;</a></h3>
 <p>Replaces all occurrences of from in Input to to.</p>
 <p>Returns a <code>string</code></p>
@@ -2049,6 +2101,12 @@ the result in an array.</p>
 <h3 id="containsinput-string">contains(input, string)<a class="headerlink" href="#containsinput-string" title="Permanent link">&para;</a></h3>
 <p>Returns if the input string contains another string or not.</p>
 <p>Returns a <code>bool</code></p>
+<h3 id="from_utf8_lossybytes">from_utf8_lossy(bytes)<a class="headerlink" href="#from_utf8_lossybytes" title="Permanent link">&para;</a></h3>
+<p>Turns a <code>binary</code> into a utf8 string, potentally discarding invalid codepoints</p>
+<p>Returns a <code>string</code></p>
+<h3 id="into_binarybytes">into_binary(bytes)<a class="headerlink" href="#into_binarybytes" title="Permanent link">&para;</a></h3>
+<p>Turns a <code>string</code> into it's binary representation</p>
+<p>Returns a <code>binary</code></p>
                 
               
               

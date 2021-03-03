@@ -392,12 +392,12 @@ Example:
 Fetches the data for a given key.
 
 **Request**:
-```json
+```jsonc
 {"get": {"key": "<string|binary>"}}
 ```
 
 **Response**:
-```json
+```jsonc
 {"ok": "<decoded>"} // key was found, the format of decoded depends on the codec (does NOT have to be a string)
 null,               // key was not found
 ```
@@ -407,7 +407,7 @@ null,               // key was not found
 Writes a value to a key, returns the old value if there was any.
 
 **Request**:
-```json
+```jsonc
 {"put": {
   "key": "<string|binary>",
   "value": "<to encode>" // the format of value depends on the codec (does NOT have to be a string)
@@ -415,7 +415,7 @@ Writes a value to a key, returns the old value if there was any.
 ```
 
 **Response**:
-```json
+```jsonc
 {"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
 null,               // key was not used before
 ```
@@ -425,12 +425,12 @@ null,               // key was not used before
 Deletes a key, returns the old value if there was any.
 
 **Request**:
-```json
+```jsonc
 {"delete": {"key": "<string|binary>"}}
 ```
 
 **Response**:
-```json
+```jsonc
 {"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
 null,               // key was not used before
 ```
@@ -441,14 +441,14 @@ null,               // key was not used before
 Reads a range of keys
 
 **Request**:
-```json
+```jsonc
 {"scan": {
    "start": "<string|binary>", // optional, if not set will start with the first key
    "end": "<string|binary>", // optional, if not set will read to the end key
 }
 ```
 **Response**:
-```json
+```jsonc
 {"ok": [
   {
     "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
@@ -462,7 +462,7 @@ Reads a range of keys
 Compare And Swap operation. Those operations require old values to match what it is compared to
 
 **Request**:
-```json
+```jsonc
 {"cas": {
    "key": "<string|binary>", // The key to operate on
    "old": "<to encode|not-set>", // The old value, if not set means "this value wasn't present"
@@ -471,7 +471,7 @@ Compare And Swap operation. Those operations require old values to match what it
 ```
 **Response**:
 
-```json
+```jsonc
 {"ok": null} // The operation succeeded
 {"error": {  // the operation failed
   "current": "<decoded>", // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)

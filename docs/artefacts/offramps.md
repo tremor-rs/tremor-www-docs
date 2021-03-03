@@ -794,4 +794,3 @@ onramp:
     config:
       url: "ws://localhost:1234"
 ```
-

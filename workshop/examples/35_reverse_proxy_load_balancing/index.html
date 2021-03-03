@@ -1864,21 +1864,24 @@ a <a href="../../../artefacts/onramps/#rest">REST onramp</a> needs to be configu
       <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
       <span class="nt">config</span><span class="p">:</span>
-        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://webserver01</span>
+        <span class="nt">endpoint</span><span class="p">:</span>
+          <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">webserver01</span>
         <span class="nt">concurrency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9</span> <span class="c1"># allo max 9 concurrent in-flight requests</span>
     <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">upstream02</span>
       <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rest</span>
       <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
       <span class="nt">config</span><span class="p">:</span>
-        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://webserver02</span>
+        <span class="nt">endpoint</span><span class="p">:</span>
+          <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">webserver02</span>
         <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">POST</span> <span class="c1"># set a default method if no $request.method is set</span>
     <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">upstream03</span>
       <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rest</span>
       <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
       <span class="nt">config</span><span class="p">:</span>
-        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://webserver03</span>
+        <span class="nt">endpoint</span><span class="p">:</span>
+          <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">webserver03</span>
         <span class="nt">headers</span><span class="p">:</span> <span class="c1"># add some headers</span>
           <span class="s">&quot;X-Upstream&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;upstream03&quot;</span>
 </code></pre></div>

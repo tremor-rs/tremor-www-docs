@@ -2632,7 +2632,9 @@ config:
       <span class="s">&quot;text/html&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;string&quot;</span>
       <span class="s">&quot;application/vnd.stuff&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;string&quot;</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="s">&quot;http://httpbin.org/patch&quot;</span>
+      <span class="nt">endpoint</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">httpbin.org</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/patch</span>
       <span class="nt">method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PATCH</span>
 </code></pre></div>
 <h4 id="rest-offramp-example-for-influxdb">rest offramp example for InfluxDB<a class="headerlink" href="#rest-offramp-example-for-influxdb" title="Permanent link">&para;</a></h4>
@@ -2644,7 +2646,10 @@ config:
     <span class="nt">postprocessors</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">lines</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://influx/write?db=metrics</span>
+      <span class="nt">endpoint</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">influx</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/write</span>
+        <span class="nt">query</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">db=metrics</span>
       <span class="nt">headers</span><span class="p">:</span>
         <span class="s">&quot;Client&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;Tremor&quot;</span>
 </code></pre></div>

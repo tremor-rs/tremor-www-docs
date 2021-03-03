@@ -1898,7 +1898,9 @@
     <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
     <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="s">&quot;http://tremor-server:8139&quot;</span>
+      <span class="nt">endpoint</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tremor-server</span>
+        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8139</span>
 </code></pre></div>
 <h3 id="request-flow">Request flow<a class="headerlink" href="#request-flow" title="Permanent link">&para;</a></h3>
 <p>Incoming requests from clients are forwarded to the <code>request_processing</code> pipeline, from where it goes to the upstream server. The resulting response is then returned back to the client which initiated the request (after any needed processing from the <code>response_processing</code> pipeline).</p>

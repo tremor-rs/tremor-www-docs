@@ -21,8 +21,8 @@ offramp:
         port: 8086
         path: /write
         query: db=tremor
-        headers:
-          "Client": "Tremor"
+      headers:
+        "Client": "Tremor"
   - id: debug
     type: stdout
     codec: influx

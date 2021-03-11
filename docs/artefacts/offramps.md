@@ -587,6 +587,10 @@ Set metadata variables:
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
     - `status` - Numeric HTTP status code
     - `headers` - A record that maps header name (lowercase string) to value (array of strings)
+- `$request` - A record with the related HTTP request attributes. Available fields within:
+    - `method` - HTTP method used
+    - `headers` - A record containing all the request headers
+    - `endpoint` - A record containing all the fields that config `endpoint` does
 
 When used as a linked offramp, batched events are rejected by the offramp.
 

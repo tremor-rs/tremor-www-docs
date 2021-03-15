@@ -7,8 +7,11 @@ binding:
   - id: example                                     # The unique name of this binding template
     links:
       '/onramp/udp-input/{instance}/out':            # Connect the inpunt to the pipeline
-       - '/pipeline/example/{instance}/in'
+        - '/pipeline/system::passthrough/{instance}/in'
+        - '/pipeline/example/{instance}/in'
+      '/pipeline/system::passthrough/{instance}/out':
+        - '/offramp/debug2/{instance}/in'
       '/pipeline/example/{instance}/out':           # Connect the pipeline to the output
-       - '/offramp/influx-output/{instance}/in'
+        - '/offramp/influx-output/{instance}/in'
       '/pipeline/example/{instance}/err':           # Connect the pipeline to the output
-       - '/offramp/system::stdout/{instance}/in'
+        - '/offramp/system::stdout/{instance}/in'

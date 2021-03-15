@@ -20,46 +20,31 @@ The most basic query possible in trickle is
 select event from in into out; # A basic passthrough query pipeline
 ```
 
-This would be configured/programmed as follows in the more verbose
-pipeline yaml format:
-
-```yaml
-pipeline:
-  - id: main
-    interface:
-      inputs:
-        - in
-      outputs:
-        - out
-    links:
-      in: [out]
-```
-
-The `event` keyword selected the event from the standard input stream `in`
+The `event` keyword selects the event from the standard input stream `in`
 and passes it through unchanged to the standard output stream `out`.
 
-In tremor's trickle query langauge queries are compiled and optimised and
+In tremor's trickle query language queries are compiled and optimised and
 data is streamed though the query. Data can be passed through, transformed,
 filtered, aggregated, branched or combined to form continuous stream processing
 algorithms.
 
 Like other event processing languages, trickle _inverts_ the relationship between
-query and data when compared to normal RDBMS SQL langauges. Instead of running a
-dynamic query against static in memory or disk persisted data, we compilse and
+query and data when compared to normal RDBMS SQL languages. Instead of running a
+dynamic query against static in memory or disk persisted data, we compile and
 optimise queries and stream near real-time data through each query.
 
 Data can be ingested from the outside world via the 'in' standard stream.
 Data can be produced to the outside world via the 'out' standard stream.
-Errors can be processed through a standard 'err' standard stream.
+Errors can be processed through the 'err' standard stream.
 
-These three primitives are analgous to the `stdin`, `stdout` and `stderr` streams
+These three primitives are analogous to the `stdin`, `stdout` and `stderr` streams
 in UNIX-like systems. These can be chained or interconnected via connecting multiple
 statements together to form a directed acyclic graph.
 
 We can branch inputs using `where` and `having` clauses as filters to logically
 partition streams into independent processing streams.
 
-In the below example we pratition events by their `seq_num` field. If the number
+In the below example we partition events by their `seq_num` field. If the number
 is even, we branch the corresponding events into a stream named `evens`. If the
 number is odd, we branch to a stream named `odds`.
 
@@ -87,14 +72,14 @@ We can test this with a json event using the `tremor` command line tool
 { "seq_num": 4, "value": 10, "group": "horse" }
 ```
 
-Assuming the trickle query is stored in a file called `evenodd.tricle` with the sample event
+Assuming the trickle query is stored in a file called `evenodd.trickle` with the sample event
 in a file called `data.json`
 
 ```bash
 $ tremor run evenodd.trickle -i data.json
 ```
 
-The command line tool will repeatedly inject the event `-i` argument document and we would
+The command line tool will inject all events from the file provided by the `-i` argument and we would
 expect to see output from the tool as follows:
 
 ```bash
@@ -103,15 +88,11 @@ expect to see output from the tool as follows:
 
 ## Scripts and Operators
 
-The query language is _backwards compatible_ with the legacy pipeline format in that the same
-operations are available in the old and new syntax. The new structured query syntax is more
-flexible and powerful, however.
-
-For example, here's the logic for an entire backpressure algorithm that could be introduced as
-a proxy between two systems:
+Here's the logic for an entire backpressure algorithm that could be introduced as
+a proxy between two systems, implemented by using a builtin operator called [`qos::backpressure`](operators.md#qosbackpressure):
 
 ```trickle
-define generic::backpressure operator bp
+define qos::backpressure operator bp
 with
     timeout = 10000,
     steps = [ 1, 50, 100, 250, 750 ],
@@ -122,8 +103,8 @@ select event from in into bp;
 select event from bp into out;
 ```
 
-A slightly more complex example that uses both operators and the tremor scripting langauge
-with the query langauge all together:
+A slightly more complex example that uses both operators and the tremor scripting language
+with the query language all together:
 
 ```tremor
 define grouper::bucket operator kfc;
@@ -151,12 +132,12 @@ select event from categorize into kfc;
 select event from kfc into out;
 ```
 
-Operators, in the query langauge as in the pipeline format are defined as `<module>::<name>` in the
+Operators are defined as `<module>::<name>` in the
 context of an operator definition clause. Operators, like script definitions can take arguments.
 
 Definitions in tremor are non-executing. They should be considered as templates or specifications.
 
-In the query langauge, any `define` clause creates specifications, possibly with arguments for
+In the query language, any `define` clause creates specifications, possibly with arguments for
 specialization. They are typically incarnated via the `create` clause. Anything that is `create`ed
 will form a stream or node in the query graph - these _do_ consume memory and participate in a
 pipeline query algorithm.
@@ -221,18 +202,18 @@ select event from b into out;
 
 ## Aggregations
 
-A key feature of the tremor query langauge are aggregations. These are supported with:
+A key feature of the tremor query language are aggregations. These are supported with:
 
-- Aggregate functions - An aggregate function is a function that runs in the context of a temporal window of events, emitting results intermittently
-- Windows - A window is a range of event, clock or data time. There can be many different types of window
+- Windows - A window is a range of events, clock or data time. There can be many different types of windows.
+- Aggregate functions - An aggregate function is a function that runs in the context of a window of events, emitting results intermittently
 - Tilt Frames - A tilt frame is a chain of compatible windows with **decreasing** resolution used to reduce memory pressure and preserve relative accuracy of windowed aggregate functions
 
 An example clock-driven tumbling window:
 
 ```
 define tumbling window `15secs`
- with
-   interval = datetime::with_seconds(15),
+with
+   interval = core::datetime::with_seconds(15),
 end;
 
 select {
@@ -249,14 +230,14 @@ into out;
 
 To use a window we need to define the window specifications, such as a 15 second clock-based
 tumbling window called `15secs` as above. We can then create instances of these windows at runtime by
-applying those windows to streams. This is done in the `from` clause in `select` expressions.
+applying those windows to streams. This is done in the `from` clause of a `select` statement.
 
 Wherever windows are applied, aggregate functions can be used. In the abvove example, we are calculating
 the minimum, maximum, average, standard deviation and variance of a `value` numeric field in data streaming
 into the query via the standard input stream.
 
-The query language is not constrained to to clock-driven window definitions. Windows can also be
-data-drive or fully programmatic.
+The query language is not constrained to clock-driven window definitions. Windows can also be
+data-driven or fully programmatic.
 
 A more complete example:
 
@@ -279,7 +260,7 @@ into normalize;
 ```
 
 In the above example we use a single aggregate function called `aggr::stats::hdr` which uses a high dynamic range
-or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
+or HDR Histogram to compute quantile estimates and basic statistics against a number of dynamic grouping fields
 set by the `group` clause. A group clause effectively partitions our operation by the group expressions provided
 by the trickle query programmer. In the example, we're using the field names of the nested 'fields' record on inbound
 events to compose a component of a group that is also qualified by tags and a measurement name. The field component
@@ -295,7 +276,7 @@ each frame without amplifying error - in short, we get the **effect** of summari
 
 ## Aggregation Mechanics
 
-The mechanics of aggregation in the query langauge are non-trivial.
+The mechanics of aggregation in the query language are non-trivial.
 
 A high level non-normative summary follows.
 
@@ -311,7 +292,7 @@ In the illustration above events `1` and `2` in the first window `w0` produce a 
 Events `3` and `4` in the second window `w1` produce a single synthetic or derivate event `b`
 As there is no 6th event in the example illustration, we will _never_ get another synthetic output event
 
-Contrast this with the 10 second or clock-based tumbling window. In tfirst window `w0`s lifetime we capture
+Contrast this with the 10 second or clock-based tumbling window. In the first window `w0`s lifetime we capture
 all events in the illustration.
 
 ### Tilt Frames
@@ -337,7 +318,7 @@ and memory overhead without the using the tilt-frame mechanism.
 
 ## Group Mechanics
 
-The group clause in the query language partitions streams before windows and tilt frames
+The `group by` clause in the query language partitions streams before windows and tilt frames
 are applied. Groups can be set-based, each-based or composites thereof.
 
 ### Set based grouping
@@ -385,9 +366,9 @@ set and qualified by country ...
 
 ### Limitations
 
-There are cases however that currently complex to partitionable with a
-single sql expression due to limitations with the grouping clause. For example
-what is we wanted to make availability zones a component of our group partitions?
+There are cases however that are currently complex to partition with a
+single select statement due to limitations with the grouping clause. For example
+what if we wanted to make availability zones a component of our group partitions?
 
 How would we structure such a query?
 

@@ -120,6 +120,13 @@ Tremor supports tumbling windows by number of events or by time.
 General configuration Parameters:
 
 * `eviction_period`: duration in nanoseconds without events arriving, after which to evict / remove the current window data for a single group.
+* `max_groups`: maximum number of groups to maintain simultaneously in memory. Groups added beyond that number will be ignored. Per default, tremor allows as much groups as will fit into memory.
+
+Each select statement maintains the groups for the current windows in an in memory data-structure. This contains the group values as well as the aggregate states.
+If your grouping values possibly have a very high cardinality it is possible to end up with runaway memory growth, as per default the group data structures won't be evicted,
+unless `eviction_period` is set. Old groups will be discarded after `2 x eviction_period` if no event for those groups arrived.
+To configure an upper bound on the number of groups that should be maintained simultaneously for a window, set `max_groups`.
+This will help avoid unbounded memory growth, especially when using `emit_empty_windows` on time based windows.
 
 ##### Windows based on number of events
 
@@ -146,6 +153,7 @@ independent from event flow with a granularity of `100ms`. It is thus possible t
 Configuration Parameters:
 
 - `interval`: Time interval in nanoseconds after which the window closes.
+- `emit_empty_windows` - By default, time based windows will only emit, if events arrived. By configuring `emit_empty_windows` as `true` this window will emit every `interval`, regardless if events arrived or not. If you use this in a `group by` query and the cardinality is likely huge, consider using `max_groups` and `eviction_period` to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.
 
 
 Window definition grammar:
@@ -272,12 +280,14 @@ select event from in into out;
 ```
 
 Select operations can filter ingested data with the specification of a `where` clause. The clause forms a predicate check on the inbound events before any further processing takes place.
+That means the `event` available to the `where` clause is the unprocessed inbound event from the input stream (`in` in this case):
 
 ```trickle
 select event from in where event.is_interesting into out;
 ```
 
 Select operations can filter data being forwarded to other operators with the specification of a `having` clause. The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
+That means the `event` available to the `having` clause is the result of evaluating the `select` target clause (the expression between `select` and `from`).
 
 ```trickle
 select event from in into out having event.is_interesting;
@@ -291,10 +301,11 @@ with
     interval = datetime::with_seconds(15),
 end;
 
-select { "count": aggr::stats::count(event) } from in[fifteen_secs] into out having event.count > 0;
+select { "count": aggr::stats::count() } from in[fifteen_secs] into out having event.count > 0;
 ```
 
 In the above operation, we emit a synthetic count every fifteen seconds if at least one event has been witnessed during a 15 second window of time.
+
 
 Select operations can be grouped through defining a `group by` clause.
 
@@ -304,7 +315,7 @@ with
     interval = datetime::with_seconds(15),
 end;
 
-select { "count": aggr::stats::count(event) }
+select { "count": aggr::stats::count() }
 from in[fifteen_secs]
 group by set(event.partition)
 into out
@@ -314,3 +325,26 @@ having event.count > 0;
 In the above operation, we partition the ingested events into groups defined by a required `event.partition` data field on the inbound event. Each of these groups maintains an independent fifteen second tumbling window, and each window upon closing gates outbound synthetic events by a count for that group.
 
 The current implementation of `select` allows set-based and each-based grouping. These can be composed concatenatively. However `cube` and `rollup` based grouping dimensions are not currently supported.
+
+In windowed queries any event related data can only be referenced in those two cases:
+
+* it is used as an argument to an aggregate function
+* it is used as expression in the `group by` clause
+
+Here is an example of valid and invalid references:
+
+```trickle
+define tumbling window my_window
+with
+  size = 12
+end;
+
+select {
+    "last": aggr::win::last(event.other), # ok, inside aggregate function
+    "foo": event.foo + 1, # ok, used inside aggregate function
+    "bad": event.other,   # NOT OK
+    "bad_meta": $my_meta, # NOT OK, same rules apply to event metadata
+} from in[my_window]
+group by set(event.foo, event.bar)
+into out;
+```

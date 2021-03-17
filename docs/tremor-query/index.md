@@ -120,7 +120,7 @@ Tremor supports tumbling windows by number of events or by time.
 General configuration Parameters:
 
 * `eviction_period`: duration in nanoseconds without events arriving, after which to evict / remove the current window data for a single group.
-* `max_groups`: maximum number of groups to maintain simultaneously in memory. Groups added beyond that number will be ignored. Per default, tremor allows as much groups as will fit into memory.
+* `max_groups`: maximum number of groups to maintain simultaneously in memory. Groups added beyond that number will be ignored. Per default, tremor does not impose any limit on the number of groups kept simultaneously.
 
 Each select statement maintains the groups for the current windows in an in memory data-structure. This contains the group values as well as the aggregate states.
 If your grouping values possibly have a very high cardinality it is possible to end up with runaway memory growth, as per default the group data structures won't be evicted,
@@ -153,7 +153,10 @@ independent from event flow with a granularity of `100ms`. It is thus possible t
 Configuration Parameters:
 
 - `interval`: Time interval in nanoseconds after which the window closes.
-- `emit_empty_windows` - By default, time based windows will only emit, if events arrived. By configuring `emit_empty_windows` as `true` this window will emit every `interval`, regardless if events arrived or not. If you use this in a `group by` query and the cardinality is likely huge, consider using `max_groups` and `eviction_period` to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.
+- `emit_empty_windows` - By default, time based windows will only emit, if events arrived. By configuring `emit_empty_windows` as `true` this window will emit every `interval`, regardless if events arrived or not.
+
+!!! warning
+    If you use a window with `emit_empty_windows` in a `group by` query and the cardinality is likely huge, consider using `max_groups` and `eviction_period` to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.
 
 
 Window definition grammar:

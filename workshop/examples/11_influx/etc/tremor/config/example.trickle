@@ -3,12 +3,12 @@ use std::record;
 
 define tumbling window `10secs`
 with
-   interval = 10000
+   interval = core::datetime::with_seconds(10)
 end;
 
 define tumbling window `1min`
 with
-   interval = 60000
+   interval = core::datetime::with_minutes(1)
 end;
 
 create stream normalize;
@@ -33,10 +33,10 @@ select {
 from in
 group by set(event.measurement, event.tags, each(record::keys(event.fields)))
 into aggregate
-having type::is_number(event.value); 
+having type::is_number(event.value);
 
 
-select 
+select
 {
     "measurement": event.measurement,
     "tags": patch event.tags of insert "window" => window end,

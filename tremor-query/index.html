@@ -2213,7 +2213,13 @@ same as in <code>tremor-script</code>.</p>
 <p>General configuration Parameters:</p>
 <ul>
 <li><code>eviction_period</code>: duration in nanoseconds without events arriving, after which to evict / remove the current window data for a single group.</li>
+<li><code>max_groups</code>: maximum number of groups to maintain simultaneously in memory. Groups added beyond that number will be ignored. Per default, tremor does not impose any limit on the number of groups kept simultaneously.</li>
 </ul>
+<p>Each select statement maintains the groups for the current windows in an in memory data-structure. This contains the group values as well as the aggregate states.
+If your grouping values possibly have a very high cardinality it is possible to end up with runaway memory growth, as per default the group data structures won't be evicted,
+unless <code>eviction_period</code> is set. Old groups will be discarded after <code>2 x eviction_period</code> if no event for those groups arrived.
+To configure an upper bound on the number of groups that should be maintained simultaneously for a window, set <code>max_groups</code>.
+This will help avoid unbounded memory growth, especially when using <code>emit_empty_windows</code> on time based windows.</p>
 <h5 id="windows-based-on-number-of-events">Windows based on number of events<a class="headerlink" href="#windows-based-on-number-of-events" title="Permanent link">&para;</a></h5>
 <p>Size based tumbling windows close when a certain number of aggregated events has been reached.</p>
 <p>Configuration Parameters:</p>
@@ -2233,7 +2239,12 @@ independent from event flow with a granularity of <code>100ms</code>. It is thus
 <p>Configuration Parameters:</p>
 <ul>
 <li><code>interval</code>: Time interval in nanoseconds after which the window closes.</li>
+<li><code>emit_empty_windows</code> - By default, time based windows will only emit, if events arrived. By configuring <code>emit_empty_windows</code> as <code>true</code> this window will emit every <code>interval</code>, regardless if events arrived or not.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use a window with <code>emit_empty_windows</code> in a <code>group by</code> query and the cardinality is likely huge, consider using <code>max_groups</code> and <code>eviction_period</code> to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.</p>
+</div>
 <p>Window definition grammar:</p>
 <blockquote>
 <p><img alt="window definition grammar" src="grammar/diagram/DefineWindowDefn.png" />
@@ -2335,10 +2346,12 @@ independent from event flow with a granularity of <code>100ms</code>. It is thus
 <p>An example select operation configured to pass through data from a pipeline's default <code>in</code> stream to a pipeline's default <code>out</code> stream:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>Select operations can filter ingested data with the specification of a <code>where</code> clause. The clause forms a predicate check on the inbound events before any further processing takes place.</p>
+<p>Select operations can filter ingested data with the specification of a <code>where</code> clause. The clause forms a predicate check on the inbound events before any further processing takes place.
+That means the <code>event</code> available to the <code>where</code> clause is the unprocessed inbound event from the input stream (<code>in</code> in this case):</p>
 <div class="highlight"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">where</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">is_interesting</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>Select operations can filter data being forwarded to other operators with the specification of a <code>having</code> clause. The clause forms a predicate check on outbound synthetic events after any other processing has taken place.</p>
+<p>Select operations can filter data being forwarded to other operators with the specification of a <code>having</code> clause. The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
+That means the <code>event</code> available to the <code>having</code> clause is the result of evaluating the <code>select</code> target clause (the expression between <code>select</code> and <code>from</code>).</p>
 <div class="highlight"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="kd">having</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">is_interesting</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <p>Select operations can be windowed by <strong>applying</strong> a window to the inbound data stream.</p>
@@ -2347,7 +2360,7 @@ independent from event flow with a granularity of <code>100ms</code>. It is thus
 <span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 
-<span class="kd">select</span><span class="w"> </span><span class="nx">{</span><span class="w"> </span><span class="s">&quot;count&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">stats</span><span class="err">::</span><span class="nx">count</span><span class="err">(</span><span class="kc">event</span><span class="err">)</span><span class="w"> </span><span class="nx">}</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="err">[</span><span class="nx">fifteen_secs</span><span class="err">]</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="kd">having</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">count</span><span class="w"> </span><span class="err">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="err">;</span><span class="w"></span>
+<span class="kd">select</span><span class="w"> </span><span class="nx">{</span><span class="w"> </span><span class="s">&quot;count&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">stats</span><span class="err">::</span><span class="nx">count</span><span class="err">()</span><span class="w"> </span><span class="nx">}</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="err">[</span><span class="nx">fifteen_secs</span><span class="err">]</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="kd">having</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">count</span><span class="w"> </span><span class="err">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <p>In the above operation, we emit a synthetic count every fifteen seconds if at least one event has been witnessed during a 15 second window of time.</p>
 <p>Select operations can be grouped through defining a <code>group by</code> clause.</p>
@@ -2356,7 +2369,7 @@ independent from event flow with a granularity of <code>100ms</code>. It is thus
 <span class="w">    </span><span class="nx">interval</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">datetime</span><span class="err">::</span><span class="nx">with_seconds</span><span class="err">(</span><span class="mi">15</span><span class="err">),</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 
-<span class="kd">select</span><span class="w"> </span><span class="nx">{</span><span class="w"> </span><span class="s">&quot;count&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">stats</span><span class="err">::</span><span class="nx">count</span><span class="err">(</span><span class="kc">event</span><span class="err">)</span><span class="w"> </span><span class="nx">}</span><span class="w"></span>
+<span class="kd">select</span><span class="w"> </span><span class="nx">{</span><span class="w"> </span><span class="s">&quot;count&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">stats</span><span class="err">::</span><span class="nx">count</span><span class="err">()</span><span class="w"> </span><span class="nx">}</span><span class="w"></span>
 <span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="err">[</span><span class="nx">fifteen_secs</span><span class="err">]</span><span class="w"></span>
 <span class="kd">group</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="kd">set</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">partition</span><span class="err">)</span><span class="w"></span>
 <span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="w"></span>
@@ -2364,6 +2377,26 @@ independent from event flow with a granularity of <code>100ms</code>. It is thus
 </code></pre></div>
 <p>In the above operation, we partition the ingested events into groups defined by a required <code>event.partition</code> data field on the inbound event. Each of these groups maintains an independent fifteen second tumbling window, and each window upon closing gates outbound synthetic events by a count for that group.</p>
 <p>The current implementation of <code>select</code> allows set-based and each-based grouping. These can be composed concatenatively. However <code>cube</code> and <code>rollup</code> based grouping dimensions are not currently supported.</p>
+<p>In windowed queries any event related data can only be referenced in those two cases:</p>
+<ul>
+<li>it is used as an argument to an aggregate function</li>
+<li>it is used as expression in the <code>group by</code> clause</li>
+</ul>
+<p>Here is an example of valid and invalid references:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">my_window</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">size</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">12</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">select</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;last&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">last</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">other</span><span class="err">),</span><span class="w"> </span><span class="c1"># ok, inside aggregate function</span>
+<span class="w">    </span><span class="s">&quot;foo&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">foo</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="c1"># ok, used inside aggregate function</span>
+<span class="w">    </span><span class="s">&quot;bad&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">other</span><span class="err">,</span><span class="w">   </span><span class="c1"># NOT OK</span>
+<span class="w">    </span><span class="s">&quot;bad_meta&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">my_meta</span><span class="err">,</span><span class="w"> </span><span class="c1"># NOT OK, same rules apply to event metadata</span>
+<span class="nx">}</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="err">[</span><span class="nx">my_window</span><span class="err">]</span><span class="w"></span>
+<span class="kd">group</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="kd">set</span><span class="err">(</span><span class="kc">event</span><span class="err">.</span><span class="nx">foo</span><span class="err">,</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">bar</span><span class="err">)</span><span class="w"></span>
+<span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
                 
               
               

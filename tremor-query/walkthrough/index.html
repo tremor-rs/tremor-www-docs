@@ -2041,37 +2041,25 @@ the tremor runtime.</p>
 <p>The most basic query possible in trickle is</p>
 <div class="highlight"><pre><span></span><code><span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"> </span><span class="c1"># A basic passthrough query pipeline</span>
 </code></pre></div>
-<p>This would be configured/programmed as follows in the more verbose
-pipeline yaml format:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">pipeline</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">main</span>
-    <span class="nt">interface</span><span class="p">:</span>
-      <span class="nt">inputs</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">in</span>
-      <span class="nt">outputs</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">out</span>
-    <span class="nt">links</span><span class="p">:</span>
-      <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
-</code></pre></div>
-<p>The <code>event</code> keyword selected the event from the standard input stream <code>in</code>
+<p>The <code>event</code> keyword selects the event from the standard input stream <code>in</code>
 and passes it through unchanged to the standard output stream <code>out</code>.</p>
-<p>In tremor's trickle query langauge queries are compiled and optimised and
+<p>In tremor's trickle query language queries are compiled and optimised and
 data is streamed though the query. Data can be passed through, transformed,
 filtered, aggregated, branched or combined to form continuous stream processing
 algorithms.</p>
 <p>Like other event processing languages, trickle <em>inverts</em> the relationship between
-query and data when compared to normal RDBMS SQL langauges. Instead of running a
-dynamic query against static in memory or disk persisted data, we compilse and
+query and data when compared to normal RDBMS SQL languages. Instead of running a
+dynamic query against static in memory or disk persisted data, we compile and
 optimise queries and stream near real-time data through each query.</p>
 <p>Data can be ingested from the outside world via the 'in' standard stream.
 Data can be produced to the outside world via the 'out' standard stream.
-Errors can be processed through a standard 'err' standard stream.</p>
-<p>These three primitives are analgous to the <code>stdin</code>, <code>stdout</code> and <code>stderr</code> streams
+Errors can be processed through the 'err' standard stream.</p>
+<p>These three primitives are analogous to the <code>stdin</code>, <code>stdout</code> and <code>stderr</code> streams
 in UNIX-like systems. These can be chained or interconnected via connecting multiple
 statements together to form a directed acyclic graph.</p>
 <p>We can branch inputs using <code>where</code> and <code>having</code> clauses as filters to logically
 partition streams into independent processing streams.</p>
-<p>In the below example we pratition events by their <code>seq_num</code> field. If the number
+<p>In the below example we partition events by their <code>seq_num</code> field. If the number
 is even, we branch the corresponding events into a stream named <code>evens</code>. If the
 number is odd, we branch to a stream named <code>odds</code>.</p>
 <p>The logical inverse of branching is to unify or union streams together, this operation
@@ -2092,21 +2080,18 @@ the <code>evens</code> and <code>odds</code> streams into the standard output st
 <p>We can test this with a json event using the <code>tremor</code> command line tool</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;seq_num&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;horse&quot;</span> <span class="p">}</span>
 </code></pre></div>
-<p>Assuming the trickle query is stored in a file called <code>evenodd.tricle</code> with the sample event
+<p>Assuming the trickle query is stored in a file called <code>evenodd.trickle</code> with the sample event
 in a file called <code>data.json</code></p>
 <div class="highlight"><pre><span></span><code>$ tremor run evenodd.trickle -i data.json
 </code></pre></div>
-<p>The command line tool will repeatedly inject the event <code>-i</code> argument document and we would
+<p>The command line tool will inject all events from the file provided by the <code>-i</code> argument and we would
 expect to see output from the tool as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="o">{</span><span class="s2">&quot;odd&quot;</span>: <span class="o">{</span><span class="s2">&quot;seq_num&quot;</span>: <span class="m">4</span>, <span class="s2">&quot;value&quot;</span>: <span class="m">10</span>, <span class="s2">&quot;group&quot;</span>: <span class="s2">&quot;horse&quot;</span><span class="o">}}</span>
 </code></pre></div>
 <h2 id="scripts-and-operators">Scripts and Operators<a class="headerlink" href="#scripts-and-operators" title="Permanent link">&para;</a></h2>
-<p>The query language is <em>backwards compatible</em> with the legacy pipeline format in that the same
-operations are available in the old and new syntax. The new structured query syntax is more
-flexible and powerful, however.</p>
-<p>For example, here's the logic for an entire backpressure algorithm that could be introduced as
-a proxy between two systems:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">generic</span><span class="err">::</span><span class="nx">backpressure</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">bp</span><span class="w"></span>
+<p>Here's the logic for an entire backpressure algorithm that could be introduced as
+a proxy between two systems, implemented by using a builtin operator called <a href="../operators/#qosbackpressure"><code>qos::backpressure</code></a>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="nx">qos</span><span class="err">::</span><span class="nx">backpressure</span><span class="w"> </span><span class="kd">operator</span><span class="w"> </span><span class="nx">bp</span><span class="w"></span>
 <span class="kd">with</span><span class="w"></span>
 <span class="w">    </span><span class="nx">timeout</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">10000</span><span class="err">,</span><span class="w"></span>
 <span class="w">    </span><span class="nx">steps</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">[</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="mi">50</span><span class="err">,</span><span class="w"> </span><span class="mi">100</span><span class="err">,</span><span class="w"> </span><span class="mi">250</span><span class="err">,</span><span class="w"> </span><span class="mi">750</span><span class="w"> </span><span class="err">],</span><span class="w"></span>
@@ -2116,8 +2101,8 @@ a proxy between two systems:</p>
 <span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">bp</span><span class="err">;</span><span class="w"></span>
 <span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">bp</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>A slightly more complex example that uses both operators and the tremor scripting langauge
-with the query langauge all together:</p>
+<p>A slightly more complex example that uses both operators and the tremor scripting language
+with the query language all together:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">define</span><span class="w"> </span><span class="nx">grouper</span><span class="err">::</span><span class="nx">bucket</span><span class="w"> </span><span class="nx">operator</span><span class="w"> </span><span class="nx">kfc</span><span class="err">;</span><span class="w"></span>
 
 <span class="nx">define</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">categorize</span><span class="w"></span>
@@ -2142,10 +2127,10 @@ with the query langauge all together:</p>
 <span class="c1"># Stream bucketed events into out stream</span>
 <span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">kfc</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
-<p>Operators, in the query langauge as in the pipeline format are defined as <code>&lt;module&gt;::&lt;name&gt;</code> in the
+<p>Operators are defined as <code>&lt;module&gt;::&lt;name&gt;</code> in the
 context of an operator definition clause. Operators, like script definitions can take arguments.</p>
 <p>Definitions in tremor are non-executing. They should be considered as templates or specifications.</p>
-<p>In the query langauge, any <code>define</code> clause creates specifications, possibly with arguments for
+<p>In the query language, any <code>define</code> clause creates specifications, possibly with arguments for
 specialization. They are typically incarnated via the <code>create</code> clause. Anything that is <code>create</code>ed
 will form a stream or node in the query graph - these <em>do</em> consume memory and participate in a
 pipeline query algorithm.</p>
@@ -2189,16 +2174,16 @@ indirect looping cycles.</p>
 <span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <h2 id="aggregations">Aggregations<a class="headerlink" href="#aggregations" title="Permanent link">&para;</a></h2>
-<p>A key feature of the tremor query langauge are aggregations. These are supported with:</p>
+<p>A key feature of the tremor query language are aggregations. These are supported with:</p>
 <ul>
-<li>Aggregate functions - An aggregate function is a function that runs in the context of a temporal window of events, emitting results intermittently</li>
-<li>Windows - A window is a range of event, clock or data time. There can be many different types of window</li>
+<li>Windows - A window is a range of events, clock or data time. There can be many different types of windows.</li>
+<li>Aggregate functions - An aggregate function is a function that runs in the context of a window of events, emitting results intermittently</li>
 <li>Tilt Frames - A tilt frame is a chain of compatible windows with <strong>decreasing</strong> resolution used to reduce memory pressure and preserve relative accuracy of windowed aggregate functions</li>
 </ul>
 <p>An example clock-driven tumbling window:</p>
 <div class="highlight"><pre><span></span><code>define tumbling window `15secs`
- with
-   interval = datetime::with_seconds(15),
+with
+   interval = core::datetime::with_seconds(15),
 end;
 
 select {
@@ -2214,12 +2199,12 @@ into out;
 </code></pre></div>
 <p>To use a window we need to define the window specifications, such as a 15 second clock-based
 tumbling window called <code>15secs</code> as above. We can then create instances of these windows at runtime by
-applying those windows to streams. This is done in the <code>from</code> clause in <code>select</code> expressions.</p>
+applying those windows to streams. This is done in the <code>from</code> clause of a <code>select</code> statement.</p>
 <p>Wherever windows are applied, aggregate functions can be used. In the abvove example, we are calculating
 the minimum, maximum, average, standard deviation and variance of a <code>value</code> numeric field in data streaming
 into the query via the standard input stream.</p>
-<p>The query language is not constrained to to clock-driven window definitions. Windows can also be
-data-drive or fully programmatic.</p>
+<p>The query language is not constrained to clock-driven window definitions. Windows can also be
+data-driven or fully programmatic.</p>
 <p>A more complete example:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">select</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;measurement&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">measurement</span><span class="err">,</span><span class="w"></span>
@@ -2238,7 +2223,7 @@ data-drive or fully programmatic.</p>
 <span class="nx">into</span><span class="w"> </span><span class="nx">normalize</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <p>In the above example we use a single aggregate function called <code>aggr::stats::hdr</code> which uses a high dynamic range
-or HDR Histogram to compute quartile estimates and basic statistics against a number of dynamic grouping fields
+or HDR Histogram to compute quantile estimates and basic statistics against a number of dynamic grouping fields
 set by the <code>group</code> clause. A group clause effectively partitions our operation by the group expressions provided
 by the trickle query programmer. In the example, we're using the field names of the nested 'fields' record on inbound
 events to compose a component of a group that is also qualified by tags and a measurement name. The field component
@@ -2250,7 +2235,7 @@ performed for each frame in the tilt frame.</p>
 <p>The advantage of tilt-frames is that as the target expression is <strong>the same</strong> for each frame, we can <em>merge</em> across
 each frame without amplifying error - in short, we get the <strong>effect</strong> of summarisation without loss of accuracy.</p>
 <h2 id="aggregation-mechanics">Aggregation Mechanics<a class="headerlink" href="#aggregation-mechanics" title="Permanent link">&para;</a></h2>
-<p>The mechanics of aggregation in the query langauge are non-trivial.</p>
+<p>The mechanics of aggregation in the query language are non-trivial.</p>
 <p>A high level non-normative summary follows.</p>
 <h3 id="windowing">Windowing<a class="headerlink" href="#windowing" title="Permanent link">&para;</a></h3>
 <p>Assuming a periodic event delivered every 2 seconds into tremor.</p>
@@ -2260,7 +2245,7 @@ So the lifespan of a size based window is 2 events, repeated and non-overlapping
 In the illustration above events <code>1</code> and <code>2</code> in the first window <code>w0</code> produce a single synthetic or derivate event <code>a</code>
 Events <code>3</code> and <code>4</code> in the second window <code>w1</code> produce a single synthetic or derivate event <code>b</code>
 As there is no 6th event in the example illustration, we will <em>never</em> get another synthetic output event</p>
-<p>Contrast this with the 10 second or clock-based tumbling window. In tfirst window <code>w0</code>s lifetime we capture
+<p>Contrast this with the 10 second or clock-based tumbling window. In the first window <code>w0</code>s lifetime we capture
 all events in the illustration.</p>
 <h3 id="tilt-frames">Tilt Frames<a class="headerlink" href="#tilt-frames" title="Permanent link">&para;</a></h3>
 <p>Assuming a continuous flow of events into tremor...</p>
@@ -2277,7 +2262,7 @@ merge-capable aggregate functions.</p>
 <p>The converged statistics under merge exhibit the same relative accuracy at a fraction of the computational
 and memory overhead without the using the tilt-frame mechanism.</p>
 <h2 id="group-mechanics">Group Mechanics<a class="headerlink" href="#group-mechanics" title="Permanent link">&para;</a></h2>
-<p>The group clause in the query language partitions streams before windows and tilt frames
+<p>The <code>group by</code> clause in the query language partitions streams before windows and tilt frames
 are applied. Groups can be set-based, each-based or composites thereof.</p>
 <h3 id="set-based-grouping">Set based grouping<a class="headerlink" href="#set-based-grouping" title="Permanent link">&para;</a></h3>
 <p>Grouping by set partitions streams by a concatenation of expressions.</p>
@@ -2308,9 +2293,9 @@ composed of the country and region of each inbound event.</p>
 <p>Each field in the nested <code>locations</code> field becomes a component of our
 set and qualified by country ...</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<p>There are cases however that currently complex to partitionable with a
-single sql expression due to limitations with the grouping clause. For example
-what is we wanted to make availability zones a component of our group partitions?</p>
+<p>There are cases however that are currently complex to partition with a
+single select statement due to limitations with the grouping clause. For example
+what if we wanted to make availability zones a component of our group partitions?</p>
 <p>How would we structure such a query?</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>

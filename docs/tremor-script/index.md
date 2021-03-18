@@ -67,7 +67,7 @@ Literal in `tremor-script` are equivalent to their sibling types supported by th
 
 #### Null
 
-The null literal which represents the abscence of a defined value
+The null literal which represents the absence of a defined value
 
 ```tremor
 null

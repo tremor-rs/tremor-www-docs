@@ -1,0 +1,13 @@
+use std::type;
+use std::record;
+
+define generic::batch operator batch
+with
+  count = 3000,
+  timeout = 5
+end;
+
+create operator batch;
+
+select event from in into batch;
+select event from batch into out;

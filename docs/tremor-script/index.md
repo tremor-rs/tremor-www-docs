@@ -516,7 +516,7 @@ It is also possible to perform predicate based matching
 
 ```tremor
 match "this is not base64 encoded" of
-  case ~base64|| => "surprisingly, this is legal base64 data"
+  case ~ base64|| => "surprisingly, this is legal base64 data"
   default => drop "as suspected, this is not base64 encoded"
 end;
 ```
@@ -537,7 +537,7 @@ let sneaky_json = "
 ";
 
 match sneaky_json of
-  case json ~= json|| => json
+  case json = ~ json|| => json
   default => drop "this is not the json we were looking for"
 end;
 ```

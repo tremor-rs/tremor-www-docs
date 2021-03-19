@@ -1,0 +1,24 @@
+# A binding associates onramps and offramps with pipeline inputs and outputs
+# through their unique identifiers to create a deployment graph template. These
+# typically use variables that are incarnated using runtime mappings so that
+# bindings can be reused where appropriate.
+#
+binding:
+  - id: ingress # The unique name of this binding template
+    links:
+      "/onramp/udp-input/{instance}/out": # Connect the inpunt to the pipeline
+        - "/pipeline/ingress/{instance}/in"
+      "/pipeline/ingress/{instance}/out": # Connect the pipeline to the output
+        - "/offramp/influx-output/{instance}/in"
+      "/pipeline/ingress/{instance}/err": # Connect the pipeline to the output
+        - "/offramp/system::stdout/{instance}/in"
+  - id: alert # The unique name of this binding template
+    links:
+      "/onramp/tick/{instance}/out": # This is our periodic tick to trigger the query
+        - "/pipeline/poll/{instance}/in"
+      "/pipeline/poll/{instance}/out": # After
+        - "/offramp/influx-query/{instance}/in"
+      "/offramp/influx-query/{instance}/out": # Connect the pipeline to the output
+        - "/pipeline/alert/{instance}/in"
+      "/pipeline/alert/{instance}/out":
+        - "/offramp/system::stdout/{instance}/in"

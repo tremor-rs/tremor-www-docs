@@ -2869,7 +2869,7 @@ scripts to simplify fixing such scripts.</p>
 <h4 id="matching-on-test-predicate-expressions">Matching on test predicate expressions<a class="headerlink" href="#matching-on-test-predicate-expressions" title="Permanent link">&para;</a></h4>
 <p>It is also possible to perform predicate based matching</p>
 <div class="highlight"><pre><span></span><code><span class="kd">match</span><span class="w"> </span><span class="s">&quot;this is not base64 encoded&quot;</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
-<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">~</span><span class="nx">base64</span><span class="err">||</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;surprisingly, this is legal base64 data&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="err">~</span><span class="w"> </span><span class="nx">base64</span><span class="err">||</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;surprisingly, this is legal base64 data&quot;</span><span class="w"></span>
 <span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">drop</span><span class="w"> </span><span class="s">&quot;as suspected, this is not base64 encoded&quot;</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
@@ -2883,7 +2883,7 @@ scripts to simplify fixing such scripts.</p>
 <span class="s">&quot;</span><span class="err">;</span><span class="w"></span>
 
 <span class="kd">match</span><span class="w"> </span><span class="nx">sneaky_json</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
-<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="err">~=</span><span class="w"> </span><span class="nx">json</span><span class="err">||</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">json</span><span class="w"></span>
+<span class="w">  </span><span class="kd">case</span><span class="w"> </span><span class="nx">json</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">~</span><span class="w"> </span><span class="nx">json</span><span class="err">||</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">json</span><span class="w"></span>
 <span class="w">  </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="kd">drop</span><span class="w"> </span><span class="s">&quot;this is not the json we were looking for&quot;</span><span class="w"></span>
 <span class="kd">end</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>

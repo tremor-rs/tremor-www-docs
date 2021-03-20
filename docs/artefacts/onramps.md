@@ -78,6 +78,12 @@ Supported configuration options are:
 - `interval` - The interval in which events are sent in nanoseconds.
 - `iters` - Number of times the file will be repeated.
 
+Set metadata variables are:
+
+- `$kafka` - Record consisting of two optional keys:
+    - `$headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message (if any).
+    - `$key`: The key used for this message in bytes (if any).
+
 Example:
 
 ```yaml

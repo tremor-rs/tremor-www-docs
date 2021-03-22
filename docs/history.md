@@ -21,7 +21,7 @@ In tremor-script - functions, constants and modules can be reused and organized 
 In tremor-query - window, operator and script definitions can be reused into modules.
 
 Tremor-script has been extended to support fixed arity functions, with optional variable arguments.
-This form of function can be use a constrained form of tail-recursion. Match functions allow
+This form of function can be used for a constrained form of tail-recursion. Match functions allow
 pattern matching and support partial functions. Intrinsic functions wrap builtin functions.
 
 Tremor-script's pattern matching syntax has been extended with tuple-based positional matching.
@@ -116,7 +116,7 @@ Those additions and the exploratory nature of the 0.3 released reduced performan
 
 ## tremor-0.2 (stable)
 
-With copy as the basis, the next step was what best could be described as an MVP. A bare minimum implementation that was good enough to serve the immediate need and form the foundation for going forward.
+With kopy as the basis, the next step was what best could be described as an MVP. A bare minimum implementation that was good enough to serve the immediate need and form the foundation for going forward.
 
 The 0.2 release of tremor consisted of a set of static steps that were configured over command line arguments. It handled reading data from Kafka, writing data to Elastic Search and InfluxDB. It included a simplistic classification engine that allowed limiting events based on an assigned class. Also, last but not least a method for handling downstream system overload and back-pressure by applying an incremental backoff strategy.
 

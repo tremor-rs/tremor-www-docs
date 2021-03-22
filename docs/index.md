@@ -32,6 +32,6 @@ Other interesting topics are:
 * Development related information
     * [Benchmarks](development/benchmarking.md)
     * [A Quickstart Guide](development/quick-start.md)
-    * Nots about [Testing](development/testing.md) and [Debugging](development/debugging.md)
+    * Notes about [Testing](development/testing.md) and [Debugging](development/debugging.md)
 
 This is not an exhaustive list and for the curious it might be worth to explore the [docs](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs) folder on their own.

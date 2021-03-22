@@ -2799,6 +2799,12 @@ config:
 <li><code>headers</code> - A record that maps header name (lowercase string) to value (array of strings)</li>
 </ul>
 </li>
+<li><code>$request</code> - A record with the related HTTP request attributes. Available fields within:<ul>
+<li><code>method</code> - HTTP method used</li>
+<li><code>headers</code> - A record containing all the request headers</li>
+<li><code>endpoint</code> - A record containing all the fields that config <code>endpoint</code> does</li>
+</ul>
+</li>
 </ul>
 <p>When used as a linked offramp, batched events are rejected by the offramp.</p>
 <p>Example 1:</p>

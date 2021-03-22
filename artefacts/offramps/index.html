@@ -2620,7 +2620,11 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 </ul>
 <p>Used metadata variables:</p>
 <ul>
-<li><code>$kafka_key</code> - same as config <code>key</code> (optional. overrides related config param when present)</li>
+<li><code>$kafka</code> - Record consisting of the following meta information:<ul>
+<li><code>$headers</code>: A record denoting the <a href="https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html">headers</a> for the message.</li>
+<li><code>$key</code>: Same as config <code>key</code> (optional. overrides related config param when present)</li>
+</ul>
+</li>
 </ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>

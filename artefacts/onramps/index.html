@@ -2221,6 +2221,14 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <li><code>interval</code> - The interval in which events are sent in nanoseconds.</li>
 <li><code>iters</code> - Number of times the file will be repeated.</li>
 </ul>
+<p>Set metadata variables are:</p>
+<ul>
+<li><code>$kafka</code> - Record consisting of two optional keys:<ul>
+<li><code>$headers</code>: A record denoting the <a href="https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html">headers</a> for the message (if any).</li>
+<li><code>$key</code>: The key used for this message in bytes (if any).</li>
+</ul>
+</li>
+</ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blaster</span>

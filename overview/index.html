@@ -2171,7 +2171,7 @@
 <h2 id="event-ordering">Event ordering<a class="headerlink" href="#event-ordering" title="Permanent link">&para;</a></h2>
 <p>Events generally flow from onramps, where they are ingested into the system, through pipelines, into offramps where they are pushed to external systems.</p>
 <p>Tremor imposes causal event ordering over ingested events and processes events deterministically. This does not mean that Tremor imposes a total ordering over all ingested events, however ( ugh, because that is not tractable in a distributed system ).</p>
-<p>Events flowing into Tremor from multiple onramps are considered independant. Events flowing from multiple clients into Tremor are also considered independant.</p>
+<p>Events flowing into Tremor from multiple onramps are considered independent. Events flowing from multiple clients into Tremor are also considered independent.</p>
 <p>However, events sent by a <em>specific</em> client through a <em>specific</em> onramp into a <em>passthrough</em> pipeline would flow through Tremor in their origin order and be passed to offramps in the same <em>origin</em> order.</p>
 <p>Requests from multiple independent sources over the same pipeline may arbitrarily interleave, but should not re-order.</p>
 <p>In pipelines, events are processed in depth first order. Where Tremor operators have no intrinsic ordering ( such as a branch split ), Tremor internally <em>imposes</em> an order.</p>
@@ -2186,7 +2186,7 @@
 <ul>
 <li>Data events - these are data events delivered via onramps into a pipeline or to offramps from a pipeline. Most events that flow through a Tremor pipeline are of this type.</li>
 <li>Signal events - these are synthetic events delivered by the Tremor runtime into a pipeline under certain conditions.</li>
-<li>Contraflow events - these are synthetic events delivered the Tremor runtime into a pipeline under certain conditions that are caused by the processing of events already in a Tremor system. Back-pressure events exploit contraflow.</li>
+<li>Contraflow events - these are synthetic events delivered by the Tremor runtime into a pipeline under certain conditions that are caused by the processing of events already in a Tremor system. Back-pressure events exploit contraflow.</li>
 </ul>
 <h3 id="dataflow">Dataflow<a class="headerlink" href="#dataflow" title="Permanent link">&para;</a></h3>
 <p>Data-flow events are the bread and butter of Tremor.</p>
@@ -2252,11 +2252,11 @@ is marked as failed to deliver all events up until this ID will be replayed.</p>
 <p>Data can be raw binary, JSON, MsgPack, Influx or other structures.</p>
 <p>When data is ingested into a Tremor pipeline it can be any <strong>supported</strong> format.</p>
 <p>Tremor pipeline operators however, often assume <em>some</em> structure. For heirarchic or nested formats such as JSON and MsgPack, Tremor uses the <code>serde</code> serialisation and deserialisation capabilities.</p>
-<p>Therefore, the <em>in-memory</em> format for <em>JSON-like</em> data in remor is effectively a <code>simd_json::Value</code>. This has the advantage of allowing Tremor-script to work against YAML, JSON or MsgPack data with no changes or considerations in the Tremor-script based on the origin data format.</p>
+<p>Therefore, the <em>in-memory</em> format for <em>JSON-like</em> data in Tremor is effectively a <code>simd_json::Value</code>. This has the advantage of allowing Tremor-script to work against YAML, JSON or MsgPack data with no changes or considerations in the Tremor-script based on the origin data format.</p>
 <p>For line oriented formats such as the Influx Line Protocol, or GELF these are typically transformed to Tremor's in-memory format ( currently based on <code>serde</code>).</p>
 <p>For raw binary or other data formats, Tremor provides a growing set of codecs that convert external data to Tremor in-memory form or that convert Tremor in-memory form to an external data format.</p>
 <p>In general, operators and developers should <em>minimize</em> the number of encoding and decoding steps required in the transit of data through Tremor or between Tremor instances.</p>
-<p>The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominent format, we <a href="https://github.com/simd-lite/simdjson-rs">ported</a> <a href="https://github.com/lemire/simdjson">sims-json</a> this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.</p>
+<p>The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominent format, we <a href="https://github.com/simd-lite/simdjson-rs">ported</a> <a href="https://github.com/lemire/simdjson">simd-json</a> this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.</p>
 <h3 id="distribution-model">Distribution model<a class="headerlink" href="#distribution-model" title="Permanent link">&para;</a></h3>
 <p>Tremor does not ( yet ) have an out-of-the-box network protocol. A native Tremor protocol is planned in the immediate / medium term.</p>
 <p>As such, the distribution model for Tremor is currently limited to the set of available onramp and offramp connectors.</p>

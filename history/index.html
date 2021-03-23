@@ -1989,7 +1989,7 @@ into nested module namespaces.</p>
 <p>In tremor-script - functions, constants and modules can be reused and organized into modules.</p>
 <p>In tremor-query - window, operator and script definitions can be reused into modules.</p>
 <p>Tremor-script has been extended to support fixed arity functions, with optional variable arguments.
-This form of function can be use a constrained form of tail-recursion. Match functions allow
+This form of function can be used for a constrained form of tail-recursion. Match functions allow
 pattern matching and support partial functions. Intrinsic functions wrap builtin functions.</p>
 <p>Tremor-script's pattern matching syntax has been extended with tuple-based positional matching.</p>
 <p>A new <code>TREMOR_PATH</code> allows modules to be referenced from the file system. Tremor preprocesses
@@ -2043,7 +2043,7 @@ expressions. A cron-based onramp for scheduled/periodic one-shot or repeated eve
 <p>With the dynamic pipelines, the configuration also went away from arguments passed to the command line to a <code>yaml</code> file that carried the specification of the pipeline which made it easier for an operator to maintain the pipeline.</p>
 <p>Those additions and the exploratory nature of the 0.3 released reduced performance by approximately the factor of 2 in this release.</p>
 <h2 id="tremor-02-stable">tremor-0.2 (stable)<a class="headerlink" href="#tremor-02-stable" title="Permanent link">&para;</a></h2>
-<p>With copy as the basis, the next step was what best could be described as an MVP. A bare minimum implementation that was good enough to serve the immediate need and form the foundation for going forward.</p>
+<p>With kopy as the basis, the next step was what best could be described as an MVP. A bare minimum implementation that was good enough to serve the immediate need and form the foundation for going forward.</p>
 <p>The 0.2 release of tremor consisted of a set of static steps that were configured over command line arguments. It handled reading data from Kafka, writing data to Elastic Search and InfluxDB. It included a simplistic classification engine that allowed limiting events based on an assigned class. Also, last but not least a method for handling downstream system overload and back-pressure by applying an incremental backoff strategy.</p>
 <p>It solved the problem initially presented - during the next peak event there was no lag invisibility into metrics or logs. And not only did it work it also reduced the computer footprint of the system it replaced by 80%.</p>
 <h2 id="kopy">kopy<a class="headerlink" href="#kopy" title="Permanent link">&para;</a></h2>

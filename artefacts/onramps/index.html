@@ -1124,6 +1124,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cb" class="md-nav__link">
+    cb
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#crononome" class="md-nav__link">
     crononome
   </a>
@@ -1972,6 +1979,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cb" class="md-nav__link">
+    cb
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#crononome" class="md-nav__link">
     crononome
   </a>
@@ -2151,7 +2165,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <p>The <code>err_required</code> field can be set to <code>true</code> if the onramp should not start unless both <code>out</code> and <code>err</code> ports are connected to at least one pipeline.</p>
 <p>The <code>config</code> contains a map (key-value pairs) specific to the onramp type.</p>
 <h2 id="delivery-properties">Delivery Properties<a class="headerlink" href="#delivery-properties" title="Permanent link">&para;</a></h2>
-<p>Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:</p>
+<p>Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:</p>
 <p>The column <code>Delivery Acknowledgements</code> describes when the onramp considers and reports the event delivered to the upstream it is connected to.</p>
 <table>
 <thead>
@@ -2163,6 +2177,10 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <tbody>
 <tr>
 <td>blaster</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>cb</td>
 <td>not supported</td>
 </tr>
 <tr>
@@ -2209,7 +2227,10 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 </table>
 <h2 id="supported-onramps">Supported Onramps<a class="headerlink" href="#supported-onramps" title="Permanent link">&para;</a></h2>
 <h3 id="blaster">blaster<a class="headerlink" href="#blaster" title="Permanent link">&para;</a></h3>
-<p>NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This onramp is for benchmarking use, it should not be deployed in a live production system.</p>
+</div>
 <p>The blaster onramp is built for performance testing, but it can be used for spaced-out replays of events as well. Files to replay can be <code>xz</code> compressed. It will keep looping over the file.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
@@ -2236,6 +2257,22 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./demo/data/data.json.xz</span>
+</code></pre></div>
+<h3 id="cb">cb<a class="headerlink" href="#cb" title="Permanent link">&para;</a></h3>
+<p>The <code>cb</code> onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured <code>timeout</code> is exceeded, it exits the tremor process. If some events didnt receive circuit breaker events, it exits with status code <code>1</code>, if everything is fine it exits with <code>0</code>.</p>
+<p>Supported configuration options are:</p>
+<ul>
+<li><code>source</code> - The file to read from, expecting 1 event payload per line.</li>
+<li><code>timeout</code> - The time to wait for circuit breaker events in milliseconds. If this timeout is exceeded, the tremor process is terminated. (Default: 10000 ms)</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cb_test</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cb</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">in.json</span>
+      <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
 </code></pre></div>
 <h3 id="crononome">crononome<a class="headerlink" href="#crononome" title="Permanent link">&para;</a></h3>
 <p>This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.</p>

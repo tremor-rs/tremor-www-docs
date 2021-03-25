@@ -2242,14 +2242,6 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <li><code>interval</code> - The interval in which events are sent in nanoseconds.</li>
 <li><code>iters</code> - Number of times the file will be repeated.</li>
 </ul>
-<p>Set metadata variables are:</p>
-<ul>
-<li><code>$kafka</code> - Record consisting of two optional keys:<ul>
-<li><code>$headers</code>: A record denoting the <a href="https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html">headers</a> for the message (if any).</li>
-<li><code>$key</code>: The key used for this message in bytes (if any).</li>
-</ul>
-</li>
-</ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blaster</span>
@@ -2429,6 +2421,14 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 <li><code>rdkafka_options</code> - A optional map of an option to value, where both sides need to be strings.</li>
 <li><code>retry_failed_events</code> - If set to <code>false</code> the source will <strong>not</strong> seek back the consumer offset upon a failed events and thus not retry those when <code>enable.auto.commit</code> is set to <code>false</code> in <code>rdkafka_options</code>. (default <code>true</code>)</li>
 <li><code>poll_interval</code> - Duration in milliseconds to wait until we poll again if no message is in the kafka queue. (default: <code>100</code>)</li>
+</ul>
+<p>Set metadata variables are:</p>
+<ul>
+<li><code>$kafka</code> - Record consisting of two optional keys:<ul>
+<li><code>headers</code>: A record denoting the <a href="https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html">headers</a> for the message (if any).</li>
+<li><code>key</code>: The key used for this message in bytes (if any).</li>
+</ul>
+</li>
 </ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>

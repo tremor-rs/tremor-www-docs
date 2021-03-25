@@ -38,15 +38,16 @@ The `config` contains a map (key-value pairs) specific to the onramp type.
 
 ## Delivery Properties
 
-Onramps are able to act upon both circuit breaker from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:
+Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:
 
 The column `Delivery Acknowledgements` describes when the onramp considers and reports the event delivered to the upstream it is connected to.
 
 Onramp     | Delivery Acknowledgements                                           |
 -----------|---------------------------------------------------------------------|
 blaster    | not supported                                                       |
+cb         | not supported                                                       |
 crononome  | not supported                                                       |
-discord    | not supported
+discord    | not supported                                                       |
 file       | not supported                                                       |
 kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
 metronome  | not supported                                                       |
@@ -60,7 +61,9 @@ ws         | not supported                                                      
 ## Supported Onramps
 ### blaster
 
-NOTE: This onramp is for benchmarking use, it should not be deployed in a live production system.
+!!!note
+
+    This onramp is for benchmarking use, it should not be deployed in a live production system.
 
 The blaster onramp is built for performance testing, but it can be used for spaced-out replays of events as well. Files to replay can be `xz` compressed. It will keep looping over the file.
 
@@ -94,7 +97,26 @@ onramp:
     config:
       source: ./demo/data/data.json.xz
 ```
+### cb
 
+The `cb` onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured `timeout` is exceeded, it exits the tremor process. If some events didnt receive circuit breaker events, it exits with status code `1`, if everything is fine it exits with `0`.
+
+Supported configuration options are:
+
+- `source` - The file to read from, expecting 1 event payload per line.
+- `timeout` - The time to wait for circuit breaker events in milliseconds. If this timeout is exceeded, the tremor process is terminated. (Default: 10000 ms)
+
+Example:
+
+```yaml
+onramp:
+  - id: cb_test
+    type: cb
+    codec: json
+    config:
+      source: in.json
+      timeout: 1000
+```
 ### crononome
 
 This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.

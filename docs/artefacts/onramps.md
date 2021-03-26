@@ -311,7 +311,7 @@ Set metadata variables are:
     - `topic`: The topic the message was on (if any).
     - `offset`: The offset in the partition the message was on (if any).
     - `partition`: The partition the message was on (if any).
-    - `timestamp`: The timestamp provided by kafka (if any).
+    - `timestamp`: The timestamp provided by kafka in milliseconds (if any).
 Example:
 
 ```yaml
@@ -650,7 +650,6 @@ onramp:
       port: 12201
       host: "127.0.0.1"
 ```
-
 # otel
 
 CNCF OpenTelemetry onramp. Listens on TCP port `4317` for gRPC traffic conforming to the CNCF OpenTelemetry protocol specification.
@@ -681,4 +680,3 @@ onramp:
       port: 4317
       host: 127.0.0.1
 ```
-

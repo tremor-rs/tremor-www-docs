@@ -308,7 +308,10 @@ Set metadata variables are:
 - `$kafka` - Record consisting of two optional keys:
     - `headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message (if any).
     - `key`: The key used for this message in bytes (if any).
-
+    - `topic`: The topic the message was on (if any).
+    - `offset`: The offset in the partition the message was on (if any).
+    - `partition`: The partition the message was on (if any).
+    - `timestamp`: The timestamp provided by kafka (if any).
 Example:
 
 ```yaml

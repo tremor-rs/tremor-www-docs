@@ -171,6 +171,7 @@ The following metadata variables can be specified on a per event basis:
 - `doc_type` - The document type for elastic (optional), deprecated in ES 7.
 - `doc_id`   - The document id for elastic (optional).
 - `pipeline` - The elastic search pipeline to use (optional).
+- `action` - The [bulk action](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) to perform, one of `delete`, `create`, `update` or `index`. If no `action` is provided it defaults to `index`. `delete` and `update` require `doc_id` to be set or elastic search will have error.
 
 #### Linked Transport
 

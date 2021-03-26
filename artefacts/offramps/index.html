@@ -2456,10 +2456,11 @@ introduced by the <a href="https://www.elastic.co/guide/en/elasticsearch/referen
 <p>If the number of parallel requests surpass <code>concurrency</code>, an error event will be emitted to the <code>err</code> port, which can be used for appropriate error handling.</p>
 <p>The following metadata variables can be specified on a per event basis:</p>
 <ul>
-<li><code>index</code> - The index to write to (required).</li>
-<li><code>doc_type</code> - The document type for elastic (optional), deprecated in ES 7.</li>
-<li><code>doc_id</code>   - The document id for elastic (optional).</li>
-<li><code>pipeline</code> - The elastic search pipeline to use (optional).</li>
+<li><code>$elastic._index</code> - The index to write to (required).</li>
+<li><code>$elastic._type</code> - The document type for elastic (optional), deprecated in ES 7.</li>
+<li><code>$elastic._id</code>   - The document id for elastic (optional).</li>
+<li><code>$elastic.pipeline</code> - The elastic search pipeline to use (optional).</li>
+<li><code>$elastic.action</code> - The <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">bulk action</a> to perform, one of <code>delete</code>, <code>create</code>, <code>update</code> or <code>index</code>. If no <code>action</code> is provided it defaults to <code>index</code>. <code>delete</code> and <code>update</code> require <code>$elastic._id</code> to be set or elastic search will have error.</li>
 </ul>
 <h4 id="linked-transport">Linked Transport<a class="headerlink" href="#linked-transport" title="Permanent link">&para;</a></h4>
 <p>If used as a linked transport, the sink will emit events in case of errors sending data to ES or if the incoming event is malformed via the <code>err</code> port.
@@ -2477,9 +2478,9 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
 <p>The event metdata will contain the following:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;elastic&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document type&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;ES index&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_type&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document type&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_index&quot;</span><span class="p">:</span> <span class="s2">&quot;ES index&quot;</span><span class="p">,</span>
     <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document version&quot;</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -2499,9 +2500,9 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
 <p>The event metadata for failed events looks as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;elastic&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document type&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;ES index&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_type&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document type&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;_index&quot;</span><span class="p">:</span> <span class="s2">&quot;ES index&quot;</span><span class="p">,</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>

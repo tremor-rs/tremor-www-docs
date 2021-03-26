@@ -363,6 +363,7 @@ Used metadata variables:
 - `$kafka` - Record consisting of the following meta information:
     - `$headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message.
     - `$key`: Same as config `key` (optional. overrides related config param when present)
+    
 
 Example:
 

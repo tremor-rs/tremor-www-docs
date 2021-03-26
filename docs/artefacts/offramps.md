@@ -167,11 +167,11 @@ If the number of parallel requests surpass `concurrency`, an error event will be
 
 The following metadata variables can be specified on a per event basis:
 
-- `index` - The index to write to (required).
-- `doc_type` - The document type for elastic (optional), deprecated in ES 7.
-- `doc_id`   - The document id for elastic (optional).
-- `pipeline` - The elastic search pipeline to use (optional).
-- `action` - The [bulk action](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) to perform, one of `delete`, `create`, `update` or `index`. If no `action` is provided it defaults to `index`. `delete` and `update` require `doc_id` to be set or elastic search will have error.
+- `$elastic._index` - The index to write to (required).
+- `$elastic._type` - The document type for elastic (optional), deprecated in ES 7.
+- `$elastic._id`   - The document id for elastic (optional).
+- `$elastic.pipeline` - The elastic search pipeline to use (optional).
+- `$elastic.action` - The [bulk action](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) to perform, one of `delete`, `create`, `update` or `index`. If no `action` is provided it defaults to `index`. `delete` and `update` require `$elastic._id` to be set or elastic search will have error.
 
 #### Linked Transport
 

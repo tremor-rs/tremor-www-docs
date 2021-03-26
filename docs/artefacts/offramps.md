@@ -196,9 +196,9 @@ The event metdata will contain the following:
 ```json
 {
   "elastic": {
-    "id": "ES document id",
-    "type": "ES document type",
-    "index": "ES index",
+    "_id": "ES document id",
+    "_type": "ES document type",
+    "_index": "ES index",
     "version": "ES document version"
   }
 }
@@ -225,9 +225,9 @@ The event metadata for failed events looks as follows:
 ```json
 {
   "elastic": {
-    "id": "ES document id",
-    "type": "ES document type",
-    "index": "ES index",
+    "_id": "ES document id",
+    "_type": "ES document type",
+    "_index": "ES index",
   }
 }
 ```

@@ -186,7 +186,7 @@ Data can be raw binary, JSON, MsgPack, Influx or other structures.
 
 When data is ingested into a Tremor pipeline it can be any **supported** format.
 
-Tremor pipeline operators however, often assume _some_ structure. For heirarchic or nested formats such as JSON and MsgPack, Tremor uses the `serde` serialisation and deserialisation capabilities.
+Tremor pipeline operators however, often assume _some_ structure. For hierarchic or nested formats such as JSON and MsgPack, Tremor uses the `serde` serialisation and deserialisation capabilities.
 
 Therefore, the _in-memory_ format for _JSON-like_ data in Tremor is effectively a `simd_json::Value`. This has the advantage of allowing Tremor-script to work against YAML, JSON or MsgPack data with no changes or considerations in the Tremor-script based on the origin data format.
 
@@ -196,7 +196,7 @@ For raw binary or other data formats, Tremor provides a growing set of codecs th
 
 In general, operators and developers should _minimize_ the number of encoding and decoding steps required in the transit of data through Tremor or between Tremor instances.
 
-The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominent format, we [ported](https://github.com/simd-lite/simdjson-rs) [simd-json](https://github.com/lemire/simdjson) this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.
+The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominant format, we [ported](https://github.com/simd-lite/simdjson-rs) [simd-json](https://github.com/lemire/simdjson) this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.
 
 ### Distribution model
 

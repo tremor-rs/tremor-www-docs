@@ -46,7 +46,7 @@ is unique.
 
 Returns artefact data, on success.
 
-If an arterfact of the same name already exists, a conflict error is returned.
+If an artefact of the same name already exists, a conflict error is returned.
 
 Response data may be either JSON or YAML formatted ( defaults to JSON ).
 
@@ -142,7 +142,7 @@ is unique.
 
 Returns artefact data, on success.
 
-If an arterfact of the same name already exists, a conflict error is returned.
+If an artefact of the same name already exists, a conflict error is returned.
 
 Response data may be either JSON or YAML formatted ( defaults to JSON ).
 

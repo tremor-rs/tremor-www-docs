@@ -38,7 +38,7 @@ Leveraging the tremor-query expression syntax allows rich filtering, transformat
 
 The addition of aggregate functions, and windowing allows batches or a slice in time of events to be summarised or processed together to derive useful synthetic events.
 
-Like its sibling langauge `tremor-script`, `tremor-query` supports the same data-types and is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet it is powerful and flexible in its own right.
+Like its sibling language `tremor-script`, `tremor-query` supports the same data-types and is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet it is powerful and flexible in its own right.
 
 ### Extensibility
 
@@ -46,7 +46,7 @@ The SQL-based nature of `tremor-query` means that complex branching, combining o
 
 The expression-based expression language derived from `tremor-script` allows computational forms to be extended.
 
-The language core is designed for reuse - currently the expression language is reused in the query langauge, as are the library of functions available to both. The addition of aggregate functions is currently exclusive to tremor-query as these are only relevant when processing multiple in-flight ( or cached ) events at the same time.
+The language core is designed for reuse - currently the expression language is reused in the query language, as are the library of functions available to both. The addition of aggregate functions is currently exclusive to tremor-query as these are only relevant when processing multiple in-flight ( or cached ) events at the same time.
 
 In the future, `tremor-query` may be retargeted as a JIT-compiled language and other domain specific languages may be integrated as the tremor runtime evolves to meet new uses, demands, and stake-holders.
 
@@ -230,7 +230,7 @@ Script definition grammar:
 
 > ![script definition grammar](grammar/diagram/DefineScriptDefn.png)
 > ![with partial params grammar](grammar/diagram/WithPartialParams.png)
-> ![embeded script grammar](grammar/diagram/EmbeddedScript.png)
+> ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
 
 Script an operator:
 

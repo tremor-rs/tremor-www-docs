@@ -63,8 +63,8 @@ and full announcement.
 
 If you have not received a reply to your email within 48 hours, or have not heard from the security team for the past five days, there are a few steps you can take (in order):
 
-Contact the current security coordinator (Darach Ennis) directly [pgp key](https://pgp.mit.edu/pks/lookup?op=get&search=0x962FAC01B6989EBB).
-Contact the back-up contact (Heinz Gies) directly [pgp key](https://keys.openpgp.org/vks/v1/by-fingerprint/71C9D7794FCEAC9D77AC4F6FE21BB9BD3F38481E).
+Contact the current security coordinator (Darach Ennis) directly [PGP key](https://pgp.mit.edu/pks/lookup?op=get&search=0x962FAC01B6989EBB).
+Contact the back-up contact (Heinz Gies) directly [PGP key](https://keys.openpgp.org/vks/v1/by-fingerprint/71C9D7794FCEAC9D77AC4F6FE21BB9BD3F38481E).
 
 Post a friendly reminder on the community slack.
 

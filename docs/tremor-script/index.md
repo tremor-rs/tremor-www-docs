@@ -18,7 +18,7 @@ The language is explicitly not Turing-complete:
 
 ### Developer friendly
 
-The language adopts a fortran-like syntax for key expression forms and has a path-like syntax for indexing into records and arrays
+The language adopts a Fortran-like syntax for key expression forms and has a path-like syntax for indexing into records and arrays
 
 ### Stream-oriented / event-based
 
@@ -809,4 +809,4 @@ The set of supported micro-formats at the time of writing are as follows:
 | **influx**  | Not required                              | Tests if the underlying value conforms to Influx line protocol specification | **record**           | Returns an influx line protocol record matching extractions based on supplied specification |
 | **json**    | Not required                              | Tests if the underlying value is json encoded                                | **depends on value** | Returns a hydrated `tremor-script` value upon extraction                                    |
 
-There is no concept of _injector_ in the `tremor-script` language that is analogous to extractors. Where relevant the langauge supports functions that support the underlying operation ( such as base64 encoding ) and let expressions can be used for assignments.
+There is no concept of _injector_ in the `tremor-script` language that is analogous to extractors. Where relevant the language supports functions that support the underlying operation ( such as base64 encoding ) and let expressions can be used for assignments.

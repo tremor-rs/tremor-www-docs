@@ -10,7 +10,7 @@ En- and decodes [JSON](https://json.org), for encoding a minified format is used
 
 ### string
 
-Treats the event as non structured string. It is required that the input **is valid utf8** or the decoding will fail.
+Treats the event as non structured string. It is required that the input **is valid UTF-8** or the decoding will fail.
 
 ### msgpack
 
@@ -45,18 +45,18 @@ The Binflux codec is a binary representation of influx data that is significantl
 
 The format itself does not include framing but can be used with the `size-prefix` pre/post processors.
 
-For all numbers netwokr byte order is used (big endian). The data is represented as follows:
+For all numbers network byte order is used (big endian). The data is represented as follows:
 
 1. _2 byte_ (u16) length of the `measurement` in bytes
 2. _n byte_ (utf8) the measurement (utf8 encoded string)
 3. _8 byte_ (u64) the timestamp
 4. _2 byte_ (u16) number of tags (key value pairs) repetitions of:
-   1. _2 byte_ (u16) lenght of the tag name in bytes
+   1. _2 byte_ (u16) length of the tag name in bytes
    2. _n byte_ (utf8) tag name (utf8 encoded string)
-   3. _2 byte_ (u16) lenght of tag value in bytes
+   3. _2 byte_ (u16) length of tag value in bytes
    4. _n byte_ (utf8) tag value (utf8 encoded string)
 5. _2 byte_ (u16) number of fiends (key value pairs) repetition of:
-   1. _2 byte_ (u16) lenght of the tag name in bytes
+   1. _2 byte_ (u16) length of the tag name in bytes
    2. _n byte_ (utf8) tag name (utf8 encoded string)
    3. _1 byte_ (tag) type of the field value can be one of:
    4. `TYPE_I64 = 0` followed by _8 byte_ (i64)

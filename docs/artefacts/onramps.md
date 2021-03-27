@@ -94,7 +94,7 @@ onramp:
 ```
 ### cb
 
-The `cb` onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured `timeout` is exceeded, it exits the tremor process. If some events didnt receive circuit breaker events, it exits with status code `1`, if everything is fine it exits with `0`.
+The `cb` onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured `timeout` is exceeded, it exits the tremor process. If some events didn't receive circuit breaker events, it exits with status code `1`, if everything is fine it exits with `0`.
 
 Supported configuration options are:
 

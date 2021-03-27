@@ -16,7 +16,7 @@ Encodes raw data into base64 encoded bytes.
 
 ### length-prefixed
 
-Prefixes the data with a network byte order (big endian) lenght of the data in bytes.
+Prefixes the data with a network byte order (big endian) length of the data in bytes.
 
 ### gelf-chunking
 

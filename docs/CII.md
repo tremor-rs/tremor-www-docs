@@ -222,7 +222,7 @@ Met.
 
 **The project MUST enable one or more compiler warning flags, a "safe" language mode, or use a separate "linter" tool to look for code quality errors or common simple mistakes, if there is at least one FLOSS tool that can implement this criterion in the selected language.**
 
-Met. The project enables all warnings and enforces strict / pendantic checks on code style, format. These are constraints and limitations are enforced by the build and continuous integration systems.
+Met. The project enables all warnings and enforces strict / pedantic checks on code style, format. These are constraints and limitations are enforced by the build and continuous integration systems.
 
 **The project MUST address warnings.**
 

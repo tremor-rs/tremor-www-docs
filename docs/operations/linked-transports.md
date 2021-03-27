@@ -69,7 +69,7 @@ Ramp artefacts that support linked transports are listed here:
 * [Websocket Onramp](../artefacts/onramps.md#ws)
 * [Websocket Offramp](../artefacts/onramps.md#ws)
 * [Discord onramp](../artefacts/onramps.md#discord)
-* [KV offramp](../artefacts/offramps.md#KV)
+* [KV offramp](../artefacts/offramps.md#kv)
 
 As part of the above docs, you will also find event metadata variables that these onramps/offramps set (and use), which can be utilized as part of the wider application built using these aretefacts.
 

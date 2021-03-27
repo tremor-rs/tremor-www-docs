@@ -80,7 +80,7 @@ To pick up the openssl libs during tremor build, you also have to set the `OPENS
 set OPENSSL_DIR=C:\Users\juju\TREMOR\vcpkg\installed\x64-windows-static
 ```
 
-Technically, the rust [openssl](https://docs.rs/openssl) crate will try to discover the openssl libs via vcpkg (as long as env var `VCPKGRS_DYNAMIC` is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a [fix](https://github.com/sfackler/rust-openssl/pull/1238) for it and once that lands in a release for `rust-openssl` (and also starts getting used by tremor depenencies), we won't have to rely on the `OPENSSL_DIR` var.
+Technically, the rust [openssl](https://docs.rs/openssl) crate will try to discover the openssl libs via vcpkg (as long as env var `VCPKGRS_DYNAMIC` is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a [fix](https://github.com/sfackler/rust-openssl/pull/1238) for it and once that lands in a release for `rust-openssl` (and also starts getting used by tremor dependencies), we won't have to rely on the `OPENSSL_DIR` var.
 
 ### Running Tremor
 
@@ -122,7 +122,7 @@ cargo fmt
 rustup component add clippy
 ```
 
-To run `clippy`, run the following comand:
+To run `clippy`, run the following command:
 
 ```bash
 cargo clippy

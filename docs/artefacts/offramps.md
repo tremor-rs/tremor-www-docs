@@ -286,7 +286,7 @@ To indicate successful termination, an `exit` status of zero may be used:
 { "exit": 0 }
 ```
 
-To indicate non-succesful termination, a non-zero `exit` status may be used:
+To indicate non-successful termination, a non-zero `exit` status may be used:
 
 ```json
 { "exit": 1 }
@@ -380,7 +380,7 @@ offramp:
 
 The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.
 
-Events send to the KV offramp are commands the following commands are supported:
+Events sent to the KV offramp are commands. The following are supported:
 
 Example:
 ```yaml
@@ -450,7 +450,7 @@ Reads a range of keys
 {"scan": {
    "start": "<string|binary>", // optional, if not set will start with the first key
    "end": "<string|binary>", // optional, if not set will read to the end key
-}
+}}
 ```
 **Response**:
 ```js
@@ -487,14 +487,14 @@ Compare And Swap operation. Those operations require old values to match what it
 
 ### newrelic
 
-Send events to [New Relic](https://newrelic.com/) platform, using it's log apis (variable by region).
+Send events to [New Relic](https://newrelic.com/) platform, using its log apis (variable by region).
 
 This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.
 
 Supported configuration options are:
 
 - `license_key` - New Relic's license (or insert only) key
-- `compress_logs` - Whther logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
+- `compress_logs` - Whether logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
 - `region` - Region to use to send logs. Available choices: usa, europe (default: usa)
 
 Example:
@@ -669,7 +669,7 @@ If `raw` is set to true, the event data will be put on stderr as is.
 Supported configuration options:
 
 - `prefix` - A prefix written before each event (optional string).
-- `raw` - Write evcent data bytes as is to stderr.
+- `raw` - Write event data bytes as is to stderr.
 
 Example:
 
@@ -698,7 +698,7 @@ If `raw` is set to true, the event data will be put on stdout as is.
 Supported configuration options:
 
 - `prefix` - A prefix written before each event (optional string).
-- `raw` - Write evcent data bytes as is to stdout.
+- `raw` - Write event data bytes as is to stdout.
 
 Example:
 
@@ -725,7 +725,7 @@ Supported configuration options are:
 - `port` - The TCP port to listen on
 - `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
 - `ttl` - Set the socket's time-to-live ( default: 64 )
-- `is_no_delay` - Set the socket's nagle ( delay ) algorithm to off ( default: true )
+- `is_no_delay` - Set the socket's Nagle ( delay ) algorithm to off ( default: true )
 
 Example:
 

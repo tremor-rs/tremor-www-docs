@@ -232,7 +232,7 @@ To use a window we need to define the window specifications, such as a 15 second
 tumbling window called `15secs` as above. We can then create instances of these windows at runtime by
 applying those windows to streams. This is done in the `from` clause of a `select` statement.
 
-Wherever windows are applied, aggregate functions can be used. In the abvove example, we are calculating
+Wherever windows are applied, aggregate functions can be used. In the above example, we are calculating
 the minimum, maximum, average, standard deviation and variance of a `value` numeric field in data streaming
 into the query via the standard input stream.
 

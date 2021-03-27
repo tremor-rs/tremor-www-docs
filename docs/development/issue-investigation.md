@@ -10,7 +10,7 @@ Logs and metrics are the first and most fundamental tool when starting to invest
 
 ### `htop` (prod)
 
-Not really a debugging tool but a nice starting point to see values like memory consumption, cpu load both per process and per thread. Things to look out for are:
+Not really a debugging tool but a nice starting point to see values like memory consumption, CPU load both per process and per thread. Things to look out for are:
 
 - Memory consumption
 - CPU load
@@ -21,7 +21,7 @@ To a degree `top` can be used in its place if `htop` isn't available.
 
 ### `perf` (prod: Linux)
 
-Perf is a tool that is used to profile processes, it gives an overview over functions that cpu time is spend on. While it doesn't give a full trace but it is quite handy in situations where we have a hot function to find where a program is spending it time.
+Perf is a tool that is used to profile processes, it gives an overview over functions that CPU time is spend on. While it doesn't give a full trace but it is quite handy in situations where we have a hot function to find where a program is spending it time.
 
 It can be run to find where a program spends time:
 
@@ -111,7 +111,7 @@ We ran tremor extensively using the Leak profiler of Instruments to see if it co
 
 #### 2nd theory: Misconfigured librdkafka operations
 
-With the hint gained from the last investigation we looked at the configuration of the system. It showed that a number instances of Kafka onramps were used and the hosts it running un were under spaced regarding to what was communicated to us. Looking at the manual for librdkafka showed that by default each librdkafka instance would allocate up to 1GB of memory as a buffer. Running 4 instances at a 4GB of memory box with additional processes this would eventually lead to running out of memory.
+With the hint gained from the last investigation we looked at the configuration of the system. It showed that a number instances of Kafka onramps were used and the hosts it running on were under spaced regarding to what was communicated to us. Looking at the manual for librdkafka showed that by default each librdkafka instance would allocate up to 1GB of memory as a buffer. Running 4 instances at a 4GB of memory box with additional processes this would eventually lead to running out of memory.
 
 ##### prove of 2nd theory
 
@@ -196,7 +196,7 @@ Issues:
 - Setup was spanning the WAN using local Logstas and WAN connected Tremor causing MTU issues that was not documented and falsely attributed to tremor
 - Using a nonstandard conform GELF header for 'uncompressed' caused those datapoints to be discarded, this was falsely attributed to tremor
 - the UDP buffer on the Tremor and logstash hosts were configured differently causing the tremor host to have significantly less buffer causing some messages to be discarded in the OS UDP stack, this was falsely attributed to tremor
-- A tool called udp_replay was used to copy data from a logstash host to a tremor host, this tool truncated the UDP payload, this payload could no longer be decompressed making this packages fail, this was falsy attributed to trmeor
+- A tool called udp_replay was used to copy data from a logstash host to a tremor host, this tool truncated the UDP payload, this payload could no longer be decompressed making this packages fail, this was falsely attributed to tremor
 - Some clients send a empty tailing message with a bad segment index (n+1) causing error messages to appear in the logs, this is valid behavior but were flagged as a 'bug' in tremor because logstash does silently drop those.
 - Some clients reuse the sequence number - this can lead to bad messages when UDP packages interleave, tremor reports those incidents and will likely be flagged as buggy because of it.
 - MIO's UDP with edge-poll stops receiving data [ticket](https://github.com/tokio-rs/mio/issues/1076) we switched to level poll which solves this.

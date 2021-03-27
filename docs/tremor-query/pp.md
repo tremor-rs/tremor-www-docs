@@ -29,7 +29,7 @@ The `#!line` directive is a implementation detail mentioned here for the same of
 
 ## Config directive
 
-This directive allows compile-time configuration paraemters to be passed into tremor
+This directive allows compile-time configuration parameters to be passed into tremor
 
 ## Example preprocessed tremor-script
 

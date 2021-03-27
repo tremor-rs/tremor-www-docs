@@ -2251,7 +2251,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
       <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./demo/data/data.json.xz</span>
 </code></pre></div>
 <h3 id="cb">cb<a class="headerlink" href="#cb" title="Permanent link">&para;</a></h3>
-<p>The <code>cb</code> onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured <code>timeout</code> is exceeded, it exits the tremor process. If some events didnt receive circuit breaker events, it exits with status code <code>1</code>, if everything is fine it exits with <code>0</code>.</p>
+<p>The <code>cb</code> onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured <code>timeout</code> is exceeded, it exits the tremor process. If some events didn't receive circuit breaker events, it exits with status code <code>1</code>, if everything is fine it exits with <code>0</code>.</p>
 <p>Supported configuration options are:</p>
 <ul>
 <li><code>source</code> - The file to read from, expecting 1 event payload per line.</li>

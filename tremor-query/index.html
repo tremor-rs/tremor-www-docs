@@ -2161,11 +2161,11 @@
 <p>The SQL-like syntax enables a natural and familiar style whilst allowing the resulting statements to be compiled into a formal DAG for compile-time checks and to ensure correctness.</p>
 <p>Leveraging the tremor-query expression syntax allows rich filtering, transformation, patching, merging and object/array comprehensions to be programmed.</p>
 <p>The addition of aggregate functions, and windowing allows batches or a slice in time of events to be summarised or processed together to derive useful synthetic events.</p>
-<p>Like its sibling langauge <code>tremor-script</code>, <code>tremor-query</code> supports the same data-types and is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet it is powerful and flexible in its own right.</p>
+<p>Like its sibling language <code>tremor-script</code>, <code>tremor-query</code> supports the same data-types and is entirely event-driven. It has many parallels for existing tremor users to leverage while learning, yet it is powerful and flexible in its own right.</p>
 <h3 id="extensibility">Extensibility<a class="headerlink" href="#extensibility" title="Permanent link">&para;</a></h3>
 <p>The SQL-based nature of <code>tremor-query</code> means that complex branching, combining or powerful constructs such as in-memory tables can be added following a familiar SQL-like syntax.</p>
 <p>The expression-based expression language derived from <code>tremor-script</code> allows computational forms to be extended.</p>
-<p>The language core is designed for reuse - currently the expression language is reused in the query langauge, as are the library of functions available to both. The addition of aggregate functions is currently exclusive to tremor-query as these are only relevant when processing multiple in-flight ( or cached ) events at the same time.</p>
+<p>The language core is designed for reuse - currently the expression language is reused in the query language, as are the library of functions available to both. The addition of aggregate functions is currently exclusive to tremor-query as these are only relevant when processing multiple in-flight ( or cached ) events at the same time.</p>
 <p>In the future, <code>tremor-query</code> may be retargeted as a JIT-compiled language and other domain specific languages may be integrated as the tremor runtime evolves to meet new uses, demands, and stake-holders.</p>
 <h3 id="performant">Performant<a class="headerlink" href="#performant" title="Permanent link">&para;</a></h3>
 <p>Data ingested into tremor-query is vectorized via SIMD-parallel instructions on x86-64 or other Intel processor architectures supporting ssev3/avx extensions. Processing streams of such event-data incurs some allocation overhead at this time, but these event-bound allocations are being written out of the interpreter.</p>
@@ -2301,7 +2301,7 @@ independent from event flow with a granularity of <code>100ms</code>. It is thus
 <blockquote>
 <p><img alt="script definition grammar" src="grammar/diagram/DefineScriptDefn.png" />
 <img alt="with partial params grammar" src="grammar/diagram/WithPartialParams.png" />
-<img alt="embeded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
+<img alt="embedded script grammar" src="grammar/diagram/EmbeddedScript.png" /></p>
 </blockquote>
 <p>Script an operator:</p>
 <blockquote>

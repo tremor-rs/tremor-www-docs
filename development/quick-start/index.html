@@ -2131,7 +2131,7 @@ cd vcpkg
 <p>To pick up the openssl libs during tremor build, you also have to set the <code>OPENSSL_DIR</code> environment variable right now. Example:</p>
 <div class="highlight"><pre><span></span><code>set OPENSSL_DIR=C:\Users\juju\TREMOR\vcpkg\installed\x64-windows-static
 </code></pre></div>
-<p>Technically, the rust <a href="https://docs.rs/openssl">openssl</a> crate will try to discover the openssl libs via vcpkg (as long as env var <code>VCPKGRS_DYNAMIC</code> is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a <a href="https://github.com/sfackler/rust-openssl/pull/1238">fix</a> for it and once that lands in a release for <code>rust-openssl</code> (and also starts getting used by tremor depenencies), we won't have to rely on the <code>OPENSSL_DIR</code> var.</p>
+<p>Technically, the rust <a href="https://docs.rs/openssl">openssl</a> crate will try to discover the openssl libs via vcpkg (as long as env var <code>VCPKGRS_DYNAMIC</code> is set), but that is not working for the recent openssl libs supplied by vcpkg. There's a <a href="https://github.com/sfackler/rust-openssl/pull/1238">fix</a> for it and once that lands in a release for <code>rust-openssl</code> (and also starts getting used by tremor dependencies), we won't have to rely on the <code>OPENSSL_DIR</code> var.</p>
 <h3 id="running-tremor">Running Tremor<a class="headerlink" href="#running-tremor" title="Permanent link">&para;</a></h3>
 <p>After installing rust and cloning the repository, you can start tremor server by running the following from the root (<code>tremor-runtime</code>) directory:</p>
 <div class="highlight"><pre><span></span><code>cargo run -p tremor-cli -- server run
@@ -2152,7 +2152,7 @@ cd vcpkg
 <p><code>Clippy</code> is a linting tool that catches common mistakes and improves the rust code. It is available as a toolchain component and can be installed by running:</p>
 <div class="highlight"><pre><span></span><code>rustup component add clippy
 </code></pre></div>
-<p>To run <code>clippy</code>, run the following comand:</p>
+<p>To run <code>clippy</code>, run the following command:</p>
 <div class="highlight"><pre><span></span><code>cargo clippy
 </code></pre></div>
 <h4 id="rustfix">Rustfix<a class="headerlink" href="#rustfix" title="Permanent link">&para;</a></h4>

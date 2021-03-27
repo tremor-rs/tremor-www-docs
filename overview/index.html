@@ -2251,12 +2251,12 @@ is marked as failed to deliver all events up until this ID will be replayed.</p>
 <p>Tremor supports unstructured data.</p>
 <p>Data can be raw binary, JSON, MsgPack, Influx or other structures.</p>
 <p>When data is ingested into a Tremor pipeline it can be any <strong>supported</strong> format.</p>
-<p>Tremor pipeline operators however, often assume <em>some</em> structure. For heirarchic or nested formats such as JSON and MsgPack, Tremor uses the <code>serde</code> serialisation and deserialisation capabilities.</p>
+<p>Tremor pipeline operators however, often assume <em>some</em> structure. For hierarchic or nested formats such as JSON and MsgPack, Tremor uses the <code>serde</code> serialisation and deserialisation capabilities.</p>
 <p>Therefore, the <em>in-memory</em> format for <em>JSON-like</em> data in Tremor is effectively a <code>simd_json::Value</code>. This has the advantage of allowing Tremor-script to work against YAML, JSON or MsgPack data with no changes or considerations in the Tremor-script based on the origin data format.</p>
 <p>For line oriented formats such as the Influx Line Protocol, or GELF these are typically transformed to Tremor's in-memory format ( currently based on <code>serde</code>).</p>
 <p>For raw binary or other data formats, Tremor provides a growing set of codecs that convert external data to Tremor in-memory form or that convert Tremor in-memory form to an external data format.</p>
 <p>In general, operators and developers should <em>minimize</em> the number of encoding and decoding steps required in the transit of data through Tremor or between Tremor instances.</p>
-<p>The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominent format, we <a href="https://github.com/simd-lite/simdjson-rs">ported</a> <a href="https://github.com/lemire/simdjson">simd-json</a> this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.</p>
+<p>The major overhead in most Tremor systems is encoding and decoding overhead. To compensate that, as JSON is the most dominant format, we <a href="https://github.com/simd-lite/simdjson-rs">ported</a> <a href="https://github.com/lemire/simdjson">simd-json</a> this reduces the cost of en- and decoding significantly compared to other JSON implementations in Rust.</p>
 <h3 id="distribution-model">Distribution model<a class="headerlink" href="#distribution-model" title="Permanent link">&para;</a></h3>
 <p>Tremor does not ( yet ) have an out-of-the-box network protocol. A native Tremor protocol is planned in the immediate / medium term.</p>
 <p>As such, the distribution model for Tremor is currently limited to the set of available onramp and offramp connectors.</p>

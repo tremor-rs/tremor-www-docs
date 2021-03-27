@@ -2546,7 +2546,7 @@ to events with a record structure containing a numeric exit field.</p>
 <p>To indicate successful termination, an <code>exit</code> status of zero may be used:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;exit&quot;</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
 </code></pre></div>
-<p>To indicate non-succesful termination, a non-zero <code>exit</code> status may be used:</p>
+<p>To indicate non-successful termination, a non-zero <code>exit</code> status may be used:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">&quot;exit&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span>
 </code></pre></div>
 <p>Exit codes should follow standard UNIX/Linux guidelines when being integrated
@@ -2638,7 +2638,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 </code></pre></div>
 <h3 id="kv">KV<a class="headerlink" href="#kv" title="Permanent link">&para;</a></h3>
 <p>The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.</p>
-<p>Events send to the KV offramp are commands the following commands are supported:</p>
+<p>Events sent to the KV offramp are commands. The following are supported:</p>
 <p>Example:
 <div class="highlight"><pre><span></span><code>  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
@@ -2683,7 +2683,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;scan&quot;</span><span class="o">:</span> <span class="p">{</span>
    <span class="s2">&quot;start&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string|binary&gt;&quot;</span><span class="p">,</span> <span class="c1">// optional, if not set will start with the first key</span>
    <span class="s2">&quot;end&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string|binary&gt;&quot;</span><span class="p">,</span> <span class="c1">// optional, if not set will read to the end key</span>
-<span class="p">}</span>
+<span class="p">}}</span>
 </code></pre></div>
 <strong>Response</strong>:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">[</span>
@@ -2710,12 +2710,12 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 <span class="p">}}</span>
 </code></pre></div>
 <h3 id="newrelic">newrelic<a class="headerlink" href="#newrelic" title="Permanent link">&para;</a></h3>
-<p>Send events to <a href="https://newrelic.com/">New Relic</a> platform, using it's log apis (variable by region).</p>
+<p>Send events to <a href="https://newrelic.com/">New Relic</a> platform, using its log apis (variable by region).</p>
 <p>This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.</p>
 <p>Supported configuration options are:</p>
 <ul>
 <li><code>license_key</code> - New Relic's license (or insert only) key</li>
-<li><code>compress_logs</code> - Whther logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)</li>
+<li><code>compress_logs</code> - Whether logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)</li>
 <li><code>region</code> - Region to use to send logs. Available choices: usa, europe (default: usa)</li>
 </ul>
 <p>Example:</p>
@@ -2869,7 +2869,7 @@ If <code>raw</code> is set to true, the event data will be put on stderr as is.<
 <p>Supported configuration options:</p>
 <ul>
 <li><code>prefix</code> - A prefix written before each event (optional string).</li>
-<li><code>raw</code> - Write evcent data bytes as is to stderr.</li>
+<li><code>raw</code> - Write event data bytes as is to stderr.</li>
 </ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
@@ -2890,7 +2890,7 @@ If <code>raw</code> is set to true, the event data will be put on stdout as is.<
 <p>Supported configuration options:</p>
 <ul>
 <li><code>prefix</code> - A prefix written before each event (optional string).</li>
-<li><code>raw</code> - Write evcent data bytes as is to stdout.</li>
+<li><code>raw</code> - Write event data bytes as is to stdout.</li>
 </ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
@@ -2910,7 +2910,7 @@ to external TCP protocol distribution endpoints.</p>
 <li><code>port</code> - The TCP port to listen on</li>
 <li><code>is_non_blocking</code> - Is the socket configured as non-blocking ( default: false )</li>
 <li><code>ttl</code> - Set the socket's time-to-live ( default: 64 )</li>
-<li><code>is_no_delay</code> - Set the socket's nagle ( delay ) algorithm to off ( default: true )</li>
+<li><code>is_no_delay</code> - Set the socket's Nagle ( delay ) algorithm to off ( default: true )</li>
 </ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>

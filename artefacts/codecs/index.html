@@ -1940,7 +1940,7 @@
 <h3 id="json">json<a class="headerlink" href="#json" title="Permanent link">&para;</a></h3>
 <p>En- and decodes <a href="https://json.org">JSON</a>, for encoding a minified format is used (excluding newlines and spaces).</p>
 <h3 id="string">string<a class="headerlink" href="#string" title="Permanent link">&para;</a></h3>
-<p>Treats the event as non structured string. It is required that the input <strong>is valid utf8</strong> or the decoding will fail.</p>
+<p>Treats the event as non structured string. It is required that the input <strong>is valid UTF-8</strong> or the decoding will fail.</p>
 <h3 id="msgpack">msgpack<a class="headerlink" href="#msgpack" title="Permanent link">&para;</a></h3>
 <p><a href="https://msgpack.org">Msgpack</a> works based on the msgpack binary format that is structurally compatible with JSON.</p>
 <p>Being a binary format, message pack is significantly more performant and requires less space compared to JSON.</p>
@@ -1960,18 +1960,18 @@
 <h3 id="binflux">binflux<a class="headerlink" href="#binflux" title="Permanent link">&para;</a></h3>
 <p>The Binflux codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.</p>
 <p>The format itself does not include framing but can be used with the <code>size-prefix</code> pre/post processors.</p>
-<p>For all numbers netwokr byte order is used (big endian). The data is represented as follows:</p>
+<p>For all numbers network byte order is used (big endian). The data is represented as follows:</p>
 <ol>
 <li><em>2 byte</em> (u16) length of the <code>measurement</code> in bytes</li>
 <li><em>n byte</em> (utf8) the measurement (utf8 encoded string)</li>
 <li><em>8 byte</em> (u64) the timestamp</li>
 <li><em>2 byte</em> (u16) number of tags (key value pairs) repetitions of:</li>
-<li><em>2 byte</em> (u16) lenght of the tag name in bytes</li>
+<li><em>2 byte</em> (u16) length of the tag name in bytes</li>
 <li><em>n byte</em> (utf8) tag name (utf8 encoded string)</li>
-<li><em>2 byte</em> (u16) lenght of tag value in bytes</li>
+<li><em>2 byte</em> (u16) length of tag value in bytes</li>
 <li><em>n byte</em> (utf8) tag value (utf8 encoded string)</li>
 <li><em>2 byte</em> (u16) number of fiends (key value pairs) repetition of:</li>
-<li><em>2 byte</em> (u16) lenght of the tag name in bytes</li>
+<li><em>2 byte</em> (u16) length of the tag name in bytes</li>
 <li><em>n byte</em> (utf8) tag name (utf8 encoded string)</li>
 <li><em>1 byte</em> (tag) type of the field value can be one of:</li>
 <li><code>TYPE_I64 = 0</code> followed by <em>8 byte</em> (i64)<ol>

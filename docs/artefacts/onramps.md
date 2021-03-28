@@ -53,6 +53,7 @@ kafka      | always, only on `ack` event if `enable.auto.commit` is set to false
 metronome  | not supported                                                       |
 PostgreSQL | not supported                                                       |
 rest       | not supported                                                       |
+stdin      | not supported                                                       |
 tcp        | not supported                                                       |
 udp        | not supported                                                       |
 ws         | not supported                                                       |
@@ -502,6 +503,18 @@ onramp:
 Known limitations:
 
 It is currently not possible to configure rest onramps via swagger, RAML or OpenAPI configuration files.
+
+### stdin
+
+An oramp which takes input from `stdin`.
+
+The default [codec](codecs.md#string) is `string`.
+
+The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
+
+```
+tremor-stdin://<tremor-host.local>
+```
 
 ### tcp
 

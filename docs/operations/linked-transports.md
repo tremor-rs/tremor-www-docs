@@ -154,6 +154,50 @@ The above linked examples also demonstrate typical error handling needed for app
 
 The key here is remembering to link the error ports for all the onramp/offramp/pipeline artefacts involved in the main event-flow, ensuring that the end destination for error events (emitted from the `err` ports) are visible to the client (or user).
 
+## Correlation
+
+If requests to and responses from a linked transport need to be correlated, the special metadata field `$correlation` can be used. It will be forwarded from the request event to the response event, so that some data from the request can be present in the response context.
+
+Example pipeline:
+
+```trickle
+define script correlate
+script
+  let $correlation = event.correlation_id;
+  let event = patch event of erase "correlation_id" end;
+  event
+end;
+
+create script correlate;
+
+select event from in into correlate;
+select event from correlate into out;
+select event from correlate/err into err;
+```
+
+This script within the pipeline file above will erase `correlation_id` from the event and put it into the `$correlation` metadata. It will be available in the response pipeline, also as `$correlation`.
+
+If both events need to be fully present and `$correlation` is only used for having a common unique identifier to bring them both together, a windowed select statement with a group by clause can help:
+
+```trickle
+define tumbling window window_size_2
+with
+  size = 2
+  # eviction_period = ...
+end;
+
+select aggr::win::collect_flattened({
+  "event": event,
+  "meta": $
+}) from in[window_size_2] group by $correlation into out;
+```
+
+This pipeline will output both request and response as 2-element array:
+
+```js
+[{"event": {}, "meta": {"correlation": "123456"}}, {"event": {}, "meta": {"correlation": "123456"}}]
+```
+
 ## Future work
 
 v0.9.0 introduces linked transports as a feature preview. There are known rough edges and issues with the current mode of configuring linked transports, and also how the richer, linked-transports-powered capabilities interface with rest of Tremor configuration. Some known items for future work, aimed at improving the overall usability:

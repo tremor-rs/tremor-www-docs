@@ -51,6 +51,7 @@ discord    | not supported                                                      
 file       | not supported                                                       |
 kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
 metronome  | not supported                                                       |
+nats       | not supported                                                       |
 PostgreSQL | not supported                                                       |
 rest       | not supported                                                       |
 tcp        | not supported                                                       |
@@ -382,6 +383,58 @@ onramp:
     type: metronome
     config:
       interval: 10000
+```
+
+### nats
+The nats onramp connects to nats server(s) and subscribes to a specified subject.
+
+The default [codec](codecs.md#json) is `json`. 
+
+The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
+
+```
+tremor-nats://<config_first_host_host_addr>[:<config_first_host_port>]/<subject>
+```
+
+Supported configuration operations are:
+
+- `hosts` - List of hosts to connect to.
+- `subject` - Subject to subscribe to for listening to messages.
+- `queue` - Optional queue to subscribe to.
+- `options` - Optional struct, which can be used to customise the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
+    - `token`: String; authenticate using a token.
+    - `username`: String; authenticate using a username and password.
+    - `password`: String; authenticate using a username and password.
+    - `credentials_path`: String; path to a `.creds` file for authentication.
+    -  `cert_path`: String; path to the client certificate file.
+    -  `key_path`: String; path to private key file.
+    -  `name`: String; name this configuration.
+    -  `echo`: Boolean; if true, published messages will not be delivered.
+    -  `max_reconnects`: Integer; max number of reconnection attempts.
+    -  `reconnect_buffer_size`: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.
+    -  `tls`: Boolean; if true, sets tls for _all_ server connections.
+    -  `root_cert`: String; path to a root certificate.
+
+Set metadata variables are:
+
+- `$nats`: Record consisting of the following metadata:
+
+    - `$reply`: Reply associated with the message (if any).
+    - `$headers`: Record denoting the headers for the message (if any).
+
+Example:
+```yaml
+onramp:
+  - id: nats-in
+    type: nats
+    config:
+      hosts:
+        - "127.0.0.1:4444"
+      subject: demo
+      queue: stack
+      options:
+        name: nats-demo
+        reconnect_buffer_size: 1
 ```
 
 ### PostgreSQL

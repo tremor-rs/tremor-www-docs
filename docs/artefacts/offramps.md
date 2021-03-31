@@ -805,3 +805,45 @@ onramp:
     config:
       url: "ws://localhost:1234"
 ```
+
+# otel
+
+CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
+and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
+
+The offramp is experimental.
+
+Supported configuration options are:
+
+- `host` - String - The host or IP to listen on
+- `port` - integer - The TCP port to listen on
+- 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
+- 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
+- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dopped when `false`.
+
+Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
+simplify working with the tremor value mapping of the event data. The connector translates the tremor value level
+data to protocol buffers automatically for distribution to downstream OpenTelemetry systems.
+
+The connector can be used with the `qos::wal` operator for transient in-memory or persistent disk-based guaranteed delivery. If either
+tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
+for lossless recovery. For events marked as transitional that are explicitly acknowledged, `fail` insights are propagated for events that
+are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
+basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
+and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.
+
+For best effort delivery - the `qos::wal` can be omitted and events distributed when downstream endpoints are inaccessible will be
+lost.
+
+Example:
+
+```yaml
+onramp:
+  - id: otlp
+    type: otel
+    codec: json
+    config:
+      port: 4317
+      host: 10.0.2.1
+```

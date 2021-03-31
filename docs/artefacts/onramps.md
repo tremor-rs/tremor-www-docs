@@ -648,3 +648,34 @@ onramp:
       host: "127.0.0.1"
 ```
 
+# otel
+
+CNCF OpenTelemetry onramp. Listens on TCP port `4317` for gRPC traffic conforming to the CNCF OpenTelemetry protocol specification.
+Forwards tremor value variants of `logs`, `trace` and `metrics` messages.
+
+The onramp is experimental.
+
+Supported configuration options are:
+
+- `host` - String - The host or IP to listen on
+- `port` - integer - The TCP port to listen on
+- 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
+- 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
+- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dopped when `false`.
+
+Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
+simplify working with the tremor value mapping of the event data. The connector translates the wire level
+data from protocol buffers to tremor values automatically.
+
+Example:
+
+```yaml
+onramp:
+  - id: otlp
+    type: otel
+    codec: json
+    config:
+      port: 4317
+      host: 127.0.0.1
+```
+

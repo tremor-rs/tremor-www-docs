@@ -2445,10 +2445,14 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 <li><code>$kafka</code> - Record consisting of two optional keys:<ul>
 <li><code>headers</code>: A record denoting the <a href="https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html">headers</a> for the message (if any).</li>
 <li><code>key</code>: The key used for this message in bytes (if any).</li>
+<li><code>topic</code>: The topic the message was on (if any).</li>
+<li><code>offset</code>: The offset in the partition the message was on (if any).</li>
+<li><code>partition</code>: The partition the message was on (if any).</li>
+<li><code>timestamp</code>: The timestamp provided by kafka in milliseconds (if any).
+Example:</li>
 </ul>
 </li>
 </ul>
-<p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafka-in</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafka</span>

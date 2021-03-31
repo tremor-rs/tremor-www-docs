@@ -1052,6 +1052,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#correlation" class="md-nav__link">
+    Correlation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#future-work" class="md-nav__link">
     Future work
   </a>
@@ -1857,6 +1864,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#correlation" class="md-nav__link">
+    Correlation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#future-work" class="md-nav__link">
     Future work
   </a>
@@ -2012,6 +2026,38 @@ hello
 </code></pre></div>
 </details>
 <p>The key here is remembering to link the error ports for all the onramp/offramp/pipeline artefacts involved in the main event-flow, ensuring that the end destination for error events (emitted from the <code>err</code> ports) are visible to the client (or user).</p>
+<h2 id="correlation">Correlation<a class="headerlink" href="#correlation" title="Permanent link">&para;</a></h2>
+<p>If requests to and responses from a linked transport need to be correlated, the special metadata field <code>$correlation</code> can be used. It will be forwarded from the request event to the response event, so that some data from the request can be present in the response context.</p>
+<p>Example pipeline:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">correlate</span><span class="w"></span>
+<span class="kd">script</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">correlation_id</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kd">patch</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">of</span><span class="w"> </span><span class="kd">erase</span><span class="w"> </span><span class="s">&quot;correlation_id&quot;</span><span class="w"> </span><span class="kd">end</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="kc">event</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">create</span><span class="w"> </span><span class="kd">script</span><span class="w"> </span><span class="nx">correlate</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">correlate</span><span class="err">;</span><span class="w"></span>
+<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">correlate</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+<span class="kd">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">correlate</span><span class="err">/</span><span class="nx">err</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">err</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>This script within the pipeline file above will erase <code>correlation_id</code> from the event and put it into the <code>$correlation</code> metadata. It will be available in the response pipeline, also as <code>$correlation</code>.</p>
+<p>If both events need to be fully present and <code>$correlation</code> is only used for having a common unique identifier to bring them both together, a windowed select statement with a group by clause can help:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">define</span><span class="w"> </span><span class="kd">tumbling</span><span class="w"> </span><span class="kd">window</span><span class="w"> </span><span class="nx">window_size_2</span><span class="w"></span>
+<span class="kd">with</span><span class="w"></span>
+<span class="w">  </span><span class="nx">size</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># eviction_period = ...</span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="kd">select</span><span class="w"> </span><span class="nx">aggr</span><span class="err">::</span><span class="nx">win</span><span class="err">::</span><span class="nx">collect_flattened</span><span class="err">(</span><span class="nx">{</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;meta&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="w"></span>
+<span class="nx">}</span><span class="err">)</span><span class="w"> </span><span class="kd">from</span><span class="w"> </span><span class="nx">in</span><span class="err">[</span><span class="nx">window_size_2</span><span class="err">]</span><span class="w"> </span><span class="kd">group</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"> </span><span class="kd">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>This pipeline will output both request and response as 2-element array:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="s2">&quot;event&quot;</span><span class="o">:</span> <span class="p">{},</span> <span class="s2">&quot;meta&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;correlation&quot;</span><span class="o">:</span> <span class="s2">&quot;123456&quot;</span><span class="p">}},</span> <span class="p">{</span><span class="s2">&quot;event&quot;</span><span class="o">:</span> <span class="p">{},</span> <span class="s2">&quot;meta&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;correlation&quot;</span><span class="o">:</span> <span class="s2">&quot;123456&quot;</span><span class="p">}}]</span>
+</code></pre></div>
 <h2 id="future-work">Future work<a class="headerlink" href="#future-work" title="Permanent link">&para;</a></h2>
 <p>v0.9.0 introduces linked transports as a feature preview. There are known rough edges and issues with the current mode of configuring linked transports, and also how the richer, linked-transports-powered capabilities interface with rest of Tremor configuration. Some known items for future work, aimed at improving the overall usability:</p>
 <ul>

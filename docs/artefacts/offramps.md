@@ -44,7 +44,8 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | exit      | never             | always                    |
 | file      | never             | always                    |
 | kafka     | see librdkafka    | see librdkafka            |
-| kv        | never             | always
+| kv        | never             | always                    |
+| nats      | connection loss   | always                    |
 | newrelic  | never             | never                     |
 | Postgres  | never             | always                    |
 | rest      | connection loss   | on non 4xx/5xx replies    |
@@ -485,6 +486,57 @@ Compare And Swap operation. Those operations require old values to match what it
 }}
 ```
 
+### nats
+The nats offramp connects to nats server(s) and publishes a message to specified subject for every event.
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration operations are:
+
+- `hosts` - List of hosts to connect to.
+- `subject` - Subject for the message to be published.
+- `reply` - Optional string specifying the reply subject.
+- `headers` - Option key-value pairs, specifying message headers, where the key is a string and the value is a list of strings.
+- `options` - Optional struct, which can be used to customise the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
+
+    - `token`: String; authenticate using a token.
+    - `username`: String; authenticate using a username and password.
+    - `password`: String; authenticate using a username and password.
+    - `credentials_path`: String; path to a `.creds` file for authentication.
+    -  `cert_path`: String; path to the client certificate file.
+    -  `key_path`: String; path to private key file.
+    -  `name`: String; name this configuration.
+    -  `echo`: Boolean; if true, published messages will not be delivered.
+    -  `max_reconnects`: Integer; max number of reconnection attempts.
+    -  `reconnect_buffer_size`: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.
+    -  `tls`: Boolean; if true, sets tls for _all_ server connections.
+    -  `root_cert`: String; path to a root certificate.
+
+Used metadata variables are:
+
+- `$nats`: Record consisting of the following metadata:
+
+    - `$reply`: Overrides `config.reply` if present.
+    - `$headers`: Overrides `config.headers` if present.
+
+Example:
+```yaml
+offramp:
+  - id: nats-out
+    type: nats
+    config:
+      hosts:
+        - "127.0.0.1:4444"
+      subject: demo
+      reply: ghost
+      headers:
+        snot:
+          - badger
+          - ferris
+      options:
+        name: nats-demo
+        reconnect_buffer_size: 1
+```
 
 ### newrelic
 

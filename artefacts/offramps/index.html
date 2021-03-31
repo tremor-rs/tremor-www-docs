@@ -2973,6 +2973,39 @@ to external TCP protocol distribution endpoints.</p>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">url</span><span class="p">:</span> <span class="s">&quot;ws://localhost:1234&quot;</span>
 </code></pre></div>
+<h1 id="otel">otel<a class="headerlink" href="#otel" title="Permanent link">&para;</a></h1>
+<p>CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of <code>logs</code>, <code>trace</code>
+and <code>metrics</code> messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.</p>
+<p>The offramp is experimental.</p>
+<p>Supported configuration options are:</p>
+<ul>
+<li><code>host</code> - String - The host or IP to listen on</li>
+<li><code>port</code> - integer - The TCP port to listen on</li>
+<li>'logs' - boolean - Is logging enabled for this instance. Defaults to <code>true</code>. Received <code>logs</code> events are dropped when <code>false</code>.</li>
+<li>'metrics' - boolean - Is metrics enabled for this instance. Defaults  to <code>true</code>. Defaults to <code>true</code>. Received <code>metrics</code> events are dropped when <code>false</code>.</li>
+<li>'trace' - boolean - Is trace enabled for this instance. Defaults to <code>true</code>. Defaults to <code>true</code>. Received <code>trace</code> events are dopped when <code>false</code>.</li>
+</ul>
+<p>Pipelines that leverage the OpenTelemetry integration can use utility modules in the <code>cncf::otel</code> module to
+simplify working with the tremor value mapping of the event data. The connector translates the tremor value level
+data to protocol buffers automatically for distribution to downstream OpenTelemetry systems.</p>
+<p>The connector can be used with the <code>qos::wal</code> operator for transient in-memory or persistent disk-based guaranteed delivery. If either
+tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
+for lossless recovery. For events marked as transitional that are explicitly acknowledged, <code>fail</code> insights are propagated for events that
+are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
+basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
+and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.</p>
+<p>For best effort delivery - the <code>qos::wal</code> can be omitted and events distributed when downstream endpoints are inaccessible will be
+lost.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">otlp</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">otel</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4317</span>
+      <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0.2.1</span>
+</code></pre></div>
                 
               
               

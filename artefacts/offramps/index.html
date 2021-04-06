@@ -1266,6 +1266,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#nats" class="md-nav__link">
+    nats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#newrelic" class="md-nav__link">
     newrelic
   </a>
@@ -2172,6 +2179,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#nats" class="md-nav__link">
+    nats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#newrelic" class="md-nav__link">
     newrelic
   </a>
@@ -2336,6 +2350,11 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <tr>
 <td>kv</td>
 <td>never</td>
+<td>always</td>
+</tr>
+<tr>
+<td>nats</td>
+<td>connection loss</td>
 <td>always</td>
 </tr>
 <tr>
@@ -2709,6 +2728,60 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
   <span class="s2">&quot;proposed&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span> <span class="c1">// the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)</span>
 <span class="p">}}</span>
 </code></pre></div>
+<h3 id="nats">nats<a class="headerlink" href="#nats" title="Permanent link">&para;</a></h3>
+<p>The nats offramp connects to nats server(s) and publishes a message to specified subject for every event.</p>
+<p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
+<p>Supported configuration operations are:</p>
+<ul>
+<li><code>hosts</code> - List of hosts to connect to.</li>
+<li><code>subject</code> - Subject for the message to be published.</li>
+<li><code>reply</code> - Optional string specifying the reply subject.</li>
+<li><code>headers</code> - Option key-value pairs, specifying message headers, where the key is a string and the value is a list of strings.</li>
+<li>
+<p><code>options</code> - Optional struct, which can be used to customise the connection to the server (see <a href="https://docs.rs/nats/0.9.8/nats/struct.Options.html"><code>nats.rs</code> configuration options</a> for more info):</p>
+<ul>
+<li><code>token</code>: String; authenticate using a token.</li>
+<li><code>username</code>: String; authenticate using a username and password.</li>
+<li><code>password</code>: String; authenticate using a username and password.</li>
+<li><code>credentials_path</code>: String; path to a <code>.creds</code> file for authentication.</li>
+<li><code>cert_path</code>: String; path to the client certificate file.</li>
+<li><code>key_path</code>: String; path to private key file.</li>
+<li><code>name</code>: String; name this configuration.</li>
+<li><code>echo</code>: Boolean; if true, published messages will not be delivered.</li>
+<li><code>max_reconnects</code>: Integer; max number of reconnection attempts.</li>
+<li><code>reconnect_buffer_size</code>: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.</li>
+<li><code>tls</code>: Boolean; if true, sets tls for <em>all</em> server connections.</li>
+<li><code>root_cert</code>: String; path to a root certificate.</li>
+</ul>
+</li>
+</ul>
+<p>Used metadata variables are:</p>
+<ul>
+<li>
+<p><code>$nats</code>: Record consisting of the following metadata:</p>
+<ul>
+<li><code>$reply</code>: Overrides <code>config.reply</code> if present.</li>
+<li><code>$headers</code>: Overrides <code>config.headers</code> if present.</li>
+</ul>
+</li>
+</ul>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nats-out</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nats</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">hosts</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;127.0.0.1:4444&quot;</span>
+      <span class="nt">subject</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">demo</span>
+      <span class="nt">reply</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ghost</span>
+      <span class="nt">headers</span><span class="p">:</span>
+        <span class="nt">snot</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">badger</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ferris</span>
+      <span class="nt">options</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nats-demo</span>
+        <span class="nt">reconnect_buffer_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div></p>
 <h3 id="newrelic">newrelic<a class="headerlink" href="#newrelic" title="Permanent link">&para;</a></h3>
 <p>Send events to <a href="https://newrelic.com/">New Relic</a> platform, using its log apis (variable by region).</p>
 <p>This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.</p>

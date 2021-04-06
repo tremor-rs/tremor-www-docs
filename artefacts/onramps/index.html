@@ -1199,6 +1199,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#nats" class="md-nav__link">
+    nats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#postgresql" class="md-nav__link">
     PostgreSQL
   </a>
@@ -2061,6 +2068,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#nats" class="md-nav__link">
+    nats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#postgresql" class="md-nav__link">
     PostgreSQL
   </a>
@@ -2215,6 +2229,10 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 </tr>
 <tr>
 <td>metronome</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>nats</td>
 <td>not supported</td>
 </tr>
 <tr>
@@ -2510,6 +2528,56 @@ If an event failed during processing within the pipeline or at a downstream offr
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10000</span>
 </code></pre></div>
+<h3 id="nats">nats<a class="headerlink" href="#nats" title="Permanent link">&para;</a></h3>
+<p>The nats onramp connects to nats server(s) and subscribes to a specified subject.</p>
+<p>The default <a href="../codecs/#json">codec</a> is <code>json</code>. </p>
+<p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
+<div class="highlight"><pre><span></span><code>tremor-nats://&lt;config_first_host_host_addr&gt;[:&lt;config_first_host_port&gt;]/&lt;subject&gt;
+</code></pre></div>
+<p>Supported configuration operations are:</p>
+<ul>
+<li><code>hosts</code> - List of hosts to connect to.</li>
+<li><code>subject</code> - Subject to subscribe to for listening to messages.</li>
+<li><code>queue</code> - Optional queue to subscribe to.</li>
+<li><code>options</code> - Optional struct, which can be used to customise the connection to the server (see <a href="https://docs.rs/nats/0.9.8/nats/struct.Options.html"><code>nats.rs</code> configuration options</a> for more info):<ul>
+<li><code>token</code>: String; authenticate using a token.</li>
+<li><code>username</code>: String; authenticate using a username and password.</li>
+<li><code>password</code>: String; authenticate using a username and password.</li>
+<li><code>credentials_path</code>: String; path to a <code>.creds</code> file for authentication.</li>
+<li><code>cert_path</code>: String; path to the client certificate file.</li>
+<li><code>key_path</code>: String; path to private key file.</li>
+<li><code>name</code>: String; name this configuration.</li>
+<li><code>echo</code>: Boolean; if true, published messages will not be delivered.</li>
+<li><code>max_reconnects</code>: Integer; max number of reconnection attempts.</li>
+<li><code>reconnect_buffer_size</code>: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.</li>
+<li><code>tls</code>: Boolean; if true, sets tls for <em>all</em> server connections.</li>
+<li><code>root_cert</code>: String; path to a root certificate.</li>
+</ul>
+</li>
+</ul>
+<p>Set metadata variables are:</p>
+<ul>
+<li>
+<p><code>$nats</code>: Record consisting of the following metadata:</p>
+<ul>
+<li><code>$reply</code>: Reply associated with the message (if any).</li>
+<li><code>$headers</code>: Record denoting the headers for the message (if any).</li>
+</ul>
+</li>
+</ul>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nats-in</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nats</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">hosts</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;127.0.0.1:4444&quot;</span>
+      <span class="nt">subject</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">demo</span>
+      <span class="nt">queue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stack</span>
+      <span class="nt">options</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nats-demo</span>
+        <span class="nt">reconnect_buffer_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div></p>
 <h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
 <p>PostgreSQL onramp.</p>
 <p>Supported configuration options are:</p>

@@ -16,6 +16,7 @@ brew install mkdocs
 
 ```bash
 pip3 install -r requirements.txt
+pip3 install -r python_scripts/requirements.txt
 ```
 
 This installs the `mkdocs-material` theme which we use, along with other dependencies.

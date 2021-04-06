@@ -159,7 +159,7 @@ Supported configuration options are:
 - `concurrency` - Maximum number of parallel requests (default: 4).
 
 Events will be sent to the connected elasticsearch cluster via the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) using the `index` action.
-It is recommended to batch events sent to this sink using the [generic::batch operator](../tremor-query/operators.d#genericbatch) to reduce the overhead
+It is recommended to batch events sent to this sink using the [generic::batch operator](../tremor-query/operators.md#genericbatch) to reduce the overhead
 introduced by the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html).
 
 The configuration options `codec` and `postprocessors` are not used, as elastic will always serialize event payloads as JSON.
@@ -364,7 +364,7 @@ Used metadata variables:
 - `$kafka` - Record consisting of the following meta information:
     - `$headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message.
     - `$key`: Same as config `key` (optional. overrides related config param when present)
-    
+
 
 Example:
 

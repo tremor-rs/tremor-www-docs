@@ -93,6 +93,13 @@ Integers in `tremor-script` are signed and are limited to 64-bit internal repres
 404
 ```
 
+The stdlib provides useful function for integers in [`std::integer`](stdlib/std/integer.md).
+
+```tremor
+use std::integer;
+integer::parse("42") == 42
+```
+
 #### Floating-Point Numerics
 
 Floating point numerics in `tremor-script` are signed and are limited to 64-bit IEEE representation
@@ -100,6 +107,8 @@ Floating point numerics in `tremor-script` are signed and are limited to 64-bit 
 ```tremor
 1.67-e10
 ```
+
+The stdlib provides useful function for floats in [`std::float`](stdlib/std/float.md).
 
 #### Character and Unicode Code-points
 
@@ -109,6 +118,13 @@ The language does not support literal character or Unicode code-points at this t
 
 ```tremor
 "I am a string"
+```
+
+The standard library provides useful function for string manipulation in [`std::string`](stdlib/std/string.md):
+
+```tremor
+use std::string;
+string::uppercase(string::substr("snotty", 0, 4)) == "SNOT"
 ```
 
 ##### String Interpolation
@@ -150,6 +166,14 @@ Array literals in `tremor-script` are a comma-delimited set of expressions brack
 [ 1, 2, "foobar", 3.456e10, { "some": "json-like-document" }, null ]
 ```
 
+The standard library provides several useful functions to work with arrays in [`std::array`](stdlib/std/array.md):
+
+```tremor
+use std::array;
+
+array::push(["snot"], "badger") == ["snot", "badger"]
+```
+
 #### Records
 
 Record grammar:
@@ -170,6 +194,8 @@ Record literals in `tremor-script` are syntactically equivalent to JSON document
 }
 ```
 
+Check out the stdlib [`std::record`](stdlib/std/record.md) module for some helpful function for working with records.
+
 #### Binary
 
 Binaries are based on the [Erlang bit syntax](https://erlang.org/doc/programming_examples/bit_syntax.html).
@@ -178,18 +204,18 @@ Binary grammar:
 
 > ![record grammar](grammar/diagram/Binary.png)
 
-Binaryfields grammar:
+BinaryFields grammar:
 
 > ![fields grammar](grammar/diagram/BinaryFields.png)
 
-Binaryfield grammar:
+BinaryField grammar:
 
 > ![field grammar](grammar/diagram/BinaryField.png)
 
 
 Parts of each field are: `<value>:<size>/<type>` where both `size` and `type` are optional.
 
-The types currently supported are:
+The binary types consists of up to three parts. That is 2 prefixes and 1 main type identifier. Examples: `unsigned-big-integer`, `signed-integer`, `binary`. The types currently supported are:
 
 * `binary` - this can handle both binaries and strings, `size` here refers to the number of bytes
 * `integer` - this can represent integers, `size` here means size in bits. In addition the type can be prefixed with `big` and `little` for indianness and `signed` and `unsigned` for signedness.
@@ -231,6 +257,12 @@ let event = {
 >>
 
 ```
+
+See also:
+
+ - [`std::binary`](stdlib/std/binary.md) for useful function for working with binary data.
+ - [`std::string::into_binary`](stdlib/std/string.md#into_binarybytes) and [`std::string::from_utf8_lossy`](stdlib/std/string.md#from_utf8_lossybytes)
+ - [`std::base64`](stdlib/std/base64.md) for encoding and decoding binary data to string using base64.
 
 
 #### Operators
@@ -373,7 +405,7 @@ Set a local variable `a` to be the ingested event record
 let a = event;
 ```
 
-Set the global variable `a` to be the value of the local variable `a`:
+Set the metadata variable `a` to be the value of the local variable `a`:
 
 ```tremor
 let $a = a;
@@ -387,7 +419,7 @@ As the content of the dropped event is user-defined, operators can standardise t
 
 ```tremor
 drop;
-drop; # As the first emit always wins, this expression never runs
+drop; # As the first drop always wins, this expression never runs
 ```
 
 ### Emit
@@ -400,7 +432,9 @@ Emit expressions enable short-circuiting the evaluation of a `tremor-script` whe
 
 As the content of the emitted event is user-defined, oeprators can standardise the format of the event emitted on emit from `tremor-script`
 
-_NOTE_ By default, if no `emit` or `drop` expressions are defined, all expressions in a correctly written tremor-script will be evaluated until completion and the value of the last expression evaluated will be returned as an `emit` message.
+!!! note
+
+    By default, if no `emit` or `drop` expressions are defined, all expressions in a correctly written tremor-script will be evaluated until completion and the value of the last expression evaluated will be returned as an `emit` message.
 
 Implicit emission:
 
@@ -456,7 +490,7 @@ Where:
 - target: An expression that is the target of case-based queries
 - case-expr: A predicate test, literal value or pattern to match against
 - guard: An optional predicate expression to gate whether or not an otherwise matching case-clause will in fact match
-- block: The expression to be evaluated if the case matches, and any supplied guard evaluates to true
+- block: The expressions to be evaluated if the case matches, and any supplied guard evaluates to true
 
 Examples:
 
@@ -464,7 +498,9 @@ Discover if the `store.book` path is an array, record or scalar structure:
 
 ```tremor
 match store.book of
-  case %[] => "store.book is an array-like data-structure"
+  case %[] =>
+    let msg = "store.book is an array-like data-structure",
+    msg
   case %{} => "store.book is a record-like data-structure"
   default => "store.book is a scalar data-type"
 end
@@ -688,6 +724,28 @@ match event of
 end
 ```
 
+#### Effectors
+
+Effectors grammar:
+> ![effectors grammar](grammar/diagram/Effectors.png)
+
+Block:
+> ![block grammar](grammar/diagram/Block.png)
+
+Effectors are the expressions evaluated when a case pattern and guard succeeded.
+Things are simple when using only a single expression as the match case effector. When we have to use multiple expressions to do some more complex processing, we need to separate those expressions with commas `,`:
+
+```tremor
+use std::string;
+match event of
+  case record = %{ present foo } =>
+    let foo_content = record["foo"],
+    let replaced = string::replace(foo_content, "foo", "bar"),
+    let record["foo"] = replaced
+  default => null
+end
+```
+
 ### Merge
 
 > ![merge grammar](grammar/diagram/Merge.png)
@@ -777,7 +835,11 @@ Since the state storage lives for the lifetime of a pipeline, state will not be 
 ## Extractors
 
 > ![test expression grammar](grammar/diagram/TestExpr.png)
+
+TEST_LITERAL Grammar:
 > ![test literal grammar](grammar/diagram/TEST_LITERAL.png)
+
+TEST_ESCAPE Grammar:
 > ![test literal escape grammar](grammar/diagram/TEST_ESCAPE.png)
 
 The language has pluggable support for a number of microformats with two basic modes of operation that enable predicate tests ( does a particular value match the expected micro-format ) and elementization ( if a value does match a specific micro-format, then extract and elementize accordingly ).
@@ -810,3 +872,13 @@ The set of supported micro-formats at the time of writing are as follows:
 | **json**    | Not required                              | Tests if the underlying value is json encoded                                | **depends on value** | Returns a hydrated `tremor-script` value upon extraction                                    |
 
 There is no concept of _injector_ in the `tremor-script` language that is analogous to extractors. Where relevant the language supports functions that support the underlying operation ( such as base64 encoding ) and let expressions can be used for assignments.
+
+## Additional Grammar Rules
+
+These rules are referenced in the main tremor-query grammar rules above and are listed here as extended reference.
+
+DocComment Grammar:
+> ![doc comment grammar](grammar/diagram/DocComment.png)
+
+DocCommentLine Grammar:
+> ![doc comment line grammar](grammar/diagram/DocCommentLine.png)

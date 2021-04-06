@@ -77,27 +77,33 @@ Queries are one or many statements separated by `;`.
 
 Queries are compiled into a DAG of operator nodes and validated at compile time. At runtime, the resulting executable tremor pipeline is evaluated/interpreted.
 
-Query grammar:
+##### Grammar
 
 > ![query grammar](grammar/diagram/Query.png)
 
+Stmt: <a name="Stmt"></a>
+> ![statement grammar](grammar/diagram/Stmt.png)
+
+See also [Additional Grammar Rules](#additional-grammar-rules).
 ### Statements
 
 Statements can be one of:
 
-- Stream definitions
-- Window definitions
-- Custom Operator definitions
-- Embedded `tremor-script` definitions
-- Or builtin operations, like the `select` statement
+- [Stream definitions](#stream-definitions)
+- [Window definitions](#window-definitions)
+- [Custom Operator definitions](#custom-operator-definitions)
+- [Embedded `tremor-script` definitions](#embedded-script-definitions)
+- Or builtin operations, like the [`select` statement](#select-queries)
 
 #### Stream definitions
 
 Stream definitions in `tremor-query` allow private intermediate streams to be named so that they can be used as the source or sinks in other continuous queries.
 
-Stream definition grammar:
+##### Grammar
 
 > ![create stream grammar](grammar/diagram/CreateStreamDefn.png)
+
+##### Example
 
 ```trickle
 create stream passthrough;
@@ -159,12 +165,12 @@ Configuration Parameters:
     If you use a window with `emit_empty_windows` in a `group by` query and the cardinality is likely huge, consider using `max_groups` and `eviction_period` to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.
 
 
-Window definition grammar:
-
+##### Grammar
 > ![window definition grammar](grammar/diagram/DefineWindowDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
-> ![with partial params grammar](grammar/diagram/WithPartialParams.png)
-> ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
+
+
+See also [Additional Grammar Rules](#additional-grammar-rules).
+##### Examples
 
 For example a 15 second tumbling window based on the event ingest timestamp can be defined as follows
 
@@ -200,15 +206,19 @@ end;
 
 Custom operators allow definition, configuration and usage of legacy operators, that have been around before tremor supported the query language. As the query language and deprecated yaml format share the same DAG model and pipeline formats, they are interoperable at runtime and are backwards compatible:
 
-Operator definition grammar:
+##### Grammar
 
+Operator Definition:
 > ![operator definition grammar](grammar/diagram/DefineOperatorDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
 
-Creating an operator:
+Operator Creation:
 
 > ![create operator grammar](grammar/diagram/CreateOperatorDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
+
+
+See also [Additional Grammar Rules](#additional-grammar-rules).
+
+##### Example
 
 ```trickle
 # create a bucketing operator
@@ -226,16 +236,18 @@ select event from kfc into out;
 
 The tremor-script language can be embedded in the query language natively and this mirrors legacy usage (before v0.9) where it was embedded within yaml-based pipeline configuration. However, the tooling that ships with `tremor-query` understands both the query language and scripting language dialects with better syntax highlighting and error checking built in, for ease of operator productivity over the deprecated yaml syntax.
 
-Script definition grammar:
+##### Grammar
 
+Script Definition Grammar:
 > ![script definition grammar](grammar/diagram/DefineScriptDefn.png)
-> ![with partial params grammar](grammar/diagram/WithPartialParams.png)
-> ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
 
-Script an operator:
 
+Script Creation Grammar:
 > ![create script grammar](grammar/diagram/CreateScriptDefn.png)
-> ![with params grammar](grammar/diagram/WithParams.png)
+
+See also [Additional Grammar Rules](#additional-grammar-rules).
+
+##### Example
 
 ```trickle
 define grouper::bucket operator kfc;
@@ -262,19 +274,9 @@ select event from kfc into out;
 
 #### Select queries
 
-The select query is a builtin operation that is the workhorse of the `tremor-query` language.
-
-The select operation is of the general form:
-
 > ![select grammar](grammar/diagram/SelectStmt.png)
-> ![from grammar](grammar/diagram/FromClause.png)
-> ![where grammar](grammar/diagram/WhereClause.png)
-> ![group by grammar](grammar/diagram/GroupByClause.png)
-> ![group by dimensions grammar](grammar/diagram/GroupByDimension.png)
-> ![set group grammar](grammar/diagram/SetBasedGroup.png)
-> ![each group grammar](grammar/diagram/EachBasedGroup.png)
-> ![into grammar](grammar/diagram/IntoClause.png)
-> ![having grammar](grammar/diagram/HavingClause.png)
+
+The select query is a builtin operation that is the workhorse of the `tremor-query` language.
 
 An example select operation configured to pass through data from a pipeline's default `in` stream to a pipeline's default `out` stream:
 
@@ -282,21 +284,21 @@ An example select operation configured to pass through data from a pipeline's de
 select event from in into out;
 ```
 
-Select operations can filter ingested data with the specification of a `where` clause. The clause forms a predicate check on the inbound events before any further processing takes place.
-That means the `event` available to the `where` clause is the unprocessed inbound event from the input stream (`in` in this case):
+Select operations can filter ingested data with the specification of a [`where` clause](#WhereClause). The clause forms a predicate check on the inbound events before any further processing takes place.
+That means the `event` available to the [`where` clause](#WhereClause) is the unprocessed inbound event from the input stream (`in` in this case):
 
 ```trickle
 select event from in where event.is_interesting into out;
 ```
 
-Select operations can filter data being forwarded to other operators with the specification of a `having` clause. The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
-That means the `event` available to the `having` clause is the result of evaluating the `select` target clause (the expression between `select` and `from`).
+Select operations can filter data being forwarded to other operators with the specification of a [`having` clause](#HavingClause). The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
+That means the `event` available to the [`having` clause](#HavingClause) is the result of evaluating the `select` target clause (the expression between `select` and `from`).
 
 ```trickle
 select event from in into out having event.is_interesting;
 ```
 
-Select operations can be windowed by **applying** a window to the inbound data stream.
+Select operations can be windowed by **applying** a [window](#window-definitions) to the inbound data stream.
 
 ```trickle
 define tumbling window fifteen_secs
@@ -310,7 +312,7 @@ select { "count": aggr::stats::count() } from in[fifteen_secs] into out having e
 In the above operation, we emit a synthetic count every fifteen seconds if at least one event has been witnessed during a 15 second window of time.
 
 
-Select operations can be grouped through defining a `group by` clause.
+Select operations can be grouped through defining a [`group by` clause](#GroupByClause).
 
 ```trickle
 define tumbling window fifteen_secs
@@ -327,7 +329,7 @@ having event.count > 0;
 
 In the above operation, we partition the ingested events into groups defined by a required `event.partition` data field on the inbound event. Each of these groups maintains an independent fifteen second tumbling window, and each window upon closing gates outbound synthetic events by a count for that group.
 
-The current implementation of `select` allows set-based and each-based grouping. These can be composed concatenatively. However `cube` and `rollup` based grouping dimensions are not currently supported.
+The current implementation of `select` allows [set-based](#SetBasedGroup) and [each-based](#EachBasedGroup) grouping. These can be composed concatenatively. However `cube` and `rollup` based grouping dimensions are not currently supported.
 
 In windowed queries any event related data can only be referenced in those two cases:
 
@@ -351,3 +353,66 @@ select {
 group by set(event.foo, event.bar)
 into out;
 ```
+
+##### Grammar
+
+Select Grammar:
+> ![select grammar](grammar/diagram/SelectStmt.png)
+
+FromClause:  <a name="FromClause"></a>
+> ![from grammar](grammar/diagram/FromClause.png)
+
+WhereClause: <a name="WhereClause"></a>
+> ![where grammar](grammar/diagram/WhereClause.png)
+
+GroupByClause: <a name="GroupByClause"></a>
+> ![group by grammar](grammar/diagram/GroupByClause.png)
+
+GroupByDimension: <a name="GroupByDimension"></a>
+> ![group by dimensions grammar](grammar/diagram/GroupByDimension.png)
+
+SetBasedGroup: <a name="SetBasedGroup"></a>
+> ![set group grammar](grammar/diagram/SetBasedGroup.png)
+
+EachBasedGroup: <a name="EachBasedGroup"></a>
+
+> ![each group grammar](grammar/diagram/EachBasedGroup.png)
+
+IntoClause: <a name="IntoClause"></a>
+
+> ![into grammar](grammar/diagram/IntoClause.png)
+
+HavingClause: <a name="HavingClause"></a>
+
+> ![having grammar](grammar/diagram/HavingClause.png)
+
+#### Additional Grammar Rules
+
+These rules are referenced in the main tremor-query grammar rules above and are listed here as extended reference.
+
+EmbeddedScript:
+> ![embedded script grammar](grammar/diagram/EmbeddedScript.png)
+
+WithParams:
+> ![with params grammar](grammar/diagram/WithParams.png)
+
+WithPartialParams:
+> ![with partial params grammar](grammar/diagram/WithPartialParams.png)
+
+Params: <a name="Params"></a>
+> ![params grammar](grammar/diagram/Params.png)
+
+Param: <a name="Param></a>
+> ![param grammar](grammar/diagram/Param.png)
+
+ModularId: <a name="ModularId"></a>
+> ![modular id graamar](grammar/diagram/ModularId.png)
+
+Id: <a name="Id"></a>
+> ![id grammar](grammar/diagram/Id.png)
+
+TiltFrames: <a name="TiltFrames"></a>
+> ![tilt-frames grammar](grammar/diagram/TiltFrames.png)
+
+WindowKind:
+> ![window kind grammar](grammar/diagram/WindowKind.png)

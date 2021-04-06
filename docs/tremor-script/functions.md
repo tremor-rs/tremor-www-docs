@@ -17,7 +17,8 @@ noteworthy restrictions:
 5. Functions can call other functions but they have to be a priori defined. The order of definitions is significant.
 6. Tail recursion is supported, and constrained to a maximum recursion depth. A recursion depth is imposed as tremor-script is designed to operate on infinite streams of data so indefinite blocking/recursion is not supportable by design.
 
-![function clause](grammar/diagram/FnDecl.png)
+Function Declaration Grammar:
+> ![function clause](grammar/diagram/FnDecl.png)
 
 Lets look at the types of functions we have.
 

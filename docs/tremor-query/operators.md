@@ -6,9 +6,49 @@ Operators process events and signals in the context of a pipeline. An operator, 
 
 Operators allow the data processing capabilities of tremor to be extended or specialized without changes to runtime behavior, concurrency, event ordering or other aspects of a running tremor system.
 
-Operators are created in the context of a pipeline and configured as part of `tremor-query` [statements](index.md#statements). An operator MUST have an identifier that is unique for its owning pipeline.
+Operators are created in the context of a pipeline and configured as part of `tremor-query` [statements](index.md#custom-operator-definitions). An operator MUST have an identifier that is unique for its owning pipeline.
 
 Configuration is of the general form:
+
+```trickle
+define module::operator_name operator my_custom_operator
+with
+  param1 = "foo",
+  param2 = [1, 2, 3]
+end;
+
+# create - full form
+create operator my_custom_operator_instance from my_custom_operator
+with
+  param1 = "bar",
+  param2 = [true, false, {}]
+end;
+
+# create - short form
+create operator my_custom_operator;
+```
+
+## script
+
+An embedded tremor script is created with a special syntax that deviates from the operator creation. For a full reference see the section on [tremor-query embedded-scripts](index.md#embedded-script-definitions).
+
+The tremor script runtime allows to modify events or their metadata. To learn more about Tremor Script please see the [related section](../tremor-script/index.md).
+
+**Outputs**:
+
+- `out` (default output used with `emit`)
+- `error` - channel for runtime errors
+- `<anything else>` used when `emit event => "<anything else>"`
+
+**Examples**:
+
+```trickle
+# definition
+define script rt
+script
+  emit
+end;
+```
 
 ```trickle
 define script add
@@ -22,24 +62,7 @@ select event from in into add;
 select event from add into out;
 ```
 
-## script
 
-The tremor script runtime allows to modify events or their metadata. To learn more about Tremor Script please see the [related section](../tremor-script/index.md).
-
-**Outputs**:
-
-- `out` (default output used with `emit`)
-- `error` - channel for runtime errors
-- `<anything else>` used when `emit event => "<anything else>"`
-
-**Example**:
-
-```trickle
-define script rt
-script
-  emit
-end;
-```
 
 ## grouper::bucket
 
@@ -258,7 +281,13 @@ define generic::counter operator counter;
 
 ## debug::history
 
-Generates a history entry in the event. Data is written to an array with the key provided in `name`, tagged with `"event: <op>(<event_id>)"`.
+!!! note
+
+    This operator is for debugging purposes only, and should not be used in production deployments.
+
+This operator generates a history entry in the event metadata underneath the field provided in the `name` config value. Data is pushed to the array as a Striong in the form: `"event: <op>(<event_id>)"`.
+
+This can be used as a tracepoint of events in a complex pipeline setup.
 
 **Configuration options**:
 

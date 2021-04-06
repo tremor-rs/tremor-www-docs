@@ -4,16 +4,16 @@ Tremor-script supports nested namespaces or modules.
 
 Modules in tremor are the lowest unit of compilation available to developers
 to modularise tremor logic across multiple logical namespaces. On the filesystem,
-modules are rooted at a base path and are nested with folders. 
+modules are rooted at a base path and are nested with folders.
 
 Within a file, nesting is via the `mod` clause.
 
-![module grammar](./grammar/diagram/Module.png)
+> ![module grammar](./grammar/diagram/Module.png)
 
 Modules can define `const` constants, `fn` functions, or
 nested `mod` sub-modules.
 
-![module grammar](./grammar/diagram/ModuleExpr.png)
+> ![module grammar](./grammar/diagram/ModuleExpr.png)
 
 # Module Path
 

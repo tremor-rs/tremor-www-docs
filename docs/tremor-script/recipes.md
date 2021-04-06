@@ -18,9 +18,10 @@ end;
 
 ## Appending to an array
 
-When appending to an array we can use the `array::push` function
+When appending to an array we can use the [`array::push`](stdlib/std/array.md#pusharray-element) function
 
 ```tremor
+use std::array;
 # event = {"key": "value", "tags": ["tag1"]}
 let event.tags = array::push(event.tags, "tag2");
 # event = {"key": "value", "tags": ["tag1", "tag2"]}
@@ -31,6 +32,7 @@ let event.tags = array::push(event.tags, "tag2");
 Sometimes we want to validate over extracted data without forcing the extraction to be a regular expression. For validations like the one below this pattern can be used.
 
 ```tremor
+use std::array;
 match event of
   # ...
   case r = %{message ~= dissect|%{log_level} %{log_timestamp}: %{logger}: %{message}|} when array::contains(["ERROR", "WARN", "INFO", "DEBUG"], result.message.log_level) => let event = merge event of r.message end
@@ -71,6 +73,8 @@ end;
 To make boolean decisions we can match on `true` or `false`.
 
 ```tremor
+use std::type;
+
 match type::is_record(event) of
   case true => let event_type = "record"
   case false => let event_type = "other"
@@ -133,18 +137,15 @@ match event of
 end
 ```
 
-And then in the pipeline configuration instead use parts such as:
+```
+define script split_script
+script
+  # see above
+end;
+create script split_script;
 
-```yaml
-pipeline:
-  - id: one
-    outputs:
-      - blue
-      - green
-    # ...
-    links:
-      script/blue: ["blue"]
-      script/green: ["green"]
+select event from split_script/blue into out/blue;
+select event from split_script/green into out/green;
 ```
 
 ## Percentage drops of events

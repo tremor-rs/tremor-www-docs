@@ -359,9 +359,9 @@ If an event failed during processing within the pipeline or at a downstream offr
 * Already processed kafka messages (that have succeeded before the failed message failed) might be seen again multiple times.
 * If the message is persistently failing (e.g. due to an illegal payload or similar), tremor will retry those messages infinitely.
 
-If persistent failures are tp be expected (e.g. due to invalid event payloads) or if repeating messages in general are a problem for, avoiding retries with `retry_failed_events: false` is advised.
+If persistent failures are to be expected (e.g. due to invalid event payloads) or if repeating messages in general are a problem for the application, avoiding retries with `retry_failed_events: false` is advised.
 
-If `enable.auto.commit: true` is set in `rdkafka_options`, this is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the kafka message as event in tremor.
+If `enable.auto.commit: true` is set in `rdkafka_options`, which is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the kafka message as event in tremor.
 
 ### metronome
 

@@ -1,13 +1,7 @@
 TREMOR_VSN=v0.10.2
 
 mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib docs/operations/cli.md
-	files=`find docs/tremor-script/stdlib -type f`;\
-	idx=$$(for f in $$files; do \
-		name=`echo $$f | sed -e 's;docs/tremor-script/stdlib/\(.*\).md;\1;' | sed -e 's;/;::;'`;\
-		file=`echo $$f | sed -e 's;docs/;;'`;\
-		echo "$${name}0      - '$$name': $$file";\
-	done | sort | sed -e 's/^.*\?0//' | awk 1 ORS='\\n');\
-	sed -e "s;      - STDLIB;$${idx};" mkdocs.yml.in > mkdocs.yml
+	python3 ./python_scripts/include_stdlib.py
 
 tremor-runtime:
 	-git clone https://github.com/tremor-rs/tremor-runtime
@@ -20,4 +14,7 @@ docs/tremor-script/stdlib: tremor-runtime
 	cp -r tremor-runtime/docs docs/tremor-script/stdlib
 
 docs/operations/cli.md: tremor-runtime
-	./cli2md/cli2md.py tremor-runtime/tremor-cli/src/cli.yaml > docs/operations/cli.md
+	python3 ./python_scripts/cli2md.py tremor-runtime/tremor-cli/src/cli.yaml > docs/operations/cli.md
+
+clean:
+	rm -rf mkdocs.yml docs/operations/cli.md

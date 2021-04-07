@@ -101,6 +101,7 @@ nav:
     - CNCF:
       - OpenTelemetry Passthrough: workshop/examples/40_otel_passthrough/README.md
       - Zipkin Interworking: workshop/examples/41_otel_zipkin/README.md
+      - Jaeger Interworking: workshop/examples/42_otel_jaeger/README.md
   - Development:
     - 'Quick Start Guide': development/quick-start.md
     - Profiling: development/profiling.md

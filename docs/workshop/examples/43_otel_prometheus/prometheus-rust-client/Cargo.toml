@@ -1,0 +1,9 @@
+[package]
+name = "prometheus-rust-client"
+version = "0.1.0"
+authors = ["Darach Ennis <darach@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+prometheus = { version = "0.12", features = [ "push" ] }
+device_query = "0.2.8"

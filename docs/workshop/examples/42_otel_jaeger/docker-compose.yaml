@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+  tremor:
+    image: tremorproject/tremor:edge
+    ports:
+      - 4316:4316
+    environment:
+      - RUST_BACKTRACE=1
+      - RUST_LOG=info
+    volumes:
+      - ./etc/tremor:/etc/tremor:ro
+      - ./var/log:/var/log:rw
+  # Collector
+  otel-collector:
+    image: otel/opentelemetry-collector-dev:latest
+    command: ["--config=/etc/otel-collector-config.yaml", ""]
+    volumes:
+      - ./etc/otel/collector.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "1888:1888"   # pprof extension
+      - "8888:8888"   # Prometheus metrics exposed by the collector
+      - "8889:8889"   # Prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "14268:14268" # Jeager http/thrift
+      - "14250:14250" # Jaeger
+      - "4317"        # OTLP gRPC receiver
+      - "9411:9411"   # Zipkin HTTP receiver
+      - "55670:55679" # zpages extension
+    depends_on:
+      - jaeger
+      - tremor
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "14268"
+      - "14250"

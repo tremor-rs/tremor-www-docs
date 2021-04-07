@@ -9,13 +9,6 @@ onramp:
       port: 4316
       host: "0.0.0.0"
 
-offramp:
-#  - id: otlp
-#    type: otel
-#    codec: json
-#    config:
-#      port: 4317
-#      host: "otel-collector"
   - id: stdout
     type: file
     codec: json

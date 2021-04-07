@@ -1,5 +1,8 @@
 # CNCF OpenTelemetry Jaeger Interworking
 
+!! note
+    All the application code here is available from the docs [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/42_otel_jaeger).
+
 This example builds on the simple passthrough CNCF OpenTelemetry
 configuration but configures Jaeger as a receiver and exporter in the
 OpenTelemetry Collector.

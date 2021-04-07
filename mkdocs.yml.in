@@ -102,6 +102,7 @@ nav:
       - OpenTelemetry Passthrough: workshop/examples/40_otel_passthrough/README.md
       - Zipkin Interworking: workshop/examples/41_otel_zipkin/README.md
       - Jaeger Interworking: workshop/examples/42_otel_jaeger/README.md
+      - Prometheus Interworking: workshop/examples/43_otel_prometheus/README.md
   - Development:
     - 'Quick Start Guide': development/quick-start.md
     - Profiling: development/profiling.md

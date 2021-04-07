@@ -1,0 +1,54 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: "otel-collector"
+          scrape_interval: 10s
+          honor_labels: true
+          static_configs:
+            - targets: ['otel-collector:8888']
+        - job_name: "prom-scrape"
+          scrape_interval: 1s
+          honor_labels: true
+          static_configs:
+            - targets: [ 'prompush:9091' ]
+
+exporters:
+  prometheusremotewrite:
+    endpoint: "http://prompush:9091/api/prom/push"
+    insecure: true
+    external_labels:
+      server: opentelemetry-collector
+  logging:
+  otlp:
+    endpoint: "tremor:4316"
+    insecure: true
+
+processors:
+  batch:
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, otlp]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging,otlp]
+    metrics:
+      receivers: [otlp,prometheus]
+      processors: [batch]
+      exporters: [logging,otlp,prometheusremotewrite]

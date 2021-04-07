@@ -38,10 +38,6 @@ onramp:
 It connects to a simple passthrough pipeline. This pipeline forwards any received
 observability events downstream unchanged.
 
-```trickle
-select event from in into out;
-```
-
 We connect the passthrough output events into a standard output sink.
 The [binding](./etc/tremor/config/01_binding.yaml) expresses these relations and gives deployment connectivity graph.
 

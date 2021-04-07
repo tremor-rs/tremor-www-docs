@@ -810,6 +810,7 @@ Supported configuration options are:
 - `port` - the local port to send data from
 - `dst_host` - the destination host to send data to
 - `dst_port` - the destination port to send data to.
+- `bound` - if the destination host and port should be bound on startup (preventing the need to lookup the destination) or be looked up on every package (default: true)
 
 Example:
 
@@ -824,6 +825,7 @@ offramp:
       port: 1234
       dst_host: "20.21.22.23"
       dst_port: 2345
+      bound: true
 ```
 
 

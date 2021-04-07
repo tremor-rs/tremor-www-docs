@@ -47,6 +47,7 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | kv        | never             | always                    |
 | nats      | connection loss   | always                    |
 | newrelic  | never             | never                     |
+| otel      | connection loss   | on successful delivery    |
 | Postgres  | never             | always                    |
 | rest      | connection loss   | on non 4xx/5xx replies    |
 | stderr    | never             | always                    |
@@ -867,7 +868,9 @@ CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destinatio
 conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
 and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
 
-The offramp is experimental.
+!!! note
+
+    The offramp is experimental.
 
 Supported configuration options are:
 
@@ -883,7 +886,7 @@ data to protocol buffers automatically for distribution to downstream OpenTeleme
 
 The connector can be used with the `qos::wal` operator for transient in-memory or persistent disk-based guaranteed delivery. If either
 tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
-for lossless recovery. For events marked as transitional that are explicitly acknowledged, `fail` insights are propagated for events that
+for lossless recovery. For events marked as transactional that are explicitly acknowledged, `fail` insights are propagated for events that
 are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
 basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
 and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.

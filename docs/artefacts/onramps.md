@@ -52,6 +52,7 @@ file       | not supported                                                      
 kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
 metronome  | not supported                                                       |
 nats       | not supported                                                       |
+otel       | not supported
 PostgreSQL | not supported                                                       |
 rest       | not supported                                                       |
 stdin      | not supported                                                       |
@@ -392,7 +393,7 @@ onramp:
 ### nats
 The nats onramp connects to nats server(s) and subscribes to a specified subject.
 
-The default [codec](codecs.md#json) is `json`. 
+The default [codec](codecs.md#json) is `json`.
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
 

@@ -10,4 +10,3 @@ binding:
        - '/pipeline/example/{instance}/in'
       '/pipeline/example/{instance}/out':
        - '/offramp/stdout/{instance}/in'
-#       - '/offramp/otlp/{instance}/in'

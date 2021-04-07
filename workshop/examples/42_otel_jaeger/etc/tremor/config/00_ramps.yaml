@@ -1,0 +1,16 @@
+# The onramp and offramp sections of configuration specify external sources and sinks
+# to an instance of tremor server.
+#
+onramp:
+  - id: otlp
+    type: otel
+    codec: json
+    config:
+      port: 4316
+      host: "0.0.0.0"
+
+  - id: stdout
+    type: file
+    codec: json
+    config:
+      file: /dev/stdout

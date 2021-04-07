@@ -1,0 +1,44 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  jaeger:
+    protocols:
+      thrift_http:
+      grpc:
+
+exporters:
+  logging:
+  otlp:
+    endpoint: "tremor:4316"
+    insecure: true
+
+  jaeger:
+    endpoint: "jaeger:14250"
+    insecure: true
+
+processors:
+  batch:
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, otlp]
+    traces:
+      receivers: [otlp,jaeger]
+      processors: [batch]
+      exporters: [logging, jaeger, otlp]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, otlp]

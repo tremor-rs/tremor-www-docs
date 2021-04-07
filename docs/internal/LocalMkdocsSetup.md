@@ -27,7 +27,7 @@ To enable syntax-highlighting for tremor-script/trickle code snippets, install o
 .github/scripts/install-lexer.sh
 ```
 
-## Generate mkdocs configuration
+## Generate dynamic documentation and configuration
 
 ```
 make

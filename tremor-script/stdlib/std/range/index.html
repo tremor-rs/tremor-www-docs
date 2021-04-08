@@ -512,6 +512,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../cncf/" class="md-nav__link">
+        cncf
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../integer/" class="md-nav__link">
         std::integer
       </a>
@@ -591,16 +603,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#rangea-b" class="md-nav__link">
     range(a, b)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#containsr-n" class="md-nav__link">
     contains(r, n)
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -727,6 +752,138 @@
     <li class="md-nav__item">
       <a href="../base64/" class="md-nav__link">
         std::base64
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/" class="md-nav__link">
+        cncf::otel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/metrics/" class="md-nav__link">
+        cncf::otel::metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace_id/" class="md-nav__link">
+        cncf::otel::trace_id
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace/" class="md-nav__link">
+        cncf::otel::trace
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/span_id/" class="md-nav__link">
+        cncf::otel::span_id
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/logs/" class="md-nav__link">
+        cncf::otel::logs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/metrics/temporality/" class="md-nav__link">
+        cncf::otel::metrics::temporality
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace/status/" class="md-nav__link">
+        cncf::otel::trace::status
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace/spankind/" class="md-nav__link">
+        cncf::otel::trace::spankind
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/logs/traceflags/" class="md-nav__link">
+        cncf::otel::logs::traceflags
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/logs/severity/" class="md-nav__link">
+        cncf::otel::logs::severity
       </a>
     </li>
   
@@ -1897,16 +2054,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#rangea-b" class="md-nav__link">
     range(a, b)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#containsr-n" class="md-nav__link">
     contains(r, n)
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1928,8 +2098,8 @@
                 
                 
                 <h1 id="range">range<a class="headerlink" href="#range" title="Permanent link">&para;</a></h1>
-<p>The range module contains functions for common range generator operations.
-        ## Functions</p>
+<p>The range module contains functions for common range generator operations.</p>
+<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h2>
 <h3 id="rangea-b">range(a, b)<a class="headerlink" href="#rangea-b" title="Permanent link">&para;</a></h3>
 <p>Returns an array from a min-inclusive to b max-inclusive.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">range</span><span class="err">::</span><span class="nx">range</span><span class="err">(</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="mi">3</span><span class="err">)</span><span class="w"> </span><span class="err">==</span><span class="w"> </span><span class="err">[</span><span class="mi">0</span><span class="err">,</span><span class="w"> </span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="mi">2</span><span class="err">]</span><span class="w"></span>

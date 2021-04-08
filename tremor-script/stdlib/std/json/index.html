@@ -512,6 +512,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../cncf/" class="md-nav__link">
+        cncf
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../integer/" class="md-nav__link">
         std::integer
       </a>
@@ -627,23 +639,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#decodestring" class="md-nav__link">
     decode(string)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#encodeany" class="md-nav__link">
     encode(any)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#encode_prettyany" class="md-nav__link">
     encode_pretty(any)
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -734,6 +759,138 @@
     <li class="md-nav__item">
       <a href="../base64/" class="md-nav__link">
         std::base64
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/" class="md-nav__link">
+        cncf::otel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/metrics/" class="md-nav__link">
+        cncf::otel::metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace_id/" class="md-nav__link">
+        cncf::otel::trace_id
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace/" class="md-nav__link">
+        cncf::otel::trace
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/span_id/" class="md-nav__link">
+        cncf::otel::span_id
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/logs/" class="md-nav__link">
+        cncf::otel::logs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/metrics/temporality/" class="md-nav__link">
+        cncf::otel::metrics::temporality
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace/status/" class="md-nav__link">
+        cncf::otel::trace::status
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/trace/spankind/" class="md-nav__link">
+        cncf::otel::trace::spankind
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/logs/traceflags/" class="md-nav__link">
+        cncf::otel::logs::traceflags
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cncf/otel/logs/severity/" class="md-nav__link">
+        cncf::otel::logs::severity
       </a>
     </li>
   
@@ -1904,23 +2061,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#decodestring" class="md-nav__link">
     decode(string)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#encodeany" class="md-nav__link">
     encode(any)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#encode_prettyany" class="md-nav__link">
     encode_pretty(any)
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1942,8 +2112,8 @@
                 
                 
                 <h1 id="json">json<a class="headerlink" href="#json" title="Permanent link">&para;</a></h1>
-<p>The json module contains functions that work with son structures.
-        ## Functions</p>
+<p>The json module contains functions that work with son structures.</p>
+<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h2>
 <h3 id="decodestring">decode(string)<a class="headerlink" href="#decodestring" title="Permanent link">&para;</a></h3>
 <p>Decodes a string containing a JSON structure.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">json</span><span class="err">::</span><span class="nx">decode</span><span class="err">(</span><span class="s">&quot;[1, 2, 3, 4]&quot;</span><span class="err">)</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="err">[</span><span class="mi">1</span><span class="err">,</span><span class="w"> </span><span class="mi">2</span><span class="err">,</span><span class="w"> </span><span class="mi">3</span><span class="err">,</span><span class="w"> </span><span class="mi">4</span><span class="err">]</span><span class="w"></span>

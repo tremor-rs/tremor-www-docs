@@ -36,7 +36,6 @@ The `poll` pipeline then connects to the linked influx offramp to run the query.
 
 ```trickle
 # poll.trickle
-#
 # This file is for for turning ticks into queries
 
 # this turns the `metronom` tick into a query
@@ -87,9 +86,9 @@ define script alert with
 script
   match event of
     case %{cpu_idle < args.cpu_limit, mem_active > args.mem_limit} => emit "EVERYTHING IS ON FIRE"
-    case %{cpu_idle < args.cpu_limit} => case event of
+    case %{cpu_idle < args.cpu_limit} => match event of
       case %{cpu_system > 50} => emit "OS BROKEN"
-      default emit "CPU BUSY"
+      default => emit "CPU BUSY"
     end
       
     case %{mem_active > args.mem_limit } => emit "MEM LOW"

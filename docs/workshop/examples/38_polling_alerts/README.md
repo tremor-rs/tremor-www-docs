@@ -1,14 +1,13 @@
 # Polling
 
-This example demonstrates using Tremor to periodically poll a datasource (we use influx as it can easiely generate data) and make decisions based on the results - in our case alert on low CPU or memory.
+This example demonstrates using Tremor to periodically poll a data source (we use influx as it can quickly generate data) and make decisions based on the results - in our case alert us on low CPU or memory.
 
-We will not dive deep into the query used, or the alerts defined as they're only supporting elements to the story we're trying to tell here: periodic, reactive workflows. To this end we leverage a good bit of the configuration introduced in [the influx example](../11_influx/README.md).
-
+We will not dive deep into the query used or the alerts defined as they're only supporting elements to the story we're trying to tell here: periodic, reactive workflows. To this end, we leverage a good bit of the configuration introduced in [the influx example](../11_influx/README.md).
 
 ## Environment
 
 
-As mentioned above we reuse a lot of the influx logic so we ignore the following artifacts:
+As mentioned above, we reuse a lot of the influx logic, so we ignore the following artifacts:
 
 - onramp: `udp-input`
 - offramp: `influx-output`
@@ -16,94 +15,110 @@ As mentioned above we reuse a lot of the influx logic so we ignore the following
 - binding: `ingress`
 - mapping: `ingress`
 
-In addition ther are two new pipelines:
+Also there are two new pipelines:
 
 - `poll` - translates a tick into a query
 - `alert` - translates the result and evaluates if an alert should be triggered
 
-We also have a new onramp and 
+We also have a new onramp (`tick`) and offramp (`influx-query`).
+
+For the sake of not repeating the privious workshop we will focus on those new parts exclusively.
 
 ## Business Logic
 
-### Grouping
+### Polling
+
+This section deals with polling, in our case we want to query influxdb on a periodic interval.
+
+To this end we use a `metronome` onramp that fires an event every 10s. We send the events into [`poll.trickle`](./poll.trickle) where we create a influx request out of the metronom event.
+
+The `poll` pipeline then connects to the linked influx offramp to run the query.
 
 ```trickle
-select {
-    "measurement": event.measurement,
-    "tags": event.tags,
-    "field": group[2],
-    "value": event.fields[group[2]],
-    "timestamp": event.timestamp,
-}
-from in
-group by set(event.measurement, event.tags, each(record::keys(event.fields)))
-into aggregate
-having type::is_number(event.value);
+# poll.trickle
+#
+# This file is for for turning ticks into queries
+
+# this turns the `metronom` tick into a query
+define script query
+with
+  host = "",
+  db = ""
+script
+  use std::url;
+  # we define the query to gather data
+  # this is the original, for the sake of dockerizing it we ignore the host in the final query since we don't know what it will be
+  # let query = "SELECT mean(\"usage_idle\") AS \"cpu_idle\", mean(\"active\") AS \"mem_active\" FROM \"tremor\".\"autogen\".\"cpu\", \"tremor\".\"autogen\".\"mem\" WHERE time > now() - 1h AND time < now() AND \"host\"='#{ args.host }' GROUP BY time(1h) FILL(null)";
+  let query = "SELECT mean(\"usage_idle\") AS \"cpu_idle\", mean(\"active\") AS \"mem_active\" FROM \"tremor\".\"autogen\".\"cpu\", \"tremor\".\"autogen\".\"mem\" WHERE time > now() - 1h AND time < now() GROUP BY time(1h) FILL(null)";
+  # we encode this to a rest offramp query parameter using `url::encode`
+  let $endpoint.query = "db=#{ args.db }&epock=ms&q=#{ url::encode(query) }";
+  let event.meta = $;
+  # we can end this script
+  event
+end;
+
+# we create a script for a given host
+create script query with
+  host = "d111f17774f7"
+end;
+# we wire it all up
+select event from in into query;
+select event from query into out;
 ```
 
-This step groups the data for aggregation. This is required since the [Influx Line protocol](https://docs.influxdata.com/influxdb/v1.7/write_protocols/line_protocol_tutorial/) allows for multiple values within one message. The grouping step ensures that we do not aggregate `cpu_idle` and `cpu_user` into the same value despite them being in the same result.
+### Alerting
 
-In other words we normalise an event like this
+The [`alert.trickle`](./alert.trickle) pipeline takes the reply from Influx and alert if the values we see are above a given limit.
 
-```influx
-measurement tag1=value1,tag2=value2 field1=42,field2="snot",field3=0.2 123587512345513
-```
+Since the influx reply uses a unique datamodle, we need to unscramble the results, this sadly is a trail and error process based on what influx returns.
 
-into the three distinct series it represents, namely:
+Once we have extracted the data we can pass it into an alerting script that checks a few conditions in a given order. The first condition that is met will trigger the coresponding alert.
 
-```influx
-measurement tag1=value1,tag2=value2 field1=42 123587512345513
-measurement tag1=value1,tag2=value2 field2="snot" 123587512345513
-measurement tag1=value1,tag2=value2 field3=0.2 123587512345513
-```
 
-The second part that happens in this query is removing non numeric values from our aggregated series since they are not able to be aggregated.
-
-### Aggregation
+You can adopt the alert conditions in the `with` section of the script.
 
 ```trickle
-select
-{
-    "measurement": event.measurement,
-    "tags": patch event.tags of insert "window" => window end,
-    "stats": aggr::stats::hdr(event.value, [ "0.5", "0.9", "0.99", "0.999" ]),
-    "field": event.field,
-    "timestamp": aggr::win::first(event.timestamp), # we can't use min since it's a float
-}
-from aggregate[`10secs`, `1min`, ]
-group by set(event.measurement, event.tags, event.field)
-into normalize;
-```
+# This script takes the responses and turns them into alerts
 
-In this section we aggregate the different serieses we created in the previous section.
+# The script that does all the logic, we define our alerts here
+define script alert with
+  cpu_limit = 100,
+  mem_limit = 19518531180
+script
+  match event of
+    case %{cpu_idle < args.cpu_limit, mem_active > args.mem_limit} => emit "EVERYTHING IS ON FIRE"
+    case %{cpu_idle < args.cpu_limit} => case event of
+      case %{cpu_system > 50} => emit "OS BROKEN"
+      default emit "CPU BUSY"
+    end
+      
+    case %{mem_active > args.mem_limit } => emit "MEM LOW"
+    default => drop
+  end
+end;
 
-Most notably are the `aggr::stats::hdr` and `aggr::win::first` functions which do the aggregation. `aggr::stats::hdr` uses a optimized [HDR Histogram](http://hdrhistogram.org/) algorithm to generate the values requested of it. `aggr::win::first` gives the timestamp of the first event in the window.
+create script alert;
 
-### Normalisation to Influx Line Protocol
-
-```tremor
+# Since the influx reply is hard to work with we santize it here so we can write our alerts
+# in a cleaner fashipn
+#
+# example result:
+# ```
+# {"results":[{"statement_id":0,"series":[{"columns":["time","cpu_idle1","mem_active"],"values":[["2021-03-02T15:00:00Z",98.856058199546,null],["2021-03-02T16:00:00Z",97.09260215835516,null]],"name":"cpu"},{"columns":["time","cpu_idle1","mem_active"],"values":[["2021-03-02T15:00:00Z",null,19519109501.023254],["2021-03-02T16:00:00Z",null,19959332287.756653]],"name":"mem"}]}]}
+# ```
+create stream extracted;
 select {
-  "measurement":  event.measurement,
-  "tags":  event.tags,
-  "fields":  {
-    "count_#{event.field}":  event.stats.count,
-    "min_#{event.field}":  event.stats.min,
-    "max_#{event.field}":  event.stats.max,
-    "mean_#{event.field}":  event.stats.mean,
-    "stdev_#{event.field}":  event.stats.stdev,
-    "var_#{event.field}":  event.stats.var,
-    "p50_#{event.field}":  event.stats.percentiles["0.5"],
-    "p90_#{event.field}":  event.stats.percentiles["0.9"],
-    "p99_#{event.field}":  event.stats.percentiles["0.99"],
-    "p99.9_#{event.field}":  event.stats.percentiles["0.999"]
-  },
-  "timestamp": event.timestamp,
-}
-from normalize
-into batch;
-```
+  "#{event.results[0].series[0].columns[1]}": event.results[0].series[0].values[1][1],
+  "#{event.results[0].series[1].columns[2]}": event.results[0].series[1].values[1][2],
+} from in into extracted;
 
-The last part normalises the data to a format that can be encoded into influx line protocol. And name the fields accordingly. This uses string interpolation for the recortd fields and simle value access for their values.
+# we wire it all up
+select event from extracted into alert;
+select event from alert into out;
+
+# we could use this for debugging
+# select event from in into out;
+```
 
 ## Command line testing during logic development
 
@@ -112,13 +127,4 @@ $ docker-compose up
   ... lots of logs ...
 ```
 
-Open the [Chronograf](http://localhost:8888) and connect the database.
-
-### Discussion
-
-It is noteworthy that in the aggregation context only `aggr::stats::hdr` and `aggr::win::first` are being evaluated for events, resulting record and the associated logic is only ever evaluated on emit.
-
-We are using `having` in the goruping step, however this could also be done with a `where` clause on the aggregation step. In this example we choose `having` over were as it is worth discarding events as early as possible. If the requirement were to handle non numeric fields in a different manner routing the output of the grouping step to two different select statements we would have used `where` instead.
-
-!!! tip
-    Using `aggr::win::first` over `aggr::stats::min` is a debatable choice as we use the timestamp of the first event not the minimal timestamp. Inside of tremor we do not re-order events so those two would result in the same result with `aggr::win::first` being cheaper to run. In addition stats functions are currently implemented to return floating point numbers so `aggr::stats::min` could lead incorrect timestamps we'd rather avoid.
+Then watch alerts on stdout from `docker-compose`.

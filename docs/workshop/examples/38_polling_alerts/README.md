@@ -1,5 +1,8 @@
 # Polling
 
+!!! note
+    All the application code here is available from the docs [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/38_polling_alerts).
+
 This example demonstrates using Tremor to periodically poll a data source (we use influx as it can quickly generate data) and make decisions based on the results - in our case alert us on low CPU or memory.
 
 We will not dive deep into the query used or the alerts defined as they're only supporting elements to the story we're trying to tell here: periodic, reactive workflows. To this end, we leverage a good bit of the configuration introduced in [the influx example](../11_influx/README.md).
@@ -36,7 +39,6 @@ The `poll` pipeline then connects to the linked influx offramp to run the query.
 
 ```trickle
 # poll.trickle
-#
 # This file is for for turning ticks into queries
 
 # this turns the `metronom` tick into a query
@@ -87,9 +89,9 @@ define script alert with
 script
   match event of
     case %{cpu_idle < args.cpu_limit, mem_active > args.mem_limit} => emit "EVERYTHING IS ON FIRE"
-    case %{cpu_idle < args.cpu_limit} => case event of
+    case %{cpu_idle < args.cpu_limit} => match event of
       case %{cpu_system > 50} => emit "OS BROKEN"
-      default emit "CPU BUSY"
+      default => emit "CPU BUSY"
     end
       
     case %{mem_active > args.mem_limit } => emit "MEM LOW"

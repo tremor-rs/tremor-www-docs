@@ -103,6 +103,7 @@ nav:
       - Zipkin Interworking: workshop/examples/41_otel_zipkin/README.md
       - Jaeger Interworking: workshop/examples/42_otel_jaeger/README.md
       - Prometheus Interworking: workshop/examples/43_otel_prometheus/README.md
+      - Elastic APM Interworking: workshop/examples/44_otel_elastic_apm/README.md
   - Development:
     - 'Quick Start Guide': development/quick-start.md
     - Profiling: development/profiling.md

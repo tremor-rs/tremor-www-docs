@@ -1,0 +1,27 @@
+# This file is for for turning ticks into queries
+
+# this turns the `metronom` tick into a query
+define script query
+with
+  host = "",
+  db = ""
+script
+  use std::url;
+  # we define the query to gather data
+  # this is the original, for the sake of dockerizing it we ignore the host in the final query since we don't know what it will be
+  # let query = "SELECT mean(\"usage_idle\") AS \"cpu_idle\", mean(\"active\") AS \"mem_active\" FROM \"tremor\".\"autogen\".\"cpu\", \"tremor\".\"autogen\".\"mem\" WHERE time > now() - 1h AND time < now() AND \"host\"='#{ args.host }' GROUP BY time(1h) FILL(null)";
+  let query = "SELECT mean(\"usage_idle\") AS \"cpu_idle\", mean(\"active\") AS \"mem_active\" FROM \"tremor\".\"autogen\".\"cpu\", \"tremor\".\"autogen\".\"mem\" WHERE time > now() - 1h AND time < now() GROUP BY time(1h) FILL(null)";
+  # we encode this to a rest offramp query parameter using `url::encode`
+  let $endpoint.query = "db=#{ args.db }&epock=ms&q=#{ url::encode(query) }";
+  let event.meta = $;
+  # we can end this script
+  event
+end;
+
+# we create a script for a given host
+create script query with
+  host = "d111f17774f7"
+end;
+# we wire it all up
+select event from in into query;
+select event from query into out;

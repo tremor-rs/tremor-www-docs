@@ -1,0 +1,40 @@
+# This script takes the responses and turns them into alerts
+
+# The script that does all the logic, we define our alerts here
+define script alert with
+  cpu_limit = 100,
+  mem_limit = 19518531180
+script
+  match event of
+    case %{cpu_idle < args.cpu_limit, mem_active > args.mem_limit} => emit "EVERYTHING IS ON FIRE"
+    case %{cpu_idle < args.cpu_limit} => match event of
+      case %{cpu_system > 50} => emit "OS BROKEN"
+      default => emit "CPU BUSY"
+    end
+      
+    case %{mem_active > args.mem_limit } => emit "MEM LOW"
+    default => drop
+  end
+end;
+
+create script alert;
+
+# Since the influx reply is hard to work with we santize it here so we can write our alerts
+# in a cleaner fashipn
+#
+# example result:
+# ```
+# {"results":[{"statement_id":0,"series":[{"columns":["time","cpu_idle1","mem_active"],"values":[["2021-03-02T15:00:00Z",98.856058199546,null],["2021-03-02T16:00:00Z",97.09260215835516,null]],"name":"cpu"},{"columns":["time","cpu_idle1","mem_active"],"values":[["2021-03-02T15:00:00Z",null,19519109501.023254],["2021-03-02T16:00:00Z",null,19959332287.756653]],"name":"mem"}]}]}
+# ```
+create stream extracted;
+select {
+  "#{event.results[0].series[0].columns[1]}": event.results[0].series[0].values[1][1],
+  "#{event.results[0].series[1].columns[2]}": event.results[0].series[1].values[1][2],
+} from in into extracted;
+
+# we wire it all up
+select event from extracted into alert;
+select event from alert into out;
+
+# we could use this for debugging
+# select event from in into out;

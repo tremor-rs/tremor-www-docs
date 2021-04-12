@@ -227,6 +227,8 @@ written to the hard drive it has a significant performance impact.
 - `max_elements` - Maximum number of elements the WAL will cache before triggering a CB event
 - `max_bytes` - Maximum space on disk the WAL should take (this is a soft limit!)
 
+Only one of `max_elements` or `max_bytes` is required, setting both is possible.
+
 **Outputs**:
 
 - `out`

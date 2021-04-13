@@ -379,11 +379,9 @@ offramp:
       topic: demo
 ```
 
-### KV
+### kv
 
 The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.
-
-Events sent to the KV offramp are commands. The following are supported:
 
 Example:
 ```yaml
@@ -394,6 +392,8 @@ Example:
     config:
       dir: "temp/kv" # directory to store data in
 ```
+
+Events sent to the KV offramp are commands. The following are supported:
 
 #### get
 
@@ -443,7 +443,6 @@ Deletes a key, returns the old value if there was any.
 null,               // key was not used before
 ```
 
-
 #### scan
 
 Reads a range of keys
@@ -486,6 +485,62 @@ Compare And Swap operation. Those operations require old values to match what it
   "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
 }}
 ```
+
+
+### dns
+
+The `dns` linked offramp allows performing DNS queries against the system resolver.
+
+!!! note
+
+    No codecs, configuration, or processors are supported.
+
+Example:
+```yaml
+  - id: dns
+    type: dns
+```
+
+The event needs the following structure:
+
+```json
+{
+  "lookup": "tremor.rs"
+}
+```
+
+or
+
+```json
+{
+  "lookup": {
+    "name": "tremor.rs",
+    "type": "CNAME"
+  }
+}
+```
+
+where type can be one of (plase consult your DNS manual for the meaning of each):
+
+* `A`
+* `AAAA`
+* `ANAME`
+* `CNAME`
+* `TXT`
+* `PTR`
+* `CAA`
+* `HINFO`
+* `HTTPS`
+* `MX`
+* `NAPTR`
+* `NULL`
+* `NS`
+* `OPENPGPKEY`
+* `SOA`
+* `SRV`
+* `SSHFP`
+* `SVCB`
+* `TLSA`
 
 ### nats
 The nats offramp connects to nats server(s) and publishes a message to specified subject for every event.
@@ -811,7 +866,11 @@ Supported configuration options are:
 - `port` - the local port to send data from
 - `dst_host` - the destination host to send data to
 - `dst_port` - the destination port to send data to.
-- `bound` - if the destination host and port should be bound on startup (preventing the need to lookup the destination) or be looked up on every package (default: true)
+- `bound` - if the destination host and port should be bound on startup (preventing the need to lookup the destination) or be looked upon every package (default: true)
+
+!!! warn
+
+    Setting `bound` to `false` makes the UDP offramp potentially extremely slow as it forces a lookup of the destination on each event!
 
 Example:
 

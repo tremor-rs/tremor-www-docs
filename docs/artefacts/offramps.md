@@ -40,6 +40,7 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | blackhole | never             | always                    |
 | cb        | never             | always                    |
 | debug     | never             | always                    |
+| dns       | never             | always                    |
 | elastic   | connection loss   | on 200 replies            |
 | exit      | never             | always                    |
 | file      | never             | always                    |
@@ -149,6 +150,71 @@ offramp:
 ```
 
 
+### dns
+
+The `dns` linked offramp allows performing DNS queries against the system resolver.
+
+!!! note
+
+    No codecs, configuration, or processors are supported.
+
+Example:
+```yaml
+  - id: dns
+    type: dns
+```
+
+The event needs the following structure:
+
+```json
+{
+  "lookup": "tremor.rs"
+}
+```
+
+```json
+{
+  "lookup": {
+    "name": "tremor.rs",
+    "type": "CNAME"
+  }
+}
+```
+
+where type can be one of (plase consult your DNS manual for the meaning of each):
+
+* `A`
+* `AAAA`
+* `ANAME`
+* `CNAME`
+* `TXT`
+* `PTR`
+* `CAA`
+* `HINFO`
+* `HTTPS`
+* `MX`
+* `NAPTR`
+* `NULL`
+* `NS`
+* `OPENPGPKEY`
+* `SOA`
+* `SRV`
+* `SSHFP`
+* `SVCB`
+* `TLSA`
+
+!!! note
+
+    If type is not specified `A` records will be looked up
+
+
+Responses are an Array of objects denoting the type of record found as a key, followed by the entry as a string (please consult your DNS manual for the return value of different record types):
+
+```json
+[
+  {"A": "1.2.3.4"},
+  {"CNAME": "www.tremor.rs"}
+]
 
 ### elastic
 
@@ -485,62 +551,6 @@ Compare And Swap operation. Those operations require old values to match what it
   "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
 }}
 ```
-
-
-### dns
-
-The `dns` linked offramp allows performing DNS queries against the system resolver.
-
-!!! note
-
-    No codecs, configuration, or processors are supported.
-
-Example:
-```yaml
-  - id: dns
-    type: dns
-```
-
-The event needs the following structure:
-
-```json
-{
-  "lookup": "tremor.rs"
-}
-```
-
-or
-
-```json
-{
-  "lookup": {
-    "name": "tremor.rs",
-    "type": "CNAME"
-  }
-}
-```
-
-where type can be one of (plase consult your DNS manual for the meaning of each):
-
-* `A`
-* `AAAA`
-* `ANAME`
-* `CNAME`
-* `TXT`
-* `PTR`
-* `CAA`
-* `HINFO`
-* `HTTPS`
-* `MX`
-* `NAPTR`
-* `NULL`
-* `NS`
-* `OPENPGPKEY`
-* `SOA`
-* `SRV`
-* `SSHFP`
-* `SVCB`
-* `TLSA`
 
 ### nats
 The nats offramp connects to nats server(s) and publishes a message to specified subject for every event.

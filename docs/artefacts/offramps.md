@@ -933,7 +933,7 @@ onramp:
 
 # otel
 
-CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+CNCF OpenTelemetry offramp. Publishes to the specified host or IP and destination TCP port via gRPC messages
 conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
 and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
 
@@ -966,7 +966,7 @@ lost.
 Example:
 
 ```yaml
-onramp:
+offramp:
   - id: otlp
     type: otel
     codec: json
@@ -974,3 +974,31 @@ onramp:
       port: 4317
       host: 10.0.2.1
 ```
+
+# gcs
+
+Google Cloud Storage offramp.  
+
+This offramp can issue basic operations to list buckets and objects and to create, insert and delete objects from the Google Cloud Platform cloud storage service.
+
+!!! note
+
+    The offramp is experimental.
+
+This offramp requires a PEM file that is used in the authentication code to resolve a service account token using Google's authentication service. This offramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` been exported to the execution environment and it has been configures to point to a valid non-expired service account token json file.
+
+
+Example:
+
+```yaml
+offramp:
+  - id: gcs
+    type: gcs
+    codec: json
+    linked: true
+    config:
+      pem: gcp.pem
+```
+
+If the use case for the offramp requires metadata from the Google Cloud Storage service on the supported operations for this offramp, then set linked to true and configure the output port `out`.
+If the use case does not require metadata, then set linked to false.

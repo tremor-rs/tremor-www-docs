@@ -899,6 +899,8 @@ offramp:
       bound: true
 ```
 
+If `bound` is set to `false` the `$udp` can be set to specify `$udp.host` and `$udp.port` to define destination per event. Be careful to set `$udp.host` to an IP **not** a DNS name or this will be extremely slow!
+
 
 ### ws
 

@@ -208,12 +208,12 @@ where type can be one of (plase consult your DNS manual for the meaning of each)
     If type is not specified `A` records will be looked up
 
 
-Responses are an Array of objects denoting the type of record found as a key, followed by the entry as a string (please consult your DNS manual for the return value of different record types):
+Responses are an Array of objects denoting the type of record found as a key, followed by the entry as a string and a `ttl` for the record (please consult your DNS manual for the return value of different record types):
 
 ```json
 [
-  {"A": "1.2.3.4"},
-  {"CNAME": "www.tremor.rs"}
+  {"A": "1.2.3.4", "ttl": 60},
+  {"CNAME": "www.tremor.rs", "ttl": 120}
 ]
 
 ### elastic

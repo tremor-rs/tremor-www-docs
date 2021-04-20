@@ -1282,8 +1282,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#systemsderr" class="md-nav__link">
-    system::sderr
+  <a href="#systemstderr" class="md-nav__link">
+    system::stderr
   </a>
   
 </li>
@@ -1365,7 +1365,7 @@
         
           <li class="md-nav__item">
   <a href="#kafka" class="md-nav__link">
-    kafka
+    Kafka
   </a>
   
 </li>
@@ -2290,8 +2290,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#systemsderr" class="md-nav__link">
-    system::sderr
+  <a href="#systemstderr" class="md-nav__link">
+    system::stderr
   </a>
   
 </li>
@@ -2373,7 +2373,7 @@
         
           <li class="md-nav__item">
   <a href="#kafka" class="md-nav__link">
-    kafka
+    Kafka
   </a>
   
 </li>
@@ -2527,7 +2527,7 @@
                 <h1 id="offramps">Offramps<a class="headerlink" href="#offramps" title="Permanent link">&para;</a></h1>
 <p>Specify how tremor connects to the outside world in order to publish to external systems.</p>
 <p>For example, the Elastic offramp pushes data to ElasticSearch via its bulk upload REST/HTTP API endpoint.</p>
-<p>All offramps are specified in the following form:</p>
+<p>All <code>offramps</code> are specified in the following form:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;unique offramp id&gt;</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;offramp name&gt;</span>
@@ -2549,7 +2549,7 @@
 <h2 id="delivery-properties">Delivery Properties<a class="headerlink" href="#delivery-properties" title="Permanent link">&para;</a></h2>
 <p>Each offramp is able to report events as being definitely sent off or as failed. It can also report itself as not functional anymore to the connected pipelines. How each offramp implements those abilities is described in the table below.</p>
 <p>The column <code>Delivery acknowledgements</code> describes under what circumstanced the offramp considers an event delivered and acknowledges it to the connected pipelines and operators, onramps etc. therein.
-Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the kafka onramp).</p>
+Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the Kafka onramp).</p>
 <p>The column <code>Disconnect events</code> describes under which circumstances this offramp is not considered functional anymore.</p>
 <table>
 <thead>
@@ -2658,10 +2658,10 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 </tbody>
 </table>
 <h2 id="system-offramps">System Offramps<a class="headerlink" href="#system-offramps" title="Permanent link">&para;</a></h2>
-<p>Each tremor runtime comes with some pre-configured offramps that can be used.</p>
+<p>Each tremor runtime comes with some pre-configured <code>offramps</code> that can be used.</p>
 <h3 id="systemstdout">system::stdout<a class="headerlink" href="#systemstdout" title="Permanent link">&para;</a></h3>
 <p>The offramp <code>/offramp/system::stdout/system</code> can be used to print to STDOUT. Data will be formatted as JSON.</p>
-<h3 id="systemsderr">system::sderr<a class="headerlink" href="#systemsderr" title="Permanent link">&para;</a></h3>
+<h3 id="systemstderr">system::stderr<a class="headerlink" href="#systemstderr" title="Permanent link">&para;</a></h3>
 <p>The offramp <code>/offramp/system::stderr/system</code> can be used to print to STDERR. Data will be formatted as JSON.</p>
 <h2 id="supported-offramps">Supported Offramps<a class="headerlink" href="#supported-offramps" title="Permanent link">&para;</a></h2>
 <h3 id="blackhole">blackhole<a class="headerlink" href="#blackhole" title="Permanent link">&para;</a></h3>
@@ -2708,7 +2708,7 @@ Supported payloads are:</p>
 </code></pre></div>
 <p>Such an event or metadata will result in two CB insight events be sent back, one <code>fail</code> event, and one <code>close</code> event.</p>
 <h3 id="debug">debug<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h3>
-<p>The debug offramp is used to get an overview of how many events are put in wich classification.</p>
+<p>The debug offramp is used to get an overview of how many events are put in which classification.</p>
 <p>This operator does not support configuration.</p>
 <p>Used metadata variables:</p>
 <ul>
@@ -2741,7 +2741,7 @@ Supported payloads are:</p>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>where type can be one of (plase consult your DNS manual for the meaning of each):</p>
+<p>where type can be one of (please consult your DNS manual for the meaning of each):</p>
 <ul>
 <li><code>A</code></li>
 <li><code>AAAA</code></li>
@@ -2780,7 +2780,7 @@ Supported payloads are:</p>
 <li><code>nodes</code> - A list of elastic search nodes to contact. These are the nodes to which tremor will send traffic to.</li>
 <li><code>concurrency</code> - Maximum number of parallel requests (default: 4).</li>
 </ul>
-<p>Events will be sent to the connected elasticsearch cluster via the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a> using the <code>index</code> action.
+<p>Events will be sent to the connected ElasticSearch cluster via the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a> using the <code>index</code> action.
 It is recommended to batch events sent to this sink using the <a href="../../tremor-query/operators/#genericbatch">generic::batch operator</a> to reduce the overhead
 introduced by the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a>.</p>
 <p>The configuration options <code>codec</code> and <code>postprocessors</code> are not used, as elastic will always serialize event payloads as JSON.</p>
@@ -2790,7 +2790,7 @@ introduced by the <a href="https://www.elastic.co/guide/en/elasticsearch/referen
 <li><code>$elastic._index</code> - The index to write to (required).</li>
 <li><code>$elastic._type</code> - The document type for elastic (optional), deprecated in ES 7.</li>
 <li><code>$elastic._id</code>   - The document id for elastic (optional).</li>
-<li><code>$elastic.pipeline</code> - The elastic search pipeline to use (optional).</li>
+<li><code>$elastic.pipeline</code> - The ElasticSearch pipeline to use (optional).</li>
 <li><code>$elastic.action</code> - The <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">bulk action</a> to perform, one of <code>delete</code>, <code>create</code>, <code>update</code> or <code>index</code>. If no <code>action</code> is provided it defaults to <code>index</code>. <code>delete</code> and <code>update</code> require <code>$elastic._id</code> to be set or elastic search will have error.</li>
 </ul>
 <h4 id="linked-transport">Linked Transport<a class="headerlink" href="#linked-transport" title="Permanent link">&para;</a></h4>
@@ -2806,7 +2806,7 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>The event metdata will contain the following:</p>
+<p>The event metadata will contain the following:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;elastic&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ES document id&quot;</span><span class="p">,</span>
@@ -2914,7 +2914,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 </tr>
 </tbody>
 </table>
-<p>To delay the exit (to allow flushing of other offramps) the <code>delay</code> key can be used to delay the exit by a number of milliseconds:</p>
+<p>To delay the exit (to allow flushing of other <code>offramps</code>) the <code>delay</code> key can be used to delay the exit by a number of milliseconds:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;exit&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
   <span class="nt">&quot;delay&quot;</span><span class="p">:</span> <span class="mi">1000</span>
@@ -2939,8 +2939,8 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">file</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/my/path/to/a/file.json</span>
 </code></pre></div>
-<h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
-<p>The Kafka offramp connects sends events to Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkaka 1.5.0 configuration options</a>.</p>
+<h3 id="kafka">Kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
+<p>The Kafka offramp connects sends events to Kafka topics. It uses <code>librdkafka</code> to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkaka 1.5.0 configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>Supported configuration options are:</p>
 <ul>
@@ -2968,7 +2968,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
       <span class="nt">topic</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">demo</span>
 </code></pre></div>
 <h3 id="kv">kv<a class="headerlink" href="#kv" title="Permanent link">&para;</a></h3>
-<p>The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.</p>
+<p>The <code>kv</code> offramp is intended to allow for a decouple way of persisting and retrieving state in a non blocking way.</p>
 <p>Example:
 <div class="highlight"><pre><span></span><code>  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
@@ -3041,7 +3041,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 <span class="p">}}</span>
 </code></pre></div>
 <h3 id="nats">nats<a class="headerlink" href="#nats" title="Permanent link">&para;</a></h3>
-<p>The nats offramp connects to nats server(s) and publishes a message to specified subject for every event.</p>
+<p>The <code>nats</code> offramp connects to Nats server(s) and publishes a message to specified subject for every event.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>Supported configuration operations are:</p>
 <ul>
@@ -3050,7 +3050,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 <li><code>reply</code> - Optional string specifying the reply subject.</li>
 <li><code>headers</code> - Option key-value pairs, specifying message headers, where the key is a string and the value is a list of strings.</li>
 <li>
-<p><code>options</code> - Optional struct, which can be used to customise the connection to the server (see <a href="https://docs.rs/nats/0.9.8/nats/struct.Options.html"><code>nats.rs</code> configuration options</a> for more info):</p>
+<p><code>options</code> - Optional struct, which can be used to customize the connection to the server (see <a href="https://docs.rs/nats/0.9.8/nats/struct.Options.html"><code>nats.rs</code> configuration options</a> for more info):</p>
 <ul>
 <li><code>token</code>: String; authenticate using a token.</li>
 <li><code>username</code>: String; authenticate using a username and password.</li>
@@ -3096,12 +3096,12 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
 </code></pre></div></p>
 <h3 id="newrelic">newrelic<a class="headerlink" href="#newrelic" title="Permanent link">&para;</a></h3>
 <p>Send events to <a href="https://newrelic.com/">New Relic</a> platform, using its log apis (variable by region).</p>
-<p>This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.</p>
+<p>This offramp encodes events as json, as this is required by the <code>newrelic</code> log api. Postprocessors are not used.</p>
 <p>Supported configuration options are:</p>
 <ul>
 <li><code>license_key</code> - New Relic's license (or insert only) key</li>
 <li><code>compress_logs</code> - Whether logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)</li>
-<li><code>region</code> - Region to use to send logs. Available choices: usa, europe (default: usa)</li>
+<li><code>region</code> - Region to use to send logs. Available choices: USA, Europe (default: USA)</li>
 </ul>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
@@ -3249,7 +3249,7 @@ config:
 <p>A custom stderr offramp can be configured by using this offramp type. But beware that this will share the single stderr stream with <code>system::stderr</code>.</p>
 <p>The default codec is <a href="../codecs/#json">json</a>.</p>
 <p>The stderr offramp will write a <code>\n</code> right after each event, and optionally prefix every event with a configurable <code>prefix</code>.</p>
-<p>If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+<p>If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
 If <code>raw</code> is set to true, the event data will be put on stderr as is.</p>
 <p>Supported configuration options:</p>
 <ul>
@@ -3270,7 +3270,7 @@ If <code>raw</code> is set to true, the event data will be put on stderr as is.<
 <p>A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with <code>system::stdout</code>.</p>
 <p>The default codec is <a href="../codecs/#json">json</a>.</p>
 <p>The stdout offramp will write a <code>\n</code> right after each event, and optionally prefix every event with a configurable <code>prefix</code>.</p>
-<p>If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+<p>If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
 If <code>raw</code> is set to true, the event data will be put on stdout as is.</p>
 <p>Supported configuration options:</p>
 <ul>
@@ -3354,7 +3354,7 @@ to external TCP protocol distribution endpoints.</p>
 </ul>
 <p>Set metadata variables (for reply with <a href="../../operations/linked-transports/">linked transports</a>):</p>
 <ul>
-<li><code>$binary</code> - <code>true</code> if the websocket message reply came as binary (<code>false</code> otherwise)</li>
+<li><code>$binary</code> - <code>true</code> if the WebSocket message reply came as binary (<code>false</code> otherwise)</li>
 </ul>
 <p>When used as a linked offramp, batched events are rejected by the offramp.</p>
 <p>Example:</p>
@@ -3365,7 +3365,7 @@ to external TCP protocol distribution endpoints.</p>
       <span class="nt">url</span><span class="p">:</span> <span class="s">&quot;ws://localhost:1234&quot;</span>
 </code></pre></div>
 <h1 id="otel">otel<a class="headerlink" href="#otel" title="Permanent link">&para;</a></h1>
-<p>CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+<p>CNCF OpenTelemetry offramp. Publishes to the specified host or IP and destination TCP port via gRPC messages
 conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of <code>logs</code>, <code>trace</code>
 and <code>metrics</code> messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.</p>
 <div class="admonition note">
@@ -3378,7 +3378,7 @@ and <code>metrics</code> messages from tremor query pipelines downstream to remo
 <li><code>port</code> - integer - The TCP port to listen on</li>
 <li>'logs' - boolean - Is logging enabled for this instance. Defaults to <code>true</code>. Received <code>logs</code> events are dropped when <code>false</code>.</li>
 <li>'metrics' - boolean - Is metrics enabled for this instance. Defaults  to <code>true</code>. Defaults to <code>true</code>. Received <code>metrics</code> events are dropped when <code>false</code>.</li>
-<li>'trace' - boolean - Is trace enabled for this instance. Defaults to <code>true</code>. Defaults to <code>true</code>. Received <code>trace</code> events are dopped when <code>false</code>.</li>
+<li>'trace' - boolean - Is trace enabled for this instance. Defaults to <code>true</code>. Defaults to <code>true</code>. Received <code>trace</code> events are dropped when <code>false</code>.</li>
 </ul>
 <p>Pipelines that leverage the OpenTelemetry integration can use utility modules in the <code>cncf::otel</code> module to
 simplify working with the tremor value mapping of the event data. The connector translates the tremor value level
@@ -3386,8 +3386,8 @@ data to protocol buffers automatically for distribution to downstream OpenTeleme
 <p>The connector can be used with the <code>qos::wal</code> operator for transient in-memory or persistent disk-based guaranteed delivery. If either
 tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
 for lossless recovery. For events marked as transactional that are explicitly acknowledged, <code>fail</code> insights are propagated for events that
-are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
-basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
+are not successfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
+basis. Regardless of the transaction configuration, when paired with QoS operators upstream pipelines, the sink will coordinate failover
 and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.</p>
 <p>For best effort delivery - the <code>qos::wal</code> can be omitted and events distributed when downstream endpoints are inaccessible will be
 lost.</p>

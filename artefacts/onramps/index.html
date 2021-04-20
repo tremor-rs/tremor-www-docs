@@ -1319,10 +1319,10 @@
         
           <li class="md-nav__item">
   <a href="#kafka" class="md-nav__link">
-    kafka
+    Kafka
   </a>
   
-    <nav class="md-nav" aria-label="kafka">
+    <nav class="md-nav" aria-label="Kafka">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2276,10 +2276,10 @@
         
           <li class="md-nav__item">
   <a href="#kafka" class="md-nav__link">
-    kafka
+    Kafka
   </a>
   
-    <nav class="md-nav" aria-label="kafka">
+    <nav class="md-nav" aria-label="Kafka">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2427,7 +2427,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <p>The <code>err_required</code> field can be set to <code>true</code> if the onramp should not start unless both <code>out</code> and <code>err</code> ports are connected to at least one pipeline.</p>
 <p>The <code>config</code> contains a map (key-value pairs) specific to the onramp type.</p>
 <h2 id="delivery-properties">Delivery Properties<a class="headerlink" href="#delivery-properties" title="Permanent link">&para;</a></h2>
-<p>Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:</p>
+<p>Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signaling it is safe to send further events. How each onramp reacts, is described in the table below:</p>
 <p>The column <code>Delivery Acknowledgements</code> describes when the onramp considers and reports the event delivered to the upstream it is connected to.</p>
 <table>
 <thead>
@@ -2570,7 +2570,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
             <span class="nt">snot</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">badger</span>
 </code></pre></div>
 <p>Cron entries that are historic or in the past ( relative to the current UTC time ) will be ignored.
-Cron entries beyond 2038 will not work due to underlying libraries ( rust, chrono, cron.rs ) suffering
+Cron entries beyond 2038 will not work due to underlying libraries ( <code>rust</code>, <code>chrono</code>, <code>cron.rs</code> ) suffering
 from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 problem</a>.</p>
 <h3 id="discord">discord<a class="headerlink" href="#discord" title="Permanent link">&para;</a></h3>
 <p><strong>This onramp can be linked</strong></p>
@@ -2681,8 +2681,8 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
       <span class="nt">close_on_done</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">sleep_on_done</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span> <span class="c1"># wait for a second before terminating</span>
 </code></pre></div>
-<h3 id="kafka">kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
-<p>The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkafka 1.5.0 configuration options</a>.</p>
+<h3 id="kafka">Kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
+<p>The Kafka onramp connects to one or more Kafka topics. It uses <code>librdkafka</code> to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkafka 1.5.0 configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-kafka://&lt;config_first_broker_host&gt;[:&lt;config_first_broker_port&gt;]/&lt;topic&gt;/&lt;partition&gt;/&lt;offset&gt;
@@ -2704,7 +2704,7 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
 <li><code>topic</code>: The topic the message was on (if any).</li>
 <li><code>offset</code>: The offset in the partition the message was on (if any).</li>
 <li><code>partition</code>: The partition the message was on (if any).</li>
-<li><code>timestamp</code>: The timestamp provided by kafka in milliseconds (if any).
+<li><code>timestamp</code>: The timestamp provided by <code>kafka</code> in milliseconds (if any).
 Example:</li>
 </ul>
 </li>
@@ -2744,11 +2744,11 @@ Example:</li>
 <p>If <code>enable.auto.commit: false</code> is set in <code>rdkafka_options</code>, the consumer offset in kafka will only be committed when the event has been successfully reached the other end of the pipeline (typically some <a href="../offramps/#offramps">offramp</a> ).
 If an event failed during processing within the pipeline or at a downstream offramp, the consumer offset will be reset to the offset of the failed event, so it will be retried. This has some consequences worth mentioning:</p>
 <ul>
-<li>Already processed kafka messages (that have succeeded before the failed message failed) might be seen again multiple times.</li>
-<li>If the message is persistently failing (e.g. due to an illegal payload or similar), tremor will retry those messages infinitely.</li>
+<li>Already processed <code>kafka</code> messages (that have succeeded before the failed message failed) might be seen again multiple times.</li>
+<li>If the message is persistently failing (e.g. due to an malformed payload or similar), tremor will retry those messages infinitely.</li>
 </ul>
-<p>If persistent failures are to be expected (e.g. due to invalid event payloads) or if repeating messages in general are a problem for the application, avoiding retries with <code>retry_failed_events: false</code> is advised.</p>
-<p>If <code>enable.auto.commit: true</code> is set in <code>rdkafka_options</code>, which is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the kafka message as event in tremor.</p>
+<p>If persistent failures are to be expected (e.g. due to incorrect event payloads) or if repeating messages in general are a problem for the application, avoiding retries with <code>retry_failed_events: false</code> is advised.</p>
+<p>If <code>enable.auto.commit: true</code> is set in <code>rdkafka_options</code>, which is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the <code>kafka</code> message as event in tremor.</p>
 <h3 id="metronome">metronome<a class="headerlink" href="#metronome" title="Permanent link">&para;</a></h3>
 <p>This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.</p>
 <p>The default <a href="../codecs/#pass">codec</a> is <code>pass</code>. (since we already output decoded JSON)</p>
@@ -2767,7 +2767,7 @@ If an event failed during processing within the pipeline or at a downstream offr
       <span class="nt">interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10000</span>
 </code></pre></div>
 <h3 id="nats">nats<a class="headerlink" href="#nats" title="Permanent link">&para;</a></h3>
-<p>The nats onramp connects to nats server(s) and subscribes to a specified subject.</p>
+<p>The <code>nats</code> onramp connects to Nats server(s) and subscribes to a specified subject.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-nats://&lt;config_first_host_host_addr&gt;[:&lt;config_first_host_port&gt;]/&lt;subject&gt;
@@ -2777,7 +2777,7 @@ If an event failed during processing within the pipeline or at a downstream offr
 <li><code>hosts</code> - List of hosts to connect to.</li>
 <li><code>subject</code> - Subject to subscribe to for listening to messages.</li>
 <li><code>queue</code> - Optional queue to subscribe to.</li>
-<li><code>options</code> - Optional struct, which can be used to customise the connection to the server (see <a href="https://docs.rs/nats/0.9.8/nats/struct.Options.html"><code>nats.rs</code> configuration options</a> for more info):<ul>
+<li><code>options</code> - Optional struct, which can be used to customize the connection to the server (see <a href="https://docs.rs/nats/0.9.8/nats/struct.Options.html"><code>nats.rs</code> configuration options</a> for more info):<ul>
 <li><code>token</code>: String; authenticate using a token.</li>
 <li><code>username</code>: String; authenticate using a username and password.</li>
 <li><code>password</code>: String; authenticate using a username and password.</li>
@@ -2920,7 +2920,7 @@ config:
 <p>Known limitations:</p>
 <p>It is currently not possible to configure rest onramps via swagger, RAML or OpenAPI configuration files.</p>
 <h3 id="stdin">stdin<a class="headerlink" href="#stdin" title="Permanent link">&para;</a></h3>
-<p>An oramp which takes input from <code>stdin</code>.</p>
+<p>An onramp that takes input from <code>stdin</code>.</p>
 <p>The default <a href="../codecs/#string">codec</a> is <code>string</code>.</p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-stdin://&lt;tremor-host.local&gt;
@@ -2996,7 +2996,7 @@ to pipelines.</p>
 </code></pre></div>
 <h3 id="ws">ws<a class="headerlink" href="#ws" title="Permanent link">&para;</a></h3>
 <p><strong>This onramp can be linked</strong></p>
-<p>Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
+<p>WebSocket onramp. Receiving either binary or text packages from a WebSocket connection. the url is: <code>ws://&lt;host&gt;:&lt;port&gt;/</code></p>
 <p>The event <a href="../../tremor-script/stdlib/tremor/origin/">origin URI</a> set by the onramp is of the form:</p>
 <div class="highlight"><pre><span></span><code>tremor-ws://&lt;tremor-ws-client-host.remote&gt;
 </code></pre></div>
@@ -3007,7 +3007,7 @@ to pipelines.</p>
 </ul>
 <p>Set metadata variables:</p>
 <ul>
-<li><code>$binary</code> - <code>true</code> if the incoming websocket message came as binary (<code>false</code> otherwise)</li>
+<li><code>$binary</code> - <code>true</code> if the incoming WebSocket message came as binary (<code>false</code> otherwise)</li>
 </ul>
 <p>Used metadata variables (for reply with <a href="../../operations/linked-transports/">linked transports</a>):</p>
 <ul>
@@ -3032,7 +3032,7 @@ Forwards tremor value variants of <code>logs</code>, <code>trace</code> and <cod
 <li><code>port</code> - integer - The TCP port to listen on</li>
 <li>'logs' - boolean - Is logging enabled for this instance. Defaults to <code>true</code>. Received <code>logs</code> events are dropped when <code>false</code>.</li>
 <li>'metrics' - boolean - Is metrics enabled for this instance. Defaults  to <code>true</code>. Defaults to <code>true</code>. Received <code>metrics</code> events are dropped when <code>false</code>.</li>
-<li>'trace' - boolean - Is trace enabled for this instance. Defaults to <code>true</code>. Defaults to <code>true</code>. Received <code>trace</code> events are dopped when <code>false</code>.</li>
+<li>'trace' - boolean - Is trace enabled for this instance. Defaults to <code>true</code>. Defaults to <code>true</code>. Received <code>trace</code> events are dropped when <code>false</code>.</li>
 </ul>
 <p>Pipelines that leverage the OpenTelemetry integration can use utility modules in the <code>cncf::otel</code> module to
 simplify working with the tremor value mapping of the event data. The connector translates the wire level

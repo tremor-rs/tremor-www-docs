@@ -2206,7 +2206,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <h3 id="binflux">binflux<a class="headerlink" href="#binflux" title="Permanent link">&para;</a></h3>
-<p>The Binflux codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.</p>
+<p>The <code>binflux</code> codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.</p>
 <p>The format itself does not include framing but can be used with the <code>size-prefix</code> pre/post processors.</p>
 <p>For all numbers network byte order is used (big endian). The data is represented as follows:</p>
 <ol>
@@ -2231,7 +2231,7 @@
 </li>
 </ol>
 <h3 id="statsd">statsd<a class="headerlink" href="#statsd" title="Permanent link">&para;</a></h3>
-<p>The same as the influx, the statsd codec translates a single statsd measurement into a structured format. The structure is as follows:</p>
+<p>The same as the influx, the <code>statsd</code> codec translates a single <code>statsd</code> measurement into a structured format. The structure is as follows:</p>
 <div class="highlight"><pre><span></span><code>sam:7|c|@0.1
 </code></pre></div>
 <p>Translates to:</p>

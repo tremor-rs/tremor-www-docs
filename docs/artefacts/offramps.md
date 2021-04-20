@@ -215,6 +215,7 @@ Responses are an Array of objects denoting the type of record found as a key, fo
   {"A": "1.2.3.4"},
   {"CNAME": "www.tremor.rs"}
 ]
+```
 
 ### elastic
 

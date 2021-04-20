@@ -41,7 +41,7 @@ translates to:
 
 ### binflux
 
-The Binflux codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.
+The `binflux` codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.
 
 The format itself does not include framing but can be used with the `size-prefix` pre/post processors.
 
@@ -67,7 +67,7 @@ For all numbers network byte order is used (big endian). The data is represented
 
 ### statsd
 
-The same as the influx, the statsd codec translates a single statsd measurement into a structured format. The structure is as follows:
+The same as the influx, the `statsd` codec translates a single `statsd` measurement into a structured format. The structure is as follows:
 
 ```text
 sam:7|c|@0.1

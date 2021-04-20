@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.2">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f955dcd.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -1232,6 +1232,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -1246,6 +1247,7 @@
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
@@ -1324,6 +1326,26 @@
   <a href="#dns" class="md-nav__link">
     dns
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elastic" class="md-nav__link">
+    elastic
+  </a>
+  
+    <nav class="md-nav" aria-label="elastic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linked-transport" class="md-nav__link">
+    Linked Transport
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2235,6 +2257,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -2311,6 +2334,26 @@
   <a href="#dns" class="md-nav__link">
     dns
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elastic" class="md-nav__link">
+    elastic
+  </a>
+  
+    <nav class="md-nav" aria-label="elastic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linked-transport" class="md-nav__link">
+    Linked Transport
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2729,41 +2772,32 @@ Supported payloads are:</p>
   <span class="p">{</span><span class="nt">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;1.2.3.4&quot;</span><span class="p">},</span>
   <span class="p">{</span><span class="nt">&quot;CNAME&quot;</span><span class="p">:</span> <span class="s2">&quot;www.tremor.rs&quot;</span><span class="p">}</span>
 <span class="p">]</span>
-
-<span class="err">###</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span>
-
-<span class="err">The</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">o</span><span class="kc">ffra</span><span class="err">mp</span> <span class="err">wri</span><span class="kc">tes</span> <span class="kc">t</span><span class="err">o</span> <span class="err">o</span><span class="kc">ne</span> <span class="err">or</span> <span class="err">more</span> <span class="err">Elas</span><span class="kc">t</span><span class="err">icSearch</span> <span class="kc">n</span><span class="err">odes.</span> <span class="err">This</span> <span class="err">is</span> <span class="err">curre</span><span class="kc">ntl</span><span class="err">y</span> <span class="kc">teste</span><span class="err">d</span> <span class="err">wi</span><span class="kc">t</span><span class="err">h</span> <span class="err">ES</span> <span class="err">v</span><span class="mi">6</span> <span class="err">a</span><span class="kc">n</span><span class="err">d</span> <span class="err">v</span><span class="mf">7.</span>
-
-<span class="err">Suppor</span><span class="kc">te</span><span class="err">d</span> <span class="err">co</span><span class="kc">nf</span><span class="err">igura</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span> <span class="err">are</span><span class="p">:</span>
-
-<span class="mi">-</span> <span class="err">`</span><span class="kc">n</span><span class="err">odes`</span> <span class="mi">-</span> <span class="err">A</span> <span class="err">lis</span><span class="kc">t</span> <span class="err">o</span><span class="kc">f</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">search</span> <span class="kc">n</span><span class="err">odes</span> <span class="kc">t</span><span class="err">o</span> <span class="err">co</span><span class="kc">nta</span><span class="err">c</span><span class="kc">t</span><span class="err">.</span> <span class="err">These</span> <span class="err">are</span> <span class="kc">t</span><span class="err">he</span> <span class="kc">n</span><span class="err">odes</span> <span class="kc">t</span><span class="err">o</span> <span class="err">which</span> <span class="kc">tre</span><span class="err">mor</span> <span class="err">will</span> <span class="err">se</span><span class="kc">n</span><span class="err">d</span> <span class="kc">traff</span><span class="err">ic</span> <span class="kc">t</span><span class="err">o.</span>
-<span class="mi">-</span> <span class="err">`co</span><span class="kc">n</span><span class="err">curre</span><span class="kc">n</span><span class="err">cy`</span> <span class="mi">-</span> <span class="err">Maximum</span> <span class="kc">nu</span><span class="err">mber</span> <span class="err">o</span><span class="kc">f</span> <span class="err">parallel</span> <span class="err">reques</span><span class="kc">ts</span> <span class="err">(de</span><span class="kc">fault</span><span class="p">:</span> <span class="mi">4</span><span class="err">).</span>
-
-<span class="err">Eve</span><span class="kc">nts</span> <span class="err">will</span> <span class="err">be</span> <span class="err">se</span><span class="kc">nt</span> <span class="kc">t</span><span class="err">o</span> <span class="kc">t</span><span class="err">he</span> <span class="err">co</span><span class="kc">nne</span><span class="err">c</span><span class="kc">te</span><span class="err">d</span> <span class="err">elas</span><span class="kc">t</span><span class="err">icsearch</span> <span class="err">clus</span><span class="kc">ter</span> <span class="err">via</span> <span class="kc">t</span><span class="err">he</span> <span class="p">[</span><span class="err">ES</span> <span class="err">Bulk</span> <span class="err">API</span><span class="p">]</span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="err">//www.elas</span><span class="kc">t</span><span class="err">ic.co/guide/e</span><span class="kc">n</span><span class="err">/elas</span><span class="kc">t</span><span class="err">icsearch/re</span><span class="kc">feren</span><span class="err">ce/curre</span><span class="kc">nt</span><span class="err">/docs</span><span class="mi">-</span><span class="err">bulk.h</span><span class="kc">t</span><span class="err">ml)</span> <span class="err">usi</span><span class="kc">n</span><span class="err">g</span> <span class="kc">t</span><span class="err">he</span> <span class="err">`i</span><span class="kc">n</span><span class="err">dex`</span> <span class="err">ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">.</span>
-<span class="err">I</span><span class="kc">t</span> <span class="err">is</span> <span class="err">recomme</span><span class="kc">n</span><span class="err">ded</span> <span class="kc">t</span><span class="err">o</span> <span class="err">ba</span><span class="kc">t</span><span class="err">ch</span> <span class="err">eve</span><span class="kc">nts</span> <span class="err">se</span><span class="kc">nt</span> <span class="kc">t</span><span class="err">o</span> <span class="kc">t</span><span class="err">his</span> <span class="err">si</span><span class="kc">n</span><span class="err">k</span> <span class="err">usi</span><span class="kc">n</span><span class="err">g</span> <span class="kc">t</span><span class="err">he</span> <span class="p">[</span><span class="err">ge</span><span class="kc">ner</span><span class="err">ic</span><span class="p">::</span><span class="err">ba</span><span class="kc">t</span><span class="err">ch</span> <span class="err">opera</span><span class="kc">t</span><span class="err">or</span><span class="p">]</span><span class="err">(../</span><span class="kc">tre</span><span class="err">mor</span><span class="mi">-</span><span class="err">query/opera</span><span class="kc">t</span><span class="err">ors.md#ge</span><span class="kc">ner</span><span class="err">icba</span><span class="kc">t</span><span class="err">ch)</span> <span class="kc">t</span><span class="err">o</span> <span class="err">reduce</span> <span class="kc">t</span><span class="err">he</span> <span class="err">overhead</span>
-<span class="err">i</span><span class="kc">ntr</span><span class="err">oduced</span> <span class="err">by</span> <span class="kc">t</span><span class="err">he</span> <span class="p">[</span><span class="err">ES</span> <span class="err">Bulk</span> <span class="err">API</span><span class="p">]</span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="err">//www.elas</span><span class="kc">t</span><span class="err">ic.co/guide/e</span><span class="kc">n</span><span class="err">/elas</span><span class="kc">t</span><span class="err">icsearch/re</span><span class="kc">feren</span><span class="err">ce/curre</span><span class="kc">nt</span><span class="err">/docs</span><span class="mi">-</span><span class="err">bulk.h</span><span class="kc">t</span><span class="err">ml).</span>
-
-<span class="err">The</span> <span class="err">co</span><span class="kc">nf</span><span class="err">igura</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="err">op</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span> <span class="err">`codec`</span> <span class="err">a</span><span class="kc">n</span><span class="err">d</span> <span class="err">`pos</span><span class="kc">t</span><span class="err">processors`</span> <span class="err">are</span> <span class="kc">n</span><span class="err">o</span><span class="kc">t</span> <span class="err">used</span><span class="p">,</span> <span class="err">as</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">will</span> <span class="err">always</span> <span class="err">serialize</span> <span class="err">eve</span><span class="kc">nt</span> <span class="err">payloads</span> <span class="err">as</span> <span class="err">JSON.</span>
-
-<span class="err">I</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="kc">nu</span><span class="err">mber</span> <span class="err">o</span><span class="kc">f</span> <span class="err">parallel</span> <span class="err">reques</span><span class="kc">ts</span> <span class="err">surpass</span> <span class="err">`co</span><span class="kc">n</span><span class="err">curre</span><span class="kc">n</span><span class="err">cy`</span><span class="p">,</span> <span class="err">a</span><span class="kc">n</span> <span class="err">error</span> <span class="err">eve</span><span class="kc">nt</span> <span class="err">will</span> <span class="err">be</span> <span class="err">emi</span><span class="kc">tte</span><span class="err">d</span> <span class="kc">t</span><span class="err">o</span> <span class="kc">t</span><span class="err">he</span> <span class="err">`err`</span> <span class="err">por</span><span class="kc">t</span><span class="p">,</span> <span class="err">which</span> <span class="err">ca</span><span class="kc">n</span> <span class="err">be</span> <span class="err">used</span> <span class="kc">f</span><span class="err">or</span> <span class="err">appropria</span><span class="kc">te</span> <span class="err">error</span> <span class="err">ha</span><span class="kc">n</span><span class="err">dli</span><span class="kc">n</span><span class="err">g.</span>
-
-<span class="err">The</span> <span class="kc">f</span><span class="err">ollowi</span><span class="kc">n</span><span class="err">g</span> <span class="err">me</span><span class="kc">ta</span><span class="err">da</span><span class="kc">ta</span> <span class="err">variables</span> <span class="err">ca</span><span class="kc">n</span> <span class="err">be</span> <span class="err">speci</span><span class="kc">f</span><span class="err">ied</span> <span class="err">o</span><span class="kc">n</span> <span class="err">a</span> <span class="err">per</span> <span class="err">eve</span><span class="kc">nt</span> <span class="err">basis</span><span class="p">:</span>
-
-<span class="mi">-</span> <span class="err">`$elas</span><span class="kc">t</span><span class="err">ic._i</span><span class="kc">n</span><span class="err">dex`</span> <span class="mi">-</span> <span class="err">The</span> <span class="err">i</span><span class="kc">n</span><span class="err">dex</span> <span class="kc">t</span><span class="err">o</span> <span class="err">wri</span><span class="kc">te</span> <span class="kc">t</span><span class="err">o</span> <span class="err">(required).</span>
-<span class="mi">-</span> <span class="err">`$elas</span><span class="kc">t</span><span class="err">ic._</span><span class="kc">t</span><span class="err">ype`</span> <span class="mi">-</span> <span class="err">The</span> <span class="err">docume</span><span class="kc">nt</span> <span class="kc">t</span><span class="err">ype</span> <span class="kc">f</span><span class="err">or</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">(op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="err">)</span><span class="p">,</span> <span class="err">depreca</span><span class="kc">te</span><span class="err">d</span> <span class="err">i</span><span class="kc">n</span> <span class="err">ES</span> <span class="mf">7.</span>
-<span class="mi">-</span> <span class="err">`$elas</span><span class="kc">t</span><span class="err">ic._id`</span>   <span class="mi">-</span> <span class="err">The</span> <span class="err">docume</span><span class="kc">nt</span> <span class="err">id</span> <span class="kc">f</span><span class="err">or</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">(op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="err">).</span>
-<span class="mi">-</span> <span class="err">`$elas</span><span class="kc">t</span><span class="err">ic.pipeli</span><span class="kc">ne</span><span class="err">`</span> <span class="mi">-</span> <span class="err">The</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">search</span> <span class="err">pipeli</span><span class="kc">ne</span> <span class="kc">t</span><span class="err">o</span> <span class="err">use</span> <span class="err">(op</span><span class="kc">t</span><span class="err">io</span><span class="kc">nal</span><span class="err">).</span>
-<span class="mi">-</span> <span class="err">`$elas</span><span class="kc">t</span><span class="err">ic.ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">`</span> <span class="mi">-</span> <span class="err">The</span> <span class="p">[</span><span class="err">bulk</span> <span class="err">ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="p">]</span><span class="err">(h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="err">//www.elas</span><span class="kc">t</span><span class="err">ic.co/guide/e</span><span class="kc">n</span><span class="err">/elas</span><span class="kc">t</span><span class="err">icsearch/re</span><span class="kc">feren</span><span class="err">ce/curre</span><span class="kc">nt</span><span class="err">/docs</span><span class="mi">-</span><span class="err">bulk.h</span><span class="kc">t</span><span class="err">ml)</span> <span class="kc">t</span><span class="err">o</span> <span class="err">per</span><span class="kc">f</span><span class="err">orm</span><span class="p">,</span> <span class="err">o</span><span class="kc">ne</span> <span class="err">o</span><span class="kc">f</span> <span class="err">`dele</span><span class="kc">te</span><span class="err">`</span><span class="p">,</span> <span class="err">`crea</span><span class="kc">te</span><span class="err">`</span><span class="p">,</span> <span class="err">`upda</span><span class="kc">te</span><span class="err">`</span> <span class="err">or</span> <span class="err">`i</span><span class="kc">n</span><span class="err">dex`.</span> <span class="err">I</span><span class="kc">f</span> <span class="kc">n</span><span class="err">o</span> <span class="err">`ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">`</span> <span class="err">is</span> <span class="err">provided</span> <span class="err">i</span><span class="kc">t</span> <span class="err">de</span><span class="kc">faults</span> <span class="kc">t</span><span class="err">o</span> <span class="err">`i</span><span class="kc">n</span><span class="err">dex`.</span> <span class="err">`dele</span><span class="kc">te</span><span class="err">`</span> <span class="err">a</span><span class="kc">n</span><span class="err">d</span> <span class="err">`upda</span><span class="kc">te</span><span class="err">`</span> <span class="err">require</span> <span class="err">`$elas</span><span class="kc">t</span><span class="err">ic._id`</span> <span class="kc">t</span><span class="err">o</span> <span class="err">be</span> <span class="err">se</span><span class="kc">t</span> <span class="err">or</span> <span class="err">elas</span><span class="kc">t</span><span class="err">ic</span> <span class="err">search</span> <span class="err">will</span> <span class="err">have</span> <span class="err">error.</span>
-
-<span class="err">####</span> <span class="err">Li</span><span class="kc">n</span><span class="err">ked</span> <span class="err">Tra</span><span class="kc">ns</span><span class="err">por</span><span class="kc">t</span>
-
-<span class="err">I</span><span class="kc">f</span> <span class="err">used</span> <span class="err">as</span> <span class="err">a</span> <span class="err">li</span><span class="kc">n</span><span class="err">ked</span> <span class="kc">trans</span><span class="err">por</span><span class="kc">t</span><span class="p">,</span> <span class="kc">t</span><span class="err">he</span> <span class="err">si</span><span class="kc">n</span><span class="err">k</span> <span class="err">will</span> <span class="err">emi</span><span class="kc">t</span> <span class="err">eve</span><span class="kc">nts</span> <span class="err">i</span><span class="kc">n</span> <span class="err">case</span> <span class="err">o</span><span class="kc">f</span> <span class="err">errors</span> <span class="err">se</span><span class="kc">n</span><span class="err">di</span><span class="kc">n</span><span class="err">g</span> <span class="err">da</span><span class="kc">ta</span> <span class="kc">t</span><span class="err">o</span> <span class="err">ES</span> <span class="err">or</span> <span class="err">i</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">i</span><span class="kc">n</span><span class="err">comi</span><span class="kc">n</span><span class="err">g</span> <span class="err">eve</span><span class="kc">nt</span> <span class="err">is</span> <span class="err">mal</span><span class="kc">f</span><span class="err">ormed</span> <span class="err">via</span> <span class="kc">t</span><span class="err">he</span> <span class="err">`err`</span> <span class="err">por</span><span class="kc">t</span><span class="err">.</span>
-<span class="err">Also</span><span class="p">,</span> <span class="err">upo</span><span class="kc">n</span> <span class="err">a</span> <span class="err">re</span><span class="kc">turne</span><span class="err">d</span> <span class="err">ES</span> <span class="err">Bulk</span> <span class="err">reques</span><span class="kc">t</span><span class="p">,</span> <span class="err">i</span><span class="kc">t</span> <span class="err">will</span> <span class="err">emi</span><span class="kc">t</span> <span class="err">a</span><span class="kc">n</span> <span class="err">eve</span><span class="kc">nt</span> <span class="kc">f</span><span class="err">or</span> <span class="err">each</span> <span class="err">bulk</span> <span class="err">i</span><span class="kc">te</span><span class="err">m</span><span class="p">,</span> <span class="err">de</span><span class="kc">n</span><span class="err">o</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span> <span class="err">success</span> <span class="err">or</span> <span class="kc">fa</span><span class="err">ilure.</span>
-
-<span class="err">Eve</span><span class="kc">nts</span> <span class="err">de</span><span class="kc">n</span><span class="err">o</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span> <span class="err">success</span> <span class="err">are</span> <span class="err">se</span><span class="kc">nt</span> <span class="err">via</span> <span class="kc">t</span><span class="err">he</span> <span class="err">`ou</span><span class="kc">t</span><span class="err">`</span> <span class="err">por</span><span class="kc">t</span> <span class="err">a</span><span class="kc">n</span><span class="err">d</span> <span class="err">have</span> <span class="kc">t</span><span class="err">he</span> <span class="kc">f</span><span class="err">ollowi</span><span class="kc">n</span><span class="err">g</span> <span class="kc">f</span><span class="err">orma</span><span class="kc">t</span><span class="p">:</span>
-
-<span class="err">```jso</span><span class="kc">n</span>
-<span class="p">{</span>
+</code></pre></div>
+<h3 id="elastic">elastic<a class="headerlink" href="#elastic" title="Permanent link">&para;</a></h3>
+<p>The elastic offramp writes to one or more ElasticSearch nodes. This is currently tested with ES v6 and v7.</p>
+<p>Supported configuration options are:</p>
+<ul>
+<li><code>nodes</code> - A list of elastic search nodes to contact. These are the nodes to which tremor will send traffic to.</li>
+<li><code>concurrency</code> - Maximum number of parallel requests (default: 4).</li>
+</ul>
+<p>Events will be sent to the connected elasticsearch cluster via the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a> using the <code>index</code> action.
+It is recommended to batch events sent to this sink using the <a href="../../tremor-query/operators/#genericbatch">generic::batch operator</a> to reduce the overhead
+introduced by the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">ES Bulk API</a>.</p>
+<p>The configuration options <code>codec</code> and <code>postprocessors</code> are not used, as elastic will always serialize event payloads as JSON.</p>
+<p>If the number of parallel requests surpass <code>concurrency</code>, an error event will be emitted to the <code>err</code> port, which can be used for appropriate error handling.</p>
+<p>The following metadata variables can be specified on a per event basis:</p>
+<ul>
+<li><code>$elastic._index</code> - The index to write to (required).</li>
+<li><code>$elastic._type</code> - The document type for elastic (optional), deprecated in ES 7.</li>
+<li><code>$elastic._id</code>   - The document id for elastic (optional).</li>
+<li><code>$elastic.pipeline</code> - The elastic search pipeline to use (optional).</li>
+<li><code>$elastic.action</code> - The <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html">bulk action</a> to perform, one of <code>delete</code>, <code>create</code>, <code>update</code> or <code>index</code>. If no <code>action</code> is provided it defaults to <code>index</code>. <code>delete</code> and <code>update</code> require <code>$elastic._id</code> to be set or elastic search will have error.</li>
+</ul>
+<h4 id="linked-transport">Linked Transport<a class="headerlink" href="#linked-transport" title="Permanent link">&para;</a></h4>
+<p>If used as a linked transport, the sink will emit events in case of errors sending data to ES or if the incoming event is malformed via the <code>err</code> port.
+Also, upon a returned ES Bulk request, it will emit an event for each bulk item, denoting success or failure.</p>
+<p>Events denoting success are sent via the <code>out</code> port and have the following format:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;event_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1:2:3&quot;</span><span class="p">,</span>
@@ -3437,7 +3471,7 @@ lost.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>

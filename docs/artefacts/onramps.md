@@ -38,7 +38,7 @@ The `config` contains a map (key-value pairs) specific to the onramp type.
 
 ## Delivery Properties
 
-Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signalling it is safe to send further events. How each onramp reacts, is described in the table below:
+Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signaling it is safe to send further events. How each onramp reacts, is described in the table below:
 
 The column `Delivery Acknowledgements` describes when the onramp considers and reports the event delivered to the upstream it is connected to.
 
@@ -154,7 +154,7 @@ onramp:
 ```
 
 Cron entries that are historic or in the past ( relative to the current UTC time ) will be ignored.
-Cron entries beyond 2038 will not work due to underlying libraries ( rust, chrono, cron.rs ) suffering
+Cron entries beyond 2038 will not work due to underlying libraries ( `rust`, `chrono`, `cron.rs` ) suffering
 from the [year 2038 problem](https://en.wikipedia.org/wiki/Year_2038_problem).
 
 ### discord
@@ -284,9 +284,9 @@ onramp:
 
 
 
-### kafka
+### Kafka
 
-The Kafka onramp connects to one or more Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkafka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).
+The Kafka onramp connects to one or more Kafka topics. It uses `librdkafka` to handle connections and can use the full set of [librdkafka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -313,7 +313,7 @@ Set metadata variables are:
     - `topic`: The topic the message was on (if any).
     - `offset`: The offset in the partition the message was on (if any).
     - `partition`: The partition the message was on (if any).
-    - `timestamp`: The timestamp provided by kafka in milliseconds (if any).
+    - `timestamp`: The timestamp provided by `kafka` in milliseconds (if any).
 Example:
 
 ```yaml
@@ -357,12 +357,12 @@ onramp:
 If `enable.auto.commit: false` is set in `rdkafka_options`, the consumer offset in kafka will only be committed when the event has been successfully reached the other end of the pipeline (typically some [offramp](offramps.md#offramps) ).
 If an event failed during processing within the pipeline or at a downstream offramp, the consumer offset will be reset to the offset of the failed event, so it will be retried. This has some consequences worth mentioning:
 
-* Already processed kafka messages (that have succeeded before the failed message failed) might be seen again multiple times.
-* If the message is persistently failing (e.g. due to an illegal payload or similar), tremor will retry those messages infinitely.
+* Already processed `kafka` messages (that have succeeded before the failed message failed) might be seen again multiple times.
+* If the message is persistently failing (e.g. due to an malformed payload or similar), tremor will retry those messages infinitely.
 
-If persistent failures are to be expected (e.g. due to invalid event payloads) or if repeating messages in general are a problem for the application, avoiding retries with `retry_failed_events: false` is advised.
+If persistent failures are to be expected (e.g. due to incorrect event payloads) or if repeating messages in general are a problem for the application, avoiding retries with `retry_failed_events: false` is advised.
 
-If `enable.auto.commit: true` is set in `rdkafka_options`, which is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the kafka message as event in tremor.
+If `enable.auto.commit: true` is set in `rdkafka_options`, which is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the `kafka` message as event in tremor.
 
 ### metronome
 
@@ -391,7 +391,7 @@ onramp:
 ```
 
 ### nats
-The nats onramp connects to nats server(s) and subscribes to a specified subject.
+The `nats` onramp connects to Nats server(s) and subscribes to a specified subject.
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -406,7 +406,7 @@ Supported configuration operations are:
 - `hosts` - List of hosts to connect to.
 - `subject` - Subject to subscribe to for listening to messages.
 - `queue` - Optional queue to subscribe to.
-- `options` - Optional struct, which can be used to customise the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
+- `options` - Optional struct, which can be used to customize the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
     - `token`: String; authenticate using a token.
     - `username`: String; authenticate using a username and password.
     - `password`: String; authenticate using a username and password.
@@ -563,7 +563,7 @@ It is currently not possible to configure rest onramps via swagger, RAML or Open
 
 ### stdin
 
-An oramp which takes input from `stdin`.
+An onramp that takes input from `stdin`.
 
 The default [codec](codecs.md#string) is `string`.
 
@@ -672,7 +672,7 @@ onramp:
 
 **This onramp can be linked**
 
-Websocket onramp. Receiving either binary or text packages from a websocket connection. the url is: `ws://<host>:<port>/`
+WebSocket onramp. Receiving either binary or text packages from a WebSocket connection. the url is: `ws://<host>:<port>/`
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
 
@@ -687,7 +687,7 @@ Supported configuration options are:
 
 Set metadata variables:
 
-- `$binary` - `true` if the incoming websocket message came as binary (`false` otherwise)
+- `$binary` - `true` if the incoming WebSocket message came as binary (`false` otherwise)
 
 Used metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
 
@@ -717,7 +717,7 @@ Supported configuration options are:
 - `port` - integer - The TCP port to listen on
 - 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
 - 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
-- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dopped when `false`.
+- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dropped when `false`.
 
 Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
 simplify working with the tremor value mapping of the event data. The connector translates the wire level

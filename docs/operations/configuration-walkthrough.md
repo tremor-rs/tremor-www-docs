@@ -18,6 +18,8 @@ In this walkthrough we configure a single onramp, offramp and pipeline but many 
 
 ### Write an onramp specification
 
+This creates a config specification for an onramp that can be referenced by the unique id `metronome`. It does not create an instance of it.
+
 ```yaml
 # File: metronome-onramp.yaml
 id: metronome
@@ -25,20 +27,9 @@ type: metronome
 config:
   interval: 1000
 ```
-
-Or, JSON:
-
-```json
-{
-  "config": {
-    "interval": 1000
-  },
-  "id": "metronome",
-  "type": "metronome"
-}
-```
-
 ### Write an offramp specification
+
+This creates a config specification for an offramp that can be referenced by the unique id `stdout`. It does not create an instance of it. Think of this as a blueprint.
 
 ```yaml
 # File: metronome-offramp.yaml
@@ -86,6 +77,8 @@ links:
   "/onramp/metronome/{instance}/out": ["/pipeline/main/{instance}/in"]
   "/pipeline/main/{instance}/out": ["/offramp/stdout/{instance}/in"]
 ```
+
+Ths creates a binding specification. Again this does not instantiate the referenced onramps, offramps or pipelines. This is also just a blueprint of a connected topology with a unique identifier `default`.
 
 ## Publish via the REST API / curl
 
@@ -200,10 +193,13 @@ In our final step we specify:
 
 - We want to call our instance 'walkthrough'
 
+A Mapping specification contains values for the placeholders (with curly braces, e.g. `{instance}`) in the binding specification.
 ```yaml
 # File: metronome-mapping.yaml
 instance: "walkthrough"
 ```
+
+We do not deploy or publish a mapping, we rather instantiate a binding specification and provide a mapping with the placeholder values.
 
 Deploy via curl:
 
@@ -216,3 +212,5 @@ Deploy via tremor:
 ```bash
 tremor api binding activate default walkthrough metronome-mapping.yaml
 ```
+
+The result is that all referenced onramps, offramps and pipelines specified in the binding are live and linked and events flow through them.

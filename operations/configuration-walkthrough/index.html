@@ -2317,22 +2317,15 @@
 <p>In this walkthrough we configure a single onramp, offramp and pipeline but many other configurations are possible.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <h3 id="write-an-onramp-specification">Write an onramp specification<a class="headerlink" href="#write-an-onramp-specification" title="Permanent link">&para;</a></h3>
+<p>This creates a config specification for an onramp that can be referenced by the unique id <code>metronome</code>. It does not create an instance of it.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># File: metronome-onramp.yaml</span>
 <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">metronome</span>
 <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">metronome</span>
 <span class="nt">config</span><span class="p">:</span>
   <span class="nt">interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
 </code></pre></div>
-<p>Or, JSON:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;config&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="mi">1000</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;metronome&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;metronome&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
 <h3 id="write-an-offramp-specification">Write an offramp specification<a class="headerlink" href="#write-an-offramp-specification" title="Permanent link">&para;</a></h3>
+<p>This creates a config specification for an offramp that can be referenced by the unique id <code>stdout</code>. It does not create an instance of it. Think of this as a blueprint.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># File: metronome-offramp.yaml</span>
 <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout</span>
 <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout</span>
@@ -2368,6 +2361,7 @@
   <span class="s">&quot;/onramp/metronome/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/pipeline/main/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
   <span class="s">&quot;/pipeline/main/{instance}/out&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/offramp/stdout/{instance}/in&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
+<p>Ths creates a binding specification. Again this does not instantiate the referenced onramps, offramps or pipelines. This is also just a blueprint of a connected topology with a unique identifier <code>default</code>.</p>
 <h2 id="publish-via-the-rest-api-curl">Publish via the REST API / curl<a class="headerlink" href="#publish-via-the-rest-api-curl" title="Permanent link">&para;</a></h2>
 <h3 id="publish-onramp-specification">Publish onramp specification<a class="headerlink" href="#publish-onramp-specification" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-onramp.yaml http://localhost:9898/onramp
@@ -2436,15 +2430,18 @@ tremor api binding list
 <ul>
 <li>We want to call our instance 'walkthrough'</li>
 </ul>
+<p>A Mapping specification contains values for the placeholders (with curly braces, e.g. <code>{instance}</code>) in the binding specification.
 <div class="highlight"><pre><span></span><code><span class="c1"># File: metronome-mapping.yaml</span>
 <span class="nt">instance</span><span class="p">:</span> <span class="s">&quot;walkthrough&quot;</span>
-</code></pre></div>
+</code></pre></div></p>
+<p>We do not deploy or publish a mapping, we rather instantiate a binding specification and provide a mapping with the placeholder values.</p>
 <p>Deploy via curl:</p>
 <div class="highlight"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-mapping.yaml http://localhost:9898/binding/default/walkthrough
 </code></pre></div>
 <p>Deploy via tremor:</p>
 <div class="highlight"><pre><span></span><code>tremor api binding activate default walkthrough metronome-mapping.yaml
 </code></pre></div>
+<p>The result is that all referenced onramps, offramps and pipelines specified in the binding are live and linked and events flow through them.</p>
                 
               
               

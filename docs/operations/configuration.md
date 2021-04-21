@@ -16,9 +16,13 @@ The tremor runtime is internally structured with repositories and registries of 
 
 - Binding - A binding is a specification of how to interconnect Onramps, Offramps and Pipelines. Binding specifications can be thought of a type of wiring harness
 
+- Mapping - A mapping instantiated multiple bindings and fills in template variables.
+
 Specifications for onramps, offramps, pipelines and bindings in tremor should be considered templates. They are stored in an internal tremor _repository_. A tremor repository stores artefacts, much like git repositories code.
 
 Live onramps, offramps and pipelines in tremor are in a runnable state. They consume typically network bandwidth and some compute in the case of onramps and offramps. They consume compute bandwidth in the case of pipelines.
+
+In order to create live instances of onramps, offramps and pipelines, a binding must be _deployed_. This is done by specifying a `mapping` which consists of a mapping from binding instance url to the template values to fill in placeholders in the Binding specification. For each entry in the `mapping` a binding instance is created and all referenced connected onramps, pipelines and offramps are instantiated with it.
 
 Live _instances_ of tremor artefacts are stored in a _registry_. A tremor registry can be thought of similarly to the Domain Name Service or DNS.
 

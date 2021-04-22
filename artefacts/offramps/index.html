@@ -2989,7 +2989,7 @@ with <code>bash</code> or other shell-based environments, as follows:</p>
       <span class="nt">region</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">europe</span>
 </code></pre></div>
 <h1 id="otel">otel<a class="headerlink" href="#otel" title="Permanent link">&para;</a></h1>
-<p>CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+<p>CNCF OpenTelemetry offramp. Publishes to the specified host or IP and destination TCP port via gRPC messages
 conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of <code>logs</code>, <code>trace</code>
 and <code>metrics</code> messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.</p>
 <div class="admonition note">
@@ -3016,7 +3016,7 @@ and recovery to the configured retention, replaying the retained messages upon r
 <p>For best effort delivery - the <code>qos::wal</code> can be omitted and events distributed when downstream endpoints are inaccessible will be
 lost.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">otlp</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">otel</span>
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
@@ -3284,6 +3284,300 @@ to external TCP protocol distribution endpoints.</p>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">url</span><span class="p">:</span> <span class="s">&quot;ws://localhost:1234&quot;</span>
 </code></pre></div>
+<h1 id="gcs">gcs<a class="headerlink" href="#gcs" title="Permanent link">&para;</a></h1>
+<p>Google Cloud Storage offramp.  </p>
+<p>This offramp can issue basic operations to list buckets and objects and to create, insert and delete objects from the Google Cloud Platform cloud storage service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The offramp is experimental.</p>
+</div>
+<p>This offramp assumes that the environment variable <code>GOOGLE_APPLICATION_CREDENTIALS</code> been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcs</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcs</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
+    <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">postprocessors</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gzip</span>    
+    <span class="nt">preprocessors</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gzip</span>
+</code></pre></div>
+<p>If the use case for the offramp requires metadata from the Google Cloud Storage service on the supported operations for this offramp, then set linked to true and configure the output port <code>out</code>.
+If the use case does not require metadata, then set linked to false.</p>
+<h4 id="list_buckets">list_buckets<a class="headerlink" href="#list_buckets" title="Permanent link">&para;</a></h4>
+<p>Lists all the buckets in the Google Cloud Storage project.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+ <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;list_buckets&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;project_id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;project-id&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;list_buckets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;items&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;location&quot;</span><span class="o">:</span> <span class="s2">&quot;EU&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-id&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;locationType&quot;</span><span class="o">:</span> <span class="s2">&quot;multi-region&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;storageClass&quot;</span><span class="o">:</span> <span class="s2">&quot;STANDARD&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;metageneration&quot;</span><span class="o">:</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;selfLink&quot;</span><span class="o">:</span> <span class="s2">&quot;https://www.googleapis.com/storage/v1/b/&lt;bucket-id&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#bucket&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;timeCreated&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;time of creation&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;iamConfiguration&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;uniformBucketLevelAccess&quot;</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">&quot;enabled&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+              <span class="s2">&quot;lockedTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-06-17T09:12:22.122Z&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;bucketPolicyOnly&quot;</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">&quot;enabled&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+              <span class="s2">&quot;lockedTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-06-17T09:12:22.122Z&quot;</span>
+            <span class="p">}</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;etag&quot;</span><span class="o">:</span> <span class="s2">&quot;CAQ=&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;defaultEventBasedHold&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="s2">&quot;retentionPolicy&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;effectiveTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:12:22.122Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;retentionPeriod&quot;</span><span class="o">:</span> <span class="s2">&quot;60&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;isLocked&quot;</span><span class="o">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;updated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-13T17:05:29.404Z&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;satisfiesPZS&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="s2">&quot;projectNumber&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;project-number&gt;&quot;</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#buckets&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;project-id&gt;</code> - The project id of the Google Cloud Storage project where the buckets are.
+- <code>&lt;bucket-id&gt;</code> - The unique identifier of the bucket.
+- <code>&lt;project-number&gt;</code> - The project number for the Google Cloud Storage project.</p>
+<h4 id="list_objects">list_objects<a class="headerlink" href="#list_objects" title="Permanent link">&para;</a></h4>
+<p>Lists all the objects in the specified bucket.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;list_objects&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;list_objects&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;items&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;mediaLink&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-id&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;size&quot;</span><span class="o">:</span> <span class="s2">&quot;1943550&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;crc32c&quot;</span><span class="o">:</span> <span class="s2">&quot;0QXXmA==&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;storageClass&quot;</span><span class="o">:</span> <span class="s2">&quot;STANDARD&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;generation&quot;</span><span class="o">:</span> <span class="s2">&quot;1616145246990906&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;metageneration&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;timeStorageClassUpdated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:14:07.012Z&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;selfLink&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#object&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;md5Hash&quot;</span><span class="o">:</span> <span class="s2">&quot;ucrP5b1N+6JHxn1TKavn/A==&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;timeCreated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:14:07.012Z&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;etag&quot;</span><span class="o">:</span> <span class="s2">&quot;CLrk6JqCvO8CEAE=&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;updated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:14:07.012Z&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;retentionExpirationTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:15:07.012Z&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;contentType&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;content-type&gt;&quot;</span>
+        <span class="p">}</span>        
+      <span class="p">],</span>
+      <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#objects&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;bucket-name&gt;</code> - The name of the Google Cloud Storage bucket where the object is.
+- <code>&lt;object-id&gt;</code> - The unique object identifier.
+- <code>&lt;object-name&gt;</code> - The name of the object in the Google Cloud Stoarge bucket.
+- <code>&lt;content-type&gt;</code> - The type of the object uploaded.</p>
+<h4 id="create_bucket">create_bucket<a class="headerlink" href="#create_bucket" title="Permanent link">&para;</a></h4>
+<p>Creates a bucket in the project specified in the command.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;create_bucket&quot;</span> <span class="p">,</span> 
+  <span class="s2">&quot;project_id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;project-id&gt;&quot;</span><span class="p">,</span> 
+  <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;create_bucket&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;projectNumber&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;project-number&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;location&quot;</span><span class="o">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-id&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;etag&quot;</span><span class="o">:</span> <span class="s2">&quot;CAE=&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;locationType&quot;</span><span class="o">:</span> <span class="s2">&quot;multi-region&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;storageClass&quot;</span><span class="o">:</span> <span class="s2">&quot;STANDARD&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;metageneration&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;updated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:37:23.702Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;selfLink&quot;</span><span class="o">:</span> <span class="s2">&quot;https://www.googleapis.com/storage/v1/b/&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#bucket&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;tremor&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;iamConfiguration&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;uniformBucketLevelAccess&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;enabled&quot;</span><span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;bucketPolicyOnly&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;enabled&quot;</span><span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;timeCreated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:37:23.702Z&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;project-id&gt;</code> - The project id of the Google Cloud Storage project where the bucket is.
+- <code>&lt;bucket-id&gt;</code> - The unique identifier of the bucket.
+- <code>&lt;project-number&gt;</code> - The project number for the Google Cloud Storage project.</p>
+<h4 id="remove_bucket">remove_bucket<a class="headerlink" href="#remove_bucket" title="Permanent link">&para;</a></h4>
+<p>Removes the bucket from the specified project in Google Cloud Storage project.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+ <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;remove_bucket&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<strong>Response</strong>:
+<div class="highlight"><pre><span></span><code>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;bucket-name&gt;</code> - The name of the Google Cloud Storage bucket where the object is.</p>
+<h4 id="upload_object">upload_object<a class="headerlink" href="#upload_object" title="Permanent link">&para;</a></h4>
+<p>Uploads the object to a Google Cloud Storage bucket.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+ <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;upload_object&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span> 
+ <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span><span class="p">,</span> 
+ <span class="s2">&quot;body&quot;</span><span class="o">:</span> <span class="sb">`&lt;object&gt;`</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;upload_object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;mediaLink&quot;</span><span class="o">:</span> <span class="s2">&quot;https://storage.googleapis.com/download/storage/v1/b/&lt;bucket-name&gt;/o/&lt;object-name&gt;?generation=1619077199260663&amp;alt=media&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-id&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;size&quot;</span><span class="o">:</span> <span class="s2">&quot;47&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;crc32c&quot;</span><span class="o">:</span> <span class="s2">&quot;a7mrxw==&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;storageClass&quot;</span><span class="o">:</span> <span class="s2">&quot;STANDARD&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;generation&quot;</span><span class="o">:</span> <span class="s2">&quot;1619077199260663&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;metageneration&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;timeStorageClassUpdated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:39:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;selfLink&quot;</span><span class="o">:</span> <span class="s2">&quot;https://www.googleapis.com/storage/v1/b/&lt;bucket-name&gt;/o/&lt;object-name&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#object&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;april&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;md5Hash&quot;</span><span class="o">:</span> <span class="s2">&quot;qhr9326j+3PeIK9koXMHCg==&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;timeCreated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:39:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;etag&quot;</span><span class="o">:</span> <span class="s2">&quot;CPfXzcqskfACEAE=&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;updated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:39:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;retentionExpirationTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:40:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;contentType&quot;</span><span class="o">:</span> <span class="s2">&quot;application/json&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;object&gt;</code> - The object data to be uploaded to a Google Cloud Storage bucket.
+- <code>&lt;bucket-name&gt;</code> - The name of the Google Cloud Storage bucket where the object is.
+- <code>&lt;object-id&gt;</code> - The unique object identifier.
+- <code>&lt;object-name&gt;</code> - The name of the object in the Google Cloud Stoarge bucket.</p>
+<h4 id="fetch_object">fetch_object<a class="headerlink" href="#fetch_object" title="Permanent link">&para;</a></h4>
+<p>Returns the metadata for the object fetched.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+ <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;fetch&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;fetch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;mediaLink&quot;</span><span class="o">:</span> <span class="s2">&quot;https://storage.googleapis.com/download/storage/v1/b/&lt;bucket-name&gt;/o/&lt;object-name&gt;?generation=1619077199260663&amp;alt=media&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-id&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;size&quot;</span><span class="o">:</span> <span class="s2">&quot;47&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;crc32c&quot;</span><span class="o">:</span> <span class="s2">&quot;a7mrxw==&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;storageClass&quot;</span><span class="o">:</span> <span class="s2">&quot;STANDARD&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;generation&quot;</span><span class="o">:</span> <span class="s2">&quot;1619077199260663&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;metageneration&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;timeStorageClassUpdated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:39:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;selfLink&quot;</span><span class="o">:</span> <span class="s2">&quot;https://www.googleapis.com/storage/v1/b/&lt;bucket-name&gt;/o/&lt;object-name&gt;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#object&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;april&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;md5Hash&quot;</span><span class="o">:</span> <span class="s2">&quot;qhr9326j+3PeIK9koXMHCg==&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;timeCreated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:39:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;etag&quot;</span><span class="o">:</span> <span class="s2">&quot;CPfXzcqskfACEAE=&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;updated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:39:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;retentionExpirationTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-04-22T07:40:59.278Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;contentType&quot;</span><span class="o">:</span> <span class="s2">&quot;application/json&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;bucket-name&gt;</code> - The name of the Google Cloud Storage bucket where the object is.
+- <code>&lt;object-id&gt;</code> - The unique object identifier.
+- <code>&lt;object-name&gt;</code> - The name of the object in the Google Cloud Stoarge bucket.</p>
+<h4 id="download_object">download_object<a class="headerlink" href="#download_object" title="Permanent link">&para;</a></h4>
+<p>Downloads the object.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span> 
+  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;download_object&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;cmd&quot;</span><span class="o">:</span> <span class="s2">&quot;download_object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="sb">`&lt;object&gt;`</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;bucket-name&gt;</code> - The name of the Google Cloud Storage bucket where the object is.
+- <code>&lt;object-name&gt;</code> - The name of the object in the Google Cloud Stoarge bucket.
+- <code>&lt;object&gt;</code> - The object downloaded.</p>
+<h4 id="remove_object">remove_object<a class="headerlink" href="#remove_object" title="Permanent link">&para;</a></h4>
+<p>Removes the object from the specified bucket.</p>
+<p><strong>Request</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;remove_object&quot;</span> <span class="p">,</span>
+  <span class="s2">&quot;bucket&quot;</span><span class="o">:</span><span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong>
+- <code>&lt;bucket-name&gt;</code> - The name of the Google Cloud Storage bucket where the object is.
+- <code>&lt;object-name&gt;</code> - The name of the object in the Google Cloud Stoarge bucket.</p>
                 
               
               

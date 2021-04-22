@@ -631,7 +631,7 @@ offramp:
 
 # otel
 
-CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+CNCF OpenTelemetry offramp. Publishes to the specified host or IP and destination TCP port via gRPC messages
 conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
 and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
 
@@ -664,7 +664,7 @@ lost.
 Example:
 
 ```yaml
-onramp:
+offramp:
   - id: otlp
     type: otel
     codec: json

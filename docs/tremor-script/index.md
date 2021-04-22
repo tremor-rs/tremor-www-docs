@@ -302,7 +302,20 @@ ArraySegment grammar:
 
 > ![array grammar](grammar/diagram/ArraySegment.png)
 
-Path-like structures in `tremor-script` allow a subset of an ingested event, meta-data passed to the tremor-script function and script-local data to be indexed.
+Path-like structures in `tremor-script` allow referencing local variables, ingested events, event meta-data, script-local state etc. and also indexing into them if they are records or arrays.
+
+#### Special paths
+
+_Normal_ paths are used to referring to local variables created with [let](#let), but tremor-script offers a set of special paths used to refer to commonly needed entities:
+
+- `event`: Always referring to the currently handled event.
+- `$`: Referring to the event metadata. Values inside the event metadata can only be accessed via a top-level name like: `$udp.port`. Its contents are usually either `null` or a record.
+- `state`: Referring to the script's state, which will persist across the lifetime of a pipeline, but not across tremor reboots. So it can be used as state kept across different events. Default value is `null`.
+- `args`: Referring to a record of arguments passed into the [script definition](../tremor-query/index.md#embedded-script-definitions) or [create script](#embedded-script-definitions).
+- `window`: Referring to the name of the [window](../tremor-query/index.md#tumbling-windows) this event is emitted from. This is `null` if the event is not handled inside a tremor-query [select](https://docs.tremor.rs/tremor-query/#select-queries) statement with a [window](../tremor-query/index.md#tumbling-windows).
+- `group`: Referring to the current group if the event is handled inside a tremor-query [select](https://docs.tremor.rs/tremor-query/#select-queries) statement with a `group by` clause. It will be `null` outside of a `group by` select, if used inside, it will be an array where the first element is the value of the current group, and the second element is the stringified _name_ of the group, derived from the group value.
+
+#### Example
 
 Example event for illustration purposes:
 

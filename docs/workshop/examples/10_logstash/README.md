@@ -19,9 +19,9 @@ In the [`example.trickle`](etc/tremor/config/example.trickle) we define scripts 
 ```trickle
 define script extract                                                          # define the script that parses our apache logs
 script
-  match {"raw": event} of                                                      # we user the dissect extractor to parse the apache log
+  match {"raw": event} of                                                      # we use the dissect extractor to parse the apache log
     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{cost:int}\\n| }
-            => r.raw                                                           # this first case is hit of the log includes an execution time (cost) for the request
+            => r.raw                                                           # this first case is hit if the log includes an execution time (cost) for the request
     case r = %{ raw ~= dissect|%{ip} %{} %{} [%{timestamp}] "%{method} %{path} %{proto}" %{code:int} %{}\\n| }
             => r.raw
     default => emit => "bad"
@@ -31,14 +31,14 @@ end;
 ```
 
 ```trickle
-define script categorize                                                       # defome the script that classifies the logs
+define script categorize                                                       # define the script that classifies the logs
 with
-  user_error_index = "errors",                                                 # we use with here to default some configuration for
+  user_error_index = "errors",                                                 # we use "with" here to default some configuration for
   server_error_index = "errors",                                               # the script, we could then re-use this script in multiple
   ok_index = "requests",                                                       # places with different indexes
   other_index = "requests"
 script
-  let $doc_type = "log";                                                      # doc_type is used by the offramp, the $ denots this is stored in event metadat
+  let $doc_type = "log";                                                      # doc_type is used by the offramp, the $ denotes this is stored in event metadata
   let $index = match event of
     case e = %{present code} when e.code >= 200 and e.code < 400              # for http codes between 200 and 400 (exclusive) - those are success codes
       => args.ok_index

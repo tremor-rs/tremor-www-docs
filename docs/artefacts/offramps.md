@@ -247,6 +247,8 @@ The following metadata variables can be specified on a per event basis:
 If used as a linked transport, the sink will emit events in case of errors sending data to ES or if the incoming event is malformed via the `err` port.
 Also, upon a returned ES Bulk request, it will emit an event for each bulk item, denoting success or failure.
 
+*Success Responses*
+
 Events denoting success are sent via the `out` port and have the following format:
 
 ```json
@@ -272,6 +274,8 @@ The event metadata will contain the following:
   }
 }
 ```
+
+*Error Responses*
 
 Events denoting bulk item failure are sent via the `err` port and have the following format:
 
@@ -301,7 +305,22 @@ The event metadata for failed events looks as follows:
 }
 ```
 
-For both event types `payload` is the event payload that was sent to ES.
+Error Responses that are not scoped to bulk items, but the whole operation of turning the event into a Elasticsearch Bulk Request and sending that request to Elasticsearch
+will have the same payload format as Bulk item errors, but the `$elastic` metadata is missing:
+
+```json
+{
+  "success": false,
+  "source": {
+    "event_id": "2:3:4",
+    "origin": "tremor-rest://example.org/"
+  },
+  "error": {},
+  "payload": {}
+}
+```
+
+For both error and success responses `payload` is the event payload that was sent to ES.
 
 Example Configuration:
 
@@ -987,7 +1006,7 @@ onramp:
 
 # gcs
 
-Google Cloud Storage offramp.  
+Google Cloud Storage offramp.
 
 This offramp can issue basic operations to list buckets and objects and to create, insert and delete objects from the Google Cloud Platform cloud storage service.
 
@@ -1007,7 +1026,7 @@ offramp:
     codec: json
     linked: true
     postprocessors:
-      - gzip    
+      - gzip
     preprocessors:
       - gzip
 ```
@@ -1117,7 +1136,7 @@ Lists all the objects in the specified bucket.
           "updated": "2021-03-19T09:14:07.012Z",
           "retentionExpirationTime": "2021-03-19T09:15:07.012Z",
           "contentType": "<content-type>"
-        }        
+        }
       ],
       "kind": "storage#objects"
     }
@@ -1140,8 +1159,8 @@ Creates a bucket in the project specified in the command.
 **Request**:
 ```js
 {
-  "command": "create_bucket" , 
-  "project_id": "<project-id>", 
+  "command": "create_bucket" ,
+  "project_id": "<project-id>",
   "bucket": "<bucket>"
 }
 ```
@@ -1209,8 +1228,8 @@ Uploads the object to a Google Cloud Storage bucket.
 ```js
 {
  "command": "upload_object",
- "bucket": "<bucket-name>", 
- "object": "<object-name>", 
+ "bucket": "<bucket-name>",
+ "object": "<object-name>",
  "body": `<object>`
 }
 ```
@@ -1306,7 +1325,7 @@ Downloads the object.
 
 **Request**:
 ```js
-{ 
+{
   "command": "download_object",
   "bucket": "<bucket-name>",
   "object": "<object-name>"

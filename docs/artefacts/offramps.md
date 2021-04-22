@@ -44,6 +44,7 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | elastic   | connection loss   | on 200 replies            |
 | exit      | never             | always                    |
 | file      | never             | always                    |
+| gcs       | never             | on successful send        |
 | kafka     | see librdkafka    | see librdkafka            |
 | kv        | never             | always                    |
 | nats      | connection loss   | always                    |
@@ -236,9 +237,9 @@ If the number of parallel requests surpass `concurrency`, an error event will be
 
 The following metadata variables can be specified on a per event basis:
 
-- `$elastic._index` - The index to write to (required).
-- `$elastic._type` - The document type for elastic (optional), deprecated in ES 7.
-- `$elastic._id`   - The document id for elastic (optional).
+- `$elastic["_index"]` - The index to write to (required).
+- `$elastic["_type"]` - The document type for elastic (optional), deprecated in ES 7.
+- `$elastic["_id"]`   - The document id for elastic (optional).
 - `$elastic.pipeline` - The ElasticSearch pipeline to use (optional).
 - `$elastic.action` - The [bulk action](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) to perform, one of `delete`, `create`, `update` or `index`. If no `action` is provided it defaults to `index`. `delete` and `update` require `$elastic._id` to be set or elastic search will have error.
 
@@ -430,581 +431,7 @@ offramp:
       file: /my/path/to/a/file.json
 ```
 
-
-
-### Kafka
-
-The Kafka offramp connects sends events to Kafka topics. It uses `librdkafka` to handle connections and can use the full set of [librdkaka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).
-
-The default [codec](codecs.md#json) is `json`.
-
-Supported configuration options are:
-
-- `topic` - The topic to send to.
-- `brokers` - Broker servers to connect to. (Kafka nodes)
-- `hostname` - Hostname to identify the client with. (default: the systems hostname)
-- `key` - Key to use for messages (default: none)
-- `rdkafka_options` - An optional map of option to value, where both sides need to be strings.
-
-Used metadata variables:
-
-- `$kafka` - Record consisting of the following meta information:
-    - `$headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message.
-    - `$key`: Same as config `key` (optional. overrides related config param when present)
-
-
-Example:
-
-```yaml
-offramp:
-  - id: kafka-out
-    type: kafka
-    config:
-      brokers:
-        - kafka:9092
-      topic: demo
-```
-
-### kv
-
-The `kv` offramp is intended to allow for a decouple way of persisting and retrieving state in a non blocking way.
-
-Example:
-```yaml
-  - id: kv
-    type: kv
-    linked: true     # this needs to be true
-    codec: json
-    config:
-      dir: "temp/kv" # directory to store data in
-```
-
-Events sent to the KV offramp are commands. The following are supported:
-
-#### get
-
-Fetches the data for a given key.
-
-**Request**:
-```js
-{"get": {"key": "<string|binary>"}}
-```
-
-**Response**:
-```js
-{"ok": "<decoded>"} // key was found, the format of decoded depends on the codec (does NOT have to be a string)
-null,               // key was not found
-```
-
-#### put
-
-Writes a value to a key, returns the old value if there was any.
-
-**Request**:
-```js
-{"put": {
-  "key": "<string|binary>",
-  "value": "<to encode>" // the format of value depends on the codec (does NOT have to be a string)
-}}
-```
-
-**Response**:
-```js
-{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
-null,               // key was not used before
-```
-
-#### delete
-
-Deletes a key, returns the old value if there was any.
-
-**Request**:
-```js
-{"delete": {"key": "<string|binary>"}}
-```
-
-**Response**:
-```js
-{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
-null,               // key was not used before
-```
-
-#### scan
-
-Reads a range of keys
-
-**Request**:
-```js
-{"scan": {
-   "start": "<string|binary>", // optional, if not set will start with the first key
-   "end": "<string|binary>", // optional, if not set will read to the end key
-}}
-```
-**Response**:
-```js
-{"ok": [
-  {
-    "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
-    "value": "<decoded>" // the value, the format of decoded depends on the codec (does NOT have to be a string)
-  } // repeated, may be empty
-]}
-```
-
-#### cas
-
-Compare And Swap operation. Those operations require old values to match what it is compared to
-
-**Request**:
-```js
-{"cas": {
-   "key": "<string|binary>", // The key to operate on
-   "old": "<to encode|not-set>", // The old value, if not set means "this value wasn't present"
-   "new": "<to encode|not-set>", // The new value, if not set it means it gets deleted
-}}
-```
-**Response**:
-
-```js
-{"ok": null} // The operation succeeded
-{"error": {  // the operation failed
-  "current": "<decoded>", // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)
-  "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
-}}
-```
-
-### nats
-The `nats` offramp connects to Nats server(s) and publishes a message to specified subject for every event.
-
-The default [codec](codecs.md#json) is `json`.
-
-Supported configuration operations are:
-
-- `hosts` - List of hosts to connect to.
-- `subject` - Subject for the message to be published.
-- `reply` - Optional string specifying the reply subject.
-- `headers` - Option key-value pairs, specifying message headers, where the key is a string and the value is a list of strings.
-- `options` - Optional struct, which can be used to customize the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
-
-    - `token`: String; authenticate using a token.
-    - `username`: String; authenticate using a username and password.
-    - `password`: String; authenticate using a username and password.
-    - `credentials_path`: String; path to a `.creds` file for authentication.
-    -  `cert_path`: String; path to the client certificate file.
-    -  `key_path`: String; path to private key file.
-    -  `name`: String; name this configuration.
-    -  `echo`: Boolean; if true, published messages will not be delivered.
-    -  `max_reconnects`: Integer; max number of reconnection attempts.
-    -  `reconnect_buffer_size`: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.
-    -  `tls`: Boolean; if true, sets tls for _all_ server connections.
-    -  `root_cert`: String; path to a root certificate.
-
-Used metadata variables are:
-
-- `$nats`: Record consisting of the following metadata:
-
-    - `$reply`: Overrides `config.reply` if present.
-    - `$headers`: Overrides `config.headers` if present.
-
-Example:
-```yaml
-offramp:
-  - id: nats-out
-    type: nats
-    config:
-      hosts:
-        - "127.0.0.1:4444"
-      subject: demo
-      reply: ghost
-      headers:
-        snot:
-          - badger
-          - ferris
-      options:
-        name: nats-demo
-        reconnect_buffer_size: 1
-```
-
-### newrelic
-
-Send events to [New Relic](https://newrelic.com/) platform, using its log apis (variable by region).
-
-This offramp encodes events as json, as this is required by the `newrelic` log api. Postprocessors are not used.
-
-Supported configuration options are:
-
-- `license_key` - New Relic's license (or insert only) key
-- `compress_logs` - Whether logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
-- `region` - Region to use to send logs. Available choices: USA, Europe (default: USA)
-
-Example:
-
-```yaml
-offramp:
-  - id: newrelic
-    type: newrelic
-    config:
-      license_key: keystring
-      compress_logs: true
-      region: europe
-```
-
-# otel
-
-CNCF OpenTelemetry offramp. Publishes to the specified host or IP and destination TCP port via gRPC messages
-conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
-and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
-
-!!! note
-
-    The offramp is experimental.
-
-Supported configuration options are:
-
-- `host` - String - The host or IP to listen on
-- `port` - integer - The TCP port to listen on
-- 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
-- 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
-- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dopped when `false`.
-
-Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
-simplify working with the tremor value mapping of the event data. The connector translates the tremor value level
-data to protocol buffers automatically for distribution to downstream OpenTelemetry systems.
-
-The connector can be used with the `qos::wal` operator for transient in-memory or persistent disk-based guaranteed delivery. If either
-tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
-for lossless recovery. For events marked as transactional that are explicitly acknowledged, `fail` insights are propagated for events that
-are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
-basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
-and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.
-
-For best effort delivery - the `qos::wal` can be omitted and events distributed when downstream endpoints are inaccessible will be
-lost.
-
-Example:
-
-```yaml
-offramp:
-  - id: otlp
-    type: otel
-    codec: json
-    config:
-      port: 4317
-      host: 10.0.2.1
-```
-
-
-### PostgreSQL
-
-PostgreSQL offramp.
-
-Supported configuration options are:
-
-- `host` - PostgreSQL database hostname
-- `port` - PostgresSQL database port
-- `user` - Username for authentication
-- `password` - Password for authentication
-- `dbname` - Database name
-- `table` - Database table name
-
-Data that comes in will be used to run an `INSERT` statement. It is required
-that data comes in objects representing columns. The object key must represent field
-name in the database and must contain following fields:
-
-- `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
-  etc.)
-- `name` - field name as represented by database table schema
-- `value` - the value of the field
-
-`codec` and `postprocessors` config values are ignored as they cannot apply to this offramp, since the event is transformed into a SQL query.
-
-Example:
-
-```yml
-id: db
-type: postgres
-config:
-  host: localhost
-  port: 5432
-  user: postgres
-  password: example
-  dbname: sales
-  table: transactions
-```
-
-### rest
-
-The rest offramp is used to send events to the specified endpoint.
-
-Supported configuration options are:
-
-- `endpoint` - Endpoint URL. Can be provided as string or as struct. The struct form is composed of the following standard URL fields:
-    - `scheme` - String, required, typically `http`
-    - `username` - String, optional
-    - `password` - String, optional
-    - `host` - String, required, hostname or ip address
-    - `port` - Number, optional, defaults to `80`
-    - `path` - String, optional, defaults to `/`
-    - `query` - String, optional
-    - `fragment` - String, optional
-- `method` - HTTP method to use (default: `POST`)
-- `headers` - A map of headers to set for the requests, where both sides are strings
-- `concurrency` - Number of parallel in-flight requests (default: `4`)
-
-Used metadata variables:
-
-> Setting these metadata variables here allows users to dynamically change the behaviour of the rest offramp:
-
-- `$endpoint` - same format as config `endpoint` (optional. overrides related config param when present)
-- `$request` - A record capturing the HTTP request attributes. Available fields within:
-    - `method` - same as config `method` (optional. overrides related config param when present)
-    - `headers` - A map from header name (string) to header value (string or array of strings)(optional. overrides related config param when present)
-
-These variables are aligned with the similar variables generated by the [rest onramp](./onramps.md#rest). Note that `$request.url` is not utilized here -- instead the same can be configured by setting `$endpoint` (since enabling the former here can lead to request loops when events sourced from rest onramp are fed to the rest offramp, without overriding it from the pipeline. also, `$endpoint` can be separately configured as a URL string, which is convenient for simple offramp use).
-
-The rest offramp encodes the event as request body using the `Content-Type` header if present, using the customizable builtin `codec_map` to determine a matching coded. It falls back to use the configured codec if no `Content-Type` header is available.
-
-When used as [Linked Transport](../operations/linked-transports.md) the same handling is applied to the incoming HTTP response, giving precedence to the `Content-Type` header and only falling back to the configured `codec`.
-
-If the number of parallel requests surpass `concurrency`, an error event will be emitted to the `err` port, which can be used for appropriate error handling.
-
-Set metadata variables:
-
-> These metadata variables are used for HTTP response events emitted through the `OUT` port:
-
-- `$response` - A record capturing the HTTP response attributes. Available fields within:
-    - `status` - Numeric HTTP status code
-    - `headers` - A record that maps header name (lowercase string) to value (array of strings)
-- `$request` - A record with the related HTTP request attributes. Available fields within:
-    - `method` - HTTP method used
-    - `headers` - A record containing all the request headers
-    - `endpoint` - A record containing all the fields that config `endpoint` does
-
-When used as a linked offramp, batched events are rejected by the offramp.
-
-Example 1:
-
-```yaml
-offramp:
-  - id: rest-offramp
-    type: rest
-    codec: json
-    postprocessors:
-      - gzip
-    linked: true
-    config:
-      endpoint:
-        host: httpbin.org
-        port: 80
-        path: /anything
-        query: "q=search"
-      headers:
-        "Accept": "application/json"
-        "Transfer-Encoding": "gzip"
-```
-
-Example 2:
-
-```yaml
-offramp:
-  - id: rest-offramp-2
-    type: rest
-    codec: json
-    codec_map:
-      "text/html": "string"
-      "application/vnd.stuff": "string"
-    config:
-      endpoint:
-        host: httpbin.org
-        path: /patch
-      method: PATCH
-```
-
-#### rest offramp example for InfluxDB
-
-The structure is given for context.
-
-```yaml
-offramp:
-  - id: influxdb
-    type: rest
-    codec: influx
-    postprocessors:
-      - lines
-    config:
-      endpoint:
-        host: influx
-        path: /write
-        query: db=metrics
-      headers:
-        "Client": "Tremor"
-```
-
-### stderr
-
-A custom stderr offramp can be configured by using this offramp type. But beware that this will share the single stderr stream with `system::stderr`.
-
-The default codec is [json](codecs.md#json).
-
-The stderr offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
-
-If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
-If `raw` is set to true, the event data will be put on stderr as is.
-
-Supported configuration options:
-
-- `prefix` - A prefix written before each event (optional string).
-- `raw` - Write event data bytes as is to stderr.
-
-Example:
-
-```yaml
-offramp:
-  - id: raw_stuff
-    type: stderr
-    codec: json
-    postprocessors:
-      - snappy
-    config:
-      raw: true
-```
-
-### stdout
-
-A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with `system::stdout`.
-
-The default codec is [json](codecs.md#json).
-
-The stdout offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
-
-If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
-If `raw` is set to true, the event data will be put on stdout as is.
-
-Supported configuration options:
-
-- `prefix` - A prefix written before each event (optional string).
-- `raw` - Write event data bytes as is to stdout.
-
-Example:
-
-```yaml
-offramp:
-  - id: like_a_python_repl
-    type: stdout
-    config:
-      prefix: ">>> "
-```
-
-### tcp
-
-This connects on a specified port for distributing outbound TCP data.
-
-The offramp can leverage postprocessors to frame data after codecs are applied and events are forwarded
-to external TCP protocol distribution endpoints.
-
-The default [codec](codecs.md#json) is `json`.
-
-Supported configuration options are:
-
-- `host` - The host to advertise as
-- `port` - The TCP port to listen on
-- `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
-- `ttl` - Set the socket's time-to-live ( default: 64 )
-- `is_no_delay` - Set the socket's Nagle ( delay ) algorithm to off ( default: true )
-
-Example:
-
-```yaml
-offramp:
-  - id: tcp
-    type: tcp
-    codec: json
-    postprocessors:
-      - gzip
-      - base64
-      - lines
-    config:
-      host: "localhost"
-      port: 9000
-```
-
-### udp
-
-The UDP offramp sends data to a given host and port as UDP datagram.
-
-The default [codec](codecs.md#json) is `json`.
-
-When the UDP onramp gets a batch of messages it will send each element of the batch as a distinct UDP datagram.
-
-Supported configuration options are:
-
-- `bind.host` - the local host to send data from
-- `bind.port` - the local port to send data from
-- `host` - the destination host to send data to
-- `port` - the destination port to send data to.
-
-!!! warn
-
-    Setting `bound` to `false` makes the UDP offramp potentially extremely slow as it forces a lookup of the destination on each event!
-
-Used metadata variables:
-
- - `$udp.host`: This overwrites the configured destination host for this event. Expects a string.
- - `$udp.port`: This overwrites the configured destination port for this event. Expects an integer.
-
-!!! warn
-
-    Be careful to set `$udp.host` to an IP, **not** a DNS name or the OS will resolve it on every event, which will be extremely slow!
-
-Example:
-
-```yaml
-offramp:
-  - id: udp-out
-    type: udp
-    postprocessors:
-      - base64
-    config:
-      bind:
-        host: "10.11.12.13"
-        port: 1234
-      host: "20.21.22.23"
-      port: 2345
-```
-
-
-### ws
-
-Sends events over a WebSocket connection. Each event is a WebSocket message.
-
-The default [codec](codecs.md#json) is `json`.
-
-Supported configuration options are:
-
-- `url` - WebSocket endpoint to send data to.
-- `binary` - If data should be send as binary instead of text (default: `false`).
-
-Used metadata variables:
-
-- `$url` - same as config `url` (optional. overrides related config param when present)
-- `$binary` - same as config `binary` (optional. overrides related config param when present)
-
-Set metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
-
-- `$binary` - `true` if the WebSocket message reply came as binary (`false` otherwise)
-
-When used as a linked offramp, batched events are rejected by the offramp.
-
-Example:
-
-```yaml
-onramp:
-  - id: ws
-    type: ws
-    config:
-      url: "ws://localhost:1234"
-```
-
-# gcs
+### gcs
 
 Google Cloud Storage offramp.
 
@@ -1369,3 +796,578 @@ Removes the object from the specified bucket.
 ***Where***
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
+
+
+
+### Kafka
+
+The Kafka offramp connects sends events to Kafka topics. It uses `librdkafka` to handle connections and can use the full set of [librdkaka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration options are:
+
+- `topic` - The topic to send to.
+- `brokers` - Broker servers to connect to. (Kafka nodes)
+- `hostname` - Hostname to identify the client with. (default: the systems hostname)
+- `key` - Key to use for messages (default: none)
+- `rdkafka_options` - An optional map of option to value, where both sides need to be strings.
+
+Used metadata variables:
+
+- `$kafka` - Record consisting of the following meta information:
+    - `$headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message.
+    - `$key`: Same as config `key` (optional. overrides related config param when present)
+
+
+Example:
+
+```yaml
+offramp:
+  - id: kafka-out
+    type: kafka
+    config:
+      brokers:
+        - kafka:9092
+      topic: demo
+```
+
+### kv
+
+The `kv` offramp is intended to allow for a decouple way of persisting and retrieving state in a non blocking way.
+
+Example:
+```yaml
+  - id: kv
+    type: kv
+    linked: true     # this needs to be true
+    codec: json
+    config:
+      dir: "temp/kv" # directory to store data in
+```
+
+Events sent to the KV offramp are commands. The following are supported:
+
+#### get
+
+Fetches the data for a given key.
+
+**Request**:
+```js
+{"get": {"key": "<string|binary>"}}
+```
+
+**Response**:
+```js
+{"ok": "<decoded>"} // key was found, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not found
+```
+
+#### put
+
+Writes a value to a key, returns the old value if there was any.
+
+**Request**:
+```js
+{"put": {
+  "key": "<string|binary>",
+  "value": "<to encode>" // the format of value depends on the codec (does NOT have to be a string)
+}}
+```
+
+**Response**:
+```js
+{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not used before
+```
+
+#### delete
+
+Deletes a key, returns the old value if there was any.
+
+**Request**:
+```js
+{"delete": {"key": "<string|binary>"}}
+```
+
+**Response**:
+```js
+{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
+null,               // key was not used before
+```
+
+#### scan
+
+Reads a range of keys
+
+**Request**:
+```js
+{"scan": {
+   "start": "<string|binary>", // optional, if not set will start with the first key
+   "end": "<string|binary>", // optional, if not set will read to the end key
+}}
+```
+**Response**:
+```js
+{"ok": [
+  {
+    "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
+    "value": "<decoded>" // the value, the format of decoded depends on the codec (does NOT have to be a string)
+  } // repeated, may be empty
+]}
+```
+
+#### cas
+
+Compare And Swap operation. Those operations require old values to match what it is compared to
+
+**Request**:
+```js
+{"cas": {
+   "key": "<string|binary>", // The key to operate on
+   "old": "<to encode|not-set>", // The old value, if not set means "this value wasn't present"
+   "new": "<to encode|not-set>", // The new value, if not set it means it gets deleted
+}}
+```
+**Response**:
+
+```js
+{"ok": null} // The operation succeeded
+{"error": {  // the operation failed
+  "current": "<decoded>", // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)
+  "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
+}}
+```
+
+### nats
+The `nats` offramp connects to Nats server(s) and publishes a message to specified subject for every event.
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration operations are:
+
+- `hosts` - List of hosts to connect to.
+- `subject` - Subject for the message to be published.
+- `reply` - Optional string specifying the reply subject.
+- `headers` - Option key-value pairs, specifying message headers, where the key is a string and the value is a list of strings.
+- `options` - Optional struct, which can be used to customize the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
+
+    - `token`: String; authenticate using a token.
+    - `username`: String; authenticate using a username and password.
+    - `password`: String; authenticate using a username and password.
+    - `credentials_path`: String; path to a `.creds` file for authentication.
+    -  `cert_path`: String; path to the client certificate file.
+    -  `key_path`: String; path to private key file.
+    -  `name`: String; name this configuration.
+    -  `echo`: Boolean; if true, published messages will not be delivered.
+    -  `max_reconnects`: Integer; max number of reconnection attempts.
+    -  `reconnect_buffer_size`: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.
+    -  `tls`: Boolean; if true, sets tls for _all_ server connections.
+    -  `root_cert`: String; path to a root certificate.
+
+Used metadata variables are:
+
+- `$nats`: Record consisting of the following metadata:
+
+    - `$reply`: Overrides `config.reply` if present.
+    - `$headers`: Overrides `config.headers` if present.
+
+Example:
+```yaml
+offramp:
+  - id: nats-out
+    type: nats
+    config:
+      hosts:
+        - "127.0.0.1:4444"
+      subject: demo
+      reply: ghost
+      headers:
+        snot:
+          - badger
+          - ferris
+      options:
+        name: nats-demo
+        reconnect_buffer_size: 1
+```
+
+### newrelic
+
+Send events to [New Relic](https://newrelic.com/) platform, using its log apis (variable by region).
+
+This offramp encodes events as json, as this is required by the `newrelic` log api. Postprocessors are not used.
+
+Supported configuration options are:
+
+- `license_key` - New Relic's license (or insert only) key
+- `compress_logs` - Whether logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
+- `region` - Region to use to send logs. Available choices: USA, Europe (default: USA)
+
+Example:
+
+```yaml
+offramp:
+  - id: newrelic
+    type: newrelic
+    config:
+      license_key: keystring
+      compress_logs: true
+      region: europe
+```
+
+### otel
+
+CNCF OpenTelemetry offramp. Publishes to the specified host or IP and destination TCP port via gRPC messages
+conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
+and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
+
+!!! note
+
+    The offramp is experimental.
+
+Supported configuration options are:
+
+- `host` - String - The host or IP to listen on
+- `port` - integer - The TCP port to listen on
+- 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
+- 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
+- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dopped when `false`.
+
+Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
+simplify working with the tremor value mapping of the event data. The connector translates the tremor value level
+data to protocol buffers automatically for distribution to downstream OpenTelemetry systems.
+
+The connector can be used with the `qos::wal` operator for transient in-memory or persistent disk-based guaranteed delivery. If either
+tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
+for lossless recovery. For events marked as transactional that are explicitly acknowledged, `fail` insights are propagated for events that
+are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
+basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
+and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.
+
+For best effort delivery - the `qos::wal` can be omitted and events distributed when downstream endpoints are inaccessible will be
+lost.
+
+Example:
+
+```yaml
+offramp:
+  - id: otlp
+    type: otel
+    codec: json
+    config:
+      port: 4317
+      host: 10.0.2.1
+```
+
+
+### PostgreSQL
+
+PostgreSQL offramp.
+
+Supported configuration options are:
+
+- `host` - PostgreSQL database hostname
+- `port` - PostgresSQL database port
+- `user` - Username for authentication
+- `password` - Password for authentication
+- `dbname` - Database name
+- `table` - Database table name
+
+Data that comes in will be used to run an `INSERT` statement. It is required
+that data comes in objects representing columns. The object key must represent field
+name in the database and must contain following fields:
+
+- `fieldType` - a PostgreSQL field type (e.g. `VARCHAR`, `INT4`, `TIMESTAMPTZ`,
+  etc.)
+- `name` - field name as represented by database table schema
+- `value` - the value of the field
+
+`codec` and `postprocessors` config values are ignored as they cannot apply to this offramp, since the event is transformed into a SQL query.
+
+Example:
+
+```yml
+id: db
+type: postgres
+config:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: example
+  dbname: sales
+  table: transactions
+```
+
+### rest
+
+The rest offramp is used to send events to the specified endpoint.
+
+Supported configuration options are:
+
+- `endpoint` - Endpoint URL. Can be provided as string or as struct. The struct form is composed of the following standard URL fields:
+    - `scheme` - String, required, typically `http`
+    - `username` - String, optional
+    - `password` - String, optional
+    - `host` - String, required, hostname or ip address
+    - `port` - Number, optional, defaults to `80`
+    - `path` - String, optional, defaults to `/`
+    - `query` - String, optional
+    - `fragment` - String, optional
+- `method` - HTTP method to use (default: `POST`)
+- `headers` - A map of headers to set for the requests, where both sides are strings
+- `concurrency` - Number of parallel in-flight requests (default: `4`)
+
+Used metadata variables:
+
+> Setting these metadata variables here allows users to dynamically change the behaviour of the rest offramp:
+
+- `$endpoint` - same format as config `endpoint` (optional. overrides related config param when present)
+- `$request` - A record capturing the HTTP request attributes. Available fields within:
+    - `method` - same as config `method` (optional. overrides related config param when present)
+    - `headers` - A map from header name (string) to header value (string or array of strings)(optional. overrides related config param when present)
+
+These variables are aligned with the similar variables generated by the [rest onramp](./onramps.md#rest). Note that `$request.url` is not utilized here -- instead the same can be configured by setting `$endpoint` (since enabling the former here can lead to request loops when events sourced from rest onramp are fed to the rest offramp, without overriding it from the pipeline. also, `$endpoint` can be separately configured as a URL string, which is convenient for simple offramp use).
+
+The rest offramp encodes the event as request body using the `Content-Type` header if present, using the customizable builtin `codec_map` to determine a matching coded. It falls back to use the configured codec if no `Content-Type` header is available.
+
+When used as [Linked Transport](../operations/linked-transports.md) the same handling is applied to the incoming HTTP response, giving precedence to the `Content-Type` header and only falling back to the configured `codec`.
+
+If the number of parallel requests surpass `concurrency`, an error event will be emitted to the `err` port, which can be used for appropriate error handling.
+
+Set metadata variables:
+
+> These metadata variables are used for HTTP response events emitted through the `OUT` port:
+
+- `$response` - A record capturing the HTTP response attributes. Available fields within:
+    - `status` - Numeric HTTP status code
+    - `headers` - A record that maps header name (lowercase string) to value (array of strings)
+- `$request` - A record with the related HTTP request attributes. Available fields within:
+    - `method` - HTTP method used
+    - `headers` - A record containing all the request headers
+    - `endpoint` - A record containing all the fields that config `endpoint` does
+
+When used as a linked offramp, batched events are rejected by the offramp.
+
+Example 1:
+
+```yaml
+offramp:
+  - id: rest-offramp
+    type: rest
+    codec: json
+    postprocessors:
+      - gzip
+    linked: true
+    config:
+      endpoint:
+        host: httpbin.org
+        port: 80
+        path: /anything
+        query: "q=search"
+      headers:
+        "Accept": "application/json"
+        "Transfer-Encoding": "gzip"
+```
+
+Example 2:
+
+```yaml
+offramp:
+  - id: rest-offramp-2
+    type: rest
+    codec: json
+    codec_map:
+      "text/html": "string"
+      "application/vnd.stuff": "string"
+    config:
+      endpoint:
+        host: httpbin.org
+        path: /patch
+      method: PATCH
+```
+
+#### rest offramp example for InfluxDB
+
+The structure is given for context.
+
+```yaml
+offramp:
+  - id: influxdb
+    type: rest
+    codec: influx
+    postprocessors:
+      - lines
+    config:
+      endpoint:
+        host: influx
+        path: /write
+        query: db=metrics
+      headers:
+        "Client": "Tremor"
+```
+
+### stderr
+
+A custom stderr offramp can be configured by using this offramp type. But beware that this will share the single stderr stream with `system::stderr`.
+
+The default codec is [json](codecs.md#json).
+
+The stderr offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
+
+If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If `raw` is set to true, the event data will be put on stderr as is.
+
+Supported configuration options:
+
+- `prefix` - A prefix written before each event (optional string).
+- `raw` - Write event data bytes as is to stderr.
+
+Example:
+
+```yaml
+offramp:
+  - id: raw_stuff
+    type: stderr
+    codec: json
+    postprocessors:
+      - snappy
+    config:
+      raw: true
+```
+
+### stdout
+
+A custom stdout offramp can be configured by using this offramp type. But beware that this will share the single stdout stream with `system::stdout`.
+
+The default codec is [json](codecs.md#json).
+
+The stdout offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
+
+If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If `raw` is set to true, the event data will be put on stdout as is.
+
+Supported configuration options:
+
+- `prefix` - A prefix written before each event (optional string).
+- `raw` - Write event data bytes as is to stdout.
+
+Example:
+
+```yaml
+offramp:
+  - id: like_a_python_repl
+    type: stdout
+    config:
+      prefix: ">>> "
+```
+
+### tcp
+
+This connects on a specified port for distributing outbound TCP data.
+
+The offramp can leverage postprocessors to frame data after codecs are applied and events are forwarded
+to external TCP protocol distribution endpoints.
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration options are:
+
+- `host` - The host to advertise as
+- `port` - The TCP port to listen on
+- `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
+- `ttl` - Set the socket's time-to-live ( default: 64 )
+- `is_no_delay` - Set the socket's Nagle ( delay ) algorithm to off ( default: true )
+
+Example:
+
+```yaml
+offramp:
+  - id: tcp
+    type: tcp
+    codec: json
+    postprocessors:
+      - gzip
+      - base64
+      - lines
+    config:
+      host: "localhost"
+      port: 9000
+```
+
+### udp
+
+The UDP offramp sends data to a given host and port as UDP datagram.
+
+The default [codec](codecs.md#json) is `json`.
+
+When the UDP onramp gets a batch of messages it will send each element of the batch as a distinct UDP datagram.
+
+Supported configuration options are:
+
+- `bind.host` - the local host to send data from
+- `bind.port` - the local port to send data from
+- `host` - the destination host to send data to
+- `port` - the destination port to send data to.
+
+!!! warn
+
+    Setting `bound` to `false` makes the UDP offramp potentially extremely slow as it forces a lookup of the destination on each event!
+
+Used metadata variables:
+
+ - `$udp.host`: This overwrites the configured destination host for this event. Expects a string.
+ - `$udp.port`: This overwrites the configured destination port for this event. Expects an integer.
+
+!!! warn
+
+    Be careful to set `$udp.host` to an IP, **not** a DNS name or the OS will resolve it on every event, which will be extremely slow!
+
+Example:
+
+```yaml
+offramp:
+  - id: udp-out
+    type: udp
+    postprocessors:
+      - base64
+    config:
+      bind:
+        host: "10.11.12.13"
+        port: 1234
+      host: "20.21.22.23"
+      port: 2345
+```
+
+
+### ws
+
+Sends events over a WebSocket connection. Each event is a WebSocket message.
+
+The default [codec](codecs.md#json) is `json`.
+
+Supported configuration options are:
+
+- `url` - WebSocket endpoint to send data to.
+- `binary` - If data should be send as binary instead of text (default: `false`).
+
+Used metadata variables:
+
+- `$url` - same as config `url` (optional. overrides related config param when present)
+- `$binary` - same as config `binary` (optional. overrides related config param when present)
+
+Set metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
+
+- `$binary` - `true` if the WebSocket message reply came as binary (`false` otherwise)
+
+When used as a linked offramp, batched events are rejected by the offramp.
+
+Example:
+
+```yaml
+onramp:
+  - id: ws
+    type: ws
+    config:
+      url: "ws://localhost:1234"
+```
+

@@ -41,7 +41,7 @@ translates to:
 
 ### binflux
 
-The Binflux codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.
+The `binflux` codec is a binary representation of influx data that is significantly faster encodes and decodes as well as takes less space on the wire.
 
 The format itself does not include framing but can be used with the `size-prefix` pre/post processors.
 
@@ -67,7 +67,7 @@ For all numbers network byte order is used (big endian). The data is represented
 
 ### statsd
 
-The same as the influx, the statsd codec translates a single statsd measurement into a structured format. The structure is as follows:
+The same as the influx, the `statsd` codec translates a single `statsd` measurement into a structured format. The structure is as follows:
 
 ```text
 sam:7|c|@0.1
@@ -97,3 +97,64 @@ For **gauge** there is also the field `action` which might be `add` if the value
 ### yaml
 
 En- and decodes [YAML](https://yaml.org).
+
+### syslog
+
+En- and decodes syslog messages (both, the standard IETF format and the old BSD format).
+A syslog message following BSD format as follows:              
+
+```text
+<13>Jan  5 15:33:03 74794bfb6795 root[8539]: i am foobar
+```
+
+get translates to:
+
+```json
+{
+  "severity": "notice",
+  "facility": "user",
+  "hostname": "74794bfb6795",
+  "appname": "root",
+  "msg": "i am foobar",
+  "procid": 8539,
+  "msgid": null,
+  "protocol": "RFC3164",
+  "protocol_version": null,
+  "structured_data": null,
+  "timestamp": 1609860783000000000
+}
+```
+
+Syslog message following IETF standard as follows:
+
+```text
+<165>1 2021-03-18T20:30:00.123Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut=\"3\" eventSource=\"Application\" eventID=\"1011\"] BOMAn application event log entry..."
+```
+
+get translates to:
+
+```json
+{
+  "severity": "notice",
+  "facility": "local4",
+  "hostname": "mymachine.example.com",
+  "appname": "evntsog",
+  "msg": "BOMAn application event log entry...",
+  "procid": null,
+  "msgid": "ID47",
+  "protocol": "RFC5424",
+  "protocol_version": 1,
+  "structured_data": {
+              "exampleSDID@32473" :
+              [
+                {"iut": "3"},
+                {"eventSource": "Application"},
+                {"eventID": "1011"}
+              ]
+            },
+  "timestamp": 1616099400123000000
+}
+```
+
+!!! note
+    invalid syslog message is treated under `3164` protocol and entire string goes to the `msg` of result object.

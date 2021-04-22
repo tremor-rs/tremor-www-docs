@@ -4,7 +4,7 @@ Specify how tremor connects to the outside world in order to publish to external
 
 For example, the Elastic offramp pushes data to ElasticSearch via its bulk upload REST/HTTP API endpoint.
 
-All offramps are specified in the following form:
+All `offramps` are specified in the following form:
 
 ```yaml
 offramp:
@@ -31,7 +31,7 @@ offramp:
 Each offramp is able to report events as being definitely sent off or as failed. It can also report itself as not functional anymore to the connected pipelines. How each offramp implements those abilities is described in the table below.
 
 The column `Delivery acknowledgements` describes under what circumstanced the offramp considers an event delivered and acknowledges it to the connected pipelines and operators, onramps etc. therein.
-Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the kafka onramp).
+Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the Kafka onramp).
 
 The column `Disconnect events` describes under which circumstances this offramp is not considered functional anymore.
 
@@ -59,12 +59,12 @@ The column `Disconnect events` describes under which circumstances this offramp 
 
 ## System Offramps
 
-Each tremor runtime comes with some pre-configured offramps that can be used.
+Each tremor runtime comes with some pre-configured `offramps` that can be used.
 
 ### system::stdout
 
 The offramp `/offramp/system::stdout/system` can be used to print to STDOUT. Data will be formatted as JSON.
-### system::sderr
+### system::stderr
 
 The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Data will be formatted as JSON.
 
@@ -133,7 +133,7 @@ Such an event or metadata will result in two CB insight events be sent back, one
 
 ### debug
 
-The debug offramp is used to get an overview of how many events are put in wich classification.
+The debug offramp is used to get an overview of how many events are put in which classification.
 
 This operator does not support configuration.
 
@@ -181,7 +181,7 @@ The event needs the following structure:
 }
 ```
 
-where type can be one of (plase consult your DNS manual for the meaning of each):
+where type can be one of (please consult your DNS manual for the meaning of each):
 
 * `A`
 * `AAAA`
@@ -208,13 +208,14 @@ where type can be one of (plase consult your DNS manual for the meaning of each)
     If type is not specified `A` records will be looked up
 
 
-Responses are an Array of objects denoting the type of record found as a key, followed by the entry as a string (please consult your DNS manual for the return value of different record types):
+Responses are an Array of objects denoting the type of record found as a key, followed by the entry as a string and a `ttl` for the record (please consult your DNS manual for the return value of different record types):
 
 ```json
 [
-  {"A": "1.2.3.4"},
-  {"CNAME": "www.tremor.rs"}
+  {"A": "1.2.3.4", "ttl": 60},
+  {"CNAME": "www.tremor.rs", "ttl": 120}
 ]
+```
 
 ### elastic
 
@@ -225,7 +226,7 @@ Supported configuration options are:
 - `nodes` - A list of elastic search nodes to contact. These are the nodes to which tremor will send traffic to.
 - `concurrency` - Maximum number of parallel requests (default: 4).
 
-Events will be sent to the connected elasticsearch cluster via the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) using the `index` action.
+Events will be sent to the connected ElasticSearch cluster via the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) using the `index` action.
 It is recommended to batch events sent to this sink using the [generic::batch operator](../tremor-query/operators.md#genericbatch) to reduce the overhead
 introduced by the [ES Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html).
 
@@ -238,7 +239,7 @@ The following metadata variables can be specified on a per event basis:
 - `$elastic._index` - The index to write to (required).
 - `$elastic._type` - The document type for elastic (optional), deprecated in ES 7.
 - `$elastic._id`   - The document id for elastic (optional).
-- `$elastic.pipeline` - The elastic search pipeline to use (optional).
+- `$elastic.pipeline` - The ElasticSearch pipeline to use (optional).
 - `$elastic.action` - The [bulk action](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html) to perform, one of `delete`, `create`, `update` or `index`. If no `action` is provided it defaults to `index`. `delete` and `update` require `$elastic._id` to be set or elastic search will have error.
 
 #### Linked Transport
@@ -259,7 +260,7 @@ Events denoting success are sent via the `out` port and have the following forma
 }
 ```
 
-The event metdata will contain the following:
+The event metadata will contain the following:
 
 ```json
 {
@@ -373,7 +374,7 @@ with `bash` or other shell-based environments, as follows:
 | 126  | Command invoked cannot run due to credentials/auth constraints |
 | 127  | Command not understood, not well-formed or illegal             |
 
-To delay the exit (to allow flushing of other offramps) the `delay` key can be used to delay the exit by a number of milliseconds:
+To delay the exit (to allow flushing of other `offramps`) the `delay` key can be used to delay the exit by a number of milliseconds:
 
 ```json
 {
@@ -412,9 +413,9 @@ offramp:
 
 
 
-### kafka
+### Kafka
 
-The Kafka offramp connects sends events to Kafka topics. It uses librdkafka to handle connections and can use the full set of [librdkaka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).
+The Kafka offramp connects sends events to Kafka topics. It uses `librdkafka` to handle connections and can use the full set of [librdkaka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -447,7 +448,7 @@ offramp:
 
 ### kv
 
-The kv offramp is intended to allow for a decuple way of persisting and retrieving state in a non blocking way.
+The `kv` offramp is intended to allow for a decouple way of persisting and retrieving state in a non blocking way.
 
 Example:
 ```yaml
@@ -553,7 +554,7 @@ Compare And Swap operation. Those operations require old values to match what it
 ```
 
 ### nats
-The nats offramp connects to nats server(s) and publishes a message to specified subject for every event.
+The `nats` offramp connects to Nats server(s) and publishes a message to specified subject for every event.
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -563,7 +564,7 @@ Supported configuration operations are:
 - `subject` - Subject for the message to be published.
 - `reply` - Optional string specifying the reply subject.
 - `headers` - Option key-value pairs, specifying message headers, where the key is a string and the value is a list of strings.
-- `options` - Optional struct, which can be used to customise the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
+- `options` - Optional struct, which can be used to customize the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
 
     - `token`: String; authenticate using a token.
     - `username`: String; authenticate using a username and password.
@@ -608,13 +609,13 @@ offramp:
 
 Send events to [New Relic](https://newrelic.com/) platform, using its log apis (variable by region).
 
-This offramp encodes events as json, as this is required by the newrelic log api. Postprocessors are not used.
+This offramp encodes events as json, as this is required by the `newrelic` log api. Postprocessors are not used.
 
 Supported configuration options are:
 
 - `license_key` - New Relic's license (or insert only) key
 - `compress_logs` - Whether logs should be compressed before sending to New Relic  (avoids extra egress costs but at the cost of more cpu usage by tremor) (default: false)
-- `region` - Region to use to send logs. Available choices: usa, europe (default: usa)
+- `region` - Region to use to send logs. Available choices: USA, Europe (default: USA)
 
 Example:
 
@@ -627,6 +628,51 @@ offramp:
       compress_logs: true
       region: europe
 ```
+
+# otel
+
+CNCF OpenTelemetry offramp. Poblishes to the specified host or IP and destination TCP port via gRPC messages
+conforming to the CNCF OpenTelemetry protocol specification v1. Forwards tremor value variants of `logs`, `trace`
+and `metrics` messages from tremor query pipelines downstream to remote OpenTelemetry endpoints.
+
+!!! note
+
+    The offramp is experimental.
+
+Supported configuration options are:
+
+- `host` - String - The host or IP to listen on
+- `port` - integer - The TCP port to listen on
+- 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
+- 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
+- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dopped when `false`.
+
+Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
+simplify working with the tremor value mapping of the event data. The connector translates the tremor value level
+data to protocol buffers automatically for distribution to downstream OpenTelemetry systems.
+
+The connector can be used with the `qos::wal` operator for transient in-memory or persistent disk-based guaranteed delivery. If either
+tremor or the downstream system fails or becomes uncontactable users can configure ( bytes and/or number of messages retained ) retention
+for lossless recovery. For events marked as transactional that are explicitly acknowledged, `fail` insights are propagated for events that
+are not succesfully transmitted downstream. Non-transactional events ( those not marked as transactional ) are delivered on a best effort
+basis. Regardless of the transaction configuration, when paired with qos operators upstream pipelines, the sink will coordinate failover
+and recovery to the configured retention, replaying the retained messages upon recovery of network accessibility of the downstream endpoints.
+
+For best effort delivery - the `qos::wal` can be omitted and events distributed when downstream endpoints are inaccessible will be
+lost.
+
+Example:
+
+```yaml
+onramp:
+  - id: otlp
+    type: otel
+    codec: json
+    config:
+      port: 4317
+      host: 10.0.2.1
+```
+
 
 ### PostgreSQL
 
@@ -782,7 +828,7 @@ The default codec is [json](codecs.md#json).
 
 The stderr offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
 
-If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
 If `raw` is set to true, the event data will be put on stderr as is.
 
 Supported configuration options:
@@ -811,7 +857,7 @@ The default codec is [json](codecs.md#json).
 
 The stdout offramp will write a `\n` right after each event, and optionally prefix every event with a configurable `prefix`.
 
-If the event data (after codec and postprocessing) is not a valid utf8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
+If the event data (after codec and postprocessing) is not a valid UTF8 string (e.g. if it is binary data) if will by default output the bytes with debug formatting.
 If `raw` is set to true, the event data will be put on stdout as is.
 
 Supported configuration options:
@@ -872,15 +918,23 @@ When the UDP onramp gets a batch of messages it will send each element of the ba
 
 Supported configuration options are:
 
-- `host` - the local host to send data from
-- `port` - the local port to send data from
-- `dst_host` - the destination host to send data to
-- `dst_port` - the destination port to send data to.
-- `bound` - if the destination host and port should be bound on startup (preventing the need to lookup the destination) or be looked upon every package (default: true)
+- `bind.host` - the local host to send data from
+- `bind.port` - the local port to send data from
+- `host` - the destination host to send data to
+- `port` - the destination port to send data to.
 
 !!! warn
 
     Setting `bound` to `false` makes the UDP offramp potentially extremely slow as it forces a lookup of the destination on each event!
+
+Used metadata variables:
+
+ - `$udp.host`: This overwrites the configured destination host for this event. Expects a string.
+ - `$udp.port`: This overwrites the configured destination port for this event. Expects an integer.
+
+!!! warn
+
+    Be careful to set `$udp.host` to an IP, **not** a DNS name or the OS will resolve it on every event, which will be extremely slow!
 
 Example:
 
@@ -891,11 +945,11 @@ offramp:
     postprocessors:
       - base64
     config:
-      host: "10.11.12.13"
-      port: 1234
-      dst_host: "20.21.22.23"
-      dst_port: 2345
-      bound: true
+      bind:
+        host: "10.11.12.13"
+        port: 1234
+      host: "20.21.22.23"
+      port: 2345
 ```
 
 
@@ -917,7 +971,7 @@ Used metadata variables:
 
 Set metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
 
-- `$binary` - `true` if the websocket message reply came as binary (`false` otherwise)
+- `$binary` - `true` if the WebSocket message reply came as binary (`false` otherwise)
 
 When used as a linked offramp, batched events are rejected by the offramp.
 

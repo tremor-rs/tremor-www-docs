@@ -985,7 +985,7 @@ This offramp can issue basic operations to list buckets and objects and to creat
 
     The offramp is experimental.
 
-This offramp requires a PEM file that is used in the authentication code to resolve a service account token using Google's authentication service. This offramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` been exported to the execution environment and it has been configures to point to a valid non-expired service account token json file.
+This offramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.
 
 
 Example:
@@ -996,9 +996,347 @@ offramp:
     type: gcs
     codec: json
     linked: true
-    config:
-      pem: gcp.pem
+    postprocessors:
+      - gzip    
+    preprocessors:
+      - gzip
 ```
 
 If the use case for the offramp requires metadata from the Google Cloud Storage service on the supported operations for this offramp, then set linked to true and configure the output port `out`.
 If the use case does not require metadata, then set linked to false.
+
+
+#### list_buckets
+
+Lists all the buckets in the Google Cloud Storage project.
+
+**Request**:
+```js
+{
+ "command": "list_buckets",
+ "project_id": "<project-id>"
+}
+```
+
+**Response**:
+```js
+[
+  {
+    "cmd": "list_buckets",
+    "data": {
+      "items": [
+        {
+          "location": "EU",
+          "id": "<bucket-id>",
+          "locationType": "multi-region",
+          "storageClass": "STANDARD",
+          "metageneration": "4",
+          "selfLink": "https://www.googleapis.com/storage/v1/b/<bucket-id>",
+          "kind": "storage#bucket",
+          "name": "<bucket-name>",
+          "timeCreated": "<time of creation>",
+          "iamConfiguration": {
+            "uniformBucketLevelAccess": {
+              "enabled": true,
+              "lockedTime": "2021-06-17T09:12:22.122Z"
+            },
+            "bucketPolicyOnly": {
+              "enabled": true,
+              "lockedTime": "2021-06-17T09:12:22.122Z"
+            }
+          },
+          "etag": "CAQ=",
+          "defaultEventBasedHold": false,
+          "retentionPolicy": {
+            "effectiveTime": "2021-03-19T09:12:22.122Z",
+            "retentionPeriod": "60",
+            "isLocked": false
+          },
+          "updated": "2021-04-13T17:05:29.404Z",
+          "satisfiesPZS": false,
+          "projectNumber": "376177678867"
+        }
+      ],
+      "kind": "storage#buckets"
+    }
+  }
+]
+
+```
+
+***Where***
+- `<project-id>` - The project id of the Google Cloud Storage project where the buckets are.
+- `<bucket-id>` - The unique identifier of the bucket.
+
+
+#### list_objects
+
+Lists all the objects in the specified bucket.
+
+**Request**:
+```js
+{
+  "command": "list_objects",
+  "bucket": "<bucket-name>"
+}
+```
+
+**Response**:
+```js
+[
+  {
+    "cmd": "list_objects",
+    "data": {
+      "items": [
+        {
+          "mediaLink": "",
+          "bucket": "<bucket-name>",
+          "id": "<object-id>",
+          "size": "1943550",
+          "crc32c": "0QXXmA==",
+          "storageClass": "STANDARD",
+          "generation": "1616145246990906",
+          "metageneration": "1",
+          "timeStorageClassUpdated": "2021-03-19T09:14:07.012Z",
+          "selfLink": "",
+          "kind": "storage#object",
+          "name": "<object-name>",
+          "md5Hash": "ucrP5b1N+6JHxn1TKavn/A==",
+          "timeCreated": "2021-03-19T09:14:07.012Z",
+          "etag": "CLrk6JqCvO8CEAE=",
+          "updated": "2021-03-19T09:14:07.012Z",
+          "retentionExpirationTime": "2021-03-19T09:15:07.012Z",
+          "contentType": "<content-type>"
+        }        
+      ],
+      "kind": "storage#objects"
+    }
+  }
+]
+
+```
+
+***Where***
+- `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
+- `<object-id>` - The unique object identifier.
+- `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
+- `<content-type>` - The type of the object uploaded.
+
+
+#### create_bucket
+
+Creates a bucket in the project specified in the command.
+
+**Request**:
+```js
+{
+  "command": "create_bucket" , 
+  "project_id": "<project-id>", 
+  "bucket": "<bucket>"
+}
+```
+
+**Response**:
+```js
+[
+  {
+    "cmd": "create_bucket",
+    "data": {
+      "projectNumber": "376177678867",
+      "location": "US",
+      "id": "<bucket-id>",
+      "etag": "CAE=",
+      "locationType": "multi-region",
+      "storageClass": "STANDARD",
+      "metageneration": "1",
+      "updated": "2021-04-22T07:37:23.702Z",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/<bucket-name>",
+      "kind": "storage#bucket",
+      "name": "tremor",
+      "iamConfiguration": {
+        "uniformBucketLevelAccess": {
+          "enabled": false
+        },
+        "bucketPolicyOnly": {
+          "enabled": false
+        }
+      },
+      "timeCreated": "2021-04-22T07:37:23.702Z"
+    }
+  }
+]
+```
+
+***Where***
+- `<project-id>` - The project id of the Google Cloud Storage project where the bucket is.
+- `<bucket-id>` - The unique identifier of the bucket.
+
+
+#### remove_bucket
+
+Removes the bucket from the specified project in Google Cloud Storage project.
+
+**Request**:
+```js
+{
+ "command": "remove_bucket",
+ "bucket": "<bucket-name>"
+}
+```
+**Response**:
+```js
+```
+
+***Where***
+- `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
+
+
+#### upload_object
+
+Uploads the object to a Google Cloud Storage bucket.
+
+**Request**:
+```js
+{
+ "command": "upload_object",
+ "bucket": "<bucket-name>", 
+ "object": "<object-name>", 
+ "body": `<object>`
+}
+```
+
+**Response**:
+```js
+[
+  {
+    "cmd": "upload_object",
+    "data": {
+      "mediaLink": "https://storage.googleapis.com/download/storage/v1/b/<bucket-name>/o/<object-name>?generation=1619077199260663&alt=media",
+      "bucket": "<bucket-name>",
+      "id": "<object-id>",
+      "size": "47",
+      "crc32c": "a7mrxw==",
+      "storageClass": "STANDARD",
+      "generation": "1619077199260663",
+      "metageneration": "1",
+      "timeStorageClassUpdated": "2021-04-22T07:39:59.278Z",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/<bucket-name>/o/<object-name>",
+      "kind": "storage#object",
+      "name": "april",
+      "md5Hash": "qhr9326j+3PeIK9koXMHCg==",
+      "timeCreated": "2021-04-22T07:39:59.278Z",
+      "etag": "CPfXzcqskfACEAE=",
+      "updated": "2021-04-22T07:39:59.278Z",
+      "retentionExpirationTime": "2021-04-22T07:40:59.278Z",
+      "contentType": "application/json"
+    }
+  }
+]
+```
+
+***Where***
+- `<object>` - The object data to be uploaded to a Google Cloud Storage bucket.
+- `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
+- `<object-id>` - The unique object identifier.
+- `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
+
+
+#### fetch_object
+
+Returns the metadata for the object fetched.
+
+**Request**:
+```js
+{
+ "command": "fetch",
+ "bucket": "<bucket-name>",
+ "object": "<object-name>"
+}
+
+```
+
+**Response**:
+```js
+[
+  {
+    "cmd": "fetch",
+    "data": {
+      "mediaLink": "https://storage.googleapis.com/download/storage/v1/b/<bucket-name>/o/<object-name>?generation=1619077199260663&alt=media",
+      "bucket": "<bucket-name>",
+      "id": "<object-id>",
+      "size": "47",
+      "crc32c": "a7mrxw==",
+      "storageClass": "STANDARD",
+      "generation": "1619077199260663",
+      "metageneration": "1",
+      "timeStorageClassUpdated": "2021-04-22T07:39:59.278Z",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/<bucket-name>/o/<object-name>",
+      "kind": "storage#object",
+      "name": "april",
+      "md5Hash": "qhr9326j+3PeIK9koXMHCg==",
+      "timeCreated": "2021-04-22T07:39:59.278Z",
+      "etag": "CPfXzcqskfACEAE=",
+      "updated": "2021-04-22T07:39:59.278Z",
+      "retentionExpirationTime": "2021-04-22T07:40:59.278Z",
+      "contentType": "application/json"
+    }
+  }
+]
+```
+
+***Where***
+- `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
+- `<object-id>` - The unique object identifier.
+- `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
+
+
+#### download_object
+
+Downloads the object.
+
+**Request**:
+```js
+{ 
+  "command": "download_object",
+  "bucket": "<bucket-name>",
+  "object": "<object-name>"
+}
+```
+
+**Response**:
+```js
+[
+  {
+    "cmd": "download_object",
+    "data": `<object>`
+  }
+]
+```
+
+***Where***
+- `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
+- `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
+- `<object>` - The object downloaded.
+
+
+#### remove_object
+
+Removes the object from the specified bucket.
+
+**Request**:
+```js
+{
+  "command": "remove_object" ,
+  "bucket":"<bucket-name>",
+  "object": "<object-name>"
+}
+```
+
+**Response**:
+```js
+
+```
+
+***Where***
+- `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
+- `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.

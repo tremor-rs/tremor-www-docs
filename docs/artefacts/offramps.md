@@ -1054,7 +1054,7 @@ Lists all the buckets in the Google Cloud Storage project.
           },
           "updated": "2021-04-13T17:05:29.404Z",
           "satisfiesPZS": false,
-          "projectNumber": "376177678867"
+          "projectNumber": "<project-number>"
         }
       ],
       "kind": "storage#buckets"
@@ -1067,7 +1067,7 @@ Lists all the buckets in the Google Cloud Storage project.
 ***Where***
 - `<project-id>` - The project id of the Google Cloud Storage project where the buckets are.
 - `<bucket-id>` - The unique identifier of the bucket.
-
+- `<project-number>` - The project number for the Google Cloud Storage project.
 
 #### list_objects
 
@@ -1142,7 +1142,7 @@ Creates a bucket in the project specified in the command.
   {
     "cmd": "create_bucket",
     "data": {
-      "projectNumber": "376177678867",
+      "projectNumber": "<project-number>",
       "location": "US",
       "id": "<bucket-id>",
       "etag": "CAE=",
@@ -1170,7 +1170,7 @@ Creates a bucket in the project specified in the command.
 ***Where***
 - `<project-id>` - The project id of the Google Cloud Storage project where the bucket is.
 - `<bucket-id>` - The unique identifier of the bucket.
-
+- `<project-number>` - The project number for the Google Cloud Storage project.
 
 #### remove_bucket
 

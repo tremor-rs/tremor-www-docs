@@ -2672,6 +2672,7 @@ introduced by the <a href="https://www.elastic.co/guide/en/elasticsearch/referen
 <h4 id="linked-transport">Linked Transport<a class="headerlink" href="#linked-transport" title="Permanent link">&para;</a></h4>
 <p>If used as a linked transport, the sink will emit events in case of errors sending data to ES or if the incoming event is malformed via the <code>err</code> port.
 Also, upon a returned ES Bulk request, it will emit an event for each bulk item, denoting success or failure.</p>
+<p><em>Success Responses</em></p>
 <p>Events denoting success are sent via the <code>out</code> port and have the following format:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -2692,6 +2693,7 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<p><em>Error Responses</em></p>
 <p>Events denoting bulk item failure are sent via the <code>err</code> port and have the following format:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
@@ -2713,7 +2715,19 @@ Also, upon a returned ES Bulk request, it will emit an event for each bulk item,
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>For both event types <code>payload</code> is the event payload that was sent to ES.</p>
+<p>Error Responses that are not scoped to bulk items, but the whole operation of turning the event into a Elasticsearch Bulk Request and sending that request to Elasticsearch
+will have the same payload format as Bulk item errors, but the <code>$elastic</code> metadata is missing:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;event_id&quot;</span><span class="p">:</span> <span class="s2">&quot;2:3:4&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;origin&quot;</span><span class="p">:</span> <span class="s2">&quot;tremor-rest://example.org/&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>For both error and success responses <code>payload</code> is the event payload that was sent to ES.</p>
 <p>Example Configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">es</span>
@@ -3285,7 +3299,7 @@ to external TCP protocol distribution endpoints.</p>
       <span class="nt">url</span><span class="p">:</span> <span class="s">&quot;ws://localhost:1234&quot;</span>
 </code></pre></div>
 <h1 id="gcs">gcs<a class="headerlink" href="#gcs" title="Permanent link">&para;</a></h1>
-<p>Google Cloud Storage offramp.  </p>
+<p>Google Cloud Storage offramp.</p>
 <p>This offramp can issue basic operations to list buckets and objects and to create, insert and delete objects from the Google Cloud Platform cloud storage service.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3299,7 +3313,7 @@ to external TCP protocol distribution endpoints.</p>
     <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>
     <span class="nt">linked</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
     <span class="nt">postprocessors</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gzip</span>    
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gzip</span>
     <span class="nt">preprocessors</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gzip</span>
 </code></pre></div>
@@ -3393,7 +3407,7 @@ If the use case does not require metadata, then set linked to false.</p>
           <span class="s2">&quot;updated&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:14:07.012Z&quot;</span><span class="p">,</span>
           <span class="s2">&quot;retentionExpirationTime&quot;</span><span class="o">:</span> <span class="s2">&quot;2021-03-19T09:15:07.012Z&quot;</span><span class="p">,</span>
           <span class="s2">&quot;contentType&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;content-type&gt;&quot;</span>
-        <span class="p">}</span>        
+        <span class="p">}</span>
       <span class="p">],</span>
       <span class="s2">&quot;kind&quot;</span><span class="o">:</span> <span class="s2">&quot;storage#objects&quot;</span>
     <span class="p">}</span>
@@ -3409,8 +3423,8 @@ If the use case does not require metadata, then set linked to false.</p>
 <p>Creates a bucket in the project specified in the command.</p>
 <p><strong>Request</strong>:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;create_bucket&quot;</span> <span class="p">,</span> 
-  <span class="s2">&quot;project_id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;project-id&gt;&quot;</span><span class="p">,</span> 
+  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;create_bucket&quot;</span> <span class="p">,</span>
+  <span class="s2">&quot;project_id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;project-id&gt;&quot;</span><span class="p">,</span>
   <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket&gt;&quot;</span>
 <span class="p">}</span>
 </code></pre></div></p>
@@ -3465,8 +3479,8 @@ If the use case does not require metadata, then set linked to false.</p>
 <p><strong>Request</strong>:
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
  <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;upload_object&quot;</span><span class="p">,</span>
- <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span> 
- <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span><span class="p">,</span> 
+ <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span><span class="p">,</span>
  <span class="s2">&quot;body&quot;</span><span class="o">:</span> <span class="sb">`&lt;object&gt;`</span>
 <span class="p">}</span>
 </code></pre></div></p>
@@ -3545,7 +3559,7 @@ If the use case does not require metadata, then set linked to false.</p>
 <h4 id="download_object">download_object<a class="headerlink" href="#download_object" title="Permanent link">&para;</a></h4>
 <p>Downloads the object.</p>
 <p><strong>Request</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span> 
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;download_object&quot;</span><span class="p">,</span>
   <span class="s2">&quot;bucket&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;bucket-name&gt;&quot;</span><span class="p">,</span>
   <span class="s2">&quot;object&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;object-name&gt;&quot;</span>

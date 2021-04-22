@@ -634,6 +634,26 @@
     Paths
   </a>
   
+    <nav class="md-nav" aria-label="Paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#special-paths" class="md-nav__link">
+    Special paths
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2543,6 +2563,26 @@
     Paths
   </a>
   
+    <nav class="md-nav" aria-label="Paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#special-paths" class="md-nav__link">
+    Special paths
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2983,7 +3023,18 @@ scripts to simplify fixing such scripts.</p>
 <blockquote>
 <p><img alt="array grammar" src="grammar/diagram/ArraySegment.png" /></p>
 </blockquote>
-<p>Path-like structures in <code>tremor-script</code> allow a subset of an ingested event, meta-data passed to the tremor-script function and script-local data to be indexed.</p>
+<p>Path-like structures in <code>tremor-script</code> allow referencing local variables, ingested events, event meta-data, script-local state etc. and also indexing into them if they are records or arrays.</p>
+<h4 id="special-paths">Special paths<a class="headerlink" href="#special-paths" title="Permanent link">&para;</a></h4>
+<p><em>Normal</em> paths are used to referring to local variables created with <a href="#let">let</a>, but tremor-script offers a set of special paths used to refer to commonly needed entities:</p>
+<ul>
+<li><code>event</code>: Always referring to the currently handled event.</li>
+<li><code>$</code>: Referring to the event metadata. Values inside the event metadata can only be accessed via a top-level name like: <code>$udp.port</code>. Its contents are usually either <code>null</code> or a record.</li>
+<li><code>state</code>: Referring to the script's state, which will persist across the lifetime of a pipeline, but not across tremor reboots. So it can be used as state kept across different events. Default value is <code>null</code>.</li>
+<li><code>args</code>: Referring to a record of arguments passed into the <a href="../tremor-query/#embedded-script-definitions">script definition</a> or <a href="#embedded-script-definitions">create script</a>.</li>
+<li><code>window</code>: Referring to the name of the <a href="../tremor-query/#tumbling-windows">window</a> this event is emitted from. This is <code>null</code> if the event is not handled inside a tremor-query <a href="https://docs.tremor.rs/tremor-query/#select-queries">select</a> statement with a <a href="../tremor-query/#tumbling-windows">window</a>.</li>
+<li><code>group</code>: Referring to the current group if the event is handled inside a tremor-query <a href="https://docs.tremor.rs/tremor-query/#select-queries">select</a> statement with a <code>group by</code> clause. It will be <code>null</code> outside of a <code>group by</code> select, if used inside, it will be an array where the first element is the value of the current group, and the second element is the stringified <em>name</em> of the group, derived from the group value.</li>
+</ul>
+<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <p>Example event for illustration purposes:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;store&quot;</span><span class="p">:</span> <span class="p">{</span>

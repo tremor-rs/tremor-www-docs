@@ -35,3 +35,8 @@ Supported formats:
 - xz - Xz2 level 9 compression
 - snappy - Snappy compression
 - lz4 - Lz level 4 compression
+
+### textual-length-prefix
+
+Prefixes the data with the length of data given in ascii digits and a whitespace as used in [RFC 5425](https://tools.ietf.org/html/rfc5425#section-4.3) for TLS/TCP transport for syslog.
+ 

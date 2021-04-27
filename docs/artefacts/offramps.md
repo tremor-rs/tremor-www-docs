@@ -834,7 +834,9 @@ offramp:
 
 ### kv
 
-The `kv` offramp is intended to allow for a decouple way of persisting and retrieving state in a non blocking way.
+The `kv` offramp is intended to allow for a decoupled way of persisting and retrieving state in a non blocking way.
+
+The `kv` store is persisted to the directory configured in `config.dir`. If it doesnt exist, it will be created.
 
 Example:
 ```yaml
@@ -846,7 +848,17 @@ Example:
       dir: "temp/kv" # directory to store data in
 ```
 
-Events sent to the KV offramp are commands. The following are supported:
+One response event is sent for every command in the handled event. On success to the `out` port, in the error case (invalid format or error during kv operation) to the `err` port.
+Each response event will have the following metadata structure:
+
+```js
+{
+  "kv": {
+    "op": "<string>|null" // contains the command key that was used to trigger this response, can be `null`
+  }
+}
+
+Events sent to the KV offramp contain commands. The following are supported:
 
 #### get
 

@@ -854,7 +854,7 @@ Each response event will have the following metadata structure:
 ```js
 {
   "kv": {
-    "op": "<string>|null" // contains the command key that was used to trigger this response, can be `null`
+    "op": "<string>|null" // contains the command key that was used to trigger this response, can be `null` for error events.
   }
 }
 
@@ -870,9 +870,22 @@ Fetches the data for a given key.
 ```
 
 **Response**:
+
+Key was found, the format of decoded depends on the codec (does NOT have to be a string):
 ```js
-{"ok": "<decoded>"} // key was found, the format of decoded depends on the codec (does NOT have to be a string)
-null,               // key was not found
+{
+  "ok": "<decoded>",
+  "key": "<binary>"
+}
+```
+
+Key was not found:
+
+```js
+{
+  "ok": null,
+  "key": "<binary>"
+}
 ```
 
 #### put
@@ -888,9 +901,21 @@ Writes a value to a key, returns the old value if there was any.
 ```
 
 **Response**:
+
+Key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string):
 ```js
-{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
-null,               // key was not used before
+{
+  "ok": "<decoded>",
+  "key": "<binary>"
+}
+```
+
+Key was not used before:
+```js
+{
+  "ok": null,
+  "key": "<binary>"
+}
 ```
 
 #### delete
@@ -903,10 +928,25 @@ Deletes a key, returns the old value if there was any.
 ```
 
 **Response**:
+
+Key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string):
+
 ```js
-{"ok": "<decoded>"} // key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)
-null,               // key was not used before
+{
+  "ok": "<decoded>",
+  "key": "<binary>"
+}
 ```
+
+Key was not used before:
+
+```js
+{
+  "ok": null,
+  "key": "<binnary>"
+}
+```
+
 
 #### scan
 
@@ -921,12 +961,15 @@ Reads a range of keys
 ```
 **Response**:
 ```js
-{"ok": [
-  {
-    "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
-    "value": "<decoded>" // the value, the format of decoded depends on the codec (does NOT have to be a string)
-  } // repeated, may be empty
-]}
+{
+  "ok": [
+    {
+      "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
+      "value": "<decoded>" // the value, the format of decoded depends on the codec (does NOT have to be a string)
+    } // repeated, may be empty
+  ],
+  "key": "<binary>"
+}
 ```
 
 #### cas
@@ -942,13 +985,25 @@ Compare And Swap operation. Those operations require old values to match what it
 }}
 ```
 **Response**:
+On success:
 
 ```js
-{"ok": null} // The operation succeeded
-{"error": {  // the operation failed
-  "current": "<decoded>", // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)
-  "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
-}}
+{
+  "ok": null,
+  "key": "<binary>"
+}
+```
+
+On failure:
+
+```js
+{
+  "error": {
+    "current": "<decoded>", // the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)
+    "proposed": "<decoded>" // the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)
+  },
+  "key": "<binary>"
+}
 ```
 
 ### nats

@@ -1,15 +1,17 @@
 define script process
 script
-  let $response = match present $response of
-    case true =>
-      merge event of {"status": 500} end
-    default =>
-      {"status": 500}
-  end;
+
+  let $response = {
+    "status": 500,
+    "headers": {
+      "x-powered-by": "Tremor",
+      "content-type": "application/json"
+    }
+  };
 
   # can choose to not include the actual event error here, if we don't want
   # to send it back to the client
-  let event.error = "Oh no, we ran into something unexpected :(\n {event.error}";
+  let event.error = "Oh no, we ran into something unexpected :(\n #{event.error}";
 
   event;
 end;

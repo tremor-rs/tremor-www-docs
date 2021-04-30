@@ -1,6 +1,7 @@
 # Collection of utility functions for our application
 
 use std::url;
+use std::string;
 
 # TODO add similar function to std::url for better parsing
 # or if we send the query string here already parsed from the rest onramp,
@@ -14,3 +15,4 @@ fn parse_query(string) with
       {}
   end
 end;
+

@@ -1,0 +1,6 @@
+{"cas": {"key": "host_default", "new": 500}, "initial":true}
+{"cas": {"key": "logger_default", "new": 50}, "initial":true}
+{"cas": {"key": "index_default", "new": 100}, "initial":true}
+{"cas": {"key": "tremolo", "new": 100}, "initial":true}
+{"cas": {"key": "application_default", "new": 100}, "initial":true}
+{"scan": {}, "initial": true}

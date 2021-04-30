@@ -874,8 +874,10 @@ Fetches the data for a given key.
 Key was found, the format of decoded depends on the codec (does NOT have to be a string):
 ```js
 {
-  "ok": "<decoded>",
-  "key": "<binary>"
+  "ok": {
+    "key": "<binary>",
+    "value": "<decoded>"
+  }
 }
 ```
 
@@ -883,8 +885,10 @@ Key was not found:
 
 ```js
 {
-  "ok": null,
-  "key": "<binary>"
+  "ok": {
+    "key": "<binary>",
+    "value": null
+  }
 }
 ```
 
@@ -894,10 +898,12 @@ Writes a value to a key, returns the old value if there was any.
 
 **Request**:
 ```js
-{"put": {
-  "key": "<string|binary>",
-  "value": "<to encode>" // the format of value depends on the codec (does NOT have to be a string)
-}}
+{
+  "put": {
+    "key": "<string|binary>",
+    "value": "<to encode>" // the format of value depends on the codec (does NOT have to be a string)
+  }
+}
 ```
 
 **Response**:
@@ -905,16 +911,20 @@ Writes a value to a key, returns the old value if there was any.
 Key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string):
 ```js
 {
-  "ok": "<decoded>",
-  "key": "<binary>"
+  "ok": {
+    "key": "<binary>",
+    "value": "<decoded>"
+  }
 }
 ```
 
 Key was not used before:
 ```js
 {
-  "ok": null,
-  "key": "<binary>"
+  "ok": {
+    "key": "<binary>",
+    "value": null
+  }
 }
 ```
 
@@ -933,8 +943,10 @@ Key was used before, this is the old value, the format of decoded depends on the
 
 ```js
 {
-  "ok": "<decoded>",
-  "key": "<binary>"
+  "ok": {
+    "key": "<binary>",
+    "value": "<decoded>"
+  }
 }
 ```
 
@@ -942,11 +954,12 @@ Key was not used before:
 
 ```js
 {
-  "ok": null,
-  "key": "<binnary>"
+  "ok": {
+    "key": "<binary>",
+    "value": null
+  }
 }
 ```
-
 
 #### scan
 
@@ -967,8 +980,7 @@ Reads a range of keys
       "key": "<binary>", // keys are ALWAYS encoded as binary since we don't know if it's a string or binary
       "value": "<decoded>" // the value, the format of decoded depends on the codec (does NOT have to be a string)
     } // repeated, may be empty
-  ],
-  "key": "<binary>"
+  ]
 }
 ```
 

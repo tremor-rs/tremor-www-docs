@@ -32,10 +32,10 @@ script
     case "put" when not type::is_null($correlation) =>
       # put responses only provide the old value, if any
       # we did put the putted value into $correlation
-      let state.rates_override[string::from_utf8_lossy(event.key)] = $correlation
+      let state.rates_override[string::from_utf8_lossy(event.ok.key)] = $correlation
     case "delete" =>
       # delete the key from our state
-      let state.rates_override = patch state.rates_override of erase string::from_utf8_lossy(event.key) end
+      let state.rates_override = patch state.rates_override of erase string::from_utf8_lossy(event.ok.key) end
     default =>
       null # pass the regular log events
   end;

@@ -19,7 +19,7 @@ script
     case "get" =>
       # get 1 quota
       let res = {},
-      let res[string::from_utf8_lossy(event.key)] = event.ok,
+      let res[string::from_utf8_lossy(event.ok.key)] = event.ok.value,
       emit res
     case "scan" =>
       # get all quotas
@@ -32,17 +32,17 @@ script
       # add a quota
       let $response.status = 201,
       let res = {},
-      let res[string::from_utf8_lossy(event.key)] = event.ok,
+      let res[string::from_utf8_lossy(event.ok.key)] = event.ok.value,
       emit res
     case "delete" =>
-      let event = match event.ok of
+      let event = match event.ok.value of
         case null =>
           let $response.status = 404,
-          {"error": "'#{string::from_utf8_lossy(event.key)}' not found"}
+          {"error": "'#{string::from_utf8_lossy(event.ok.key)}' not found"}
         default =>
           let $response.status = 200,
           let res = {},
-          let res[string::from_utf8_lossy(event.key)] = event.ok,
+          let res[string::from_utf8_lossy(event.ok.key)] = event.ok.value,
           res
       end,
       emit event

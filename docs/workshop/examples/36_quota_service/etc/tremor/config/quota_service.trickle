@@ -1,6 +1,7 @@
 define script process
 script
   use std::array;
+  use std::string;
   use std::json;
   use std::type;
   use tremor::origin;
@@ -10,38 +11,19 @@ script
 
   # defaults for the server response
   let $response = {
-    "status": 200,
-    "headers": {
-      "content-type": "application/json",
-      "x-powered-by": "Tremor",
-    }
-  };
-
-  match type::is_null(state) of
-    case true =>
-      let state = {"count": 0, "quotas": {}}
-    default =>
-      null
-  end;
-
-  # TODO better way to catch initial state updates
-  match origin::scheme() of
-    case "tremor-file" =>
-      let state.quotas = merge state.quotas of event end,
-      drop # this event is of no use now
-    default =>
-      # keep counting no of (non-file) events i.e. service requests
-      let state.count = state.count + 1
-  end;
-
-  # --------------------------------------------------------------------------
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-powered-by": "Tremor",
+      }
+    };
 
   # short-circuit if $request is absent
   match absent $request of
     case true =>
       let $response.status = 500,
       emit {
-        "error": "No request metadata available",
+        "error": "Not a request",
         "event": event,
       } => "app_error"
     default =>
@@ -50,9 +32,14 @@ script
 
   # --------------------------------------------------------------------------
 
+  fn last_path_segment(path) with
+    let split_path = string::split(path, "/");
+    split_path[array::len(split_path) - 1]
+  end;
+
   # content based on method and path combo
   match [$request.method, $request.url.path] of
-    case ["GET", "/"] =>
+    case %("GET", "") =>
       let $response.headers["content-type"] = "text/plain",
       emit """
       Welcome to the Logging Quota Service!
@@ -60,37 +47,37 @@ script
       Available routes:
 
       GET /quotas
-      POST /quotas
-      POST /flush
+      GET /quotas/<quota_name>
+      PUT /quotas/<quota_name>
+      DELETE /quotas/<quota_name>
 
       HEAD /ping
-      GET /stats
 
-      /echo
+      * /echo
       """
 
-    case ["GET", "/quotas"] =>
-      emit state.quotas
+    case %("GET", "/quotas") =>
+      # get all quotas
+      emit {"scan": {}} => "quotas"
 
-    case ["POST", "/quotas"] =>
-      let state.quotas = merge state.quotas of event end,
-      let $is_quotas = true,
-      emit state.quotas => "quotas"
-
-    case ["POST", "/flush"] =>
-      # TODO ensure 200 on succesful flush
-      let $response.status = 202,
-      let $is_quotas = true,
-      emit state.quotas => "quotas"
+    case %("GET", ~ glob|/quotas/?*|) =>
+      # get a specific quota
+      let quota_name = last_path_segment($request.url.path),
+      emit {"get": {"key": quota_name}} => "quotas"
+    case %("DELETE", ~ glob|/quotas/?*|) =>
+      # delete a quota
+      let quota_name = last_path_segment($request.url.path),
+      emit {"delete": {"key": quota_name}} => "quotas"
+    case %("PUT", ~ glob|/quotas/?*|) =>
+      # add a quota
+      # put returns the old value, we need the new one to be forwarded as well
+      let $correlation = event,
+      let quota_name = last_path_segment($request.url.path),
+      emit {"put": {"key": quota_name, "value": event }} => "quotas"
 
     # TODO add path for setting total instances
-
-    case ["HEAD", "/ping"] =>
-      emit ""
-
-    # application statistics
-    case ["GET", "/stats"] =>
-      emit {"requests_processed": state.count}
+    case %("HEAD", "/ping") =>
+      emit "pong"
 
     # useful for debugging (also matches all methods)
     case %(_, "/echo") =>
@@ -100,11 +87,11 @@ script
       }
 
     # our top-secret endpoint
-    case ["GET", "/snot"] =>
+    case %("GET", "/snot") =>
       emit "badger"
 
     # example for runtime error handling
-    case ["GET", "/error-test"] =>
+    case %("GET", "/error-test") =>
       emit non_existent_var
 
     default =>
@@ -120,14 +107,12 @@ create script process;
 
 # main request processing
 select event from in into process;
+
+# this will send short circuiting HTTP responses back
 select event from process into out;
 
-# quotas output from the pipeline ensures we can share the quota state with other pipelines
-# (as well as forward it to save on disk, for persistent state)
+# forward requests to the kv state offramp
 select event from process/quotas into out/quotas;
-
-# this ensures we return a service response for quota updates as well
-select event from process/quotas into out;
 
 # our defined app errors (still succesful processing from tremor's perspective)
 # useful to track these from different port (app_error) for metrics

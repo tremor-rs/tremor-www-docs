@@ -2,9 +2,9 @@
 
 Demo quota service, geared for a log collection usecase (but can be easily applied for similar needs elsewhere too).
 
-This is a HTTP application running alongside an example log receiver setup (logs in via TCP -> tremor -> elastic out), that allows operators to easily (and quickly) update the throttling rates for various classes of logs. It also allows retrieving the current quotas for all classes, which can potentially be used by logging clients to pre-throttle on their end, even before transmitting the logs to tremor (or the information can be used to always provide up-to-date quota limits to folks using this log platform).
+This is a HTTP CRUD application running alongside an example log receiver setup (logs in via TCP -> tremor -> elastic out), that allows operators to easily (and quickly) update the throttling rates for various classes of logs. It also allows retrieving the current quotas for all classes, which can potentially be used by logging clients to pre-throttle on their end, even before transmitting the logs to tremor (or the information can be used to always provide up-to-date quota limits to folks using this log platform).
 
-The application itself is written on top of tremor, utilizing the [linked transports](../../../operations/linked-transports.md) feature introduced as part of tremor v0.9.
+The application itself is written on top of tremor, utilizing the [linked transports](../../../operations/linked-transports.md) feature introduced in Tremor 0.9 and the [KV offramp](../../../artefacts/offramps.md#kv) introduced in Tremor 0.11.
 
 ## Setup
 
@@ -54,13 +54,13 @@ $ curl http://localhost:8139
       Available routes:
 
       GET /quotas
-      POST /quotas
-      POST /flush
+      GET /quotas/<quota_name>
+      PUT /quotas/<quota_name>
+      DELETE /quotas/<quota_name>
 
       HEAD /ping
-      GET /stats
 
-      /echo
+      * /echo
 ```
 
 **Get quotas**
@@ -71,41 +71,33 @@ $ curl http://localhost:8139
 $ curl -XGET localhost:8139/quotas
 
 {"host_default":500,"logger_default":50,"index_default":100,"tremolo":100,"application_default":100}
+
+# it is also possible to get single quotas
+$ curl -XGET localhost:8139/quotas/index_default
+
+{"index_default":100}
 ```
 
 **Set quotas**
 
+Changes to quotas are applied immediately, no scheduled reads of the quotas are necessary, no downtime to change configuration is required. What we get is updated quota handling in real-time:
+
 ```sh
 # set rate for tremolo class of logs to 1 message per second
-# returns the overall quotas state on success
-$ curl -XPOST -H'Content-Type: application/json' http://localhost:8139/quotas -d'{"tremolo": 1}'
+# returns the old, overwritten state on success
+$ curl -XPUT -H'Content-Type: application/json' http://localhost:8139/quotas/tremolo" -d'1'
 
-{"host_default":500,"logger_default":50,"tremolo":1,"index_default":100,"application_default":100}
+{"tremolo": 100}
 
 # If you are monitoring the tremolo logs from kibana, you should now see the (debug) field `tremor_class_rate` change to 1 (from 100).
 # More importantly, the log volume visible there should have also decreased.
 
-# to remove the rate override for tremolo (i.e. switch to the default, hard-coded rate for it)
-# curl -XPOST -H'Content-Type: application/json' http://localhost:8139/quotas -d'{"tremolo": null}'
+# to remove the rate override for a given quota (i.e. switch to the default, hard-coded rate)
+# curl -XDELETE http://localhost:8139/quotas/tremolo
 ```
 
 Example kibana view demonstrating the change in number of tremolo logs, after setting the quota dynamically from the above api:
 > ![Kibana View for Quota Service Demo](images/tremor_quota_service_demo.png)
-
-**Flush quotas**
-
-```sh
-# force save of quotas to disk as well as publishing of quotas to any other pipelines present.
-# both actions are handled on quota updates as well -- this path is there in case manual flush is needed.
-# returns 202 if the request was succesfully accepted, along with overall quotas state.
-$ curl -XPOST http://localhost:8139/flush
-
-{"host_default":500,"logger_default":50,"tremolo":1,"index_default":100,"application_default":100}
-
-# to load the saved quotas during tremor restart, we need to do the following before tremor restarts right now:
-sudo cp etc/tremor/data/quotas.json.save etc/tremor/data/quotas.json
-# and after startup, run the flush once more
-```
 
 **Debug request**
 

@@ -29,10 +29,10 @@ Where:
 For example:
 
 ```bash
-./bench/run real-workflow-througput-json
+./bench/run real-workflow-throughput-json
 ```
 
-Will run the 'real-workflow-througput-json' benchmark and publish a HDR histogram to standard output
+Will run the 'real-workflow-throughput-json' benchmark and publish a HDR histogram to standard output
 upon completion. it takes about 1 minute to run.
 
 ## Anatomy of a benchmark

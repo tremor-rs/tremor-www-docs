@@ -1,0 +1,17 @@
+define tumbling window correlation_window
+with
+  size = 2 # size needs to be adjusted to number of upstream quota services configured in main.yaml
+end;
+
+define script prepare
+script
+  use tremor::origin;
+  {
+    "upstream": origin::host(),
+    "response": event
+  }
+end;
+create script prepare;
+
+select event from in into prepare;
+select aggr::win::collect_flattened(event) from prepare[correlation_window] group by $correlation into out;

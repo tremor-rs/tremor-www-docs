@@ -1,6 +1,10 @@
 # Configurator
 
-An application built using tremor (and the new [linked transports](../../../operations/linked-transports.md) feature new in 0.9) allowing for centralized configuration across services and their component nodes.
+An application built using tremor using the [linked transports](../../../operations/linked-transports.md) feature and the [qos::wal](https://docs.tremor.rs/tremor-query/operators/#qoswal) operator introduced in 0.9 and the [`$correlation`](https://docs.tremor.rs/operations/linked-transports/#correlation) feature introduced in 0.11, allowing for centralized configuration across services and their component nodes.
+
+The main task of the Configurator is to distribute config changes to a group of upstream tremor nodes running the [_Quota Service_](../36_quota_service/README.md).
+The config changes do not happen in an atomic or transactional fashion across all upstream nodes, but all valid configuration updates are persisted and retried until they succeed.
+The responses are aggregated from all the upstream nodes and bundled into a single event / HTTP response.
 
 This is an exploration project meant to push what we can do with the current tremor feature set and as such, there are/will be rough edges.
 
@@ -32,12 +36,15 @@ $ curl http://localhost:9139
       Available routes:
 
       GET /services
-      POST /service/<id>
+      GET /service/<id>
+      GET /service/<id>/...
+      PUT /service/<id>/...
+      DELETE /service/<id>/...
 
       HEAD /ping
       GET /stats
 
-      /echo
+      * /echo
 ```
 
 **List services**
@@ -45,18 +52,61 @@ $ curl http://localhost:9139
 ```sh
 $ curl http://localhost:9139/services
 
-  ["quota_service]
+  ["quota_service"]
 ```
 
 **Set service configuration**
 
 ```sh
-# change quotas for the quota service
-$ curl -XPOST -H'Content-Type: application/json' http://localhost:9139/service/quota_service -d'{"application_default": 11}'
-
-# should have now applied to all the nodes in the quota service.
-# if the delivery fails on a node (eg: it's down or there's network issues), it will be retried until it's successful
+# change a quota for all instances of the quota service
+$ curl -XPUT -H'Content-Type: application/json' http://localhost:9139/service/quota_service/application_default -d'11' | jq .
+[
+  {
+    "response": {
+      "application_default": 100
+    },
+    "upstream": "quota_service_1"
+  },
+  {
+    "response": {
+      "application_default": 100
+    },
+    "upstream": "quota_service_2"
+  }
+]
+# As the response suggests, the config update has been applied to all the nodes in the quota service.
+# The config value for `application_default` has been changed from `100` to `11`.
+# If the delivery fails on a node (eg: it's down or there's network issues), it will be retried until it's successful
 # (this works even if the configurator gets restarted during the process, since the undelivered updates are stored on disk)
+```
+
+We can verify that the config changes got applied by checking the configu through the configurator
+or through each quota_service instance:
+
+```sh
+$ curl http://localhost:9139/service/quota_service | jq .
+[
+  {
+    "response": {
+      "host_default": 500,
+      "logger_default": 50,
+      "index_default": 100,
+      "tremolo": 100,
+      "application_default": 11
+    },
+    "upstream": "quota_service_2"
+  },
+  {
+    "response": {
+      "host_default": 500,
+      "logger_default": 50,
+      "index_default": 100,
+      "tremolo": 100,
+      "application_default": 11
+    },
+    "upstream": "quota_service_1"
+  }
+]
 
 $ curl http://localhost:8139/quotas
 {"host_default":500,"logger_default":50,"tremolo":100,"index_default":100,"application_default":11}
@@ -75,7 +125,6 @@ $ curl -XPOST localhost:9139/echo -d'{"snot": "badger"}'
 
 ## TODO
 
-* aggregate responses from service constituents (from tremor-script for now)
 * explore pull model for configuration sync
 * generate per-service config routes from openapi specs
 * templatize new service addition/boilerplate

@@ -9,6 +9,7 @@ services:
     volumes:
       - ./etc/tremor:/etc/tremor:rw
       - ./var/log:/var/log:rw
+      - ./etc/tremor/data:/home/tremor/data
     ports:
       - 9898:9898   # tremor api
       - 12202:12202 # log receiver

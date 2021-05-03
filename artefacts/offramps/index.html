@@ -1448,13 +1448,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
-    get
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#put" class="md-nav__link">
     put
   </a>
@@ -2532,13 +2525,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
-    get
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#put" class="md-nav__link">
     put
   </a>
@@ -3433,7 +3419,8 @@ If the use case does not require metadata, then set linked to false.</p>
       <span class="nt">topic</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">demo</span>
 </code></pre></div>
 <h3 id="kv">kv<a class="headerlink" href="#kv" title="Permanent link">&para;</a></h3>
-<p>The <code>kv</code> offramp is intended to allow for a decouple way of persisting and retrieving state in a non blocking way.</p>
+<p>The <code>kv</code> offramp is intended to allow for a decoupled way of persisting and retrieving state in a non blocking way.</p>
+<p>The <code>kv</code> store is persisted to the directory configured in <code>config.dir</code>. If it doesnt exist, it will be created.</p>
 <p>Example:
 <div class="highlight"><pre><span></span><code>  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kv</span>
@@ -3442,37 +3429,90 @@ If the use case does not require metadata, then set linked to false.</p>
     <span class="nt">config</span><span class="p">:</span>
       <span class="nt">dir</span><span class="p">:</span> <span class="s">&quot;temp/kv&quot;</span> <span class="c1"># directory to store data in</span>
 </code></pre></div></p>
-<p>Events sent to the KV offramp are commands. The following are supported:</p>
-<h4 id="get">get<a class="headerlink" href="#get" title="Permanent link">&para;</a></h4>
-<p>Fetches the data for a given key.</p>
-<p><strong>Request</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;get&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string|binary&gt;&quot;</span><span class="p">}}</span>
+<p>One response event is sent for every command in the handled event. On success to the <code>out</code> port, in the error case (invalid format or error during kv operation) to the <code>err</code> port.
+Each response event will have the following metadata structure:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;kv&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;op&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string&gt;|null&quot;</span> <span class="c1">// contains the command key that was used to trigger this response, can be `null` for error events.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">Events</span> <span class="nx">sent</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">KV</span> <span class="nx">offramp</span> <span class="nx">contain</span> <span class="nx">commands</span><span class="p">.</span> <span class="nx">The</span> <span class="nx">following</span> <span class="nx">are</span> <span class="nx">supported</span><span class="o">:</span>
+
+<span class="err">####</span> <span class="nx">get</span>
+
+<span class="nx">Fetches</span> <span class="nx">the</span> <span class="nx">data</span> <span class="k">for</span> <span class="nx">a</span> <span class="nx">given</span> <span class="nx">key</span><span class="p">.</span>
+
+<span class="o">**</span><span class="nx">Request</span><span class="o">**:</span>
+<span class="sb">```js</span>
+<span class="sb">{&quot;get&quot;: {&quot;key&quot;: &quot;&lt;string|binary&gt;&quot;}}</span>
+</code></pre></div>
+<p><strong>Response</strong>:</p>
+<p>Key was found, the format of decoded depends on the codec (does NOT have to be a string):
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></p>
-<p><strong>Response</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span><span class="p">}</span> <span class="c1">// key was found, the format of decoded depends on the codec (does NOT have to be a string)</span>
-<span class="kc">null</span><span class="p">,</span>               <span class="c1">// key was not found</span>
-</code></pre></div></p>
+<p>Key was not found:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="kc">null</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h4 id="put">put<a class="headerlink" href="#put" title="Permanent link">&para;</a></h4>
 <p>Writes a value to a key, returns the old value if there was any.</p>
 <p><strong>Request</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;put&quot;</span><span class="o">:</span> <span class="p">{</span>
-  <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string|binary&gt;&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;to encode&gt;&quot;</span> <span class="c1">// the format of value depends on the codec (does NOT have to be a string)</span>
-<span class="p">}}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;put&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string|binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;to encode&gt;&quot;</span> <span class="c1">// the format of value depends on the codec (does NOT have to be a string)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></p>
-<p><strong>Response</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span><span class="p">}</span> <span class="c1">// key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)</span>
-<span class="kc">null</span><span class="p">,</span>               <span class="c1">// key was not used before</span>
+<p><strong>Response</strong>:</p>
+<p>Key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string):
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Key was not used before:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="kc">null</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <h4 id="delete">delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h4>
 <p>Deletes a key, returns the old value if there was any.</p>
 <p><strong>Request</strong>:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;delete&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;string|binary&gt;&quot;</span><span class="p">}}</span>
 </code></pre></div></p>
-<p><strong>Response</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span><span class="p">}</span> <span class="c1">// key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string)</span>
-<span class="kc">null</span><span class="p">,</span>               <span class="c1">// key was not used before</span>
-</code></pre></div></p>
+<p><strong>Response</strong>:</p>
+<p>Key was used before, this is the old value, the format of decoded depends on the codec (does NOT have to be a string):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Key was not used before:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="kc">null</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h4 id="scan">scan<a class="headerlink" href="#scan" title="Permanent link">&para;</a></h4>
 <p>Reads a range of keys</p>
 <p><strong>Request</strong>:
@@ -3482,12 +3522,14 @@ If the use case does not require metadata, then set linked to false.</p>
 <span class="p">}}</span>
 </code></pre></div>
 <strong>Response</strong>:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">[</span>
-  <span class="p">{</span>
-    <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span> <span class="c1">// keys are ALWAYS encoded as binary since we don&#39;t know if it&#39;s a string or binary</span>
-    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span> <span class="c1">// the value, the format of decoded depends on the codec (does NOT have to be a string)</span>
-  <span class="p">}</span> <span class="c1">// repeated, may be empty</span>
-<span class="p">]}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span><span class="p">,</span> <span class="c1">// keys are ALWAYS encoded as binary since we don&#39;t know if it&#39;s a string or binary</span>
+      <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span> <span class="c1">// the value, the format of decoded depends on the codec (does NOT have to be a string)</span>
+    <span class="p">}</span> <span class="c1">// repeated, may be empty</span>
+  <span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <h4 id="cas">cas<a class="headerlink" href="#cas" title="Permanent link">&para;</a></h4>
 <p>Compare And Swap operation. Those operations require old values to match what it is compared to</p>
@@ -3498,12 +3540,21 @@ If the use case does not require metadata, then set linked to false.</p>
    <span class="s2">&quot;new&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;to encode|not-set&gt;&quot;</span><span class="p">,</span> <span class="c1">// The new value, if not set it means it gets deleted</span>
 <span class="p">}}</span>
 </code></pre></div>
-<strong>Response</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="kc">null</span><span class="p">}</span> <span class="c1">// The operation succeeded</span>
-<span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// the operation failed</span>
-  <span class="s2">&quot;current&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span><span class="p">,</span> <span class="c1">// the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)</span>
-  <span class="s2">&quot;proposed&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span> <span class="c1">// the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)</span>
-<span class="p">}}</span>
+<strong>Response</strong>:
+On success:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;ok&quot;</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>On failure:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;current&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span><span class="p">,</span> <span class="c1">// the value that is currently stored, the format of decoded depends on the codec (does NOT have to be a string)</span>
+    <span class="s2">&quot;proposed&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;decoded&gt;&quot;</span> <span class="c1">// the value that was proposed/expected to be there, the format of decoded depends on the codec (does NOT have to be a string)</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;binary&gt;&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="nats">nats<a class="headerlink" href="#nats" title="Permanent link">&para;</a></h3>
 <p>The <code>nats</code> offramp connects to Nats server(s) and publishes a message to specified subject for every event.</p>

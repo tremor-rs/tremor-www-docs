@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   configurator_tremor:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:edge
     depends_on:
       - quota_service_1
       - quota_service_2
@@ -16,9 +16,11 @@ services:
     ports:
       - 9898:9898 # tremor api
       - 9139:9139 # the configurator
+    networks:
+      - net
 
   quota_service_1:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:edge
     container_name: quota_service_1
     environment:
       - RUST_BACKTRACE=full
@@ -26,9 +28,15 @@ services:
       - ../36_quota_service/etc/tremor:/etc/tremor
     ports:
       - 8139:8139
+    networks:
+      - net
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
 
   quota_service_2:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:edge
     container_name: quota_service_2
     environment:
       - RUST_BACKTRACE=full
@@ -36,3 +44,41 @@ services:
       - ../36_quota_service/etc/tremor:/etc/tremor
     ports:
       - 8140:8139
+    networks:
+      - net
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    environment:
+    - bootstrap.memory_lock=true
+    - cluster.name=docker-cluster
+    - cluster.routing.allocation.disk.threshold_enabled=false
+    - discovery.type=single-node
+    - ES_JAVA_OPTS=-XX:UseAVX=2 -Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+    volumes:
+    - esdata:/usr/share/elasticsearch/data
+    ports:
+    - 9200:9200
+    networks:
+    - net
+    healthcheck:
+      interval: 20s
+      retries: 10
+      test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
+    networks:
+    - net
+
+networks:
+  net:
+    driver: bridge
+
+volumes:
+  esdata:
+    driver: local

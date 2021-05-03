@@ -9,40 +9,45 @@ services:
     volumes:
       - ./etc/tremor:/etc/tremor:rw
       - ./var/log:/var/log:rw
+      - ./etc/tremor/data:/home/tremor/data
     ports:
       - 9898:9898   # tremor api
       - 12202:12202 # log receiver
       - 8139:8139 # quota service
-
+    networks:
+    - net
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      # Elastic Search
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/${ES_IMAGE}:${ES_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
     environment:
-      # also set the vm.max_map_count kernel setting for production use. See:
-      # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144
-      - "ES_JAVA_OPTS=-Xms${ES_JAVA_HEAP_SIZE} -Xmx${ES_JAVA_HEAP_SIZE}"
-      # elasticsearch-specific xpack features (to be used when xpack is installed)
-      # disable these when using the elasticsearch-oss image
-      - xpack.license.self_generated.type=basic
-      - xpack.monitoring.collection.enabled=false
+    - bootstrap.memory_lock=true
+    - cluster.name=docker-cluster
+    - cluster.routing.allocation.disk.threshold_enabled=false
+    - discovery.type=single-node
+    - ES_JAVA_OPTS=-XX:UseAVX=2 -Xms${ES_JAVA_HEAP_SIZE} -Xmx${ES_JAVA_HEAP_SIZE}
     ulimits:
-      # disabling swapping for performance and node stability
       memlock:
-        soft: -1
         hard: -1
+        soft: -1
     volumes:
-      # share the config in the repo with the container
-      - ./etc/elasticsearch/:/etc/elasticsearch:rw
-      # using local docker volume for es data
-      # gets stored in /var/lib/docker/volumes by default, and can specify a
-      # custom path here, but need to configure the dir perms for container use
-      - esdata:/usr/share/elasticsearch/data
+    - esdata:/usr/share/elasticsearch/data
     ports:
-      - 9200:9200
+    - 9200:9200
+    networks:
+    - net
+    healthcheck:
+      interval: 20s
+      retries: 10
+      test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
 
   kibana:
     image: docker.elastic.co/kibana/${KIBANA_IMAGE}:${KIBANA_VERSION}
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     environment:
       # limit kibana memory usage (default is 1G)
       - "NODE_OPTIONS=--max-old-space-size=${KIBANA_NODE_MEM_LIMIT_MB}"
@@ -55,7 +60,13 @@ services:
       # kibana-specific xpack features (to be used when xpack is installed)
       - XPACK_LICENSE_SELF_GENERATED_TYPE=basic
     ports:
-      - 5601:5601
+    - 5601:5601
+    networks:
+    - net
+
+networks:
+  net:
+    driver: bridge
 
 volumes:
   esdata:

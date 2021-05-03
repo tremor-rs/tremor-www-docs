@@ -2089,7 +2089,10 @@
                 
                 
                 <h1 id="configurator">Configurator<a class="headerlink" href="#configurator" title="Permanent link">&para;</a></h1>
-<p>An application built using tremor (and the new <a href="../../../operations/linked-transports/">linked transports</a> feature new in 0.9) allowing for centralized configuration across services and their component nodes.</p>
+<p>An application built using tremor using the <a href="../../../operations/linked-transports/">linked transports</a> feature and the <a href="https://docs.tremor.rs/tremor-query/operators/#qoswal">qos::wal</a> operator introduced in 0.9 and the <a href="https://docs.tremor.rs/operations/linked-transports/#correlation"><code>$correlation</code></a> feature introduced in 0.11, allowing for centralized configuration across services and their component nodes.</p>
+<p>The main task of the Configurator is to distribute config changes to a group of upstream tremor nodes running the <a href="../36_quota_service/"><em>Quota Service</em></a>.
+The config changes do not happen in an atomic or transactional fashion across all upstream nodes, but all valid configuration updates are persisted and retried until they succeed.
+The responses are aggregated from all the upstream nodes and bundled into a single event / HTTP response.</p>
 <p>This is an exploration project meant to push what we can do with the current tremor feature set and as such, there are/will be rough edges.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
@@ -2114,25 +2117,68 @@ docker-compose up
       Available routes:
 
       GET /services
-      POST /service/&lt;id&gt;
+      GET /service/&lt;id&gt;
+      GET /service/&lt;id&gt;/...
+      PUT /service/&lt;id&gt;/...
+      DELETE /service/&lt;id&gt;/...
 
       HEAD /ping
       GET /stats
 
-      /echo
+      * /echo
 </code></pre></div>
 <p><strong>List services</strong></p>
 <div class="highlight"><pre><span></span><code>$ curl http://localhost:9139/services
 
-  <span class="o">[</span><span class="s2">&quot;quota_service]</span>
+  <span class="o">[</span><span class="s2">&quot;quota_service&quot;</span><span class="o">]</span>
 </code></pre></div>
 <p><strong>Set service configuration</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># change quotas for the quota service</span>
-$ curl -XPOST -H<span class="s1">&#39;Content-Type: application/json&#39;</span> http://localhost:9139/service/quota_service -d<span class="s1">&#39;{&quot;application_default&quot;: 11}&#39;</span>
-
-<span class="c1"># should have now applied to all the nodes in the quota service.</span>
-<span class="c1"># if the delivery fails on a node (eg: it&#39;s down or there&#39;s network issues), it will be retried until it&#39;s successful</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># change a quota for all instances of the quota service</span>
+$ curl -XPUT -H<span class="s1">&#39;Content-Type: application/json&#39;</span> http://localhost:9139/service/quota_service/application_default -d<span class="s1">&#39;11&#39;</span> <span class="p">|</span> jq .
+<span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">&quot;response&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;application_default&quot;</span>: <span class="m">100</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;upstream&quot;</span>: <span class="s2">&quot;quota_service_1&quot;</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">&quot;response&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;application_default&quot;</span>: <span class="m">100</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;upstream&quot;</span>: <span class="s2">&quot;quota_service_2&quot;</span>
+  <span class="o">}</span>
+<span class="o">]</span>
+<span class="c1"># As the response suggests, the config update has been applied to all the nodes in the quota service.</span>
+<span class="c1"># The config value for `application_default` has been changed from `100` to `11`.</span>
+<span class="c1"># If the delivery fails on a node (eg: it&#39;s down or there&#39;s network issues), it will be retried until it&#39;s successful</span>
 <span class="c1"># (this works even if the configurator gets restarted during the process, since the undelivered updates are stored on disk)</span>
+</code></pre></div>
+<p>We can verify that the config changes got applied by checking the configu through the configurator
+or through each quota_service instance:</p>
+<div class="highlight"><pre><span></span><code>$ curl http://localhost:9139/service/quota_service <span class="p">|</span> jq .
+<span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">&quot;response&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;host_default&quot;</span>: <span class="m">500</span>,
+      <span class="s2">&quot;logger_default&quot;</span>: <span class="m">50</span>,
+      <span class="s2">&quot;index_default&quot;</span>: <span class="m">100</span>,
+      <span class="s2">&quot;tremolo&quot;</span>: <span class="m">100</span>,
+      <span class="s2">&quot;application_default&quot;</span>: <span class="m">11</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;upstream&quot;</span>: <span class="s2">&quot;quota_service_2&quot;</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">&quot;response&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;host_default&quot;</span>: <span class="m">500</span>,
+      <span class="s2">&quot;logger_default&quot;</span>: <span class="m">50</span>,
+      <span class="s2">&quot;index_default&quot;</span>: <span class="m">100</span>,
+      <span class="s2">&quot;tremolo&quot;</span>: <span class="m">100</span>,
+      <span class="s2">&quot;application_default&quot;</span>: <span class="m">11</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;upstream&quot;</span>: <span class="s2">&quot;quota_service_1&quot;</span>
+  <span class="o">}</span>
+<span class="o">]</span>
 
 $ curl http://localhost:8139/quotas
 <span class="o">{</span><span class="s2">&quot;host_default&quot;</span>:500,<span class="s2">&quot;logger_default&quot;</span>:50,<span class="s2">&quot;tremolo&quot;</span>:100,<span class="s2">&quot;index_default&quot;</span>:100,<span class="s2">&quot;application_default&quot;</span>:11<span class="o">}</span>
@@ -2147,7 +2193,6 @@ $ curl http://localhost:8140/quotas
 </code></pre></div>
 <h2 id="todo">TODO<a class="headerlink" href="#todo" title="Permanent link">&para;</a></h2>
 <ul>
-<li>aggregate responses from service constituents (from tremor-script for now)</li>
 <li>explore pull model for configuration sync</li>
 <li>generate per-service config routes from openapi specs</li>
 <li>templatize new service addition/boilerplate</li>

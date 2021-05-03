@@ -11,7 +11,7 @@ offramp:
   - id: quota_service_1
     type: rest
     linked: true
-    codec: string
+    codec: json
     config:
       endpoint:
         host: quota_service_1
@@ -20,7 +20,7 @@ offramp:
   - id: quota_service_2
     type: rest
     linked: true
-    codec: string
+    codec: json
     config:
       endpoint:
         host: quota_service_2
@@ -35,7 +35,7 @@ binding:
 
       # process incoming requests and send back the response
       "/pipeline/main/{instance}/out":
-        - "/onramp/http/{instance}/response"
+        - "/onramp/http/{instance}/in"
         # for debugging
         #- "/offramp/system::stdout/system/in"
 
@@ -48,6 +48,15 @@ binding:
         # for debugging
         #- "/offramp/system::stdout/system/in"
 
+      # response handling
+      "/offramp/quota_service_1/{instance}/out":
+        - "/pipeline/upstream_response/{instance}/in"
+      "/offramp/quota_service_2/{instance}/out":
+        - "/pipeline/upstream_response/{instance}/in"
+      # send responses back to the onramp
+      "/pipeline/upstream_response/{instance}/out":
+        - "/onramp/http/{instance}/in"
+
   - id: error
     links:
       "/onramp/http/{instance}/err":
@@ -56,15 +65,23 @@ binding:
       "/pipeline/main/{instance}/err":
         - "/pipeline/internal_error_processing/{instance}/in"
 
+      "/pipeline/upstream_response/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
+      "/offramp/quota_service_1/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+      "/offramp/quota_service_2/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
       # send back errors as response as well
       "/pipeline/internal_error_processing/{instance}/out":
-        - "/onramp/http/{instance}/response"
-        #- "/offramp/system::stderr/system/in"
+        - "/onramp/http/{instance}/in"
+        # - "/offramp/system::stderr/system/in"
 
       # respond on errors during error processing too
       "/pipeline/internal_error_processing/{instance}/err":
-        - "/onramp/http/{instance}/response"
-        #- "/offramp/system::stderr/system/in"
+        - "/onramp/http/{instance}/in"
+        # - "/offramp/system::stderr/system/in"
 
 mapping:
   /binding/main/01:

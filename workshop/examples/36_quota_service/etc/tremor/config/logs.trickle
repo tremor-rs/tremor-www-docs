@@ -5,7 +5,9 @@ script
   use std::math;
   use std::record;
   use std::type;
+  use std::string;
   use tremor::system;
+  use tremor::origin;
 
   # TODO initial state here should be synced with quotas file load?
   match type::is_null(state) of
@@ -15,16 +17,35 @@ script
       null
   end;
 
-  # handle quota publish events from the quota-service
+  # handle kv get with the newest state
   # (overwrites the pipeline node-local state here)
   # TODO use origin uri to distinguish state updates? or some other mechanism
-  match present $is_quotas of
-    case true =>
-      let state.rates_override = event,
-      drop # this event is of no use now
+  let op = match $ of
+    case %{ kv ~= %{ present op }} => $kv.op
+    default => null
+  end;
+  match op of
+    case "scan" when not type::is_null(event.ok) =>
+      for event.ok of case (i, doc) =>
+        let state.rates_override[string::from_utf8_lossy(doc.key)] = doc.value
+      end
+    case "put" when not type::is_null($correlation) =>
+      # put responses only provide the old value, if any
+      # we did put the putted value into $correlation
+      let state.rates_override[string::from_utf8_lossy(event.ok.key)] = $correlation
+    case "delete" =>
+      # delete the key from our state
+      let state.rates_override = patch state.rates_override of erase string::from_utf8_lossy(event.ok.key) end
     default =>
       null # pass the regular log events
   end;
+
+  # drop events from the kv, they served their purpose already
+  match origin::scheme() of
+    case "tremor-kv" => drop
+    default => null
+  end;
+
 
   # align this with no of tremor nodes handling traffic here
   # (with the assumption that traffic is evenly aligned across the nodes)
@@ -82,8 +103,10 @@ script
 
   # for elasticsearch offramp
   # https://docs.tremor.rs/artefacts/offramps/#elastic
-  let $index = "test_logs";
-  let $doc_type = "_doc";
+  let $elastic = {
+    "_index": "test_logs",
+    "_type": "_doc"
+  };
 
   # log enrichments
   let event = patch event of

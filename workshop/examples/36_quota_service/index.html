@@ -2090,8 +2090,8 @@
                 
                 <h1 id="quota-service">Quota Service<a class="headerlink" href="#quota-service" title="Permanent link">&para;</a></h1>
 <p>Demo quota service, geared for a log collection usecase (but can be easily applied for similar needs elsewhere too).</p>
-<p>This is a HTTP application running alongside an example log receiver setup (logs in via TCP -&gt; tremor -&gt; elastic out), that allows operators to easily (and quickly) update the throttling rates for various classes of logs. It also allows retrieving the current quotas for all classes, which can potentially be used by logging clients to pre-throttle on their end, even before transmitting the logs to tremor (or the information can be used to always provide up-to-date quota limits to folks using this log platform).</p>
-<p>The application itself is written on top of tremor, utilizing the <a href="../../../operations/linked-transports/">linked transports</a> feature introduced as part of tremor v0.9.</p>
+<p>This is a HTTP CRUD application running alongside an example log receiver setup (logs in via TCP -&gt; tremor -&gt; elastic out), that allows operators to easily (and quickly) update the throttling rates for various classes of logs. It also allows retrieving the current quotas for all classes, which can potentially be used by logging clients to pre-throttle on their end, even before transmitting the logs to tremor (or the information can be used to always provide up-to-date quota limits to folks using this log platform).</p>
+<p>The application itself is written on top of tremor, utilizing the <a href="../../../operations/linked-transports/">linked transports</a> feature introduced in Tremor 0.9 and the <a href="../../../artefacts/offramps/#kv">KV offramp</a> introduced in Tremor 0.11.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2129,13 +2129,13 @@ yellow open test_logs xtdBODqGQ7Gub1PfUlcaWA 5 1 788 0  139kb  139kb
       Available routes:
 
       GET /quotas
-      POST /quotas
-      POST /flush
+      GET /quotas/&lt;quota_name&gt;
+      PUT /quotas/&lt;quota_name&gt;
+      DELETE /quotas/&lt;quota_name&gt;
 
       HEAD /ping
-      GET /stats
 
-      /echo
+      * /echo
 </code></pre></div>
 <p><strong>Get quotas</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># populated from file etc/tremor/data/quotas.json on startup</span>
@@ -2143,36 +2143,30 @@ yellow open test_logs xtdBODqGQ7Gub1PfUlcaWA 5 1 788 0  139kb  139kb
 $ curl -XGET localhost:8139/quotas
 
 <span class="o">{</span><span class="s2">&quot;host_default&quot;</span>:500,<span class="s2">&quot;logger_default&quot;</span>:50,<span class="s2">&quot;index_default&quot;</span>:100,<span class="s2">&quot;tremolo&quot;</span>:100,<span class="s2">&quot;application_default&quot;</span>:100<span class="o">}</span>
+
+<span class="c1"># it is also possible to get single quotas</span>
+$ curl -XGET localhost:8139/quotas/index_default
+
+<span class="o">{</span><span class="s2">&quot;index_default&quot;</span>:100<span class="o">}</span>
 </code></pre></div>
 <p><strong>Set quotas</strong></p>
+<p>Changes to quotas are applied immediately, no scheduled reads of the quotas are necessary, no downtime to change configuration is required. What we get is updated quota handling in real-time:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># set rate for tremolo class of logs to 1 message per second</span>
-<span class="c1"># returns the overall quotas state on success</span>
-$ curl -XPOST -H<span class="s1">&#39;Content-Type: application/json&#39;</span> http://localhost:8139/quotas -d<span class="s1">&#39;{&quot;tremolo&quot;: 1}&#39;</span>
+<span class="c1"># returns the old, overwritten state on success</span>
+$ curl -XPUT -H<span class="s1">&#39;Content-Type: application/json&#39;</span> http://localhost:8139/quotas/tremolo<span class="s2">&quot; -d&#39;1&#39;</span>
 
-<span class="o">{</span><span class="s2">&quot;host_default&quot;</span>:500,<span class="s2">&quot;logger_default&quot;</span>:50,<span class="s2">&quot;tremolo&quot;</span>:1,<span class="s2">&quot;index_default&quot;</span>:100,<span class="s2">&quot;application_default&quot;</span>:100<span class="o">}</span>
+<span class="s2">{&quot;</span>tremolo<span class="s2">&quot;: 100}</span>
 
-<span class="c1"># If you are monitoring the tremolo logs from kibana, you should now see the (debug) field `tremor_class_rate` change to 1 (from 100).</span>
-<span class="c1"># More importantly, the log volume visible there should have also decreased.</span>
+<span class="s2"># If you are monitoring the tremolo logs from kibana, you should now see the (debug) field `tremor_class_rate` change to 1 (from 100).</span>
+<span class="s2"># More importantly, the log volume visible there should have also decreased.</span>
 
-<span class="c1"># to remove the rate override for tremolo (i.e. switch to the default, hard-coded rate for it)</span>
-<span class="c1"># curl -XPOST -H&#39;Content-Type: application/json&#39; http://localhost:8139/quotas -d&#39;{&quot;tremolo&quot;: null}&#39;</span>
+<span class="s2"># to remove the rate override for a given quota (i.e. switch to the default, hard-coded rate)</span>
+<span class="s2"># curl -XDELETE http://localhost:8139/quotas/tremolo</span>
 </code></pre></div>
 <p>Example kibana view demonstrating the change in number of tremolo logs, after setting the quota dynamically from the above api:</p>
 <blockquote>
 <p><img alt="Kibana View for Quota Service Demo" src="images/tremor_quota_service_demo.png" /></p>
 </blockquote>
-<p><strong>Flush quotas</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># force save of quotas to disk as well as publishing of quotas to any other pipelines present.</span>
-<span class="c1"># both actions are handled on quota updates as well -- this path is there in case manual flush is needed.</span>
-<span class="c1"># returns 202 if the request was succesfully accepted, along with overall quotas state.</span>
-$ curl -XPOST http://localhost:8139/flush
-
-<span class="o">{</span><span class="s2">&quot;host_default&quot;</span>:500,<span class="s2">&quot;logger_default&quot;</span>:50,<span class="s2">&quot;tremolo&quot;</span>:1,<span class="s2">&quot;index_default&quot;</span>:100,<span class="s2">&quot;application_default&quot;</span>:100<span class="o">}</span>
-
-<span class="c1"># to load the saved quotas during tremor restart, we need to do the following before tremor restarts right now:</span>
-sudo cp etc/tremor/data/quotas.json.save etc/tremor/data/quotas.json
-<span class="c1"># and after startup, run the flush once more</span>
-</code></pre></div>
 <p><strong>Debug request</strong></p>
 <div class="highlight"><pre><span></span><code>$ curl -XPOST localhost:8139/echo -d<span class="s1">&#39;{&quot;snot&quot;: &quot;badger&quot;}&#39;</span>
 

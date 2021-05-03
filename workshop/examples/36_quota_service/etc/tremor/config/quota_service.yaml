@@ -6,23 +6,18 @@ onramp:
     config:
       host: 0.0.0.0
       port: 8139
-
-  - id: state
+  - id: initial
     type: file
     codec: json
     config:
-      # load quotas state from this file (during startup)
-      source: /etc/tremor/data/quotas.json
+      source: /etc/tremor/data/initial.json
 
 offramp:
   - id: state
-    type: file
+    type: kv
     codec: json
     config:
-      # save quotas updates to this file (replayed during startup)
-      # FIXME support file appends from offramp and just use the same file as state onramp
-      # this will simplify the quotas load process during restart
-      file: /etc/tremor/data/quotas.json.save
+      dir: /home/tremor/data/state
 
 binding:
   - id: main
@@ -30,22 +25,38 @@ binding:
       "/onramp/http/{instance}/out":
         - "/pipeline/quota_service/{instance}/in"
 
-      # load initial state based on this onramp output
-      "/onramp/state/{instance}/out":
-        - "/pipeline/quota_service/{instance}/in"
-
-      # process incoming requests and send back the response
-      "/pipeline/quota_service/{instance}/out":
-        - "/onramp/http/{instance}/response"
+      # handle quota service requests
+      # ask the kv offramp for the current state, also update it
+      "/pipeline/quota_service/{instance}/quotas":
+        - "/offramp/state/{instance}/in"
         # for debugging
         #- "/offramp/system::stdout/system/in"
 
-      # handle updates to the quotas state:
-      # publish the quotas state to the logs pipeline as well as save it
-      # for persistent state (that survives tremor restarts)
-      "/pipeline/quota_service/{instance}/quotas":
-        - "/pipeline/logs/{instance}/in"
+      # send responses directly from the pipeline without visiting the kv for state
+      "/pipeline/quota_service/{instance}/out":
+        - "/onramp/http/{instance}/in"
+        # for debugging
+        # - "/offramp/system::stdout/system/in"
+
+      # initial get query against the state storage to fill in
+      # the quota state in the logs pipeline
+      "/onramp/initial/{instance}/out":
+        - "/pipeline/system::passthrough/{instance}/in"
+      "/pipeline/system::passthrough/{instance}/out":
         - "/offramp/state/{instance}/in"
+        # for debugging
+        #- "/offramp/system::stdout/system/in"
+
+      # propagate kv responses
+      #  - to logs pipeline for state updates
+      #  - to response pipeline for creating HTTP responses
+      "/offramp/state/{instance}/out":
+        - "/pipeline/response/{instance}/in"
+        - "/pipeline/logs/{instance}/in"
+
+      # send responses back
+      "/pipeline/response/{instance}/out":
+        - "/onramp/http/{instance}/in"
         # for debugging
         #- "/offramp/system::stdout/system/in"
 
@@ -54,18 +65,26 @@ binding:
       "/onramp/http/{instance}/err":
         - "/pipeline/internal_error_processing/{instance}/in"
 
+      "/offramp/state/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
       "/pipeline/quota_service/{instance}/err":
+        - "/pipeline/internal_error_processing/{instance}/in"
+
+      "/pipeline/response/{instance}/err":
         - "/pipeline/internal_error_processing/{instance}/in"
 
       # send back errors as response as well
       "/pipeline/internal_error_processing/{instance}/out":
         - "/onramp/http/{instance}/response"
+        # for debugging
         #- "/offramp/system::stderr/system/in"
 
       # respond on errors during error processing too
       "/pipeline/internal_error_processing/{instance}/err":
         - "/onramp/http/{instance}/response"
-        #- "/offramp/system::stderr/system/in"
+        # for debugging
+        - "/offramp/system::stderr/system/in"
 
 mapping:
   /binding/main/01:

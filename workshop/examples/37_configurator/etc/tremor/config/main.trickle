@@ -1,9 +1,12 @@
 define script process
 script
   use std::array;
+  use std::string;
   use std::json;
   use std::type;
+  use std::random;
   use tremor::origin;
+  use tremor::system;
 
   # defaults for the server response
   let $response = {
@@ -37,15 +40,20 @@ script
 
   # --------------------------------------------------------------------------
 
-  let request_path_parts = match $request.url of
-    case r = %{path ~= dissect|/%{base}/%{rest}|} =>
-      [ "/#{r.path.base}", r.path.rest ]
-    default =>
-      [ $request.url.path ]
-  end;
+
+  # split path for easier path matching and segment extraction
+  # strip empty leading string
+  let request_path_parts = string::split($request.url.path, "/");
+  let request_path_parts = request_path_parts[1:array::len(request_path_parts)];
+
+  let state.count = state.count + 1;
+
+  # create a unique correlation id for collecting all responses from upstream quota serbvices
+  # and join them in a single response event
+  let $correlation = "#{system::ingest_ns()}#{random::integer(0, 100)}";
 
   # content based on method and path combo
-  match [$request.method, request_path_parts[0]] of
+  match [$request.method, $request.url.path] of
     case ["GET", "/"] =>
       let $response.headers["content-type"] = "text/plain",
       emit """
@@ -54,34 +62,48 @@ script
       Available routes:
 
       GET /services
-      POST /service/<id>
+      GET /service/<id>
+      GET /service/<id>/...
+      PUT /service/<id>/...
+      DELETE /service/<id>/...
 
       HEAD /ping
       GET /stats
 
-      /echo
+      * /echo
       """
 
     case ["GET", "/services"] =>
       [
         "quota_service"
       ]
-
-    case ["POST", "/service"] =>
-      let service_id = match array::len(request_path_parts) > 1 of
-        case true => request_path_parts[1]
-        default =>
-          let $response.status = 400,
-          emit {
-            "error": "Please provide a service id",
-            "event": event,
-          } => "app_error"
+    case %("GET", ~ glob|/service/?*|) =>
+      # get config values from one of the services
+      let service_id = request_path_parts[1],
+      let path = match array::len(request_path_parts) of
+        case 2 => "/quotas"
+        case 3 => "/quotas/#{request_path_parts[2]}"
       end,
+      let $request.headers["Content-Type"] = "application/json",
+      let $endpoint = {
+        "path": path
+      },
+      emit "" => "#{service_id}"
+    case %("PUT", ~ glob|/service/?*|) when array::len(request_path_parts) == 3 =>
+      # put config values to all registered services
+      let service_id = request_path_parts[1],
       let $response.status = 202,
       # TODO add common event structure and validate
       # also check if it's one of the registered services
+      let $endpoint = {"path": "/quotas/#{request_path_parts[2]}"},
       emit event => "#{service_id}"
-
+    case %("DELETE", ~ glob|/service/?*|) when array::len(request_path_parts) == 3 =>
+      # delete a service config value
+      # TODO: this is hard-coded logic for the quota_service
+      # make it more dynamic by matching on the service_id
+      let service_id = request_path_parts[1],
+      let $endpoint = {"path": "/quotas/#{request_path_parts[2]}"},
+      emit event => "#{service_id}"
     case ["HEAD", "/ping"] =>
       emit ""
 
@@ -107,6 +129,7 @@ script
     default =>
       let $response.status = 404,
       emit {
+        "handler": "Configurator",
         "error": "Path '#{$request.url.path}' not found for method #{$request.method}",
         "event": event,
       } => "app_error"
@@ -117,8 +140,7 @@ end;
 define qos::wal operator on_disk_wal with
   dir = "store",
   read_count = 20,
-  max_elements = 1000, # Capacity limit of 1000 stored events
-  max_bytes = 10485760 # Capacity limit of 1MB of events
+  max_elements = 1000 # Capacity limit of 1000 stored events
 end;
 
 create script process;
@@ -126,13 +148,12 @@ create operator on_disk_wal;
 
 # main request processing
 select event from in into process;
+# this is for short-circuiting requests that dont need to go through the upstream quota services
 select event from process into out;
 
+# we send events directed at the quota_service through the wal to have them retried until they succeed.
 select event from process/quota_service into on_disk_wal;
-select event from on_disk_wal into out/quota_service;
-
-# this ensures we return a response from configurator on service updates
-select event from process/quota_service into out;
+select from on_disk_wal into out/quota_service;
 
 # our defined app errors (still succesful processing from tremor's perspective)
 # useful to track these from different port (app_error) for metrics

@@ -1,0 +1,62 @@
+define script response_handling
+script
+  use std::base64;
+  use std::string;
+  use std::type;
+
+  let $response = {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-powered-by": "Tremor",
+      }
+    };
+
+  let op = match $ of
+    case %{ kv ~= %{ present op }} => $kv.op
+    default => null
+  end;
+  match op of
+    case "get" =>
+      # get 1 quota
+      let res = {},
+      let res[string::from_utf8_lossy(event.ok.key)] = event.ok.value,
+      emit res
+    case "scan" =>
+      # get all quotas
+      let quotas = {},
+      for event.ok of case (i, e) =>
+        let quotas[string::from_utf8_lossy(e.key)] = e.value
+      end,
+      emit quotas
+    case "put" =>
+      # add a quota
+      let $response.status = 201,
+      let res = {},
+      let res[string::from_utf8_lossy(event.ok.key)] = event.ok.value,
+      emit res
+    case "delete" =>
+      let event = match event.ok.value of
+        case null =>
+          let $response.status = 404,
+          {"error": "'#{string::from_utf8_lossy(event.ok.key)}' not found"}
+        default =>
+          let $response.status = 200,
+          let res = {},
+          let res[string::from_utf8_lossy(event.ok.key)] = event.ok.value,
+          res
+      end,
+      emit event
+    default =>
+      let $response.status = 500,
+      emit {
+        "error": event
+      }
+  end;
+end;
+
+create script response_handling;
+
+select event from in into response_handling;
+select event from response_handling into out;
+select event from response_handling/err into err;

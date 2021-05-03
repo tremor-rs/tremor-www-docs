@@ -13,20 +13,26 @@ appenders:
 
 
 root:
-  level: warn
+  level: debug
   appenders:
     - stdout
     - file
 
 loggers:
+  tide:
+    level: debug
+    appenders:
+      - stdout
+    additive: false
   tremor_runtime:
-    level: info
+    level: debug
     appenders:
       - stdout
       - file
     additive: false
   tremor:
-    level: info
+    level: debug
     appenders:
       - stdout
       - file
+    additive: false

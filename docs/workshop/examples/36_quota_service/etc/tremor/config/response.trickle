@@ -2,6 +2,7 @@ define script response_handling
 script
   use std::base64;
   use std::string;
+  use std::type;
 
   let $response = {
       "status": 200,

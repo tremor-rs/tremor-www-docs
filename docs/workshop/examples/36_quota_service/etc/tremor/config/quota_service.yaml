@@ -17,7 +17,7 @@ offramp:
     type: kv
     codec: json
     config:
-      dir: /etc/tremor/data/state
+      dir: /home/tremor/data/state
 
 binding:
   - id: main
@@ -36,7 +36,7 @@ binding:
       "/pipeline/quota_service/{instance}/out":
         - "/onramp/http/{instance}/in"
         # for debugging
-        #- "/offramp/system::stdout/system/in"
+        # - "/offramp/system::stdout/system/in"
 
       # initial get query against the state storage to fill in
       # the quota state in the logs pipeline

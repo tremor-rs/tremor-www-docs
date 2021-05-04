@@ -1,8 +1,8 @@
-version: '2.2'
+version: '3.8'
 services:
   # Tremor
   tremor:
-    image: tremorproject/tremor:edge
+    image: tremorproject/tremor:0.11
     ports:
       - 4316:4316
     environment:
@@ -19,7 +19,7 @@ services:
 
   # Elastic APM Server
   apm-server:
-    image: docker.elastic.co/apm/apm-server:7.12.0
+    image: docker.elastic.co/apm/apm-server:7.12.1
     depends_on:
       elasticsearch:
         condition: service_healthy
@@ -49,7 +49,7 @@ services:
 
   # Elastic Search
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
     environment:
     - bootstrap.memory_lock=true
     - cluster.name=docker-cluster
@@ -73,7 +73,7 @@ services:
 
   # Kibana
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.12.0
+    image: docker.elastic.co/kibana/kibana:7.12.1
     depends_on:
       elasticsearch:
         condition: service_healthy

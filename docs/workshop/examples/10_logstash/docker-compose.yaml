@@ -1,26 +1,41 @@
-version: '3.3'
+version: '3.8'
 services:
   elastic:
-    image: 'docker.elastic.co/elasticsearch/elasticsearch:6.6.1'
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.12.1'
     ports:
       - '9200:9200'
       - '9300:9300'
     environment:
       discovery.type: single-node
+    healthcheck:
+      interval: 20s
+      retries: 10
+      test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
+    networks:
+      - net
   kibana:
-    image: 'docker.elastic.co/kibana/kibana:6.6.1'
+    image: 'docker.elastic.co/kibana/kibana:7.12.1'
     ports:
       - '5601:5601'
     depends_on:
-      - elastic
+      elastic:
+        condition: service_healthy
     environment:
       ELASTICSEARCH_URL: 'http://elastic:9200'
-    links:
-      - elastic
+      ELASTICSEARCH_HOSTS: http://elastic:9200
+    networks:
+      - net
+    healthcheck:
+      interval: 10s
+      retries: 20
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:5601/api/status
   tremor:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:0.11
     depends_on:
-      - kibana
+      kibana:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     ports:
       - 4242:4242
     environment:
@@ -29,3 +44,9 @@ services:
     volumes:
       - ./etc/tremor:/etc/tremor:ro
       - ./var/log:/var/log:rw
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge

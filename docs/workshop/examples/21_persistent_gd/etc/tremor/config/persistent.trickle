@@ -3,8 +3,7 @@ use tremor::system;
 define qos::wal operator on_disk_wal with
   dir = "store",
   read_count = 20,
-  max_elements = 1000, # Capacity limit of 1000 stored events
-  max_bytes = 10485760 # Capacity limit of 1MB of events
+  max_elements = 1000 # Capacity limit of 1000 stored events
 end;
 
 create operator on_disk_wal;

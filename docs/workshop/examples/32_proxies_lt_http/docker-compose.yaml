@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   tremor-server:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:0.11
     ports:
       - 9898:9898
       - 8139:8139
@@ -13,7 +13,7 @@ services:
       - ../30_servers_lt_http/etc/tremor:/etc/tremor:rw
       - ../30_servers_lt_http/var/log:/var/log:rw
   tremor-proxy:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:0.11
     depends_on:
       - tremor-server
     ports:

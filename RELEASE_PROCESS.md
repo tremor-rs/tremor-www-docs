@@ -13,4 +13,7 @@
 - Tag the repo:
   * `git tag -a -m"Release v<MAJOR>.<MINOR>.<BUGFIX>" v<MAJOR>.<MINOR>.<BUGFIX> <COMMIT>`
   * `git push origin --tag`
+- Try to bump up the docker image version in the workshop examnples in `docs/workshops/examples`
+  and test if they still run successfully. If not mark them as only working with the last version,
+  fix the example right away or create an issue for updating the example.
 - Go to bed.

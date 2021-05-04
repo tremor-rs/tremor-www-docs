@@ -85,10 +85,10 @@ start and stop tremor and the OpenTelemetry collector as follows:
 
 ```bash
 # Start
-$ docker-compose up
+$ docker compose up
 
 # Stop
-$ docker-compose down
+$ docker compose down
 ```
 
 ## Post-installation steps

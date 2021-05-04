@@ -229,5 +229,5 @@ In the case of an upstream failing, the `qos::backpressure` operators will kick 
 Here is an example response for the case an upstream is not reachable:
 
 ```json
-{"error":"ConnectFailed: failed to connect to the server","event_id":"1: 4"}
+{"error":"ConnectFailed: failed to connect to the server","event_id":"1:0:4"}
 ```

@@ -104,10 +104,10 @@ $ docker stop 33_proxies_lt_ws_tremor-server_1
 # upstream connection now gets closed from the proxy
 $ echo "hello" | websocat -n1 ws://localhost:9139
 {"error":"Error receiving reply from server ws://localhost:8139: WebSocket protocol error: Connection reset without closing handshake","event_id":"
-1: 2"}
+1:0:9"}
 
 # sending further messages results in errors
 $ echo "hello" | websocat -n1 ws://localhost:9139
 $ echo "hello" | websocat -n1 ws://localhost:9139
-{"error":"Error sending event to server ws://localhost:8139: Trying to work with closed connection","event_id":"1: 3"}
+{"error":"Error sending event to server ws://localhost:8139: Trying to work with closed connection","event_id":"1:0:10"}
 ```

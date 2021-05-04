@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 services:
   influxdb:
     image: influxdb:1.7
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./etc/telegraf:/etc/telegraf:ro
   tremor:
-    image: tremorproject/tremor:latest
+    image: tremorproject/tremor:0.11
     depends_on:
       - influxdb
     ports:

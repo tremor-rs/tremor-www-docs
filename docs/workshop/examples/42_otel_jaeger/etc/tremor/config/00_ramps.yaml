@@ -8,7 +8,7 @@ onramp:
     config:
       port: 4316
       host: "0.0.0.0"
-
+offramp:
   - id: stdout
     type: file
     codec: json

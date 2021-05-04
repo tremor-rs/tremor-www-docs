@@ -14,4 +14,4 @@ offramp:
     type: elastic # an elastic search offramp
     config:
       nodes: # this is the elastic search host started by docker compose
-        - elastic:9200
+        - http://elastic:9200

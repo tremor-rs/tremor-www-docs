@@ -91,5 +91,5 @@ If there's internal tremor error while processing the incoming message (eg: code
 ```sh
 # after changing the onramp codec to json
 $ echo "{" | websocat -n1 ws://localhost:8139
-{"error":"[Codec] Syntax at character 0 ('{')","event_id":1,"source_id":"tremor://localhost/onramp/ws/01/in"}
+{"error":"SIMD JSON error: Syntax at character 0 ('{')","event_id":0,"source_id":"tremor://localhost/onramp/ws/01/in"}
 ```

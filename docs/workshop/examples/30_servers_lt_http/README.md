@@ -217,5 +217,5 @@ content-type: application/json
 
 # similarly, for onramp-level error when invalid data is sent (non-json here when the request content-type header is set to be json)
 $ curl -H'Content-Type:application/json' http://localhost:8139/echo -d'{'
-{"error":"Oh no, we ran into something unexpected :(\n [Codec] Syntax at character 0 ('{')","event_id":6,"source_id":"tremor://localhost/onramp/http/01/in"}
+{"error":"Oh no, we ran into something unexpected :(\n SIMD JSON error: Syntax at character 0 ('{')","event_id":9,"source_id":"tremor://localhost/onramp/http/01/in"}
 ```

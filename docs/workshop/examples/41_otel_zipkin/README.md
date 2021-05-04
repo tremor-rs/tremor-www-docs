@@ -78,10 +78,10 @@ start and stop tremor and the opentelemetry collector as follows:
 
 ```bash
 # Start
-$ docker-compose up
+$ docker compose up
 
 # Stop
-$ docker-compose down
+$ docker compose down
 ```
 
 ## Zipkin client

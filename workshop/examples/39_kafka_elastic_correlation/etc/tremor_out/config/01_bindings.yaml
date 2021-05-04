@@ -1,0 +1,29 @@
+binding:
+  - id: kafka_elastic
+    links:
+      # ingest into elastic
+      "/onramp/kafka_in/{instance}/out":
+        - "/pipeline/ingest/{instance}/in"
+      "/pipeline/ingest/{instance}/out":
+        - "/offramp/elastic_out/{instance}/in"
+      "/pipeline/ingest/{instance}/err":
+        - "/offramp/system::stderr/{instance}/in"
+
+      # elastic ingest response handling
+      # ok handling
+      "/offramp/elastic_out/{instance}/out":
+        - "/pipeline/ingest_ok_handling/{instance}/in"
+      "/pipeline/ingest_ok_handling/{instance}/out":
+        - "/offramp/kafka_out/{instance}/in"
+        - "/offramp/ok_stdout/{instance}/in"
+      "/pipeline/ingest_ok_handling/{instance}/err":
+        - "/offramp/system::stderr/{instance}/in"
+      # err handling
+      "/offramp/elastic_out/{instance}/err":
+        - "/pipeline/ingest_err_handling/{instance}/in"
+      "/pipeline/ingest_err_handling/{instance}/out":
+        - "/offramp/kafka_out/{instance}/in"
+        - "/offramp/err_stderr/{instance}/in"
+      "/pipeline/ingest_err_handling/{instance}/err":
+        - "/offramp/system::stderr/{instance}/in"
+

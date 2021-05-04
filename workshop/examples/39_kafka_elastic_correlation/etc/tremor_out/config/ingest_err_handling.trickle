@@ -1,0 +1,45 @@
+# handle elastic response from failing document or failing bulk insert
+# so this might be scoped to a document or to a failing elastic bulk request
+define script error_notify
+script
+
+  # add kafka metadata
+  let $kafka = {
+    "headers": {
+      "message_id": $correlation
+    },
+    "key": $correlation
+  };
+
+  match $ of
+    case %{ present elastic } =>
+      # this is an error for an invalid event
+      emit {
+        "success": false,
+        "message_id": $correlation,
+        "payload": event.payload,
+        "error": event.error,
+        "elastic_metadata": $elastic
+      } => "out"
+    default =>
+      # this is an error report regarding the bulk request to ES
+      # we know it is batched, so $correlation is an array
+      # we need to explode this event into 1 event per $correlation value,
+      # so the reporting back to kafka has 1 kafka record per ingested document
+      emit event => "explode"
+  end;
+end;
+
+create script error_notify;
+
+select event from in into error_notify;
+select event from error_notify/out into out;
+# explode the event for each `$correlation` value
+select {
+  "success": false,
+  "message_id": group[0],
+  "payload": event.payload,
+  "error": event.error
+} from error_notify/explode group by each($correlation) into out;
+
+select event from error_notify/err into err;

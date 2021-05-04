@@ -1,0 +1,2257 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="The Tremor Team">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Ingesting documents from kafka into elastic - Tremor Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ingesting-documents-from-kafka-into-elastic" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tremor Documentation" class="md-header__button md-logo" aria-label="Tremor Documentation" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tremor Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ingesting documents from kafka into elastic
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/tremor-rs/tremor-www-docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tremor-rs/tremor-www-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tremor Documentation" class="md-nav__button md-logo" aria-label="Tremor Documentation" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="logo">
+
+    </a>
+    Tremor Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/tremor-rs/tremor-www-docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tremor-rs/tremor-www-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../overview/" class="md-nav__link">
+        Architecture Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Tremor Query
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tremor Query" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tremor Query
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/operators/" class="md-nav__link">
+        Operators
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/modules/" class="md-nav__link">
+        Modules
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/pp/" class="md-nav__link">
+        Lexical Preprocessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/walkthrough/" class="md-nav__link">
+        Walkthrough
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" type="checkbox" id="__nav_3_6" >
+      
+      <label class="md-nav__link" for="__nav_3_6">
+        Aggregate Function Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Aggregate Function Reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          Aggregate Function Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/functions/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/functions/stats/" class="md-nav__link">
+        stats
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/functions/win/" class="md-nav__link">
+        win
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-query/recipes/" class="md-nav__link">
+        Recipes
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Tremor Script
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tremor Script" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tremor Script
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/modules/" class="md-nav__link">
+        Modules
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/pp/" class="md-nav__link">
+        Lexical Preprocessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        Function Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Function Reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Function Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/functions/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/" class="md-nav__link">
+        cncf
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/tremor/" class="md-nav__link">
+        tremor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/" class="md-nav__link">
+        std
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/integer/" class="md-nav__link">
+        std::integer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/range/" class="md-nav__link">
+        std::range
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/json/" class="md-nav__link">
+        std::json
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/math/" class="md-nav__link">
+        std::math
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/string/" class="md-nav__link">
+        std::string
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/url/" class="md-nav__link">
+        std::url
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/re/" class="md-nav__link">
+        std::re
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/base64/" class="md-nav__link">
+        std::base64
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/float/" class="md-nav__link">
+        std::float
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/binary/" class="md-nav__link">
+        std::binary
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/type/" class="md-nav__link">
+        std::type
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/random/" class="md-nav__link">
+        std::random
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/record/" class="md-nav__link">
+        std::record
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/test/" class="md-nav__link">
+        std::test
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/std/array/" class="md-nav__link">
+        std::array
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/tremor/system/" class="md-nav__link">
+        tremor::system
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/tremor/origin/" class="md-nav__link">
+        tremor::origin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/tremor/chash/" class="md-nav__link">
+        tremor::chash
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/" class="md-nav__link">
+        cncf::otel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/metrics/" class="md-nav__link">
+        cncf::otel::metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/logs/" class="md-nav__link">
+        cncf::otel::logs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/trace_id/" class="md-nav__link">
+        cncf::otel::trace_id
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/span_id/" class="md-nav__link">
+        cncf::otel::span_id
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/trace/" class="md-nav__link">
+        cncf::otel::trace
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/metrics/temporality/" class="md-nav__link">
+        cncf::otel::metrics::temporality
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/trace/status/" class="md-nav__link">
+        cncf::otel::trace::status
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/trace/spankind/" class="md-nav__link">
+        cncf::otel::trace::spankind
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/logs/severity/" class="md-nav__link">
+        cncf::otel::logs::severity
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/stdlib/cncf/otel/logs/traceflags/" class="md-nav__link">
+        cncf::otel::logs::traceflags
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        Extractor Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Extractor Reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extractor Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/base64/" class="md-nav__link">
+        Base64
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/cidr/" class="md-nav__link">
+        CIDR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/datetime/" class="md-nav__link">
+        Datetime
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/dissect/" class="md-nav__link">
+        Dissect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/glob/" class="md-nav__link">
+        Glob
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/grok/" class="md-nav__link">
+        Grok
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/influx/" class="md-nav__link">
+        Influx
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/json/" class="md-nav__link">
+        JSON
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/kv/" class="md-nav__link">
+        KV
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/extractors/regex/" class="md-nav__link">
+        Regex
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tremor-script/recipes/" class="md-nav__link">
+        Recipes
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Operations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Operations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Operations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/monitoring/" class="md-nav__link">
+        Monitoring
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/cli/" class="md-nav__link">
+        Tremor Tool
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/configuration-walkthrough/" class="md-nav__link">
+        Configuration Walkthrough
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/gdcb/" class="md-nav__link">
+        Circuit Breakers and Guaranteed Delivery
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../operations/linked-transports/" class="md-nav__link">
+        Linked Transports
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Artefacts
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Artefacts" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Artefacts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../artefacts/preprocessors/" class="md-nav__link">
+        Preprocessors
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../artefacts/postprocessors/" class="md-nav__link">
+        Postprocessors
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../artefacts/codecs/" class="md-nav__link">
+        Codecs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../artefacts/onramps/" class="md-nav__link">
+        Onramps
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../artefacts/offramps/" class="md-nav__link">
+        Offramps
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../history/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      <label class="md-nav__link" for="__nav_10">
+        Workshops
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Workshops" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Workshops
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_1" type="checkbox" id="__nav_10_1" >
+      
+      <label class="md-nav__link" for="__nav_10_1">
+        Basic examples
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Basic examples" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_1">
+          <span class="md-nav__icon md-icon"></span>
+          Basic examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_passthrough/" class="md-nav__link">
+        Passthrough
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_filter/" class="md-nav__link">
+        Filter
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_transform/" class="md-nav__link">
+        Transform
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_validate/" class="md-nav__link">
+        Validate
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_2" type="checkbox" id="__nav_10_2" >
+      
+      <label class="md-nav__link" for="__nav_10_2">
+        Integrations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Integrations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_2">
+          <span class="md-nav__icon md-icon"></span>
+          Integrations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_logstash/" class="md-nav__link">
+        Logstash
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_influx/" class="md-nav__link">
+        Influx
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_postgres_timescaledb/" class="md-nav__link">
+        Timescale
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_3" type="checkbox" id="__nav_10_3" >
+      
+      <label class="md-nav__link" for="__nav_10_3">
+        Delivery Guarantees
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Delivery Guarantees" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_3">
+          <span class="md-nav__icon md-icon"></span>
+          Delivery Guarantees
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_transient_gd/" class="md-nav__link">
+        Transient GD
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21_persistent_gd/" class="md-nav__link">
+        Persistent GD
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22_roundrobin/" class="md-nav__link">
+        Round Robin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23_kafka_gd/" class="md-nav__link">
+        Kafka
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_4" type="checkbox" id="__nav_10_4" >
+      
+      <label class="md-nav__link" for="__nav_10_4">
+        Linked Ramps
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Linked Ramps" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_4">
+          <span class="md-nav__icon md-icon"></span>
+          Linked Ramps
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../30_servers_lt_http/" class="md-nav__link">
+        HTTP Server
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../31_servers_lt_ws/" class="md-nav__link">
+        Websocket Server
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../32_proxies_lt_http/" class="md-nav__link">
+        HTTP Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../33_proxies_lt_ws/" class="md-nav__link">
+        Websocket Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../34_bridges_lt_http_ws/" class="md-nav__link">
+        HTTP -> WS Bridge
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../35_reverse_proxy_load_balancing/" class="md-nav__link">
+        HTTP Load Balancing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../36_quota_service/" class="md-nav__link">
+        Quota Service
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../37_configurator/" class="md-nav__link">
+        Configurator
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      <label class="md-nav__link" for="__nav_10_5">
+        CNCF
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="CNCF" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          CNCF
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../40_otel_passthrough/" class="md-nav__link">
+        OpenTelemetry Passthrough
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41_otel_zipkin/" class="md-nav__link">
+        Zipkin Interworking
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../42_otel_jaeger/" class="md-nav__link">
+        Jaeger Interworking
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../43_otel_prometheus/" class="md-nav__link">
+        Prometheus Interworking
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../44_otel_elastic_apm/" class="md-nav__link">
+        Elastic APM Interworking
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      <label class="md-nav__link" for="__nav_11">
+        Development
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/quick-start/" class="md-nav__link">
+        Quick Start Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/profiling/" class="md-nav__link">
+        Profiling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/debugging/" class="md-nav__link">
+        Debugging with LLDB
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11_4" type="checkbox" id="__nav_11_4" >
+      
+      <label class="md-nav__link" for="__nav_11_4">
+        Benchmarking
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Benchmarking" data-md-level="2">
+        <label class="md-nav__title" for="__nav_11_4">
+          <span class="md-nav__icon md-icon"></span>
+          Benchmarking
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/benchmarking/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/benchmarks/LogstashBenchmark/" class="md-nav__link">
+        Logstash
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../development/issue-investigation/" class="md-nav__link">
+        Investigation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      <label class="md-nav__link" for="__nav_12">
+        Governance
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Governance" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Governance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CodeOfConduct/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CII/" class="md-nav__link">
+        Core Infrastructure Initiative
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../policies/security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-source" class="md-nav__link">
+    Data source
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ingestion-from-kafka-to-elasticsearch" class="md-nav__link">
+    Ingestion from Kafka to Elasticsearch
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trying-this-at-home" class="md-nav__link">
+    Trying this at home
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/tremor-rs/tremor-www-docs/edit/main/docs/workshop/examples/39_kafka_elastic_correlation/README.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="ingesting-documents-from-kafka-into-elastic">Ingesting documents from kafka into elastic<a class="headerlink" href="#ingesting-documents-from-kafka-into-elastic" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the application code here is available from the docs <a href="https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/38_kafka_elastic_correlation">git repository</a>.</p>
+</div>
+<p>This example tries to show how to use tremor as the orchestrator for ingesting documents coming from kafka into elasticsearch and notify the upstream system of success or failure of the ingest operation for every single document.</p>
+<h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
+<p>In this walkthrough we explore how to make use of <em>Linked Transports</em>, <em>Guaranteed Delivery</em> and <em>Correlation</em> features of tremor.</p>
+<p>In the <code>tremor_in</code> directory we have set up a tremor instance that acts as our data source for this workshop. It is not our main focus, but lets look at it, so we understand our source data.</p>
+<h3 id="data-source">Data source<a class="headerlink" href="#data-source" title="Permanent link">&para;</a></h3>
+<p>The tremor instance used for feeding data into our main system contains of a <code>metronome</code> onramp which will emit an event every second. The connected pipeline will enrich those events with some metadata destined for the kafka offramp it is connected to.
+Based on random choice it will change the event format to some incompatible format. This is done so we can trigger errors at elasticsearch later on.</p>
+<p>The script responsible for creating the events is the following:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">define</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">add_meta</span><span class="w"></span>
+<span class="nx">script</span><span class="w"></span>
+
+<span class="w">  </span><span class="kd">use</span><span class="w"> </span><span class="nx">tremor</span><span class="err">::</span><span class="nx">system</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">use</span><span class="w"> </span><span class="nx">std</span><span class="err">::</span><span class="nx">random</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># we add a message id as kafka header,</span>
+<span class="w">  </span><span class="c1"># that we use later on for correlation and notifying purposes</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">message_id</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="s">&quot;</span><span class="nx">#{system</span><span class="err">::</span><span class="nx">ingest_ns</span><span class="err">()</span><span class="nx">}</span><span class="s">&quot;</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">kafka</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;headers&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;message_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">message_id</span><span class="w"></span>
+<span class="w">    </span><span class="nx">}</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;key&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">message_id</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="err">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># trigger some errors due to invalid formats</span>
+<span class="w">  </span><span class="c1"># ES auto creates an index schema for the first event it rerceives,</span>
+<span class="w">  </span><span class="c1"># some next event will have a differently typed payload for the field `might_be_invalid`</span>
+<span class="w">  </span><span class="kd">match</span><span class="w"> </span><span class="nx">random</span><span class="err">::</span><span class="nx">bool</span><span class="err">()</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
+<span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;might_be_invalid&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">[</span><span class="kc">true</span><span class="err">,</span><span class="w"> </span><span class="kc">false</span><span class="err">]</span><span class="w"></span>
+<span class="w">    </span><span class="nx">}</span><span class="w"></span>
+<span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;might_be_invalid&quot;</span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">    </span><span class="nx">}</span><span class="w"></span>
+<span class="w">  </span><span class="kd">end</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>Here we switch the value of the <code>might_be_invalid</code> field, based on ramdomness.
+We also create a <code>message_id</code> from the event ingest timestamp and put it into the kafka headers. We are going to need this <code>message_id</code> later on for reporting the ingestion success or failure.</p>
+<p>The resulting event is then put to kafka into the <code>tremor</code> topic.</p>
+<h3 id="ingestion-from-kafka-to-elasticsearch">Ingestion from Kafka to Elasticsearch<a class="headerlink" href="#ingestion-from-kafka-to-elasticsearch" title="Permanent link">&para;</a></h3>
+<p>In our ingestion pipeline in the <code>tremor_out</code> directory, we have setup a kafka consumer consuming from the <code>tremor</code> topic. It is forwarding the messages to elasticsearch:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">define</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">add_correlation</span><span class="w"></span>
+<span class="nx">script</span><span class="w"></span>
+<span class="w">  </span><span class="kd">use</span><span class="w"> </span><span class="nx">tremor</span><span class="err">::</span><span class="nx">origin</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">use</span><span class="w"> </span><span class="nx">tremor</span><span class="err">::</span><span class="nx">system</span><span class="err">;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">use</span><span class="w"> </span><span class="nx">std</span><span class="err">::</span><span class="nx">string</span><span class="err">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># add correlation</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="kd">match</span><span class="w"> </span><span class="err">$</span><span class="nx">kafka</span><span class="err">.</span><span class="nx">headers</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
+<span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">%</span><span class="nx">{</span><span class="w"> </span><span class="kd">present</span><span class="w"> </span><span class="nx">message_id</span><span class="w"> </span><span class="nx">}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"></span>
+<span class="w">      </span><span class="nx">headers</span><span class="err">[</span><span class="s">&quot;message_id&quot;</span><span class="err">]</span><span class="w"></span>
+<span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># stupid fallback, actually should never happen</span>
+<span class="w">      </span><span class="s">&quot;</span><span class="nx">#{</span><span class="w"> </span><span class="nx">system</span><span class="err">::</span><span class="nx">ingest_ns</span><span class="err">()</span><span class="w"> </span><span class="nx">}</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># add elastic metadata</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">elastic</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;_index&quot;</span><span class="err">:</span><span class="w"> </span><span class="s">&quot;foo&quot;</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">string</span><span class="err">::</span><span class="nx">from_utf8_lossy</span><span class="err">($</span><span class="nx">kafka</span><span class="err">[</span><span class="s">&quot;key&quot;</span><span class="err">])</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="err">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># form the event</span>
+<span class="w">  </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;some_data&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">[</span><span class="w"> </span><span class="nx">origin</span><span class="err">::</span><span class="nx">as_uri_string</span><span class="err">()</span><span class="w"> </span><span class="err">]</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>Here we add metadata for elasticsearch, so it ends up in the right index, we use the kafka key as elastic document id.
+We also extract a <code>message_id</code> from the kafka headers and put it in <code>$correlation</code>. This special metadata value will
+be forwarded across linked transports, like elasticsearch.</p>
+<p>Further down in the ingestion pipeline we batch events up into counts of 10 to be more efficient when sending stuff over to elastic.</p>
+<p>The elasticsearch offramp will issue success and error events from its <code>out</code> and <code>err</code> ports respectively. One event per batched document or one error event if something went wrong with the overall request execution (e.g. elasticsearch is not reachable).</p>
+<p>We handle those events in two different pipelines. Success events are handled in this one:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">define</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">correlate</span><span class="w"></span>
+<span class="nx">script</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># add kafka metadata</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">kafka</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;headers&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;message_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"></span>
+<span class="w">    </span><span class="nx">}</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;key&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="err">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># build up the notify event for success</span>
+<span class="w">  </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;success&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">success</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;message_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;payload&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">payload</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;elastic_metadata&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">elastic</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="w"></span>
+
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="nx">create</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">correlate</span><span class="err">;</span><span class="w"></span>
+
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">correlate</span><span class="err">;</span><span class="w"></span>
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">correlate</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">correlate</span><span class="err">/</span><span class="nx">err</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">err</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>Here we extract the <code>$correlation</code> metadata and put it into the event payload. The actual event is sent back to kafka into the topic: <code>ingest_notify</code>. The machinery outside of this tremor application can re-inject the message based on the reported status, if need be. For you to enjoy events flying by we also directed the events to stdout/stderr.</p>
+<p>For handling errors we also get <code>$correlation</code> metadata and can forward it back to kafka:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># handle elastic response from failing document or failing bulk insert</span>
+<span class="c1"># so this might be scoped to a document or to a failing elastic bulk request</span>
+<span class="nx">define</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">error_notify</span><span class="w"></span>
+<span class="nx">script</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1"># add kafka metadata</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="err">$</span><span class="nx">kafka</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;headers&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;message_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"></span>
+<span class="w">    </span><span class="nx">}</span><span class="err">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;key&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="w"></span>
+<span class="w">  </span><span class="nx">}</span><span class="err">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kd">match</span><span class="w"> </span><span class="err">$</span><span class="w"> </span><span class="kd">of</span><span class="w"></span>
+<span class="w">    </span><span class="kd">case</span><span class="w"> </span><span class="err">%</span><span class="nx">{</span><span class="w"> </span><span class="kd">present</span><span class="w"> </span><span class="nx">elastic</span><span class="w"> </span><span class="nx">}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># this is an error for an invalid event</span>
+<span class="w">      </span><span class="kd">emit</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;success&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">false</span><span class="err">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;message_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">correlation</span><span class="err">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;payload&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">payload</span><span class="err">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;error&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">error</span><span class="err">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;elastic_metadata&quot;</span><span class="err">:</span><span class="w"> </span><span class="err">$</span><span class="nx">elastic</span><span class="w"></span>
+<span class="w">      </span><span class="nx">}</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;out&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">default</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># this is an error report regarding the bulk request to ES</span>
+<span class="w">      </span><span class="c1"># we know it is batched, so $correlation is an array</span>
+<span class="w">      </span><span class="c1"># we need to explode this event into 1 event per $correlation value,</span>
+<span class="w">      </span><span class="c1"># so the reporting back to kafka has 1 kafka record per ingested document</span>
+<span class="w">      </span><span class="kd">emit</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="err">=&gt;</span><span class="w"> </span><span class="s">&quot;explode&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="kd">end</span><span class="err">;</span><span class="w"></span>
+<span class="kd">end</span><span class="err">;</span><span class="w"></span>
+
+<span class="nx">create</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="nx">error_notify</span><span class="err">;</span><span class="w"></span>
+
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">error_notify</span><span class="err">;</span><span class="w"></span>
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">error_notify</span><span class="err">/</span><span class="nx">out</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+<span class="c1"># explode the event for each `$correlation` value</span>
+<span class="nx">select</span><span class="w"> </span><span class="nx">{</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;success&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">false</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;message_id&quot;</span><span class="err">:</span><span class="w"> </span><span class="nx">group</span><span class="err">[</span><span class="mi">0</span><span class="err">],</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;payload&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">payload</span><span class="err">,</span><span class="w"></span>
+<span class="w">  </span><span class="s">&quot;error&quot;</span><span class="err">:</span><span class="w"> </span><span class="kc">event</span><span class="err">.</span><span class="nx">error</span><span class="w"></span>
+<span class="nx">}</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">error_notify</span><span class="err">/</span><span class="nx">explode</span><span class="w"> </span><span class="nx">group</span><span class="w"> </span><span class="nx">by</span><span class="w"> </span><span class="nx">each</span><span class="err">($</span><span class="nx">correlation</span><span class="err">)</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
+
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">error_notify</span><span class="err">/</span><span class="nx">err</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">err</span><span class="err">;</span><span class="w"></span>
+</code></pre></div>
+<p>Here we distinguish between errors per document (e.g. invalid format for the given index) and errors scoped to the whole request execution (no <code>$elastic</code> metadata).
+In the case of a request error, we have an array of all the batched <code>$correlation</code> values and need to "explode" the event into 1 per <code>$correlation</code> id, so we can correctly
+report back to kafka 1 document at a time.</p>
+<h2 id="trying-this-at-home">Trying this at home<a class="headerlink" href="#trying-this-at-home" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>docker compose up
+</code></pre></div>
+<p>Once everything is set up you will see logs like this in your console:</p>
+<div class="highlight"><pre><span></span><code>tremor_out_1     | [ERR] {&quot;success&quot;:false,&quot;message_id&quot;:&quot;MTYyMDEzNjg1NDY2NzI5OTQwMA==&quot;,&quot;payload&quot;:{&quot;event&quot;:{&quot;event&quot;:{&quot;onramp&quot;:&quot;metronome&quot;,&quot;ingest_ns&quot;:1620136854667292300,&quot;id&quot;:601},&quot;might_be_invalid&quot;:2},&quot;some_data&quot;:[&quot;tremor-kafka://kafka:9092/tremor/0/601&quot;]},&quot;error&quot;:{&quot;caused_by&quot;:{&quot;reason&quot;:&quot;Current token (VALUE_NUMBER_INT) not of boolean type\n at [Source: (byte[])\&quot;POST /_bulk HTTP/1.1\r\ncontent-type: application/json\r\ncontent-length: 2216\r\nuser-agent: reqwest/0.9.24\r\naccept: */*\r\naccept-encoding: gzip\r\nhost: elasticsearch:9200\r\n\r\n{\&quot;index\&quot;:{\&quot;_index\&quot;:\&quot;foo\&quot;,\&quot;_id\&quot;:\&quot;1620136845697865700\&quot;}}\n{\&quot;event\&quot;:{\&quot;event\&quot;:{\&quot;onramp\&quot;:\&quot;metronome\&quot;,\&quot;ingest_ns\&quot;:1620136845697859400,\&quot;id\&quot;:592},\&quot;might_be_invalid\&quot;:[true,false]},\&quot;some_data\&quot;:[\&quot;tremor-kafka://kafka:9092/tremor/0/592\&quot;]}\n{\&quot;index\&quot;:{\&quot;_index\&quot;:\&quot;foo\&quot;,\&quot;_id\&quot;:\&quot;1620136846698130900\&quot;}}\n{\&quot;event\&quot;:{\&quot;event\&quot;:{\&quot;onramp\&quot;:\&quot;metronome\&quot;,\&quot;ingest_ns\&quot;\&quot;[truncated 1884 bytes]; line: 1, column: 103]&quot;,&quot;type&quot;:&quot;json_parse_exception&quot;},&quot;reason&quot;:&quot;failed to parse field [event.might_be_invalid] of type [boolean] in document with id &#39;1620136854667299400&#39;. Preview of field&#39;s value: &#39;2&#39;&quot;,&quot;type&quot;:&quot;mapper_parsing_exception&quot;},&quot;elastic_metadata&quot;:{&quot;_id&quot;:&quot;1620136854667299400&quot;,&quot;_index&quot;:&quot;foo&quot;,&quot;_type&quot;:&quot;_doc&quot;,&quot;id&quot;:&quot;1620136854667299400&quot;,&quot;index&quot;:&quot;foo&quot;,&quot;doc_type&quot;:&quot;_doc&quot;}}
+tremor_out_1     | [OK] {&quot;success&quot;:true,&quot;message_id&quot;:&quot;MTYyMDEzNjg1MjY2NjgxMzAwMA==&quot;,&quot;payload&quot;:{&quot;event&quot;:{&quot;event&quot;:{&quot;onramp&quot;:&quot;metronome&quot;,&quot;ingest_ns&quot;:1620136852666806400,&quot;id&quot;:599},&quot;might_be_invalid&quot;:[true,false]},&quot;some_data&quot;:[&quot;tremor-kafka://kafka:9092/tremor/0/599&quot;]},&quot;elastic_metadata&quot;:{&quot;_id&quot;:&quot;1620136852666813000&quot;,&quot;_index&quot;:&quot;foo&quot;,&quot;_type&quot;:&quot;_doc&quot;,&quot;id&quot;:&quot;1620136852666813000&quot;,&quot;index&quot;:&quot;foo&quot;,&quot;doc_type&quot;:&quot;_doc&quot;,&quot;version&quot;:1}}
+tremor_out_1     | [OK] {&quot;success&quot;:true,&quot;message_id&quot;:&quot;MTYyMDEzNjg1MzY2NzA5NjAwMA==&quot;,&quot;payload&quot;:{&quot;event&quot;:{&quot;event&quot;:{&quot;onramp&quot;:&quot;metronome&quot;,&quot;ingest_ns&quot;:1620136853667088800,&quot;id&quot;:600},&quot;might_be_invalid&quot;:[true,false]},&quot;some_data&quot;:[&quot;tremor-kafka://kafka:9092/tremor/0/600&quot;]},&quot;elastic_metadata&quot;:{&quot;_id&quot;:&quot;1620136853667096000&quot;,&quot;_index&quot;:&quot;foo&quot;,&quot;_type&quot;:&quot;_doc&quot;,&quot;id&quot;:&quot;1620136853667096000&quot;,&quot;index&quot;:&quot;foo&quot;,&quot;doc_type&quot;:&quot;_doc&quot;,&quot;version&quot;:1}}
+</code></pre></div>
+<p>Here we see one error message and two successful messages. For the error message you can clearly recognize the cause: <code>Current token (VALUE_NUMBER_INT) not of boolean type</code>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

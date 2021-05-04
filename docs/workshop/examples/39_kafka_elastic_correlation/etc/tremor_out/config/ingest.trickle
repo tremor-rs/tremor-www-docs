@@ -1,0 +1,43 @@
+# ingest.trickle
+#
+# takes the incoming event from kafka and adds the correlation id from the kafka headers
+# and preparing an elasticsearch document
+define script add_correlation
+script
+  use tremor::origin;
+  use tremor::system;
+  use std::string;
+
+  # add correlation
+  let $correlation = match $kafka.headers of
+    case headers = %{ present message_id } =>
+      headers["message_id"]
+    default =>
+      # stupid fallback, actually should never happen
+      "#{ system::ingest_ns() }"
+  end;
+
+  # add elastic metadata
+  let $elastic = {
+    "_index": "foo",
+    "_id": string::from_utf8_lossy($kafka["key"])
+  };
+
+  # form the event
+  {
+    "event": event,
+    "some_data": [ origin::as_uri_string() ]
+  }
+end;
+
+create script add_correlation;
+
+define generic::batch operator batch with
+  count = 10
+end;
+create operator batch;
+
+select event from in into add_correlation;
+select event from add_correlation into batch;
+select event from batch into out;
+select event from add_correlation/err into err;

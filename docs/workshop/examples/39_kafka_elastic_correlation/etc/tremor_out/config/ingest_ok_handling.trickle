@@ -1,0 +1,27 @@
+# handle positive elastic ingest response
+define script correlate
+script
+
+  # add kafka metadata
+  let $kafka = {
+    "headers": {
+      "message_id": $correlation
+    },
+    "key": $correlation
+  };
+
+  # build up the notify event for success
+  {
+    "success": event.success,
+    "message_id": $correlation,
+    "payload": event.payload,
+    "elastic_metadata": $elastic
+  }
+
+end;
+
+create script correlate;
+
+select event from in into correlate;
+select event from correlate into out;
+select event from correlate/err into err;

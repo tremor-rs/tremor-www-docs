@@ -1,0 +1,35 @@
+define script add_meta
+script
+
+  use tremor::system;
+  use std::random;
+  # we add a message id as kafka header,
+  # that we use later on for correlation and notifying purposes
+  let message_id = "#{system::ingest_ns()}";
+  let $kafka = {
+    "headers": {
+      "message_id": message_id
+    },
+    "key": message_id
+  };
+
+  # trigger some errors due to invalid formats
+  # ES auto creates an index schema for the first event it rerceives,
+  # some next event will have a differently typed payload for the field `might_be_invalid`
+  match random::bool() of
+    case true => {
+      "event": event,
+      "might_be_invalid": [true, false]
+    }
+    default => {
+      "event": event,
+      "might_be_invalid": 2
+    }
+  end
+end;
+
+create script add_meta;
+
+select event from in into add_meta;
+select event from add_meta into out;
+select event from add_meta/err into err;

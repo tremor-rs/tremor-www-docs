@@ -2395,7 +2395,7 @@ content-type: application/json
 
 <span class="c1"># similarly, for onramp-level error when invalid data is sent (non-json here when the request content-type header is set to be json)</span>
 $ curl -H<span class="s1">&#39;Content-Type:application/json&#39;</span> http://localhost:8139/echo -d<span class="s1">&#39;{&#39;</span>
-<span class="o">{</span><span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;Oh no, we ran into something unexpected :(\n [Codec] Syntax at character 0 (&#39;{&#39;)&quot;</span>,<span class="s2">&quot;event_id&quot;</span>:6,<span class="s2">&quot;source_id&quot;</span>:<span class="s2">&quot;tremor://localhost/onramp/http/01/in&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;Oh no, we ran into something unexpected :(\n SIMD JSON error: Syntax at character 0 (&#39;{&#39;)&quot;</span>,<span class="s2">&quot;event_id&quot;</span>:9,<span class="s2">&quot;source_id&quot;</span>:<span class="s2">&quot;tremor://localhost/onramp/http/01/in&quot;</span><span class="o">}</span>
 </code></pre></div>
                 
               

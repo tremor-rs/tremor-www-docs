@@ -2199,7 +2199,7 @@ goodbye
 <p>If there's internal tremor error while processing the incoming message (eg: codec or preprocessor failure), the error should be bubbled up to the client. To test this out, change the codec in the <a href="etc/tremor/config/config.yaml">onramp configuration</a> to be <code>json</code> from <code>string</code> and send an invalid json input:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># after changing the onramp codec to json</span>
 $ <span class="nb">echo</span> <span class="s2">&quot;{&quot;</span> <span class="p">|</span> websocat -n1 ws://localhost:8139
-<span class="o">{</span><span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;[Codec] Syntax at character 0 (&#39;{&#39;)&quot;</span>,<span class="s2">&quot;event_id&quot;</span>:1,<span class="s2">&quot;source_id&quot;</span>:<span class="s2">&quot;tremor://localhost/onramp/ws/01/in&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;error&quot;</span>:<span class="s2">&quot;SIMD JSON error: Syntax at character 0 (&#39;{&#39;)&quot;</span>,<span class="s2">&quot;event_id&quot;</span>:0,<span class="s2">&quot;source_id&quot;</span>:<span class="s2">&quot;tremor://localhost/onramp/ws/01/in&quot;</span><span class="o">}</span>
 </code></pre></div>
                 
               

@@ -2284,7 +2284,7 @@ Starting them is straight-forward:</p>
 <p>The tremor reverse-proxy added the <code>forwarded</code> field and header to the request (See the <code>data</code> amd <code>headers</code> fields of the response body) and passed through the response body from the upstream.</p>
 <p>In the case of an upstream failing, the <code>qos::backpressure</code> operators will kick in and discard events for the failed upstream.</p>
 <p>Here is an example response for the case an upstream is not reachable:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="s2">&quot;ConnectFailed: failed to connect to the server&quot;</span><span class="p">,</span><span class="nt">&quot;event_id&quot;</span><span class="p">:</span><span class="s2">&quot;1: 4&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="s2">&quot;ConnectFailed: failed to connect to the server&quot;</span><span class="p">,</span><span class="nt">&quot;event_id&quot;</span><span class="p">:</span><span class="s2">&quot;1:0:4&quot;</span><span class="p">}</span>
 </code></pre></div>
                 
               

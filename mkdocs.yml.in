@@ -98,6 +98,8 @@ nav:
       - HTTP Load Balancing: workshop/examples/35_reverse_proxy_load_balancing/README.md
       - Quota Service: workshop/examples/36_quota_service/README.md
       - Configurator: workshop/examples/37_configurator/README.md
+      - Polling and Alerting: workshop/examples/38_polling_alerts/README.md
+      - Event Correlation from Kafka to Elasticsearch: workshop/examples/39_kafka_elastic_correlation/README.md
     - CNCF:
       - OpenTelemetry Passthrough: workshop/examples/40_otel_passthrough/README.md
       - Zipkin Interworking: workshop/examples/41_otel_zipkin/README.md

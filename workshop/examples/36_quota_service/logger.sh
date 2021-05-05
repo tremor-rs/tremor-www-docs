@@ -8,7 +8,8 @@ LOG_INTERVAL=0.01 # in seconds
 while true; do
   while read log_line; do
     [ -z "$log_line" ] && continue # skip empty lines
-    echo "$log_line"
+    TS=`date -u +"%Y-%m-%dT%H:%M:%S"`
+    echo "$log_line" | sed "s/%TIMESTAMP%/$TS/"
     #echo "Sleeping for ${LOG_INTERVAL}s..." >&2
     sleep "$LOG_INTERVAL"
   done < "$INPUT_FILE"

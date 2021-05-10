@@ -17,11 +17,11 @@ labels: bug
 3.
 
 **Possible Solution(s)**
+
 <!-- Not obligatory, but suggest a fix/reason for the bug, -->
 <!-- or ideas how to implement the addition or change -->
 
-**Notes**
+**Notes For Reviewer(s)**
 
-Output of `rustup --version`:
-Output of `rustup show`:
-Output of `tremor --version`:
+<!-- Any additional context or information you feel may be relevant to the issue. -->
+<!-- or screenshots of the change -->

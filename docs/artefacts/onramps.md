@@ -44,6 +44,7 @@ The column `Delivery Acknowledgements` describes when the onramp considers and r
 
 Onramp     | Delivery Acknowledgements                                           |
 -----------|---------------------------------------------------------------------|
+amqp       | not supported                                                       |
 blaster    | not supported                                                       |
 cb         | not supported                                                       |
 crononome  | not supported                                                       |
@@ -52,7 +53,7 @@ file       | not supported                                                      
 kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
 metronome  | not supported                                                       |
 nats       | not supported                                                       |
-otel       | not supported
+otel       | not supported                                                       |
 PostgreSQL | not supported                                                       |
 rest       | not supported                                                       |
 stdin      | not supported                                                       |
@@ -62,6 +63,35 @@ ws         | not supported                                                      
 
 
 ## Supported Onramps
+### amqp
+
+The `amqp` onramp allows consuming events from an [AMQP](https://www.amqp.org) broker. It uses [lapin](https://docs.rs/lapin/1.6.8/lapin/) for an AMQP 0.9.1 protocol implementation.
+
+Example:
+
+```yaml
+onramp:
+  - id: amqp
+    type: amqp
+    config:
+      amqp_addr: "amqp://guest:guest@127.0.0.1:5672/"
+      queue_name: "my_queue"
+      queue_options:
+        passive: false
+        durable: false
+        exclusive: false
+        auto_delete: false
+        nowait: false
+      routing_key: "#"
+      exchange: ""
+```
+
+Initialization declares the specified `queue_name` using `queue_options` and binds it the with the given routing key ([AMQP routing](https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)) to the named exchange (emtpy string means the default exchange).
+
+The meaning of lapin's [queue declaration options](https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueDeclareOptions.html) are documented with the [protocol-spec for queues](https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.queue). The current implementation uses defaults, i.e. all fields false: not passive (create queue if it doesn't exist), not durable (purged when server restarts), not exclusive (subscription from other connections allowed), no auto-delete (queue remains after last consumer disconnects), not no-wait (i.e. actually wait on server's response).
+
+The current implementation uses [default queue bind options](https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html), i.e. `nowait = False`, meaning the server reply is awaited before continuing. It simply acknowledges messages to the protocol stack upon retrieval.
+
 ### blaster
 
 !!!note

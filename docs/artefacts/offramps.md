@@ -37,6 +37,7 @@ The column `Disconnect events` describes under which circumstances this offramp 
 
 | Offramp   | Disconnect events | Delivery acknowledgements |
 | --------- | ----------------- | ------------------------- |
+| amqp      | never             | always                    |
 | blackhole | never             | always                    |
 | cb        | never             | always                    |
 | debug     | never             | always                    |
@@ -72,6 +73,27 @@ The offramp `/offramp/system::stderr/system` can be used to print to STDERR. Dat
 
 ## Supported Offramps
 
+
+### amqp
+
+The amqp offramp publishes AMQP messages to an [AMQP](https://www.amqp.org) broker. It uses [lapin](https://docs.rs/lapin/1.6.8/lapin/) for an AMQP 0.9.1 protocol implementation.
+
+Example:
+
+```yaml
+offramp:
+  - id: amqp
+    type: amqp
+    config:
+      amqp_addr: "amqp://guest:guest@127.0.0.1:5672/"
+      exchange: ""
+      routing_key: "hello"
+      publish_options:
+        immediate: true
+        mandatory: false
+```
+
+Messages are published to the specified `exchange` (empty string is the default exchange) using the specified routing key. Lapin's [basic publish options](https://docs.rs/lapin/1.6.8/lapin/options/struct.BasicPublishOptions.html) are documented with the [protocol-spec for basic publish operation](https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.basic).
 
 ### blackhole
 

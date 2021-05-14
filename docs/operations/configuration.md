@@ -58,8 +58,8 @@ When using the tremor docker image configuration is loaded from the folder `/etc
 The following files are looked for:
 
 - `/etc/tremor/logger.yaml` a [log4rs](https://docs.rs/log4rs/*/log4rs/) configuration file to control logging in tremor.
-- `/etc/tremor/config/*.trickle` all files will be loaded as trickle pipelines - trickle pipelines are always loaded before yaml configuration! The file name in this case (the part before `.trickle`) is the pipeline id which you can use in places like the binding configuration. The `#!config id = "name"` preprocessor directive can be used to overwrite the naming.
-- `/etc/tremor/config/*.yaml` all files will be loaded as configuration files and evaluated in order (so mappings cannot refer to artefacts in later files!) - NOTE: defining pipelines in yaml is deprecated and trickle pipelines should be used.
+- `/etc/tremor/config/` : All `*.trickle` files in this directory and its subdirectories will be loaded as trickle pipelines - trickle pipelines are always loaded before yaml configuration! The file name in this case (the part before `.trickle`) is the pipeline id which you can use in places like the binding configuration. The `#!config id = "name"` preprocessor directive can be used to overwrite the naming.
+- `/etc/tremor/config/`: All `*.yml` and `*.yaml` files will be loaded as configuration files and evaluated in order (so mappings cannot refer to artefacts in later files!) - NOTE: defining pipelines in yaml is deprecated and trickle pipelines should be used.
 
 ## Static or Bootstrap deployments
 

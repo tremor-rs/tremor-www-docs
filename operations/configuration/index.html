@@ -2184,8 +2184,8 @@
 <p>The following files are looked for:</p>
 <ul>
 <li><code>/etc/tremor/logger.yaml</code> a <a href="https://docs.rs/log4rs/*/log4rs/">log4rs</a> configuration file to control logging in tremor.</li>
-<li><code>/etc/tremor/config/*.trickle</code> all files will be loaded as trickle pipelines - trickle pipelines are always loaded before yaml configuration! The file name in this case (the part before <code>.trickle</code>) is the pipeline id which you can use in places like the binding configuration. The <code>#!config id = "name"</code> preprocessor directive can be used to overwrite the naming.</li>
-<li><code>/etc/tremor/config/*.yaml</code> all files will be loaded as configuration files and evaluated in order (so mappings cannot refer to artefacts in later files!) - NOTE: defining pipelines in yaml is deprecated and trickle pipelines should be used.</li>
+<li><code>/etc/tremor/config/</code> : All <code>*.trickle</code> files in this directory and its subdirectories will be loaded as trickle pipelines - trickle pipelines are always loaded before yaml configuration! The file name in this case (the part before <code>.trickle</code>) is the pipeline id which you can use in places like the binding configuration. The <code>#!config id = "name"</code> preprocessor directive can be used to overwrite the naming.</li>
+<li><code>/etc/tremor/config/</code>: All <code>*.yml</code> and <code>*.yaml</code> files will be loaded as configuration files and evaluated in order (so mappings cannot refer to artefacts in later files!) - NOTE: defining pipelines in yaml is deprecated and trickle pipelines should be used.</li>
 </ul>
 <h2 id="static-or-bootstrap-deployments">Static or Bootstrap deployments<a class="headerlink" href="#static-or-bootstrap-deployments" title="Permanent link">&para;</a></h2>
 <p>Static or Bootstrap deployment allows tremor to be configured at startup with its registry and repository pre-populated with out of the box user defined configuration.</p>

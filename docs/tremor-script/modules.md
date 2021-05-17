@@ -5,10 +5,7 @@ Tremor-script supports nested namespaces or modules.
 Modules in tremor are the lowest unit of compilation available to developers
 to modularise tremor logic across multiple logical namespaces. On the filesystem,
 modules are rooted at a base path and are nested with folders.
-
-Within a file, nesting is via the `mod` clause.
-
-> ![module grammar](./grammar/diagram/Module.png)
+png)
 
 Modules can define `const` constants, `fn` functions, or
 nested `mod` sub-modules.
@@ -29,13 +26,15 @@ on the file system, relative to a root module path: Nested modules can be define
 ```
 
 Assuming this module hierarchy is rooted at `/opt/my-project/lib` they can be registered with tremor
-by setting the `TREMOR_PATH` environment variable
+by prepending this folder to the `TREMOR_PATH` environment variable
 
 ```bash
-export TREMOR_PATH=/opt/my-project/lib
+export TREMOR_PATH="/opt/my-project/lib:$TREMOR_PATH"
 ```
 
 The `TREMOR_PATH` uses ':' on linux/unix to separate multiple module paths.
+
+The default places to look for your modules is `/usr/local/share/tremor` if `TREMOR_PATH` is not provided.
 
 The modules can be used using the `use` clause as follows:
 

@@ -39,15 +39,9 @@ type: stdout
 
 ### Write a pipeline specification
 
-```yaml
-# File: metronome-pipeline.yaml
----
-id: main
-interface:
-  inputs: [in]
-  outputs: [out]
-links:
-  in: [out]
+```tremor
+# File: main.trickle
+select event from in into out;
 ```
 
 ### Write a binding specification
@@ -111,7 +105,7 @@ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/offramp
 ### Publish pipeline specification
 
 ```bash
-curl -vs -stderr -X POST -H "Content-Type: application/yaml" --data-binary @metronome-pipeline.yaml http://localhost:9898/pipeline
+curl -vs -stderr -X POST -H "Content-type: application/vnd.trickle" --data-binary @main.trickle http://localhost:9898/pipeline
 ```
 
 Check that it published ok:

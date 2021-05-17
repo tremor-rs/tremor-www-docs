@@ -29,15 +29,17 @@ on the file system, relative to a root module path: Nested modules can be define
 ```
 
 Assuming this module hierarchy is rooted at `/opt/my-project/lib` they can be registered with tremor
-by setting the `TREMOR_PATH` environment variable
+by prepending this folder to the `TREMOR_PATH` environment variable
 
 ```bash
-export TREMOR_PATH=/opt/my-project/lib
+export TREMOR_PATH="/opt/my-project/lib:$TREMOR_PATH"
 ```
 
 The `TREMOR_PATH` uses ':' on linux/unix to separate multiple module paths.
 
-The modules can be used using the `use` clause as follows:
+The default places to look for your modules is `/usr/local/share/tremor` if `TREMOR_PATH` is not provided.
+
+The modules can be loaded using the `use` clause as follows:
 
 ```trickle
 use foo::bar::snot; # snot is a ref to 'foo/bar/snot.trickle'

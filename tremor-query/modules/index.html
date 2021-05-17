@@ -2061,11 +2061,12 @@ on the file system, relative to a root module path: Nested modules can be define
       +-- badger.trickle
 </code></pre></div>
 <p>Assuming this module hierarchy is rooted at <code>/opt/my-project/lib</code> they can be registered with tremor
-by setting the <code>TREMOR_PATH</code> environment variable</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">TREMOR_PATH</span><span class="o">=</span>/opt/my-project/lib
+by prepending this folder to the <code>TREMOR_PATH</code> environment variable</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">TREMOR_PATH</span><span class="o">=</span><span class="s2">&quot;/opt/my-project/lib:</span><span class="nv">$TREMOR_PATH</span><span class="s2">&quot;</span>
 </code></pre></div>
 <p>The <code>TREMOR_PATH</code> uses ':' on linux/unix to separate multiple module paths.</p>
-<p>The modules can be used using the <code>use</code> clause as follows:</p>
+<p>The default places to look for your modules is <code>/usr/local/share/tremor</code> if <code>TREMOR_PATH</code> is not provided.</p>
+<p>The modules can be loaded using the <code>use</code> clause as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">bar</span><span class="err">::</span><span class="nx">snot</span><span class="err">;</span><span class="w"> </span><span class="c1"># snot is a ref to &#39;foo/bar/snot.trickle&#39;</span>
 <span class="kd">use</span><span class="w"> </span><span class="nx">foo</span><span class="err">::</span><span class="nx">baz</span><span class="err">::</span><span class="nx">badger</span><span class="err">;</span><span class="w"> </span><span class="c1"># badger is a ref to &#39;foo/bar/badger.trickle&#39;</span>
 

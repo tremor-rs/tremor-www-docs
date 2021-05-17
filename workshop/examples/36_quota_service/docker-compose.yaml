@@ -5,11 +5,11 @@ services:
     image: tremorproject/tremor:${TREMOR_VERSION}
     environment:
       - RUST_BACKTRACE=full
-      - TREMOR_PATH=/opt/local/tremor/lib:/etc/tremor/lib
     volumes:
       - ./etc/tremor:/etc/tremor:rw
       - ./var/log:/var/log:rw
       - ./etc/tremor/data:/home/tremor/data
+      - ./usr/local/share/tremor:/usr/local/share/tremor
     ports:
       - 9898:9898   # tremor api
       - 12202:12202 # log receiver

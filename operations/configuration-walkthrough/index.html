@@ -2355,14 +2355,9 @@
 <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stdout</span>
 </code></pre></div>
 <h3 id="write-a-pipeline-specification">Write a pipeline specification<a class="headerlink" href="#write-a-pipeline-specification" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># File: metronome-pipeline.yaml</span>
-<span class="nn">---</span>
-<span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">main</span>
-<span class="nt">interface</span><span class="p">:</span>
-  <span class="nt">inputs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">in</span><span class="p p-Indicator">]</span>
-  <span class="nt">outputs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
-<span class="nt">links</span><span class="p">:</span>
-  <span class="nt">in</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">out</span><span class="p p-Indicator">]</span>
+<p>File: <code>main.trickle</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#!config id = &quot;main&quot;</span><span class="w"></span>
+<span class="nx">select</span><span class="w"> </span><span class="kc">event</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">out</span><span class="err">;</span><span class="w"></span>
 </code></pre></div>
 <h3 id="write-a-binding-specification">Write a binding specification<a class="headerlink" href="#write-a-binding-specification" title="Permanent link">&para;</a></h3>
 <p>In tremor pipelines have no non-deterministic side-effects.</p>
@@ -2402,11 +2397,12 @@
 - stdout
 </code></pre></div>
 <h3 id="publish-pipeline-specification">Publish pipeline specification<a class="headerlink" href="#publish-pipeline-specification" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-pipeline.yaml http://localhost:9898/pipeline
+<div class="highlight"><pre><span></span><code>curl -vs --stderr -X POST -H <span class="s2">&quot;Content-type: application/vnd.trickle&quot;</span> --data-binary @main.trickle http://localhost:9898/pipeline
 </code></pre></div>
 <p>Check that it published ok:</p>
-<div class="highlight"><pre><span></span><code>$ curl -vs --stderr - -H <span class="s2">&quot;Accept: application/yaml&quot;</span> http://localhost:9898/pipeline
-- main
+<div class="highlight"><pre><span></span><code>$ curl -vs --stderr -H <span class="s2">&quot;Accept: application/vnd.trickle&quot;</span> http://localhost:9898/pipeline/main
+<span class="c1">#!config id = &quot;main&quot;</span>
+<span class="k">select</span> event from <span class="k">in</span> into out<span class="p">;</span>
 </code></pre></div>
 <h3 id="publish-binding-specification">Publish binding specification<a class="headerlink" href="#publish-binding-specification" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>curl -vs -stderr -X POST -H <span class="s2">&quot;Content-Type: application/yaml&quot;</span> --data-binary @metronome-binding.yaml http://localhost:9898/binding

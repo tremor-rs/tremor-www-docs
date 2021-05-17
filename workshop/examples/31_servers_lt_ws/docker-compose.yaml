@@ -8,7 +8,6 @@ services:
       - 8139:8139
     environment:
       - RUST_BACKTRACE=full
-      - TREMOR_PATH=/opt/local/tremor/lib:/etc/tremor/lib
     volumes:
       - ./etc/tremor:/etc/tremor:rw
       - ./var/log:/var/log:rw

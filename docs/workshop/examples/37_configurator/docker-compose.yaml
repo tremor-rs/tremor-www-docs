@@ -9,7 +9,6 @@ services:
     container_name: configurator_tremor
     environment:
       - RUST_BACKTRACE=full
-      - TREMOR_PATH=/etc/tremor/lib:/usr/local/share/tremor:/usr/share/tremor/lib
     volumes:
       - ./etc/tremor:/etc/tremor:rw
       - ./var/log:/var/log:rw

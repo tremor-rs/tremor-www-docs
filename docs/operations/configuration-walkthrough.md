@@ -111,7 +111,7 @@ curl -vs -stderr -X POST -H "Content-type: application/vnd.trickle" --data-binar
 Check that it published ok:
 
 ```bash
-$ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/pipeline
+$ curl -vs --stderr - -H "Accept: application/vnd.trickle" http://localhost:9898/pipeline
 - main
 ```
 

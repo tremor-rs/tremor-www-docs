@@ -39,8 +39,10 @@ type: stdout
 
 ### Write a pipeline specification
 
+File: `main.trickle`:
+
 ```tremor
-# File: main.trickle
+#!config id = "main"
 select event from in into out;
 ```
 
@@ -105,14 +107,15 @@ curl -vs --stderr - -H "Accept: application/yaml" http://localhost:9898/offramp
 ### Publish pipeline specification
 
 ```bash
-curl -vs -stderr -X POST -H "Content-type: application/vnd.trickle" --data-binary @main.trickle http://localhost:9898/pipeline
+curl -vs --stderr -X POST -H "Content-type: application/vnd.trickle" --data-binary @main.trickle http://localhost:9898/pipeline
 ```
 
 Check that it published ok:
 
 ```bash
-$ curl -vs --stderr - -H "Accept: application/vnd.trickle" http://localhost:9898/pipeline
-- main
+$ curl -vs --stderr -H "Accept: application/vnd.trickle" http://localhost:9898/pipeline/main
+#!config id = "main"
+select event from in into out;
 ```
 
 ### Publish binding specification

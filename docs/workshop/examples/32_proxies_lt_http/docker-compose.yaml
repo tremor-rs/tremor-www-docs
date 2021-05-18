@@ -9,8 +9,9 @@ services:
     environment:
       - RUST_BACKTRACE=full
     volumes:
-      - ../30_servers_lt_http/etc/tremor:/etc/tremor:rw
+      - ../30_servers_lt_http/etc/tremor:/etc/tremor:ro
       - ../30_servers_lt_http/var/log:/var/log:rw
+      - ../30_servers_lt_http/usr/local/share/tremor:/usr/local/share/tremor:ro
   tremor-proxy:
     image: tremorproject/tremor:0.11
     depends_on:
@@ -21,5 +22,5 @@ services:
     environment:
       - RUST_BACKTRACE=full
     volumes:
-      - ./etc/tremor:/etc/tremor:rw
+      - ./etc/tremor:/etc/tremor:ro
       - ./var/log:/var/log:rw

@@ -120,7 +120,7 @@ select event from process/err into err;
 Assuming you have all the code from the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/34_bridges_lt_http_ws), run the following to start our application (along with the [tremor websocket server example](../31_servers_lt_ws/README.md) that our application is bridging to):
 
 ```sh
-docker-compose up
+docker compose up
 ```
 
 Now let's try to test the echo capabilities of the websocket server example, via the HTTP bridge:
@@ -169,11 +169,16 @@ content-length: 198
 date: Fri, 16 Oct 2020 04:12:11 GMT
 content-type: application/json
 
-{"error":"Oh no, we ran into something unexpected :(\n Error receiving reply from server ws://localhost:8139: WebSocket protocol error: Connection reset without closing handshake","event_id":"1: 3"}
+{"error":"Oh no, we ran into something unexpected :(\n Error receiving reply from server ws://localhost:8139: WebSocket protocol error: Connection reset without closing handshake","event_id":"1:0:3"}
 
+Internally the websocket offramp is trying to re-establish the connection continuously.
 
-# sending further messages results in errors
+Restarting the docker websocket server will heal the offramp:
+
+```sh
+# restart the websocket server
+$ docker start 34_bridges_lt_http_ws_tremor-server_1
+
 $ curl http://localhost:9139/bridge -d "hello"
-{"error":"Oh no, we ran into something unexpected :(\n Error sending event to server ws://localhost:8139: Trying to work with closed connection","e
-vent_id":"1: 4"}
+hello
 ```

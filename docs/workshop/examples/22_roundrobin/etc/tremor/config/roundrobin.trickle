@@ -2,7 +2,7 @@ use tremor::system;
 
 define qos::wal operator in_memory_wal with
   read_count = 1,
-  max_elements = 10, # Capacity limit of 1000 stored events
+  max_elements = 10, # Capacity limit of 10 stored events
 end;
 
 define qos::roundrobin operator roundrobin

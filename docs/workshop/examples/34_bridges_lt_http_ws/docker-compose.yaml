@@ -9,7 +9,7 @@ services:
     environment:
       - RUST_BACKTRACE=full
     volumes:
-      - ../31_servers_lt_ws/etc/tremor:/etc/tremor:rw
+      - ../31_servers_lt_ws/etc/tremor:/etc/tremor:ro
       - ../31_servers_lt_ws/var/log:/var/log:rw
   tremor-bridge:
     image: tremorproject/tremor:0.11

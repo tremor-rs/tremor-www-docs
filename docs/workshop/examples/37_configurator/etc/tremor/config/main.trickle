@@ -153,7 +153,7 @@ select event from process into out;
 
 # we send events directed at the quota_service through the wal to have them retried until they succeed.
 select event from process/quota_service into on_disk_wal;
-select from on_disk_wal into out/quota_service;
+select event from on_disk_wal into out/quota_service;
 
 # our defined app errors (still succesful processing from tremor's perspective)
 # useful to track these from different port (app_error) for metrics

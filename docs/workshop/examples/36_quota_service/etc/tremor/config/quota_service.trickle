@@ -39,7 +39,7 @@ script
 
   # content based on method and path combo
   match [$request.method, $request.url.path] of
-    case %("GET", "") =>
+    case %("GET", "/") =>
       let $response.headers["content-type"] = "text/plain",
       emit """
       Welcome to the Logging Quota Service!

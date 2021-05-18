@@ -8,7 +8,7 @@ onramp:
     preprocessors: # telegraf udp sends multiple influx line messages in one package seperated by new lines
       - lines
     config:
-      port: 4242 # The TCP port to listen on
+      port: 4242 # The UDP port to listen on
       host: "0.0.0.0" # The IP address to bind on ( all interfaces in this case )
   - id: tick
     type: metronome

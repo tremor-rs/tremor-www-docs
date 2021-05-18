@@ -11,7 +11,7 @@ script
       case %{cpu_system > 50} => emit "OS BROKEN"
       default => emit "CPU BUSY"
     end
-      
+
     case %{mem_active > args.mem_limit } => emit "MEM LOW"
     default => drop
   end

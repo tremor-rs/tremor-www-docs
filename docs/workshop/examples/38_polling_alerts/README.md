@@ -93,7 +93,7 @@ script
       case %{cpu_system > 50} => emit "OS BROKEN"
       default => emit "CPU BUSY"
     end
-      
+
     case %{mem_active > args.mem_limit } => emit "MEM LOW"
     default => drop
   end
@@ -125,8 +125,8 @@ select event from alert into out;
 ## Command line testing during logic development
 
 ```bash
-$ docker-compose up
+$ docker compose up
   ... lots of logs ...
 ```
 
-Then watch alerts on stdout from `docker-compose`.
+Then watch alerts on stdout from `docker compose`.

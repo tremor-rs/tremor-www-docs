@@ -196,7 +196,7 @@ $ docker compose up
 In another shell, we fire up curl and send requests through our reverse proxy:
 
 ```bash
-$ curl -v -XGET http://localhost:65535/anything  -H'Content-Type: appliaction/json' -d '{"snot": "badger"}'
+$ curl -v -XGET http://localhost:65535/anything  -H'Content-Type: application/json' -d '{"snot": "badger"}'
 *   Trying ::1...
 * TCP_NODELAY set
 * Connected to localhost (::1) port 65535 (#0)

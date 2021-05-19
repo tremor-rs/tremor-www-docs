@@ -1325,6 +1325,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gsub" class="md-nav__link">
+    gsub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kafka" class="md-nav__link">
     Kafka
   </a>
@@ -2313,6 +2320,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gsub" class="md-nav__link">
+    gsub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kafka" class="md-nav__link">
     Kafka
   </a>
@@ -2757,6 +2771,48 @@ from the <a href="https://en.wikipedia.org/wiki/Year_2038_problem">year 2038 pro
       <span class="nt">close_on_done</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">sleep_on_done</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span> <span class="c1"># wait for a second before terminating</span>
 </code></pre></div>
+<h3 id="gsub">gsub<a class="headerlink" href="#gsub" title="Permanent link">&para;</a></h3>
+<p>Google Cloud Pubsub - Subscriber</p>
+<p>This onramp can issue basic operation of receiving a message from a subscription.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The onramp is experimental.</p>
+</div>
+<p>This onramp assumes that the environment variable <code>GOOGLE_APPLICATION_CREDENTIALS</code> has been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.</p>
+<p>Supported configuration options are:</p>
+<ul>
+<li><code>pem</code> - The pem file from GCP for authentication.</li>
+<li><code>subscription</code> - The subscription name which is linked to a topic to receive messages.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gsub</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gsub</span>
+    <span class="nt">codec</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json</span>  
+    <span class="nt">preprocessors</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gzip</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">pem</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcp.pem</span> 
+      <span class="nt">subscription</span><span class="p">:</span> <span class="s">&#39;tremor-sub&#39;</span>
+</code></pre></div>
+<p>We get the meta data as response that includes the message id and the acknowledgement id of the message.</p>
+<p><strong>Response</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;hello&quot;</span><span class="o">:</span> <span class="s2">&quot;folks!!&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;meta&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;message_id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;message-id&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;acknowledgement_id&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;acknowledgement_id&gt;&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong><em>Where</em></strong></p>
+<ul>
+<li><code>&lt;data&gt;</code> - The data received as message.</li>
+<li><code>&lt;message-id&gt;</code> - The message id assigned by the Google Cloud Pubsub api.</li>
+<li><code>&lt;acknowledgement_id&gt;</code> - The acknowedgement id assigned by the Google Cloud Pubsub api. </li>
+</ul>
 <h3 id="kafka">Kafka<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h3>
 <p>The Kafka onramp connects to one or more Kafka topics. It uses <code>librdkafka</code> to handle connections and can use the full set of <a href="https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md">librdkafka 1.5.0 configuration options</a>.</p>
 <p>The default <a href="../codecs/#json">codec</a> is <code>json</code>.</p>

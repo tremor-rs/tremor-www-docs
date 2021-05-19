@@ -553,9 +553,11 @@ Lists all the buckets in the Google Cloud Storage project.
 ```
 
 ***Where***
+```js
 - `<project-id>` - The project id of the Google Cloud Storage project where the buckets are.
 - `<bucket-id>` - The unique identifier of the bucket.
 - `<project-number>` - The project number for the Google Cloud Storage project.
+```
 
 #### list_objects
 
@@ -605,11 +607,12 @@ Lists all the objects in the specified bucket.
 ```
 
 ***Where***
+```js
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-id>` - The unique object identifier.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
 - `<content-type>` - The type of the object uploaded.
-
+```
 
 #### create_bucket
 
@@ -656,9 +659,11 @@ Creates a bucket in the project specified in the command.
 ```
 
 ***Where***
+```js
 - `<project-id>` - The project id of the Google Cloud Storage project where the bucket is.
 - `<bucket-id>` - The unique identifier of the bucket.
 - `<project-number>` - The project number for the Google Cloud Storage project.
+```
 
 #### remove_bucket
 
@@ -676,8 +681,9 @@ Removes the bucket from the specified project in Google Cloud Storage project.
 ```
 
 ***Where***
+```js
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
-
+```
 
 #### upload_object
 
@@ -723,11 +729,12 @@ Uploads the object to a Google Cloud Storage bucket.
 ```
 
 ***Where***
+```js
 - `<object>` - The object data to be uploaded to a Google Cloud Storage bucket.
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-id>` - The unique object identifier.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
-
+```
 
 #### fetch_object
 
@@ -773,10 +780,11 @@ Returns the metadata for the object fetched.
 ```
 
 ***Where***
+```js
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-id>` - The unique object identifier.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
-
+```
 
 #### download_object
 
@@ -802,10 +810,11 @@ Downloads the object.
 ```
 
 ***Where***
+```js
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
 - `<object>` - The object downloaded.
-
+```
 
 #### remove_object
 
@@ -826,9 +835,74 @@ Removes the object from the specified bucket.
 ```
 
 ***Where***
+```js
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
+```
 
+
+### gpub
+
+Google Cloud Pubsub - Publisher
+
+This offramp can issue basic operation of sending a message to a topic.
+
+!!! note
+
+    The offramp is experimental.
+
+This offramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.
+
+Supported configuration options are:
+
+- `pem` - The pem file from GCP for authentication.
+
+
+Example:
+
+```yaml
+offramp:
+  - id: gpub
+    type: gpub
+    codec: json
+    postprocessors:
+      - gzip    
+    config:
+      pem: gcp.pem
+```
+
+
+#### send_message
+
+Lists all the buckets in the Google Cloud Storage project.
+
+**Request**:
+```js
+{
+  "command": "send_message", 
+  "project": "<project-id>", 
+  "topic": "<topic-name>", 
+  "data": `<data>` 
+}
+```
+
+**Response**:
+```js
+{
+  "project": "<project-id>",
+  "data": `<data>`,
+  "topic": "<topic-name>",
+  "command": "send_message"
+}
+
+```
+
+***Where***
+```js
+- `<project-id>` - The project id of the Google Cloud Pubsub project where the topic is.
+- `<topic-name>` - The Google cloud PubSub topic name to which the message is being sent.
+- `<data>` - The data that is to be sent as message.
+```
 
 
 ### Kafka

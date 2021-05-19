@@ -553,7 +553,7 @@ Lists all the buckets in the Google Cloud Storage project.
 ```
 
 ***Where***
-```js
+```
 - `<project-id>` - The project id of the Google Cloud Storage project where the buckets are.
 - `<bucket-id>` - The unique identifier of the bucket.
 - `<project-number>` - The project number for the Google Cloud Storage project.
@@ -607,7 +607,7 @@ Lists all the objects in the specified bucket.
 ```
 
 ***Where***
-```js
+```
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-id>` - The unique object identifier.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
@@ -659,7 +659,7 @@ Creates a bucket in the project specified in the command.
 ```
 
 ***Where***
-```js
+```
 - `<project-id>` - The project id of the Google Cloud Storage project where the bucket is.
 - `<bucket-id>` - The unique identifier of the bucket.
 - `<project-number>` - The project number for the Google Cloud Storage project.
@@ -681,7 +681,7 @@ Removes the bucket from the specified project in Google Cloud Storage project.
 ```
 
 ***Where***
-```js
+```
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 ```
 
@@ -729,7 +729,7 @@ Uploads the object to a Google Cloud Storage bucket.
 ```
 
 ***Where***
-```js
+```
 - `<object>` - The object data to be uploaded to a Google Cloud Storage bucket.
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-id>` - The unique object identifier.
@@ -780,7 +780,7 @@ Returns the metadata for the object fetched.
 ```
 
 ***Where***
-```js
+```
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-id>` - The unique object identifier.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
@@ -810,7 +810,7 @@ Downloads the object.
 ```
 
 ***Where***
-```js
+```
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
 - `<object>` - The object downloaded.
@@ -835,7 +835,7 @@ Removes the object from the specified bucket.
 ```
 
 ***Where***
-```js
+```
 - `<bucket-name>` - The name of the Google Cloud Storage bucket where the object is.
 - `<object-name>` - The name of the object in the Google Cloud Stoarge bucket.
 ```
@@ -894,11 +894,10 @@ Send a message to a pubsub topic.
   "topic": "<topic-name>",
   "command": "send_message"
 }
-
 ```
 
 ***Where***
-```js
+```
 - `<project-id>` - The project id of the Google Cloud Pubsub project where the topic is.
 - `<topic-name>` - The Google cloud PubSub topic name to which the message is being sent.
 - `<data>` - The data that is to be sent as message.

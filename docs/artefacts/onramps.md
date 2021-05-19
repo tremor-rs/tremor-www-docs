@@ -373,12 +373,11 @@ We get the meta data as response that includes the message id and the acknowledg
 ```
 
 ***Where***
-```js
+```
 - `<data>` - The data received as message.
 - `<message-id>` - The message id assigned by the Google Cloud Pubsub api.
-- `<acknowledgement_id>` - The acknowedgement id assigned by the Google Cloud Pubsub api.
+- `<acknowledgement_id>` - The acknowedgement id assigned by the Google Cloud Pubsub api. 
 ```
-
 
 ### Kafka
 

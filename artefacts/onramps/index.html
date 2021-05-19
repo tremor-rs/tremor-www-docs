@@ -1263,6 +1263,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#amqp" class="md-nav__link">
+    amqp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#blaster" class="md-nav__link">
     blaster
   </a>
@@ -2244,6 +2251,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#amqp" class="md-nav__link">
+    amqp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#blaster" class="md-nav__link">
     blaster
   </a>
@@ -2462,6 +2476,10 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 </thead>
 <tbody>
 <tr>
+<td>amqp</td>
+<td>not supported</td>
+</tr>
+<tr>
 <td>blaster</td>
 <td>not supported</td>
 </tr>
@@ -2524,6 +2542,27 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 </tbody>
 </table>
 <h2 id="supported-onramps">Supported Onramps<a class="headerlink" href="#supported-onramps" title="Permanent link">&para;</a></h2>
+<h3 id="amqp">amqp<a class="headerlink" href="#amqp" title="Permanent link">&para;</a></h3>
+<p>The <code>amqp</code> onramp allows consuming events from an <a href="https://www.amqp.org">AMQP</a> broker. It uses <a href="https://docs.rs/lapin/1.6.8/lapin/">lapin</a> for an AMQP 0.9.1 protocol implementation.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">amqp_addr</span><span class="p">:</span> <span class="s">&quot;amqp://guest:guest@127.0.0.1:5672/&quot;</span>
+      <span class="nt">queue_name</span><span class="p">:</span> <span class="s">&quot;my_queue&quot;</span>
+      <span class="nt">queue_options</span><span class="p">:</span>
+        <span class="nt">passive</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">durable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">exclusive</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">auto_delete</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">nowait</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">routing_key</span><span class="p">:</span> <span class="s">&quot;#&quot;</span>
+      <span class="nt">exchange</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+</code></pre></div>
+<p>Initialization declares the specified <code>queue_name</code> using <code>queue_options</code> and binds it the with the given routing key (<a href="https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html">AMQP routing</a>) to the named exchange (emtpy string means the default exchange).</p>
+<p>The meaning of lapin's <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueDeclareOptions.html">queue declaration options</a> are documented with the <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.queue">protocol-spec for queues</a>. The current implementation uses defaults, i.e. all fields false: not passive (create queue if it doesn't exist), not durable (purged when server restarts), not exclusive (subscription from other connections allowed), no auto-delete (queue remains after last consumer disconnects), not no-wait (i.e. actually wait on server's response).</p>
+<p>The current implementation uses <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html">default queue bind options</a>, i.e. <code>nowait = False</code>, meaning the server reply is awaited before continuing. It simply acknowledges messages to the protocol stack upon retrieval.</p>
 <h3 id="blaster">blaster<a class="headerlink" href="#blaster" title="Permanent link">&para;</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

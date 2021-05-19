@@ -1302,6 +1302,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#amqp" class="md-nav__link">
+    amqp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#blackhole" class="md-nav__link">
     blackhole
   </a>
@@ -2403,6 +2410,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#amqp" class="md-nav__link">
+    amqp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#blackhole" class="md-nav__link">
     blackhole
   </a>
@@ -2723,6 +2737,11 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 </thead>
 <tbody>
 <tr>
+<td>amqp</td>
+<td>never</td>
+<td>always</td>
+</tr>
+<tr>
 <td>blackhole</td>
 <td>never</td>
 <td>always</td>
@@ -2831,6 +2850,21 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <h3 id="systemstderr">system::stderr<a class="headerlink" href="#systemstderr" title="Permanent link">&para;</a></h3>
 <p>The offramp <code>/offramp/system::stderr/system</code> can be used to print to STDERR. Data will be formatted as JSON.</p>
 <h2 id="supported-offramps">Supported Offramps<a class="headerlink" href="#supported-offramps" title="Permanent link">&para;</a></h2>
+<h3 id="amqp">amqp<a class="headerlink" href="#amqp" title="Permanent link">&para;</a></h3>
+<p>The amqp offramp publishes AMQP messages to an <a href="https://www.amqp.org">AMQP</a> broker. It uses <a href="https://docs.rs/lapin/1.6.8/lapin/">lapin</a> for an AMQP 0.9.1 protocol implementation.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
+    <span class="nt">config</span><span class="p">:</span>
+      <span class="nt">amqp_addr</span><span class="p">:</span> <span class="s">&quot;amqp://guest:guest@127.0.0.1:5672/&quot;</span>
+      <span class="nt">exchange</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+      <span class="nt">routing_key</span><span class="p">:</span> <span class="s">&quot;hello&quot;</span>
+      <span class="nt">publish_options</span><span class="p">:</span>
+        <span class="nt">immediate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">mandatory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>Messages are published to the specified <code>exchange</code> (empty string is the default exchange) using the specified routing key. Lapin's <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.BasicPublishOptions.html">basic publish options</a> are documented with the <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.basic">protocol-spec for basic publish operation</a>.</p>
 <h3 id="blackhole">blackhole<a class="headerlink" href="#blackhole" title="Permanent link">&para;</a></h3>
 <p>The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) <a href="http://hdrhistogram.org/">histogram</a>.</p>
 <p>Supported configuration options are:</p>

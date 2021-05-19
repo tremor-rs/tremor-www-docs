@@ -85,12 +85,24 @@ onramp:
       routing_key: "#"
       exchange: ""
 ```
+Supported configuration options are:
 
-Initialization declares the specified `queue_name` using `queue_options` and binds it the with the given routing key ([AMQP routing](https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)) to the named exchange (emtpy string means the default exchange).
+- `amqp_addr` - an AMQP URI. Format: String, required. For more details see [AMQP 0.9.1 URI spec](https://www.rabbitmq.com/uri-spec.html).
+- `exchange` - Specifies the exchange to bind the configured queue to. Format: String, optional, Default: the empty string, the default exchange
+- `routing_key` - Specifies a routing key used when binding the configured queue to an exchange. Format: String, optional, Default: the empty string.
+- `queue_name` - The name of the queue to use/create for consuming messages. It will be bound to the configured `exchange` with the given `routing_key`. Format: String, required.
+- `queue_options` - Required Options to use when declaring the queue
+  - `passive` - Declare the configured queue as [`passive`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.passive), if `true` do not auto-create the queue. Format: bool, Default: `false`.
+  - `durable` - Declare the configured queue as [`durable`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.durable), so it survives AMQP server restarts. Format: bool, Default: `false`.
+  - `exclusive` - Declare the configured queue as [`exclusive`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.exclusive) to this connection. Format: bool, Default: `false`.
+  - `auto_delete` - Declare the configured queue as [`auto-delete`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.auto-delete), deleting it if there are no consumers left. Format: bool, Default: `false`.
+  - `nowait` - Declare the configured queue with [`nowait`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.no-wait), do not wait for a reply from the server when declaring the queue. Format: bool, Default: `false`
 
-The meaning of lapin's [queue declaration options](https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueDeclareOptions.html) are documented with the [protocol-spec for queues](https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.queue). The current implementation uses defaults, i.e. all fields false: not passive (create queue if it doesn't exist), not durable (purged when server restarts), not exclusive (subscription from other connections allowed), no auto-delete (queue remains after last consumer disconnects), not no-wait (i.e. actually wait on server's response).
+Upon onramp initializationthe specified `queue_name` is [`declared`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare) using `queue_options`. It will be created if it doesn't exist yet. The queue is [`bound`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.bind) to the named `exchange` (emtpy string means the default exchange) with the given `routing_key` ([AMQP routing](https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)). If the queue was not able to bind, the onramp will error upon initialization.
 
-The current implementation uses [default queue bind options](https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html), i.e. `nowait = False`, meaning the server reply is awaited before continuing. It simply acknowledges messages to the protocol stack upon retrieval.
+The current implementation uses [default queue bind options](https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html), i.e. `nowait = False`, meaning the server reply is awaited before continuing.
+
+Received messages are immediately acknowledged to the protocol stack. This Onramp does not wait for Guaranteed Delivery acknowledgements or fails.
 
 ### blaster
 

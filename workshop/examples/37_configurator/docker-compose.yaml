@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   configurator_tremor:
-    image: tremorproject/tremor:edge
+    image: tremorproject/tremor:0.11
     depends_on:
       - quota_service_1
       - quota_service_2
@@ -19,7 +19,7 @@ services:
       - net
 
   quota_service_1:
-    image: tremorproject/tremor:edge
+    image: tremorproject/tremor:0.11
     container_name: quota_service_1
     environment:
       - RUST_BACKTRACE=full
@@ -35,7 +35,7 @@ services:
 
 
   quota_service_2:
-    image: tremorproject/tremor:edge
+    image: tremorproject/tremor:0.11
     container_name: quota_service_2
     environment:
       - RUST_BACKTRACE=full

@@ -92,8 +92,18 @@ offramp:
         immediate: true
         mandatory: false
 ```
+Supported configuration options are:
 
-Messages are published to the specified `exchange` (empty string is the default exchange) using the specified routing key. Lapin's [basic publish options](https://docs.rs/lapin/1.6.8/lapin/options/struct.BasicPublishOptions.html) are documented with the [protocol-spec for basic publish operation](https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.basic).
+- `amqp_addr` - an AMQP URI as string, required. For more details see [AMQP 0.9.1 URI spec](https://www.rabbitmq.com/uri-spec.html).
+- `exchange` - The exchange to publish messages to. Format: String, optional, defaults to the empty string and then publish to the default exchange.
+- `routing_key` - Specifies the routing key for the message. The routing key is used for routing messages depending on the exchange configuration. Format: String, optional, defaults to the empty string.
+- `publish_options` - Required config that controls what happens when a message cannot be routed to a queue
+  - `immediate` - This flag tells the server how to react if the message cannot be routed to a queue consumer immediately. If this flag is `true`, the server will return an undeliverable message with a Return method. If this flag is `false`, the server will queue the message, but with no guarantee that it will ever be consumed. Default: `false`.
+  - `mandatory` - This flag tells the server how to react if the message cannot be routed to a queue. If this flag is `true`, the server will return an unroutable message with a Return method. If this flag is false, the server silently drops the message. Default: `false`.
+
+Events are published (after being serialized and possibly chunked codec and postprocessors) as AMQP Messages to the specified `exchange` (empty string is the default exchange) using the specified routing key.
+
+This offramp uses the AMQP 0.9.1 [basic-publish operation](https://www.rabbitmq.com/amqp-0-9-1-reference.html#basic.publish).
 
 ### blackhole
 

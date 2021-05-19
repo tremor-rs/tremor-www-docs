@@ -851,7 +851,7 @@ This offramp can issue basic operation of sending a message to a topic.
 
     The offramp is experimental.
 
-This offramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.
+This offramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` has been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.
 
 Supported configuration options are:
 
@@ -874,7 +874,7 @@ offramp:
 
 #### send_message
 
-Lists all the buckets in the Google Cloud Storage project.
+Send a message to a pubsub topic.
 
 **Request**:
 ```js

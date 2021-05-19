@@ -326,6 +326,58 @@ onramp:
 
 
 
+### gsub
+
+Google Cloud Pubsub - Subscriber
+
+This onramp can issue basic operation of receiving a message from a subscription.
+
+!!! note
+
+    The onramp is experimental.
+
+Supported configuration options are:
+
+- `pem` - The pem file from GCP for authentication.
+- `subscription` - The subscription name which is linked to a topic to receive messages.
+
+Example:
+
+```yaml
+onramp:
+  - id: gsub
+    type: gsub
+    codec: json  
+    preprocessors:
+      - gzip
+    config:
+      pem: gcp.pem 
+      subscription: 'tremor-sub'
+```
+
+We get the meta data as response that includes the message id and the acknowledgement id of the message.
+
+**Response**:
+```js
+{
+  "data": {
+    "hello": "folks!!"
+  },
+  "meta": {
+    "message_id": "<message-id>",
+    "acknowledgement_id": "<acknowledgement_id>"
+  }
+}
+```
+
+***Where***
+```js
+- `<data>` - The data received as message.
+- `<message-id>` - The message id assigned by the Google Cloud Pubsub api.
+- `<acknowledgement_id>` - The acknowedgement id assigned by the Google Cloud Pubsub api.
+```
+
+
 ### Kafka
 
 The Kafka onramp connects to one or more Kafka topics. It uses `librdkafka` to handle connections and can use the full set of [librdkafka 1.5.0 configuration options](https://github.com/edenhill/librdkafka/blob/v1.5.0/CONFIGURATION.md).

@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
     
     
       
@@ -2853,7 +2853,7 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
 <h3 id="amqp">amqp<a class="headerlink" href="#amqp" title="Permanent link">&para;</a></h3>
 <p>The amqp offramp publishes AMQP messages to an <a href="https://www.amqp.org">AMQP</a> broker. It uses <a href="https://docs.rs/lapin/1.6.8/lapin/">lapin</a> for an AMQP 0.9.1 protocol implementation.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">offramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
     <span class="nt">config</span><span class="p">:</span>
@@ -2864,7 +2864,17 @@ Acknowledgements, Failures or missing Acknowledgements take effect e.g. when usi
         <span class="nt">immediate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
         <span class="nt">mandatory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
-<p>Messages are published to the specified <code>exchange</code> (empty string is the default exchange) using the specified routing key. Lapin's <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.BasicPublishOptions.html">basic publish options</a> are documented with the <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.basic">protocol-spec for basic publish operation</a>.</p>
+Supported configuration options are:</p>
+<ul>
+<li><code>amqp_addr</code> - an AMQP URI as string, required. For more details see <a href="https://www.rabbitmq.com/uri-spec.html">AMQP 0.9.1 URI spec</a>.</li>
+<li><code>exchange</code> - The exchange to publish messages to. Format: String, optional, defaults to the empty string and then publish to the default exchange.</li>
+<li><code>routing_key</code> - Specifies the routing key for the message. The routing key is used for routing messages depending on the exchange configuration. Format: String, optional, defaults to the empty string.</li>
+<li><code>publish_options</code> - Required config that controls what happens when a message cannot be routed to a queue</li>
+<li><code>immediate</code> - This flag tells the server how to react if the message cannot be routed to a queue consumer immediately. If this flag is <code>true</code>, the server will return an undeliverable message with a Return method. If this flag is <code>false</code>, the server will queue the message, but with no guarantee that it will ever be consumed. Default: <code>false</code>.</li>
+<li><code>mandatory</code> - This flag tells the server how to react if the message cannot be routed to a queue. If this flag is <code>true</code>, the server will return an unroutable message with a Return method. If this flag is false, the server silently drops the message. Default: <code>false</code>.</li>
+</ul>
+<p>Events are published (after being serialized and possibly chunked codec and postprocessors) as AMQP Messages to the specified <code>exchange</code> (empty string is the default exchange) using the specified routing key.</p>
+<p>This offramp uses the AMQP 0.9.1 <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#basic.publish">basic-publish operation</a>.</p>
 <h3 id="blackhole">blackhole<a class="headerlink" href="#blackhole" title="Permanent link">&para;</a></h3>
 <p>The blackhole offramp is used for benchmarking it takes measurements of the end to end times of each event traversing the pipeline and at the end prints an HDR ( High Dynamic Range ) <a href="http://hdrhistogram.org/">histogram</a>.</p>
 <p>Supported configuration options are:</p>
@@ -4050,10 +4060,10 @@ to external TCP protocol distribution endpoints.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a1609d9a.min.js"></script>
       
     
   </body>

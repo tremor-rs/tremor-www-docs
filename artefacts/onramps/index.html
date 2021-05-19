@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
     
     
       
@@ -2545,7 +2545,7 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
 <h3 id="amqp">amqp<a class="headerlink" href="#amqp" title="Permanent link">&para;</a></h3>
 <p>The <code>amqp</code> onramp allows consuming events from an <a href="https://www.amqp.org">AMQP</a> broker. It uses <a href="https://docs.rs/lapin/1.6.8/lapin/">lapin</a> for an AMQP 0.9.1 protocol implementation.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">onramp</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amqp</span>
     <span class="nt">config</span><span class="p">:</span>
@@ -2560,9 +2560,22 @@ consumer, connecting to a set of topics and ingesting Kafka record data.</p>
       <span class="nt">routing_key</span><span class="p">:</span> <span class="s">&quot;#&quot;</span>
       <span class="nt">exchange</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
 </code></pre></div>
-<p>Initialization declares the specified <code>queue_name</code> using <code>queue_options</code> and binds it the with the given routing key (<a href="https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html">AMQP routing</a>) to the named exchange (emtpy string means the default exchange).</p>
-<p>The meaning of lapin's <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueDeclareOptions.html">queue declaration options</a> are documented with the <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#class.queue">protocol-spec for queues</a>. The current implementation uses defaults, i.e. all fields false: not passive (create queue if it doesn't exist), not durable (purged when server restarts), not exclusive (subscription from other connections allowed), no auto-delete (queue remains after last consumer disconnects), not no-wait (i.e. actually wait on server's response).</p>
-<p>The current implementation uses <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html">default queue bind options</a>, i.e. <code>nowait = False</code>, meaning the server reply is awaited before continuing. It simply acknowledges messages to the protocol stack upon retrieval.</p>
+Supported configuration options are:</p>
+<ul>
+<li><code>amqp_addr</code> - an AMQP URI. Format: String, required. For more details see <a href="https://www.rabbitmq.com/uri-spec.html">AMQP 0.9.1 URI spec</a>.</li>
+<li><code>exchange</code> - Specifies the exchange to bind the configured queue to. Format: String, optional, Default: the empty string, the default exchange</li>
+<li><code>routing_key</code> - Specifies a routing key used when binding the configured queue to an exchange. Format: String, optional, Default: the empty string.</li>
+<li><code>queue_name</code> - The name of the queue to use/create for consuming messages. It will be bound to the configured <code>exchange</code> with the given <code>routing_key</code>. Format: String, required.</li>
+<li><code>queue_options</code> - Required Options to use when declaring the queue</li>
+<li><code>passive</code> - Declare the configured queue as <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.passive"><code>passive</code></a>, if <code>true</code> do not auto-create the queue. Format: bool, Default: <code>false</code>.</li>
+<li><code>durable</code> - Declare the configured queue as <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.durable"><code>durable</code></a>, so it survives AMQP server restarts. Format: bool, Default: <code>false</code>.</li>
+<li><code>exclusive</code> - Declare the configured queue as <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.exclusive"><code>exclusive</code></a> to this connection. Format: bool, Default: <code>false</code>.</li>
+<li><code>auto_delete</code> - Declare the configured queue as <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.auto-delete"><code>auto-delete</code></a>, deleting it if there are no consumers left. Format: bool, Default: <code>false</code>.</li>
+<li><code>nowait</code> - Declare the configured queue with <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.no-wait"><code>nowait</code></a>, do not wait for a reply from the server when declaring the queue. Format: bool, Default: <code>false</code></li>
+</ul>
+<p>Upon onramp initializationthe specified <code>queue_name</code> is <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare"><code>declared</code></a> using <code>queue_options</code>. It will be created if it doesn't exist yet. The queue is <a href="https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.bind"><code>bound</code></a> to the named <code>exchange</code> (emtpy string means the default exchange) with the given <code>routing_key</code> (<a href="https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html">AMQP routing</a>). If the queue was not able to bind, the onramp will error upon initialization.</p>
+<p>The current implementation uses <a href="https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html">default queue bind options</a>, i.e. <code>nowait = False</code>, meaning the server reply is awaited before continuing.</p>
+<p>Received messages are immediately acknowledged to the protocol stack. This Onramp does not wait for Guaranteed Delivery acknowledgements or fails.</p>
 <h3 id="blaster">blaster<a class="headerlink" href="#blaster" title="Permanent link">&para;</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3177,10 +3190,10 @@ data from protocol buffers to tremor values automatically.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a1609d9a.min.js"></script>
       
     
   </body>

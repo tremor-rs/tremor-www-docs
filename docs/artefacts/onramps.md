@@ -336,6 +336,8 @@ This onramp can issue basic operation of receiving a message from a subscription
 
     The onramp is experimental.
 
+This onramp assumes that the environment variable `GOOGLE_APPLICATION_CREDENTIALS` has been exported to the execution environment and it has been configured to point to a valid non-expired service account token json file.
+
 Supported configuration options are:
 
 - `pem` - The pem file from GCP for authentication.

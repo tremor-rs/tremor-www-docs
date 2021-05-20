@@ -1,4 +1,4 @@
-TREMOR_VSN=v0.11.2
+TREMOR_VSN=v0.11.3
 
 mkdocs.yml: mkdocs.yml.in docs/tremor-script/stdlib docs/operations/cli.md docs/api.md
 	python3 ./python_scripts/include_stdlib.py

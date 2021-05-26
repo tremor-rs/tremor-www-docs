@@ -687,6 +687,9 @@ Supported configuration options are:
 
 - `host` - The IP to listen on
 - `port` - The Port to listen on
+- `tls` - The tls config for sending messages via TCP/TLS
+    - `cert` - The certificate PEM file (X.509 certificate)
+    - `key` - The private Keys PEM file (RSA or PKCS8 format)
 
 Example:
 
@@ -715,6 +718,23 @@ onramp:
     config:
       host: "127.0.0.1"
       port: 12201
+```
+
+### tcp example for TLS
+
+```yaml
+onramp:
+  - id: tls
+    type: tcp
+    preprocessors:
+      - lines
+    codec: string
+    config:
+      host: "127.0.0.1"
+      port: 65535
+      tls:
+        cert: "path/to/cert.pem"
+        key: "path/to/key.pem"
 ```
 
 

@@ -38,10 +38,7 @@ Now download the rustup installer by clicking [here](https://win.rustup.rs/x86_6
 #### macOS
 
 ```bash
-brew install openssl
-brew install autoconf
-brew install re2c
-brew install bison #make sure to follow the printed instructions!
+brew install cmake
 ```
 
 #### Ubuntu

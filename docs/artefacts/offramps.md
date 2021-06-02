@@ -1461,6 +1461,9 @@ Supported configuration options are:
 - `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
 - `ttl` - Set the socket's time-to-live ( default: 64 )
 - `is_no_delay` - Set the socket's Nagle ( delay ) algorithm to off ( default: true )
+- `tls` - The tls config or a boolean value to indicate the use of TLS stream ( default: TCP stream )
+    - `cafile` - The CA (PEM) file (load the default webpki-roots if no file is provided) 
+    - `domain` - The domain to connect to (Takes the host parameter if not provided)
 
 Example:
 
@@ -1477,6 +1480,21 @@ offramp:
       host: "localhost"
       port: 9000
 ```
+
+### tcp example for TLS
+
+```yaml
+offramp:
+  - id: tls
+    type: tcp
+    codec: json
+    config:
+      host: "127.0.0.1"
+      port: 65535
+      tls:
+        cafile: "path/to/cafile"
+```
+
 
 ### udp
 

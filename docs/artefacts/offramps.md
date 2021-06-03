@@ -1499,7 +1499,7 @@ offramp:
       tls: true
 ```
 
-This behaviour can be tuned by providing a detailed config. If `tls.cafile` is provided, the TCP offramo will only accept server certificates signed (directly or indirectly via a server-provided certificate chain) by the given root-certificate. This is useful for testing against self-signed certificates. In this case the self signed certificate needs to provided via `tls.cafile`. If `tls.domain` is provided, this value will be used instead of the `host` config to verify the domain name provided in the server certificate. This is especially useful if an IP address is used as `host` config:
+This behaviour can be tuned by providing a detailed config. If `tls.cafile` is provided, the TCP offramp will only accept server certificates signed (directly or indirectly via a server-provided certificate chain) by the given root-certificate. This is useful for testing against self-signed certificates. In this case the self signed certificate needs to provided via `tls.cafile`. If `tls.domain` is provided, this value will be used instead of the `host` config to verify the domain name provided in the server certificate. This is especially useful if an IP address is used as `host` config:
 
 
 ```yaml

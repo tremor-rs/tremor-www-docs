@@ -670,7 +670,7 @@ tremor-stdin://<tremor-host.local>
 
 ### tcp
 
-This listens on a specified port for inbound tcp data.
+This listens on a specified port for inbound tcp data. TLS is supported.
 
 The onramp can leverage preprocessors to segment data before codecs are applied and events are forwarded
 to pipelines.
@@ -687,9 +687,9 @@ Supported configuration options are:
 
 - `host` - The IP to listen on
 - `port` - The Port to listen on
-- `tls` - The tls config for sending messages via TCP/TLS
-    - `cert` - The certificate PEM file (X.509 certificate)
-    - `key` - The private Keys PEM file (RSA or PKCS8 format)
+- `tls` - The TLS config for receiving messages via TCP/TLS. If provided this onramp expects TLS traffic.
+    - `cert` - The server certificate (or certificate chain) PEM file (X.509 certificate). Required for TLS.
+    - `key` - The private Key PEM file (RSA or PKCS8 format). Required for TLS.
 
 Example:
 
@@ -721,6 +721,8 @@ onramp:
 ```
 
 ### tcp example for TLS
+
+If the `tls` config is provided, this onramp acts as a TCP/TLS server and expects SSL/TLS traffic from clients:
 
 ```yaml
 onramp:

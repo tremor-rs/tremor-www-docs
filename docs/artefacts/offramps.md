@@ -1462,7 +1462,7 @@ Supported configuration options are:
 - `ttl` - Set the socket's time-to-live ( default: 64 )
 - `is_no_delay` - Set the socket's Nagle ( delay ) algorithm to off ( default: true )
 - `tls` - If set to `true` or a detailed TLS config with the keys below, will wrap the TCP socket with a TLS session. ( default: `false` )
-    - `cafile` - If provided, only server certificates signed by the Certificate Authority represented by the root certificate in `cafile` are accepted. If not provided, all root certificated distributed by Mozilla via [webpki-roots](https://github.com/rustls/webpki-roots) are loaded).
+    - `cafile` - If provided, only server certificates signed by the Certificate Authority represented by the root certificate in `cafile` are accepted. If not provided, all root certificated distributed by Mozilla via [webpki-roots](https://github.com/rustls/webpki-roots) are loaded.
     - `domain` - if provided, this will be the domain to verify the TLS certificate against. It might differ to `host`, especially if `host` is given as IP address. If not provided, the `host` config is used as domain.
 
 ```yaml

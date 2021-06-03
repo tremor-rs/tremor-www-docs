@@ -85,7 +85,7 @@ Changes to quotas are applied immediately, no scheduled reads of the quotas are 
 ```sh
 # set rate for tremolo class of logs to 1 message per second
 # returns the old, overwritten state on success
-$ curl -XPUT -H'Content-Type: application/json' http://localhost:8139/quotas/tremolo" -d'1'
+$ curl -XPUT -H'Content-Type: application/json' "http://localhost:8139/quotas/tremolo" -d'1'
 
 {"tremolo": 100}
 

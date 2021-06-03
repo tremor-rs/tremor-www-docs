@@ -1447,7 +1447,7 @@ offramp:
 
 ### tcp
 
-This connects on a specified port for distributing outbound TCP data.
+This connects on a specified port for distributing outbound TCP data. TLS is supported via [rustls](https://github.com/ctz/rustls).
 
 The offramp can leverage postprocessors to frame data after codecs are applied and events are forwarded
 to external TCP protocol distribution endpoints.
@@ -1461,11 +1461,9 @@ Supported configuration options are:
 - `is_non_blocking` - Is the socket configured as non-blocking ( default: false )
 - `ttl` - Set the socket's time-to-live ( default: 64 )
 - `is_no_delay` - Set the socket's Nagle ( delay ) algorithm to off ( default: true )
-- `tls` - The tls config or a boolean value to indicate the use of TLS stream ( default: TCP stream )
-    - `cafile` - The CA (PEM) file (load the default webpki-roots if no file is provided) 
-    - `domain` - The domain to connect to (Takes the host parameter if not provided)
-
-Example:
+- `tls` - If set to `true` or a detailed TLS config with the keys below, will wrap the TCP socket with a TLS session. ( default: `false` )
+    - `cafile` - If provided, only server certificates signed by the Certificate Authority represented by the root certificate in `cafile` are accepted. If not provided, all root certificated distributed by Mozilla via [webpki-roots](https://github.com/rustls/webpki-roots) are loaded).
+    - `domain` - if provided, this will be the domain to verify the TLS certificate against. It might differ to `host`, especially if `host` is given as IP address. If not provided, the `host` config is used as domain.
 
 ```yaml
 offramp:
@@ -1481,7 +1479,28 @@ offramp:
       port: 9000
 ```
 
-### tcp example for TLS
+
+#### TLS Support
+
+TLS support is enabled by providing either `tls: true` or a detailed config.
+
+When providing `tls: true`, the TCP offramp is verifying the server it connects to and its certificate against the `host` config, and a set of common root-certificates provided by Mozilla via [webpki-roots](https://github.com/rustls/webpki-roots):
+
+```yaml
+offramp:
+  - id: tcp
+    type: tcp
+    codec: json
+    postprocessors:
+      - length-prefixed
+    config:
+      host: "example.com"
+      port: 443
+      tls: true
+```
+
+This behaviour can be tuned by providing a detailed config. If `tls.cafile` is provided, the TCP offramo will only accept server certificates signed (directly or indirectly via a server-provided certificate chain) by the given root-certificate. This is useful for testing against self-signed certificates. In this case the self signed certificate needs to provided via `tls.cafile`. If `tls.domain` is provided, this value will be used instead of the `host` config to verify the domain name provided in the server certificate. This is especially useful if an IP address is used as `host` config:
+
 
 ```yaml
 offramp:
@@ -1492,8 +1511,11 @@ offramp:
       host: "127.0.0.1"
       port: 65535
       tls:
-        cafile: "path/to/cafile"
+        cafile: "path/to/self_signed_certificate.pem"
+        domain: "localhost"
 ```
+
+For testing purposes, self-signed certificates need the Subject Alternative Name extension, otherwise setting up the onramp will fail with a `BadDER` Error. Adding this when generating a self-signed certificate can be done by passing `-addext 'subjectAltName = DNS:<DOMAIN>'` via `openssl` command line or by adding it to `openssl.cfg` as described in the [openssl manual](https://www.openssl.org/docs/man1.1.1/man5/x509v3_config.html#Subject-Alternative-Name).
 
 
 ### udp

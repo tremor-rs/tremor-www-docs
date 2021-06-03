@@ -2,7 +2,7 @@
 
 !!! note
 
-    All the application code here is available from the docs [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/38_kafka_elastic_correlation).
+    All the application code here is available from the docs [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/39_kafka_elastic_correlation).
 
 This example tries to show how to use tremor as the orchestrator for ingesting documents coming from kafka into elasticsearch and notify the upstream system of success or failure of the ingest operation for every single document.
 

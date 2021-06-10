@@ -487,7 +487,7 @@ onramp:
 
 The data looks like this:
 
-```json
+```js
 {
   "onramp": "metronome",
   "ingest_ns": 12345, // time

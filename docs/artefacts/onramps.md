@@ -199,6 +199,18 @@ Cron entries that are historic or in the past ( relative to the current UTC time
 Cron entries beyond 2038 will not work due to underlying libraries ( `rust`, `chrono`, `cron.rs` ) suffering
 from the [year 2038 problem](https://en.wikipedia.org/wiki/Year_2038_problem).
 
+The data looks like this:
+
+```js
+{
+  "onramp": "crononome",
+  "ingest_ns": 12345, // the time
+  "id": 42,
+  "name": "the name of the trigger",
+  "payload": ["the", "configured", "payload", "perhaps"],
+  "trigger": {"the": "trigger"}
+}
+```
 ### discord
 
 **This onramp can be linked**

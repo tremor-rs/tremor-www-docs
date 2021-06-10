@@ -485,6 +485,16 @@ onramp:
       interval: 10000
 ```
 
+The data looks like this:
+
+```json
+{
+  "onramp": "metronome",
+  "ingest_ns": 12345, // time
+  "id": 42
+}
+```
+
 ### nats
 The `nats` onramp connects to Nats server(s) and subscribes to a specified subject.
 

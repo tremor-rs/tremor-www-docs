@@ -30,7 +30,7 @@ offramp:
 
 Each offramp is able to report events as being definitely sent off or as failed. It can also report itself as not functional anymore to the connected pipelines. How each offramp implements those abilities is described in the table below.
 
-The column `Delivery acknowledgements` describes under what circumstanced the offramp considers an event delivered and acknowledges it to the connected pipelines and operators, onramps etc. therein.
+The column `Delivery acknowledgements` describes under what circumstances the offramp considers an event delivered and acknowledges it to the connected pipelines and operators, onramps etc. therein.
 Acknowledgements, Failures or missing Acknowledgements take effect e.g. when using the operators or onramps that support those mechanisms (e.g. the WAL operator or the Kafka onramp).
 
 The column `Disconnect events` describes under which circumstances this offramp is not considered functional anymore.

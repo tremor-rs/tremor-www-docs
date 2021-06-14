@@ -158,10 +158,10 @@ mapping:
 Tremor's registry and repository can be configured dynamically via tremor's REST API, and via the tremor-cli tool. For example:
 
 ```bash
-tremor api onramp publish blaster.yaml
-tremor api offramp publish offramp.yaml
-tremor api pipeline publish main.yaml
-tremor api binding publish benchmark.yaml
+tremor api onramp create blaster.yaml
+tremor api offramp create offramp.yaml
+tremor api pipeline create main.yaml
+tremor api binding create benchmark.yaml
 ```
 
 Or via curl:

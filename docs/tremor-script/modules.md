@@ -25,26 +25,6 @@ on the file system, relative to a root module path: Nested modules can be define
       +-- badger.tremor
 ```
 
-Assuming this module hierarchy is rooted at `/opt/my-project/lib` they can be registered with tremor
-by prepending this folder to the `TREMOR_PATH` environment variable
-
-```bash
-export TREMOR_PATH="/opt/my-project/lib:$TREMOR_PATH"
-```
-
-The `TREMOR_PATH` uses ':' on linux/unix to separate multiple module paths.
-
-The default places to look for your modules is `/usr/local/share/tremor` if `TREMOR_PATH` is not provided.
-
-The modules can be used using the `use` clause as follows:
-
-```tremor
-use foo::bar::snot; # snot is a ref to 'foo/bar/snot.tremor'
-use foo::baz::badger; # badger is a ref to 'foo/bar/badger.tremor'
-
-"#{snot::snot}#{badger::badger}"; # emits an interpolated string
-```
-
 The same modular hierarchy can be defined as nested module declarations as follows:
 
 ```tremor
@@ -61,6 +41,35 @@ let snot = foo::bar::snot;
 let badger = foo::baz::badger;
 
 "#{snot}-#{badger}";
+```
+
+Assuming this module hierarchy is rooted at `/opt/my-project/lib` they can be registered with tremor
+by prepending this folder to the `TREMOR_PATH` environment variable
+
+```bash
+export TREMOR_PATH="/opt/my-project/lib:$TREMOR_PATH"
+```
+
+## Defaults
+
+The `TREMOR_PATH` uses ':' on linux/unix to separate multiple module paths.
+
+The default places to look for your modules is `/usr/local/share/tremor` if `TREMOR_PATH` is not provided.
+
+The default place for the _tremor standard library_ is `/usr/share/tremor/lib`, so the full `TREMOR_PATH` default is
+
+- `/usr/local/share/tremor`
+- `/usr/share/tremor/lib`
+
+## Referencing Modules with `use`
+
+The modules can be used using the `use` clause as follows:
+
+```tremor
+use foo::bar::snot; # snot is a ref to 'foo/bar/snot.tremor'
+use foo::baz::badger; # badger is a ref to 'foo/bar/badger.tremor'
+
+"#{snot::snot}#{badger::badger}"; # emits an interpolated string
 ```
 
 Modules can be loaded via the `use` clause which in turn loads a module from the physical file system via the module path.

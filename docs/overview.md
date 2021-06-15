@@ -1,6 +1,6 @@
 # Architecture Overview
 
-This is a short architectural overview of Tremor
+This is a short architectural overview of Tremor.
 
 ## Scope
 

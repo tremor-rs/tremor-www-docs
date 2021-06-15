@@ -33,7 +33,7 @@ For the sake of not repeating the privious workshop we will focus on those new p
 
 This section deals with polling, in our case we want to query influxdb on a periodic interval.
 
-To this end we use a `metronome` onramp that fires an event every 10s. We send the events into [`poll.trickle`](./poll.trickle) where we create a influx request out of the metronom event.
+To this end we use a `metronome` onramp that fires an event every 10s. We send the events into [`poll.trickle`](./etc/tremor/config/poll.trickle) where we create a influx request out of the metronom event.
 
 The `poll` pipeline then connects to the linked influx offramp to run the query.
 
@@ -70,7 +70,7 @@ select event from query into out;
 
 ### Alerting
 
-The [`alert.trickle`](./alert.trickle) pipeline takes the reply from Influx and alert if the values we see are above a given limit.
+The [`alert.trickle`](./etc/tremor/config/alert.trickle) pipeline takes the reply from Influx and alert if the values we see are above a given limit.
 
 Since the influx reply uses a unique datamodle, we need to unscramble the results, this sadly is a trail and error process based on what influx returns.
 

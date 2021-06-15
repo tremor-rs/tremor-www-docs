@@ -29,9 +29,9 @@ intention is to demonstrate intermediate record format which is accepted by
 
 ## Business Logic
 
-In [`01_pipeline.yaml`](etc/tremor/config/01_pipeline.yaml) we register two
-pipelines: `postgres-things` for data coming from a PostgreSQL database and
-`crononome-things` coming from `crononome` at regular interval of `5s`.
+We have two pipelines.
+- [`postgres.trickle`](etc/tremor/config/postgres.trickle) for data coming from a PostgreSQL database
+- [`crononome.trickle`](etc/tremor/config/crononome.trickle) for events coming from the `crononome` onramp at a regular interval of `5s`.
 
 ## Command line testing during logic development
 

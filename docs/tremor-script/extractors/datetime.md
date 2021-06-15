@@ -1,6 +1,6 @@
 # Datetime
 
-The datetime extractor parses the input into a timestamp. The format of the target needs to be specified as a parameter to the extractor. The extractor is equivalent to the [Datetime::parse(…)](../functions/datetime.md#datetimeparsedatetime-input_format).
+The datetime extractor parses the input into a timestamp. The format of the target needs to be specified as a parameter to the extractor.
 
 ## Predicate
 

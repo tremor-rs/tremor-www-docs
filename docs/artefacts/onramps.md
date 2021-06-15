@@ -30,7 +30,7 @@ onramp:
       <key>: <value>
 ```
 
-The [`codec`](codecs.md) field is optional and if not provided will use onramps default codec.
+The [`codec`](codecs.md) field is optional and if not provided, will use onramps default codec.
 
 The `err_required` field can be set to `true` if the onramp should not start unless both `out` and `err` ports are connected to at least one pipeline.
 
@@ -38,7 +38,7 @@ The `config` contains a map (key-value pairs) specific to the onramp type.
 
 ## Delivery Properties
 
-Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signaling it is safe to send further events. How each onramp reacts, is described in the table below:
+Onramps are able to act upon both circuit breaker and guaranteed delivery events from the downstream pipelines. Those are triggered when event delivery is acknowledged or when event delivery fails. Also when some part (offramps, operators) signals itself being broken, the circuit breaker opens, or when the downstream system heals, the circuit breaker closes again, signaling it is safe to send further events. How each onramp reacts is described in the table below:
 
 The column `Delivery Acknowledgements` describes when the onramp considers and reports the event delivered to the upstream it is connected to.
 
@@ -88,17 +88,17 @@ onramp:
 Supported configuration options are:
 
 - `amqp_addr` - an AMQP URI. Format: String, required. For more details see [AMQP 0.9.1 URI spec](https://www.rabbitmq.com/uri-spec.html).
-- `exchange` - Specifies the exchange to bind the configured queue to. Format: String, optional, Default: the empty string, the default exchange
+- `exchange` - Specifies the exchange to bind the configured queue to. Format: String, optional, Default: the empty string, the default exchange.
 - `routing_key` - Specifies a routing key used when binding the configured queue to an exchange. Format: String, optional, Default: the empty string.
 - `queue_name` - The name of the queue to use/create for consuming messages. It will be bound to the configured `exchange` with the given `routing_key`. Format: String, required.
-- `queue_options` - Required Options to use when declaring the queue
+- `queue_options` - Required Options to use when declaring the queue.
   - `passive` - Declare the configured queue as [`passive`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.passive), if `true` do not auto-create the queue. Format: bool, Default: `false`.
   - `durable` - Declare the configured queue as [`durable`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.durable), so it survives AMQP server restarts. Format: bool, Default: `false`.
   - `exclusive` - Declare the configured queue as [`exclusive`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.exclusive) to this connection. Format: bool, Default: `false`.
   - `auto_delete` - Declare the configured queue as [`auto-delete`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.auto-delete), deleting it if there are no consumers left. Format: bool, Default: `false`.
-  - `nowait` - Declare the configured queue with [`nowait`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.no-wait), do not wait for a reply from the server when declaring the queue. Format: bool, Default: `false`
+  - `nowait` - Declare the configured queue with [`nowait`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare.no-wait), do not wait for a reply from the server when declaring the queue. Format: bool, Default: `false`.
 
-Upon onramp initializationthe specified `queue_name` is [`declared`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare) using `queue_options`. It will be created if it doesn't exist yet. The queue is [`bound`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.bind) to the named `exchange` (emtpy string means the default exchange) with the given `routing_key` ([AMQP routing](https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)). If the queue was not able to bind, the onramp will error upon initialization.
+Upon onramp initialization, the specified `queue_name` is [`declared`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.declare) using `queue_options`. It will be created if it doesn't exist yet. The queue is [`bound`](https://www.rabbitmq.com/amqp-0-9-1-reference.html#queue.bind) to the named `exchange` (emtpy string means the default exchange) with the given `routing_key` ([AMQP routing](https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html)). If the queue was not able to bind, the onramp will error upon initialization.
 
 The current implementation uses [default queue bind options](https://docs.rs/lapin/1.6.8/lapin/options/struct.QueueBindOptions.html), i.e. `nowait = False`, meaning the server reply is awaited before continuing.
 
@@ -139,7 +139,7 @@ onramp:
 ```
 ### cb
 
-The `cb` onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured `timeout` is exceeded, it exits the tremor process. If some events didn't receive circuit breaker events, it exits with status code `1`, if everything is fine it exits with `0`.
+The `cb` onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured `timeout` is exceeded, it exits the tremor process. If some events didn't receive circuit breaker events, it exits with status code `1`; if everything is fine, it exits with `0`.
 
 Supported configuration options are:
 
@@ -171,7 +171,7 @@ tremor-crononome://<tremor-host.local>
 
 Supported configuration options are:
 
-- `entries` - A sequence of entries
+- `entries` - A sequence of entries.
 
 Example
 
@@ -217,7 +217,7 @@ The data looks like this:
 
 The `discord` onramp allows consuming events from the [Discord API](https://discord.com/developers/docs/intro). It uses the event structure as provided by [serenity](https://docs.rs/serenity/0.10.2/serenity/) wrapped in event-named records.
 
-Replies send to this onramp can perform multiple operations:
+Replies sent to this onramp can perform multiple operations:
 
 #### Guild related
 ```json
@@ -308,7 +308,7 @@ Replies send to this onramp can perform multiple operations:
 
 ### file
 
-The file onramp reads the content of a file, line by line. And sends each line as an event. It has the ability to shut down the system upon completion. Files can be `xz` compressed.
+The file onramp reads the content of a file, line by line, and sends each line as an event. It has the ability to shut down the system upon completion. Files can be `xz` compressed.
 
 The default [codec](codecs.md#json) is `json`.
 
@@ -322,7 +322,7 @@ Supported configuration options are:
 
 - `source` - The file to read from.
 - `close_on_done` - Terminates tremor once the file is processed.
-- `sleep_on_done` - Waits for the given number of milliseconds, before terminating tremor. Intended to be used with `close_on_done`.
+- `sleep_on_done` - Waits for the given number of milliseconds before terminating tremor. Intended to be used with `close_on_done`.
 
 Example:
 
@@ -408,8 +408,8 @@ Supported configuration options are:
 - `group_id` - The Kafka consumer group id to use.
 - `topics` - A list of topics to subscribe to.
 - `brokers` - Broker servers to connect to. (Kafka nodes)
-- `rdkafka_options` - A optional map of an option to value, where both sides need to be strings.
-- `retry_failed_events` - If set to `false` the source will **not** seek back the consumer offset upon a failed events and thus not retry those when `enable.auto.commit` is set to `false` in `rdkafka_options`. (default `true`)
+- `rdkafka_options` - An optional map of an option to value, where both sides need to be strings.
+- `retry_failed_events` - If set to `false`, the source will **not** seek back the consumer offset upon failed events, and thus not retry those when `enable.auto.commit` is set to `false` in `rdkafka_options`. (default `true`)
 - `poll_interval` - Duration in milliseconds to wait until we poll again if no message is in the kafka queue. (default: `100`)
 
 Set metadata variables are:
@@ -461,13 +461,13 @@ onramp:
 
 #### Semantics with `enable.auto.commit`
 
-If `enable.auto.commit: false` is set in `rdkafka_options`, the consumer offset in kafka will only be committed when the event has been successfully reached the other end of the pipeline (typically some [offramp](offramps.md#offramps) ).
+If `enable.auto.commit: false` is set in `rdkafka_options`, the consumer offset in kafka will only be committed when the event has successfully reached the other end of the pipeline (typically some [offramp](offramps.md#offramps) ).
 If an event failed during processing within the pipeline or at a downstream offramp, the consumer offset will be reset to the offset of the failed event, so it will be retried. This has some consequences worth mentioning:
 
 * Already processed `kafka` messages (that have succeeded before the failed message failed) might be seen again multiple times.
 * If the message is persistently failing (e.g. due to an malformed payload or similar), tremor will retry those messages infinitely.
 
-If persistent failures are to be expected (e.g. due to incorrect event payloads) or if repeating messages in general are a problem for the application, avoiding retries with `retry_failed_events: false` is advised.
+If persistent failures are to be expected (e.g. due to incorrect event payloads), or if repeating messages in general are a problem for the application, avoiding retries with `retry_failed_events: false` is advised.
 
 If `enable.auto.commit: true` is set in `rdkafka_options`, which is the default behaviour if nothing is specified, the offset is immediately committed upon event reception in tremor, regardless of success or failure of processing the `kafka` message as event in tremor.
 
@@ -475,7 +475,7 @@ If `enable.auto.commit: true` is set in `rdkafka_options`, which is the default 
 
 This sends a periodic tick downstream. It is an excellent tool to generate some test traffic to validate pipelines.
 
-The default [codec](codecs.md#pass) is `pass`. (since we already output decoded JSON)
+The default [codec](codecs.md#pass) is `pass` (since we already output decoded JSON).
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
 
@@ -565,20 +565,20 @@ PostgreSQL onramp.
 
 Supported configuration options are:
 
-- `host` - PostgreSQL database hostname
-- `port` - PostgresSQL database port
-- `user` - Username for authentication
-- `password` - Password for authentication
-- `dbname` - Database name
-- `query` - Query run to retrieve data
-- `interval_ms` - Query interval in milliseconds
-- `cache` - Location (`path`) and size (`size`) for caching of latest successful query interval
+- `host` - PostgreSQL database hostname.
+- `port` - PostgresSQL database port.
+- `user` - Username for authentication.
+- `password` - Password for authentication.
+- `dbname` - Database name.
+- `query` - Query run to retrieve data.
+- `interval_ms` - Query interval in milliseconds.
+- `cache` - Location (`path`) and size (`size`) for caching of latest successful query interval.
 
 `query` must include two arguments to be filled with start and end interval timestamps.
 
 Data will come out of onramp in objects representing columns. If schema
 specifies there are two fields, `username` (`VARCHAR`) and `created_at`
-(`TIMESTAMPTZ`) then the actual JSON coming out of onramp looks like:
+(`TIMESTAMPTZ`), then the actual JSON coming out of onramp looks like this:
 
 ```
 "username": {
@@ -626,12 +626,12 @@ tremor-rest://<tremor-rest-client-host.remote>
 
 Supported configuration options are:
 
-- `host` - The host to advertise as
-- `port` - The TCP port to listen on
+- `host` - The host to advertise as.
+- `port` - The TCP port to listen on.
 
-The rest onramp respects the HTTP [Content-Type header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) and will use it to decode the request body when it's present (otherwise it defaults to using the codec specified in the onramp config).
+The rest onramp respects the HTTP [Content-Type header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) and will use it to decode the request body when it's present (otherwise, it defaults to using the codec specified in the onramp config).
 
-Tremor supports a limited set of builtin codecs used for well known MIME types (e.g. `application/json`, `application/yaml`, `text/plain`). In order to customize how certain `Content-Type`s are handled, provide a `codec_map` providing a mapping from MIME type to Tremor codec in the top level artifact config (where the `codec` is set).
+Tremor supports a limited set of built-in codecs used for well known MIME types (e.g. `application/json`, `application/yaml`, `text/plain`). In order to customize how certain `Content-Type`s are handled, provide a `codec_map` providing a mapping from MIME type to Tremor codec in the top level artefact config (where the `codec` is set).
 
 Set metadata variables:
 
@@ -645,16 +645,16 @@ Set metadata variables:
         - `path` - String
         - `query` - String, optional
         - `fragment` - String, optional
-    - `method` - HTTP method used by the incoming request
-    - `headers` - A record that maps header name (lowercase string) to values (array of strings)
+    - `method` - HTTP method used by the incoming request.
+    - `headers` - A record that maps header name (lowercase string) to values (array of strings).
 
 Used metadata variables:
 
 > These variables can be used to dynamically change how responses are handled when using this onramp as [linked transport](../operations/linked-transports.md):
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
-    - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set)
-    - `headers` - A record that maps header name (string) to value (string or array of strings) (optional)
+    - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set).
+    - `headers` - A record that maps header name (string) to value (string or array of strings) (optional).
 
 When not used as a linked onramp, the status code returned with the response is `202`.
 
@@ -707,9 +707,9 @@ tremor-tcp://<client_ip>:<client_port>/<config_server_port>
 
 Supported configuration options are:
 
-- `host` - The IP to listen on
-- `port` - The Port to listen on
-- `tls` - The TLS config for receiving messages via TCP/TLS. If provided this onramp expects TLS traffic.
+- `host` - The IP to listen on.
+- `port` - The Port to listen on.
+- `tls` - The TLS config for receiving messages via TCP/TLS. If provided, this onramp expects TLS traffic.
     - `cert` - The server certificate (or certificate chain) PEM file (X.509 certificate). Required for TLS.
     - `key` - The private Key PEM file (RSA or PKCS8 format). Required for TLS.
 
@@ -776,8 +776,8 @@ tremor-udp://<sender_ip>:<sender_port>/<config_receive_port>
 
 Supported configuration options are:
 
-- `host` - The IP to listen on
-- `port` - The Port to listen on
+- `host` - The IP to listen on.
+- `port` - The Port to listen on.
 
 Example:
 
@@ -811,7 +811,7 @@ onramp:
 
 **This onramp can be linked**
 
-WebSocket onramp. Receiving either binary or text packages from a WebSocket connection. the url is: `ws://<host>:<port>/`
+WebSocket onramp. Receiving either binary or text packages from a WebSocket connection. the url is: `ws://<host>:<port>/`.
 
 The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
 
@@ -821,16 +821,16 @@ tremor-ws://<tremor-ws-client-host.remote>
 
 Supported configuration options are:
 
-- `host` - The IP to listen on
-- `port` - The Port to listen on
+- `host` - The IP to listen on.
+- `port` - The Port to listen on.
 
 Set metadata variables:
 
-- `$binary` - `true` if the incoming WebSocket message came as binary (`false` otherwise)
+- `$binary` - `true` if the incoming WebSocket message came as binary (`false` otherwise).
 
 Used metadata variables (for reply with [linked transports](../operations/linked-transports.md)):
 
-- `$binary` - If reply data should be send as binary instead of text (optional. data format defaults to text when not set).
+- `$binary` - If reply data should be sent as binary instead of text (optional. data format defaults to text when not set).
 
 Example:
 
@@ -852,11 +852,11 @@ The onramp is experimental.
 
 Supported configuration options are:
 
-- `host` - String - The host or IP to listen on
-- `port` - integer - The TCP port to listen on
-- 'logs' - boolean - Is logging enabled for this instance. Defaults to `true`. Received `logs` events are dropped when `false`.
-- 'metrics' - boolean - Is metrics enabled for this instance. Defaults  to `true`. Defaults to `true`. Received `metrics` events are dropped when `false`.
-- 'trace' - boolean - Is trace enabled for this instance. Defaults to `true`. Defaults to `true`. Received `trace` events are dropped when `false`.
+- `host` - String - The host or IP to listen on.
+- `port` - integer - The TCP port to listen on.
+- 'logs' - boolean - Is logging enabled for this instance? Defaults to `true`. Received `logs` events are dropped when `false`.
+- 'metrics' - boolean - Is metrics enabled for this instance? Defaults  to `true`. Received `metrics` events are dropped when `false`.
+- 'trace' - boolean - Is trace enabled for this instance? Defaults to `true`. Received `trace` events are dropped when `false`.
 
 Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to
 simplify working with the tremor value mapping of the event data. The connector translates the wire level

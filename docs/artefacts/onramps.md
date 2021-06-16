@@ -347,7 +347,7 @@ onramp:
 
 Google Cloud Pubsub - Subscriber
 
-This onramp can issue basic operation of receiving a message from a subscription.
+This onramp can issue basic operation of receiving messages from a subscription.
 
 !!! note
 

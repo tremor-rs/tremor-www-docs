@@ -845,7 +845,7 @@ Removes the object from the specified bucket.
 
 Google Cloud Pubsub - Publisher
 
-This offramp can issue basic operation of sending a message to a topic.
+This offramp can issue basic operation of creating a subscription and sending a message to a topic.
 
 !!! note
 
@@ -872,6 +872,33 @@ offramp:
 ```
 
 
+#### create_subscription
+
+Create a subsrciption to a pub/sub topic.
+
+**Request**:
+```js
+{
+  "command": "create_subscription",
+  "project": "<project-id>",
+  "topic": "<topic-name>",
+  "subscription": "<subscription-name>",
+  "message_ordering": `<message-ordering>`
+}
+```
+
+**Response**:
+```js
+```
+
+***Where***
+
+- `<project-id>` - The project id of the Google Cloud Pub/sub project where the topic is.
+- `<topic-name>` - The Google cloud Pub/Sub topic name to which the subscription is being created.
+- `<subscription-name>` - Set a unique name for the subscription to be created.
+- `<message-ordering>` - Can be set to true or false. To receive the messages in order, set the message ordering property on the subscription you receive messages from. Receiving messages in order might increase latency.
+
+
 #### send_message
 
 Send a message to a pubsub topic.
@@ -882,7 +909,8 @@ Send a message to a pubsub topic.
   "command": "send_message", 
   "project": "<project-id>", 
   "topic": "<topic-name>", 
-  "data": `<data>` 
+  "data": `<data>`,
+  "ordering_key": "<ordering-key>" 
 }
 ```
 
@@ -891,6 +919,7 @@ Send a message to a pubsub topic.
 {
   "project": "<project-id>",
   "data": `<data>`,
+  "ordering_key": "<ordering-key>",
   "topic": "<topic-name>",
   "command": "send_message"
 }
@@ -901,6 +930,7 @@ Send a message to a pubsub topic.
 - `<project-id>` - The project id of the Google Cloud Pubsub project where the topic is.
 - `<topic-name>` - The Google cloud PubSub topic name to which the message is being sent.
 - `<data>` - The data that is to be sent as message.
+- `<ordering-key>` - If non-empty, identifies related messages for which publish order should be respected. If a Subscription has message_ordering set to true, messages published with the same non-empty ordering_key value will be delivered to subscribers in the order in which they are received by the pub/sub system. All PubsubMessages published in a given PublishRequest must specify the same ordering_key value. 
 
 
 

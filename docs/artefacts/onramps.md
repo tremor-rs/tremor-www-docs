@@ -374,7 +374,7 @@ onramp:
       subscription: "tremor-sub"
 ```
 
-We get the meta data as response that includes the message id and the acknowledgement id of the message.
+We get the meta data as response that includes the message id and the acknowledgement id of the message. Configure the inbound trickle file to display the metadata received.
 
 **Response**:
 

@@ -867,10 +867,11 @@ offramp:
     codec: json
     postprocessors:
       - gzip    
+    linked: true
     config:
       pem: gcp.pem
 ```
-
+If the use case for the offramp requires metadata from the Google Cloud Pub/Sub service on the supported operations for this offramp, then set linked to true and configure the output port `out`. If the use case does not require metadata, then set linked to false.
 
 #### create_subscription
 
@@ -889,6 +890,16 @@ Create a subsrciption to a pub/sub topic.
 
 **Response**:
 ```js
+{
+  "subscription": "projects/<project-id>/subscriptions/<subscription-name>",
+  "topic": "projects/<project-id>/topics/<topic-name>",
+  "ack_deadline_seconds": `<ack_deadline_seconds>`,
+  "retain_acked_messages": `<retain_acked_messages>`,
+  "enable_message_ordering": `<enable_message_ordering>`,
+  "message_retention_duration": `<message_retention_duration>`,
+  "filter": "<filter>",
+  "detached": `<detached>`
+}
 ```
 
 ***Where***
@@ -897,6 +908,12 @@ Create a subsrciption to a pub/sub topic.
 - `<topic-name>` - The Google cloud Pub/Sub topic name to which the subscription is being created.
 - `<subscription-name>` - Set a unique name for the subscription to be created.
 - `<message-ordering>` - Can be set to true or false. To receive the messages in order, set the message ordering property on the subscription you receive messages from. Receiving messages in order might increase latency.
+- `<ack_deadline_seconds>` - The approximate amount of time (on a best-effort basis) Pub/Sub waits for the subscriber to acknowledge receipt before resending the message. In the interval after the message is delivered and before it is acknowledged, it is considered to be outstanding. During that time period, the message will not be redelivered (on a best-effort basis).
+- `<retain_acked_messages>` -  Indicates whether to retain acknowledged messages. If true, then messages are not expunged from the subscription's backlog, even if they are acknowledged, until they fall out of the message_retention_duration window.
+- `<enable_message_ordering>` - If true, messages published with the same ordering_key in PubsubMessage will be delivered to the subscribers in the order in which they are received by the Pub/Sub system. Otherwise, they may be delivered in any order.
+- `<message_retention_duration>` - How long to retain unacknowledged messages in the subscription's backlog, from the moment a message is published. If retain_acked_messages is true, then this also configures the retention of acknowledged messages, and thus configures how far back in time a Seek can be done. Defaults to 7 days. Cannot be more than 7 days or less than 10 minutes.
+- `<filter>` - An expression written in the Pub/Sub filter language. If non-empty, then only PubsubMessages whose attributes field matches the filter are delivered on this subscription. If empty, then no messages are filtered out.
+- `<detached>` - Indicates whether the subscription is detached from its topic. Detached subscriptions don't receive messages from their topic and don't retain any backlog.
 
 
 #### send_message
@@ -917,10 +934,7 @@ Send a message to a pubsub topic.
 **Response**:
 ```js
 {
-  "project": "<project-id>",
-  "data": `<data>`,
-  "ordering_key": "<ordering-key>",
-  "topic": "<topic-name>",
+  "message-id": "<message-id>",
   "command": "send_message"
 }
 ```
@@ -931,6 +945,7 @@ Send a message to a pubsub topic.
 - `<topic-name>` - The Google cloud PubSub topic name to which the message is being sent.
 - `<data>` - The data that is to be sent as message.
 - `<ordering-key>` - If non-empty, identifies related messages for which publish order should be respected. If a Subscription has message_ordering set to true, messages published with the same non-empty ordering_key value will be delivered to subscribers in the order in which they are received by the pub/sub system. All PubsubMessages published in a given PublishRequest must specify the same ordering_key value. 
+- `<message-id>` - The message id assigned by the Google Cloud pub/sub api.
 
 
 

@@ -3,14 +3,14 @@
 ## Contributors Guide
 
 This course is a basic introduction to development practices and
-a high level overview of how to contribute to the tremor project
+a high-level overview of how to contribute to the tremor project
 for the uninitiated.
 
 >>>
 
 ### Practical Matters
 
-In this section we look at the mechanics of contributing to tremor.
+In this section, we look at the mechanics of contributing to tremor.
 
 ---
 
@@ -18,7 +18,7 @@ In this section we look at the mechanics of contributing to tremor.
 
 <div style='font-size: 20px'>
 One of the most valuable contributions is a bug report for a feature,
-capability or artifact that doesn't seem quite right to you. If in doubt,
+capability or artefact that doesn't seem quite right to you. If in doubt,
 please raise an issue on our issues list.
 </div>
 
@@ -26,7 +26,7 @@ please raise an issue on our issues list.
 
 1. Identify similar [existing issues](https://github.com/tremor-rs/tremor-runtime/search?q=&type=Issues&utf8=%E2%9C%93) to up-vote.
 2. If none found, [raise a new issue](https://github.com/tremor-rs/tremor-runtime/issues/new).
-3. Be descriptive with your testcase
+3. Be descriptive with your testcase.
 
 ---
 
@@ -55,9 +55,9 @@ repository. For significant contributions, we follow an open RFC Process.
 
 <br/>
 
-1. Read the [RFC Process](https://github.com/tremor-rs/tremor-rfcs/blob/main/README.md)
-2. Familarise with [existing RFCs](https://github.com/tremor-rs/tremor-rfcs)
-3. Talk to the maintainers via [Tremor discord](https://bit.ly/tremor-discord)
+1. Read the [RFC Process](https://github.com/tremor-rs/tremor-rfcs/blob/main/README.md).
+2. Familarise with [existing RFCs](https://github.com/tremor-rs/tremor-rfcs).
+3. Talk to the maintainers via [Tremor discord](https://bit.ly/tremor-discord).
 
 ---
 
@@ -70,9 +70,9 @@ feature, perhaps even with an RFC.
 
 <br/>
 
-1. We use the [fork and pull](https://help.github.com/articles/about-collaborative-development-models/)
-2. Make sure to maintain or improve code coverage
-3. Make sure to get a clean run via  lint tools
+1. We use the [fork and pull](https://help.github.com/articles/about-collaborative-development-models/).
+2. Make sure to maintain or improve code coverage.
+3. Make sure to get a clean run via  lint tools.
 
 ---
 
@@ -86,15 +86,15 @@ improves tremor for its community very highly.
 
 <br/>
 
-1. Main documentation [Tremor Documentation](https://github.com/tremor-rs/tremor-www-docs)
-2. Search for documentation related [issues](https://github.com/tremor-rs/tremor-www-docs/issues?q=is%3Aopen%20is%3Aissue%20label%3Adoc)
+1. Main documentation [Tremor Documentation](https://github.com/tremor-rs/tremor-www-docs).
+2. Search for documentation related [issues](https://github.com/tremor-rs/tremor-www-docs/issues?q=is%3Aopen%20is%3Aissue%20label%3Adoc).
 
 >>>
 
 ### Contribute By Skill
 
 <div style='font-size: 20px'>
-Tremor is a lot more than rust code. If you are a polyglot developer
+Tremor is a lot more than rust code. If you are a polyglot developer,
 there are many ways to contribute. Lets explore a few!
 </div>
 
@@ -104,7 +104,7 @@ there are many ways to contribute. Lets explore a few!
 
 <br/>
 
-1. The main tremor [runtime](https://github.com/tremor-rs/tremor-runtime) is rust based.
+1. The main tremor [runtime](https://github.com/tremor-rs/tremor-runtime) is rust-based.
 2. The tremor language server - [trill](https://github.com/tremor-rs/tremor-runtime) is rust based.
 3. Contribute to [simd-json-rs](https://github.com/simd-lite/simd-json), a sister project.
 
@@ -113,7 +113,7 @@ there are many ways to contribute. Lets explore a few!
 ### Javascript
 
 <div style='font-size: 20px'>
-Its more than likely your javascript skills are better than ours. Our Visual Studio Code
+It's more than likely your javascript skills are better than ours. Our Visual Studio Code
 extension is implemented in your language. Please make our plugin better!
 </div>
 
@@ -127,8 +127,8 @@ extension is implemented in your language. Please make our plugin better!
 
 
 <div style='font-size: 20px'>
-If you love Erlang like we do, and you really like property based testing then
-perhaps extending our language tests would be a great way to contribute?
+If you love Erlang like we do, and you really like property-based testing, then
+perhaps extending our language tests would be a great way to contribute.
 </div>
 
 <br/>
@@ -142,7 +142,7 @@ perhaps extending our language tests would be a great way to contribute?
 
 <div style='font-size: 20px'>
 If Python is your thing, then improving our pygments syntax highlighting
-extension is one way to contribute to tremor
+extension is one way to contribute to tremor.
 </div>
 
 [Tremor Pygments Extension](https://github.com/tremor-rs/tremor-mkdocs-lexer)
@@ -153,9 +153,9 @@ extension is one way to contribute to tremor
 
 <div style='font-size: 20px'>
 If you are using tremor and you can already write code in `tremor-script` and
-`tremor-query` or build data distribution and eventing solutions with tremor
+`tremor-query`, or build data distribution and eventing solutions with tremor,
 then there are lots of ways to contribute through providing solution examples
-through to designing labs around specific use cases ( eg: logs, security, gateways ).
+through to designing labs around specific use cases (eg: logs, security, gateways).
 
 <br/>
 
@@ -169,7 +169,7 @@ Please get in touch!
 
 <div style='font-size: 20px'>
 You may be here because you want something very specific from tremor and it isn't
-something we support. If that's the case then this section might be for you
+something we support. If that's the case, then this section might be for you.
 </div>
 
 ---
@@ -177,12 +177,12 @@ something we support. If that's the case then this section might be for you
 ### New Sources
 
 <div style='font-size: 20px'>
-I want to distribute data into tremor from <b>BLANK</b>
+I want to distribute data into tremor from <b>BLANK</b>.
 </div>
 <br/>
 
 1. Read existing [sinks](https://docs.tremor.rs/artefacts/offramps/) documentation?
-2. No. You will need to write a new one.
+2. No? You will need to write a new one.
 3. Refer to existing [sources](https://github.com/tremor-rs/tremor-runtime/tree/main/src/source) and talk to us!
 
 <br/>
@@ -195,12 +195,12 @@ Suits: Rust programmers. Complexity: Moderate. Time: Typically than a week.
 ### New Sinks
 
 <div style='font-size: 20px'>
-I want to distribute data from tremor into <b>BLANK</b>
+I want to distribute data from tremor into <b>BLANK</b>.
 </div>
 <br/>
 
 1. Read existing [sinks](https://docs.tremor.rs/artefacts/offramps/) documentation?
-2. No. You will need to write a new one.
+2. No? You will need to write a new one.
 3. Refer to existing [sinks](https://github.com/tremor-rs/tremor-runtime/tree/main/src/sink) and talk to us!
 
 <br/>
@@ -213,7 +213,7 @@ Suits: Rust programmers. Complexity: Moderate. Time: Typically than a week.
 ### New Builtin Functions
 
 <div style='font-size: 20px'>
-I want to extend tremor with a new function for <b>BLANK</b>
+I want to extend tremor with a new function for <b>BLANK</b>.
 </div>
 <br/>
 
@@ -231,7 +231,7 @@ Suits: Rust programmers. Complexity: Typically easy. Time: Typically less than a
 ### New Query Operators
 
 <div style='font-size: 20px'>
-I want to extend tremor query with a new operator for <b>BLANK</b>
+I want to extend tremor query with a new operator for <b>BLANK</b>.
 </div>
 <br/>
 
@@ -241,7 +241,7 @@ I want to extend tremor query with a new operator for <b>BLANK</b>
 
 <br/>
 <div style='font-size: 20px'>
-Suits: Rust programmers. Complexity: Can be complex. Time: Significant investment
+Suits: Rust programmers. Complexity: Can be complex. Time: Significant investment.
 </div>
 
 ---
@@ -250,7 +250,7 @@ Suits: Rust programmers. Complexity: Can be complex. Time: Significant investmen
 
 
 <div style='font-size: 20px'>
-Outside of the above examples investment in time, effort, complexity becomes
+Outside of the above examples, investment in time, effort and complexity becomes
 non-trivial and will likely require following the RFC process, and engaging
 with other stakeholders, collaborators and the maintenance team to nurse the
 contribution into the project.
@@ -267,6 +267,6 @@ Please talk to us at the earliest opportunity!
 ### End of `contributing` guide
 <!-- .slide: data-background="#33FF77" -->
 
-This is the end of the contributors getting started guide
+This is the end of the contributors getting started guide.
 
-Note: This will only appear in speaker notes window
+Note: This will only appear in speaker notes window.

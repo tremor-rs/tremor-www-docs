@@ -1,13 +1,13 @@
 ## Tremor Training
 <!-- .slide: data-background="#FF7733" -->
 
-Web-based deep dives into tremor
+Web-based deep dives into tremor:
 
 >>>
 
 ### `overview`
 
-A very high level summary [`overview`](./overview/index.html) of tremor.
+A very high-level summary [`overview`](./overview/index.html) of tremor.
 
 >>>
 
@@ -19,14 +19,14 @@ How to [operate](./operations/index.html) tremor and develop your very own produ
 
 ### `tremor-script`
 
-A deep dive into the [`tremor-script`](./tremor-script/index.html) domain specific
+A deep dive into the [`tremor-script`](./tremor-script/index.html) domain-specific
 language.
 
 >>>
 
 ### `tremor-query`
 
-A deep dive into the [`tremor-query`](./tremor-query/index.html) domain specific
+A deep dive into the [`tremor-query`](./tremor-query/index.html) domain-specific
 language.
 
 >>>
@@ -40,7 +40,7 @@ and integration testing frameworks.
 
 ### `benchmarking`
 
-A deep dive into [`benchmarking`](./testing/benchmark.html) and an introduction
+A deep dive into [`benchmarking`](./testing/benchmark.html), and an introduction
 to benchmarking methodology in tremor.
 
 >>>
@@ -67,9 +67,9 @@ An overview of [`how to contribute`](./contributing/index.html) to tremor.
 <!-- .slide: data-background="#33FF77" -->
 
 Watch this space for future guides as we develop
-more online self-guide and instructor led training
+more online self-guide and instructor-led training
 collateral.
 
-Note: This will only appear in speaker notes window
+Note: This will only appear in speaker notes window.
 
 

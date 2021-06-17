@@ -1,0 +1,13 @@
+define script dns
+script
+ let $correlation = event;
+ {
+  "lookup": $correlation.hostname,
+  "type": "A"
+ }
+end;
+
+create script dns;
+
+select event from in into dns;
+select event from dns into out;

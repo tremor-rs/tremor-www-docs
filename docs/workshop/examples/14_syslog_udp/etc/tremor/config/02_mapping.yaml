@@ -1,0 +1,5 @@
+mapping:
+  /binding/producer/passthrough:
+    instance: "producer"
+  /binding/consumer/passthrough:
+    instance: "consumer"

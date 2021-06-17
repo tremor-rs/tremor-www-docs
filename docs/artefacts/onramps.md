@@ -42,27 +42,27 @@ Onramps are able to act upon both circuit breaker and guaranteed delivery events
 
 The column `Delivery Acknowledgements` describes when the onramp considers and reports the event delivered to the upstream it is connected to.
 
-Onramp     | Delivery Acknowledgements                                           |
------------|---------------------------------------------------------------------|
-amqp       | not supported                                                       |
-blaster    | not supported                                                       |
-cb         | not supported                                                       |
-crononome  | not supported                                                       |
-discord    | not supported                                                       |
-file       | not supported                                                       |
-kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
-metronome  | not supported                                                       |
-nats       | not supported                                                       |
-otel       | not supported                                                       |
-PostgreSQL | not supported                                                       |
-rest       | not supported                                                       |
-stdin      | not supported                                                       |
-tcp        | not supported                                                       |
-udp        | not supported                                                       |
-ws         | not supported                                                       |
-
+| Onramp     | Delivery Acknowledgements                                           |
+| ---------- | ------------------------------------------------------------------- |
+| amqp       | not supported                                                       |
+| blaster    | not supported                                                       |
+| cb         | not supported                                                       |
+| crononome  | not supported                                                       |
+| discord    | not supported                                                       |
+| file       | not supported                                                       |
+| kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
+| metronome  | not supported                                                       |
+| nats       | not supported                                                       |
+| otel       | not supported                                                       |
+| PostgreSQL | not supported                                                       |
+| rest       | not supported                                                       |
+| stdin      | not supported                                                       |
+| tcp        | not supported                                                       |
+| udp        | not supported                                                       |
+| ws         | not supported                                                       |
 
 ## Supported Onramps
+
 ### amqp
 
 The `amqp` onramp allows consuming events from an [AMQP](https://www.amqp.org) broker. It uses [lapin](https://docs.rs/lapin/1.6.8/lapin/) for an AMQP 0.9.1 protocol implementation.
@@ -85,6 +85,7 @@ onramp:
       routing_key: "#"
       exchange: ""
 ```
+
 Supported configuration options are:
 
 - `amqp_addr` - an AMQP URI. Format: String, required. For more details see [AMQP 0.9.1 URI spec](https://www.rabbitmq.com/uri-spec.html).
@@ -126,7 +127,6 @@ Supported configuration options are:
 - `interval` - The interval in which events are sent in nanoseconds.
 - `iters` - Number of times the file will be repeated.
 
-
 Example:
 
 ```yaml
@@ -137,6 +137,7 @@ onramp:
     config:
       source: ./demo/data/data.json.xz
 ```
+
 ### cb
 
 The `cb` onramp is for testing how downstream pipeline and offramps issue circuit breaker events. It expects a circuit breaker event for each event it sent out, and then, the latest after the configured `timeout` is exceeded, it exits the tremor process. If some events didn't receive circuit breaker events, it exits with status code `1`; if everything is fine, it exits with `0`.
@@ -157,6 +158,7 @@ onramp:
       source: in.json
       timeout: 1000
 ```
+
 ### crononome
 
 This sends a scheduled tick down the offramp. Schedules can be one-off or repeating and use a cron-like format.
@@ -211,6 +213,7 @@ The data looks like this:
   "trigger": {"the": "trigger"}
 }
 ```
+
 ### discord
 
 **This onramp can be linked**
@@ -220,28 +223,32 @@ The `discord` onramp allows consuming events from the [Discord API](https://disc
 Replies sent to this onramp can perform multiple operations:
 
 #### Guild related
+
 ```json
-{"guild": {
-  "id": 1234,         // guild id, required
-  // member section required
-  "member": {
-    "id": 2345,      // member id, required
+{
+  "guild": {
+    "id": 1234, // guild id, required
+    // member section required
+    "member": {
+      "id": 2345, // member id, required
 
-    // Roles to remove, optional
-    "remove_roles": [
-      3456, // ... role ids
-    ],
-    // Roles to add, optional
-    "add_roles": [
-      4567, // ... role ids
-    ],
-    "deafen": true, // (un)deafen the member, optional
-    "mute": true, // (un)deafen the member, optional
-  },
-
-}}
+      // Roles to remove, optional
+      "remove_roles": [
+        3456 // ... role ids
+      ],
+      // Roles to add, optional
+      "add_roles": [
+        4567 // ... role ids
+      ],
+      "deafen": true, // (un)deafen the member, optional
+      "mute": true // (un)deafen the member, optional
+    }
+  }
+}
 ```
+
 #### Message related
+
 ```json
 {"message": {
   "channel_id": 1234, // channel id, required
@@ -336,8 +343,6 @@ onramp:
       sleep_on_done: 1000 # wait for a second before terminating
 ```
 
-
-
 ### gsub
 
 Google Cloud Pubsub - Subscriber
@@ -361,17 +366,18 @@ Example:
 onramp:
   - id: gsub
     type: gsub
-    codec: json  
+    codec: json
     preprocessors:
       - gzip
     config:
-      pem: gcp.pem 
-      subscription: 'tremor-sub'
+      pem: gcp.pem
+      subscription: "tremor-sub"
 ```
 
 We get the meta data as response that includes the message id and the acknowledgement id of the message.
 
 **Response**:
+
 ```js
 {
   "data": {
@@ -384,12 +390,11 @@ We get the meta data as response that includes the message id and the acknowledg
 }
 ```
 
-***Where***
+**_Where_**
 
 - `<data>` - The data received as message.
 - `<message-id>` - The message id assigned by the Google Cloud Pubsub api.
-- `<acknowledgement_id>` - The acknowedgement id assigned by the Google Cloud Pubsub api. 
-
+- `<acknowledgement_id>` - The acknowedgement id assigned by the Google Cloud Pubsub api.
 
 ### Kafka
 
@@ -414,14 +419,8 @@ Supported configuration options are:
 
 Set metadata variables are:
 
-- `$kafka` - Record consisting of two optional keys:
-    - `headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message (if any).
-    - `key`: The key used for this message in bytes (if any).
-    - `topic`: The topic the message was on (if any).
-    - `offset`: The offset in the partition the message was on (if any).
-    - `partition`: The partition the message was on (if any).
-    - `timestamp`: The timestamp provided by `kafka` in milliseconds (if any).
-Example:
+- `$kafka` - Record consisting of two optional keys: - `headers`: A record denoting the [headers](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/connect/header/Header.html) for the message (if any). - `key`: The key used for this message in bytes (if any). - `topic`: The topic the message was on (if any). - `offset`: The offset in the partition the message was on (if any). - `partition`: The partition the message was on (if any). - `timestamp`: The timestamp provided by `kafka` in milliseconds (if any).
+  Example:
 
 ```yaml
 onramp:
@@ -456,7 +455,7 @@ onramp:
       retry_failed_events: false
       poll_interval: 10
       rdkafka_options:
-        'enable.auto.commit': false
+        "enable.auto.commit": false
 ```
 
 #### Semantics with `enable.auto.commit`
@@ -464,8 +463,8 @@ onramp:
 If `enable.auto.commit: false` is set in `rdkafka_options`, the consumer offset in kafka will only be committed when the event has successfully reached the other end of the pipeline (typically some [offramp](offramps.md#offramps) ).
 If an event failed during processing within the pipeline or at a downstream offramp, the consumer offset will be reset to the offset of the failed event, so it will be retried. This has some consequences worth mentioning:
 
-* Already processed `kafka` messages (that have succeeded before the failed message failed) might be seen again multiple times.
-* If the message is persistently failing (e.g. due to an malformed payload or similar), tremor will retry those messages infinitely.
+- Already processed `kafka` messages (that have succeeded before the failed message failed) might be seen again multiple times.
+- If the message is persistently failing (e.g. due to an malformed payload or similar), tremor will retry those messages infinitely.
 
 If persistent failures are to be expected (e.g. due to incorrect event payloads), or if repeating messages in general are a problem for the application, avoiding retries with `retry_failed_events: false` is advised.
 
@@ -508,6 +507,7 @@ The data looks like this:
 ```
 
 ### nats
+
 The `nats` onramp connects to Nats server(s) and subscribes to a specified subject.
 
 The default [codec](codecs.md#json) is `json`.
@@ -524,27 +524,28 @@ Supported configuration operations are:
 - `subject` - Subject to subscribe to for listening to messages.
 - `queue` - Optional queue to subscribe to.
 - `options` - Optional struct, which can be used to customize the connection to the server (see [`nats.rs` configuration options](https://docs.rs/nats/0.9.8/nats/struct.Options.html) for more info):
-    - `token`: String; authenticate using a token.
-    - `username`: String; authenticate using a username and password.
-    - `password`: String; authenticate using a username and password.
-    - `credentials_path`: String; path to a `.creds` file for authentication.
-    -  `cert_path`: String; path to the client certificate file.
-    -  `key_path`: String; path to private key file.
-    -  `name`: String; name this configuration.
-    -  `echo`: Boolean; if true, published messages will not be delivered.
-    -  `max_reconnects`: Integer; max number of reconnection attempts.
-    -  `reconnect_buffer_size`: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.
-    -  `tls`: Boolean; if true, sets tls for _all_ server connections.
-    -  `root_cert`: String; path to a root certificate.
+  - `token`: String; authenticate using a token.
+  - `username`: String; authenticate using a username and password.
+  - `password`: String; authenticate using a username and password.
+  - `credentials_path`: String; path to a `.creds` file for authentication.
+  - `cert_path`: String; path to the client certificate file.
+  - `key_path`: String; path to private key file.
+  - `name`: String; name this configuration.
+  - `echo`: Boolean; if true, published messages will not be delivered.
+  - `max_reconnects`: Integer; max number of reconnection attempts.
+  - `reconnect_buffer_size`: Integer; max amount of bytes to buffer when accepting outgoing traffic in disconnected mode.
+  - `tls`: Boolean; if true, sets tls for _all_ server connections.
+  - `root_cert`: String; path to a root certificate.
 
 Set metadata variables are:
 
 - `$nats`: Record consisting of the following metadata:
 
-    - `$reply`: Reply associated with the message (if any).
-    - `$headers`: Record denoting the headers for the message (if any).
+  - `$reply`: Reply associated with the message (if any).
+  - `$headers`: Record denoting the headers for the message (if any).
 
 Example:
+
 ```yaml
 onramp:
   - id: nats-in
@@ -636,25 +637,25 @@ Tremor supports a limited set of built-in codecs used for well known MIME types 
 Set metadata variables:
 
 - `$request` - A record capturing the HTTP request attributes. Available fields within:
-    - `url` - A record with the following standard URL fields (optional fields might not be present):
-        - `scheme` - String, typically `http`
-        - `username` - String, optional
-        - `password` - String, optional
-        - `host` - String
-        - `port` - number, optional, absence means `80`
-        - `path` - String
-        - `query` - String, optional
-        - `fragment` - String, optional
-    - `method` - HTTP method used by the incoming request.
-    - `headers` - A record that maps header name (lowercase string) to values (array of strings).
+  - `url` - A record with the following standard URL fields (optional fields might not be present):
+    - `scheme` - String, typically `http`
+    - `username` - String, optional
+    - `password` - String, optional
+    - `host` - String
+    - `port` - number, optional, absence means `80`
+    - `path` - String
+    - `query` - String, optional
+    - `fragment` - String, optional
+  - `method` - HTTP method used by the incoming request.
+  - `headers` - A record that maps header name (lowercase string) to values (array of strings).
 
 Used metadata variables:
 
 > These variables can be used to dynamically change how responses are handled when using this onramp as [linked transport](../operations/linked-transports.md):
 
 - `$response` - A record capturing the HTTP response attributes. Available fields within:
-    - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set).
-    - `headers` - A record that maps header name (string) to value (string or array of strings) (optional).
+  - `status` - Numeric HTTP status code. (optional. status code defaults to `200` when not set).
+  - `headers` - A record that maps header name (string) to value (string or array of strings) (optional).
 
 When not used as a linked onramp, the status code returned with the response is `202`.
 
@@ -710,8 +711,8 @@ Supported configuration options are:
 - `host` - The IP to listen on.
 - `port` - The Port to listen on.
 - `tls` - The TLS config for receiving messages via TCP/TLS. If provided, this onramp expects TLS traffic.
-    - `cert` - The server certificate (or certificate chain) PEM file (X.509 certificate). Required for TLS.
-    - `key` - The private Key PEM file (RSA or PKCS8 format). Required for TLS.
+  - `cert` - The server certificate (or certificate chain) PEM file (X.509 certificate). Required for TLS.
+  - `key` - The private Key PEM file (RSA or PKCS8 format). Required for TLS.
 
 Example:
 
@@ -761,7 +762,6 @@ onramp:
         key: "path/to/key.pem"
 ```
 
-
 ### udp
 
 The UDP onramp allows receiving data via UDP datagrams.
@@ -807,6 +807,18 @@ onramp:
       port: 12201
 ```
 
+#### udp onramp example for [syslog](../codecs.md#syslog)
+
+```yaml
+onramp:
+  - id: syslog-udp
+    type: udp
+    codec: syslog
+    config:
+      host: "127.0.0.1"
+      port: 12201
+```
+
 ### ws
 
 **This onramp can be linked**
@@ -843,6 +855,7 @@ onramp:
       port: 12201
       host: "127.0.0.1"
 ```
+
 # otel
 
 CNCF OpenTelemetry onramp. Listens on TCP port `4317` for gRPC traffic conforming to the CNCF OpenTelemetry protocol specification.
@@ -855,7 +868,7 @@ Supported configuration options are:
 - `host` - String - The host or IP to listen on.
 - `port` - integer - The TCP port to listen on.
 - 'logs' - boolean - Is logging enabled for this instance? Defaults to `true`. Received `logs` events are dropped when `false`.
-- 'metrics' - boolean - Is metrics enabled for this instance? Defaults  to `true`. Received `metrics` events are dropped when `false`.
+- 'metrics' - boolean - Is metrics enabled for this instance? Defaults to `true`. Received `metrics` events are dropped when `false`.
 - 'trace' - boolean - Is trace enabled for this instance? Defaults to `true`. Received `trace` events are dropped when `false`.
 
 Pipelines that leverage the OpenTelemetry integration can use utility modules in the `cncf::otel` module to

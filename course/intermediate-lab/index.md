@@ -176,9 +176,9 @@ select event from cleanup/err into err;
 <div style='font-size: 25px'>
 
 Add a new field `class` to the event, with value based on the contents of the `index_type` field.
-  - `applog`: if field `index_type` starts with the string `applog`
-  - `syslog`: if field `index_type` starts with the string `syslog`
-  - `other`: all other events
+  - `applog`: if field `index_type` starts with the string `applog`.
+  - `syslog`: if field `index_type` starts with the string `syslog`.
+  - `other`: all other events.
 
 <hr/>
 
@@ -229,8 +229,8 @@ select event from classify/err into err;
 <div style='font-size: 25px'>
 
 Add a new value to the `tags` array in the event, indicating the application's oddness or evenness.
-  - `app_even`: if field `application` starts with the string `app`, immediately followed by an even number. e.g. `app2`
-  - `app_odd`: if field `application` starts with the string `app`, immediately followed by an odd number. e.g. `app3`
+  - `app_even`: if field `application` starts with the string `app`, immediately followed by an even number. e.g. `app2`.
+  - `app_odd`: if field `application` starts with the string `app`, immediately followed by an odd number. e.g. `app3`.
 
 <hr/>
 
@@ -357,9 +357,9 @@ select event from tag/err into err;
 
 Rate-limit events differently based on the value of `event.class` field (which was computed earlier):
 
-* `applog`: 2 event per second for each application (via `application` field)
-* `syslog`: 3 event per second for each host (via `syslog_hostname` field)
-* `other`:  4 event per second for all other events
+* `applog`: 2 event per second for each application (via `application` field).
+* `syslog`: 3 event per second for each host (via `syslog_hostname` field).
+* `other`:  4 event per second for all other events.
 
 <hr/>
 
@@ -438,7 +438,7 @@ select event from tag/err into err;
 
 <div style='font-size: 25px'>
 
-Send rate-limited events to Elastic via [elastic offramp](https://docs.tremor.rs/artefacts/offramps/#elastic) and investigate response events on stdout/stderr.
+Send rate-limited events to Elastic via [elastic offramp](https://docs.tremor.rs/artefacts/offramps/#elastic), and investigate response events on stdout/stderr.
 
 ```sh
 make start-elastic

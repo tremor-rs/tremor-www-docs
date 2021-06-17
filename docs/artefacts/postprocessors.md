@@ -1,14 +1,14 @@
 # Postprocessors
 
-Postprocessors operate on the raw data stream and transform it. They are run after data reaches the codec and do not know or care about tremors internal representation.
+Postprocessors operate on the raw data stream and transform it. They are run after data reaches the codec and do not know or care about tremor's internal representation.
 
-Online codecs, postprocessors can be chained to perform multiple operations in succession.
+Online codecs and postprocessors can be chained to perform multiple operations in succession.
 
 ## Supported Postprocessors
 
 ### lines
 
-Delimits the output ( events ) into lines ( by '\n' ).
+Delimits the output (events) into lines (by '\n').
 
 ### base64
 

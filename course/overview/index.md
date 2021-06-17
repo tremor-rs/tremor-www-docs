@@ -2,31 +2,31 @@
 
 ## What is Tremor?
 
-Tremor is a generic event based system designed for data distribution, routing
+Tremor is a generic event-based system designed for data distribution, routing
 and processing in 24x7x365 high frequency at scale environments.
 
 ---
 
 ## History
 
-- Running in continuous production at Wayfair since October 2018 <!-- .element: class="fragment" -->
-- Born out of a need for better traffic shaping, load shedding and backpressure detection when shipping logs/metrics during peak eCommerce trading <!-- .element: class="fragment" -->
+- Running in continuous production at Wayfair since October 2018. <!-- .element: class="fragment" -->
+- Born out of a need for better traffic shaping, load shedding and backpressure detection when shipping logs/metrics during peak eCommerce trading. <!-- .element: class="fragment" -->
 
 
 ---
 
 ## History
 
-- Evolved to tackle other processing needs (collection, transformation and aggregation) for logs and metrics <!-- .element: class="fragment" -->
-- Addressed gaps not fulfilled by exisiting tools in use (eg: logstash, telegraf, kapacitor) <!-- .element: class="fragment" -->
-- 6 (and counting) distinct usecases at Wayfair now, with applications also outside of the observability domain (eg: search data distribution) <!-- .element: class="fragment" -->
+- Evolved to tackle other processing needs (collection, transformation and aggregation) for logs and metrics. <!-- .element: class="fragment" -->
+- Addressed gaps not fulfilled by exisiting tools in use (eg: logstash, telegraf, kapacitor). <!-- .element: class="fragment" -->
+- 6 (and counting) distinct usecases at Wayfair now, with applications also outside of the observability domain (eg: search data distribution). <!-- .element: class="fragment" -->
 
 ---
 
 ## History
 
-- [Open sourced](https://github.com/tremor-rs/) on Feb 25, 2020
-- External adoption and interest
+- [Open sourced](https://github.com/tremor-rs/) on Feb 25, 2020.
+- External adoption and interest.
 - [CNCF sandbox project](https://www.cncf.io/sandbox-projects/) since September 2020!
 
 <img src="./assets/cncf-color.svg" alt="CNCF Logo" style="width:300px">
@@ -41,7 +41,7 @@ requirements.
 _Some numbers from Wayfair:_
 
 - 10 terabytes of data per day, or 10 billion events per minute
-- 10x footprint reduction in bare metal infrastructure (in terms of no of hosts/cpu/memory)
+- 10x footprint reduction in bare metal infrastructure (in terms of no of hosts/cpu/memory).
 
 ---
 
@@ -49,19 +49,19 @@ _Some numbers from Wayfair:_
 
 Tremor has good UX. It doesnt <b>SUX</b> in many ways:
 
-- Define core processing logic in a proper language with editor support (no YAML!)
-- Informative errors -- doesn't barf stacktraces
-- Won't panic in production. Built in a [safe programming language](https://www.rust-lang.org/) ( mostly )
-- Out-of-the-box support for multiple data sources
-- Reusable building blocks that can be composed flexibly for need at hand
+- Define core processing logic in a proper language with editor support (no YAML!).
+- Informative errors -- doesn't barf stacktraces.
+- Won't panic in production. Built in a [safe programming language](https://www.rust-lang.org/) (mostly).
+- Out-of-the-box support for multiple data sources.
+- Reusable building blocks that can be composed flexibly for need at hand.
 
 ---
 
 ## Productivity
 
-Tremor replaces an eclectic range of in-house, commercial off the shelf and
-open source tools with a single, easier to operate solution designed for very
-high usability in at scale production environments
+Tremor replaces an eclectic range of in-house, commercial, off-the-shelf and
+open-source tools with a single, easier-to-operate solution designed for very
+high usability in at-scale production environments
 
 ---
 
@@ -77,7 +77,7 @@ production.
 
 ### Architecture Overview
 
-A high level overview of tremor-based systems architecture
+A high-level overview of tremor-based systems architecture:
 
 ---
 
@@ -90,15 +90,15 @@ A high level overview of tremor-based systems architecture
 
 ![image](./assets/overview_arch.png)
 
-- __Sources__. Ingest data from the outside world and deserialize to events ( onramps )
-- __Sinks__. Send serialized events to the outside world ( offramps )
-- __Pipelines__. Business logic compiles to an event flow DAG
+- __Sources__. Ingest data from the outside world and deserialize to events (onramps).
+- __Sinks__. Send serialized events to the outside world (offramps).
+- __Pipelines__. Business logic compiles to an event flow DAG.
 
 >>>
 
 ### Sources
 
-- Tap on an external data sources
+- Tap on external data sources:
   - network (tcp, udp, http, websocket) <!-- .element: class="fragment" -->
   - file <!-- .element: class="fragment" -->
   - system clock (metronome, crononome) <!-- .element: class="fragment" -->
@@ -108,9 +108,9 @@ A high level overview of tremor-based systems architecture
 ---
 ### Sources
 
-- Define mapping between protocol data units and events (preprocessors, codec) <!-- .element: class="fragment" -->
+- Define mapping between protocol data units and events (preprocessors, codec). <!-- .element: class="fragment" -->
 - Implemented in the Rust programming language. <!-- .element: class="fragment" -->
-- Configured in YAML <!-- .element: class="fragment" -->
+- Configured in YAML. <!-- .element: class="fragment" -->
 
 ---
 
@@ -176,9 +176,9 @@ A high level overview of tremor-based systems architecture
 
 ### Sinks
 
-- Defines mapping for outgoing events and protocol data units (codec, postprocessors) <!-- .element: class="fragment" -->
+- Defines mapping for outgoing events and protocol data units (codec, postprocessors). <!-- .element: class="fragment" -->
 - Implemented in the rust programming language. <!-- .element: class="fragment" -->
-- Configured in YAML <!-- .element: class="fragment" -->
+- Configured in YAML. <!-- .element: class="fragment" -->
 
 ---
 
@@ -209,8 +209,8 @@ A high level overview of tremor-based systems architecture
 
 ### Pipelines
 
-- Define event flow in user defined business logic
-- Implemented in [tremor-query](https://docs.tremor.rs/tremor-query/)
+- Define event flow in user-defined business logic.
+- Implemented in [tremor-query](https://docs.tremor.rs/tremor-query/).
 
 
 ```trickle
@@ -222,7 +222,7 @@ select event from in into out;
 
 ### Pipelines
 
-- Filter and Transform events
+- Filter and transform events.
 
 ```trickle
 use std::array;
@@ -243,8 +243,8 @@ into out;
 ---
 ### Pipelines
 
-- Event introspection
-- Rich extractors
+- Event introspection.
+- Rich extractors.
 
 ```tremor
 define script extract_http_url
@@ -260,7 +260,7 @@ end;
 ---
 ### Pipelines
 
-- grouping and windowing
+- Grouping and windowing.
 
 ```trickle
 # emits event every 15 secs
@@ -280,7 +280,7 @@ having event.count > 0;
 
 ### Pipelines
 
-- Powerful operators
+- Powerful operators.
 
 ```trickle
 # distribute events across outputs evenly
@@ -296,7 +296,7 @@ create operator my_h3_rr from h3_roundrobin;
 
 ### Pipelines
 
-- Express complex logic in functional expression language [tremor-script](https://docs.tremor.rs/tremor-script/)
+- Express complex logic in functional expression language [tremor-script](https://docs.tremor.rs/tremor-script/).
 
 <div style="font-size: 22px!important">
 
@@ -359,8 +359,8 @@ tremor server run
 
 ### Linked Transports
 
-- Typical event processing flow is one direction only
-- But most network traffic is request-response
+- Typical event-processing flow is one-direction only.
+- But most network traffic is request-response.
 
 ![One Directional Event Flow](./assets/linked_one_direction.png)
 
@@ -370,9 +370,9 @@ tremor server run
 
 ![Request Response based Event Flow](./assets/linked_bidirectional.png)
 
-- Enables bridging, load balancing and routing RPC protocols
-- Allows request and response flows to be implemented in event logic
-- Allows service control and data abstractions to be adapted to event logic
+- Enables bridging, load balancing and routing RPC protocols.
+- Allows request and response flows to be implemented in event logic.
+- Allows service control and data abstractions to be adapted to event logic.
 
 ---
 
@@ -407,11 +407,11 @@ More details in our [docs](https://docs.tremor.rs/operations/linked-transports/)
 
 ### API
 
-- The tremor API is used for monitoring, deployment and administration
-- Publish, find and bind sources, sinks, pipelines
-- Sources and Sinks are automatically removed upon quiescence
-- Connect sources to pipelines
-- Connect pipelines to sinks
+- The tremor API is used for monitoring, deployment and administration.
+- Publish, find and bind sources, sinks, pipelines.
+- Sources and Sinks are automatically removed upon quiescence.
+- Connect sources to pipelines.
+- Connect pipelines to sinks.
 
 ---
 
@@ -426,7 +426,7 @@ More details in our [docs](https://docs.tremor.rs/operations/linked-transports/)
 ### Solutions
 
 <div style='font-size: 20px'>
-In this section we look at some examples of existing production
+In this section, we look at some examples of existing production
 solutions based on tremor.
 </div>
 
@@ -437,7 +437,7 @@ solutions based on tremor.
 ### Wayfair Platform Logging Service
 
 ![Basic Logging Architecture](./assets/logging-arch-basic.png)
-<div style='font-size: 20px'>A simplified high level view of logging systems architecture at Wayfair</div>
+<div style='font-size: 20px'>A simplified high-level view of logging systems architecture at Wayfair.</div>
 
 
 ---
@@ -445,7 +445,7 @@ solutions based on tremor.
 ### Possible Target Logging Architecture
 
 ![Target Logging Architecture](./assets/logging-arch-next-maybe.png)
-<div style='font-size: 20px'>A simplified high level view of one potential future logging systems architecture at Wayfair. Moving the transformation tier logic upstream to the source tiers allows greater flexibility, reduced traffic volumetric, and reduces deployment footprint and associated costs. Tremor as a sidecar is already in production in Kubernetes use cases</div>
+<div style='font-size: 20px'>A simplified high-level view of one potential future logging systems architecture at Wayfair. Moving the transformation tier logic upstream to the source tiers allows greater flexibility, reduced traffic volumetric, and reduces deployment footprint and associated costs. Tremor as a sidecar is already in production in Kubernetes use cases.</div>
 
 ---
 
@@ -635,7 +635,7 @@ select event from process into out;%
 - [Configurator](https://docs.tremor.rs/workshop/examples/37_configurator/)
 - [Quota Service](https://docs.tremor.rs/workshop/examples/36_quota_service/)
 
-<div style='font-size: 20px'>From `v0.9` tremor can now be used to quickly build and deploy solutions requiring request/response style semantics</div>
+<div style='font-size: 20px'>From `v0.9`, tremor can now be used to quickly build and deploy solutions requiring request/response style semantics.</div>
 
 >>>
 
@@ -643,16 +643,16 @@ select event from process into out;%
 
 - [Circuit breakers and guaranteed delivery](https://docs.tremor.rs/operations/gdcb/). Finer grained QoS.
 - [Linked Transports](https://docs.tremor.rs/operations/linked-transports/). Enable event-sourced micro-services.
-- [Task-based concurrency](https://www.tremor.rs/blog/2020-08-06-to-async-or-not-to-async/). Deploy 1000's of pipelines in 1 tremor node.
+- [Task-based concurrency](https://www.tremor.rs/blog/2020-08-06-to-async-or-not-to-async/). Deploy 1000s of pipelines in 1 tremor node.
 
 >>>
 
 
 ### Future plans
 
-- Clustering based on Raft, enabling resiliency for pipelines as well as denser deployments
-- Improve deployment configuration (no YAML anywhere)
-- Sliding window mechanism for aggregations
+- Clustering based on Raft, enabling resilience for pipelines as well as denser deployments.
+- Improve deployment configuration (no YAML anywhere).
+- Sliding window mechanism for aggregations.
 
 >>>
 
@@ -672,6 +672,6 @@ select event from process into out;%
 ### End of `overview` guide
 <!-- .slide: data-background="#33FF77" -->
 
-This is the end of the overview
+This is the end of the overview.
 
-Note: This will only appear in speaker notes window
+Note: This will only appear in speaker notes window.

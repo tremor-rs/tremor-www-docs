@@ -22,7 +22,7 @@ docker run --rm -t tremorproject/tremor:latest
 
 __From source:__
 
-1. [Install Requirements](https://docs.tremor.rs/development/quick-start/#without-docker)
+1. [Install Requirements](https://docs.tremor.rs/development/quick-start/#without-docker).
 2. Get a  **huge** cup of coffee!
 3. Compile the `tremor` binary:
 
@@ -36,7 +36,7 @@ cargo build --release --all
 
 One binary to rule them all:
 
-* [tremor](https://docs.tremor.rs/operations/cli/)
+* [tremor](https://docs.tremor.rs/operations/cli/).
 
 ---
 
@@ -72,12 +72,12 @@ $ tremor server run -f pipeline.trickle -f artefacts.yaml
 
 ## Repositories and Artefacts
 
-- Artefacts are configurations that are available and addressable within tremor  <!-- .element: class="fragment" data-fragment-index="1" -->
+- Artefacts are configurations that are available and addressable within tremor.  <!-- .element: class="fragment" data-fragment-index="1" -->.
   - [Sources](https://docs.tremor.rs/artefacts/onramps/)
   - [Sinks](https://docs.tremor.rs/artefacts/offramps/)
   - [Pipelines](https://docs.tremor.rs/tremor-query/)
   - [Bindings](https://docs.tremor.rs/operations/configuration-walkthrough/#write-a-binding-specification) (connections of the three former artefacts)
-- Artefacts will be instantiated and connected to form event flows <!-- .element: class="fragment" data-fragment-index="2" -->
+- Artefacts will be instantiated and connected to form event flows. <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -107,15 +107,15 @@ tremor server run -f onramp.yaml
 
 ## Repositories and Artefacts
 
-- Artefacts are available for instantiation
-- Fully deploying a connected pipeline is a 2-step process
+- Artefacts are available for instantiation.
+- Fully deploying a connected pipeline is a 2-step process.
 
 ---
 
 ## Bindings
 
-- Onramps, pipelines, offramps are connected via binding artefacts
-- can be templates, interpolated:
+- Onramps, pipelines, offramps are connected via binding artefacts.
+- Can be templates, interpolated:
 
 ```yaml
 id: my-binding
@@ -130,8 +130,8 @@ links:
 
 ## Registry and Instances
 
-- Connected pipelines are started by instantiating a binding
-- filling in the missing interpolations
+- Connected pipelines are started by instantiating a binding.
+- Filling in the missing interpolations:
 
 ```yaml
 mapping:
@@ -147,17 +147,17 @@ mapping:
 
 ## Registry and Instances
 
-- for each referenced artefact an instance is created (if necessary) <!-- .element: class="fragment" -->
-- instances live in the registry <!-- .element: class="fragment" -->
-- bindings represent connected event flows <!-- .element: class="fragment" -->
-- runtime starts artefacts and events can flow <!-- .element: class="fragment" -->
+- For each referenced artefact, an instance is created (if necessary). <!-- .element: class="fragment" -->
+- Instances live in the registry. <!-- .element: class="fragment" -->
+- Bindings represent connected event flows. <!-- .element: class="fragment" -->
+- When runtime starts, artefacts and events can flow. <!-- .element: class="fragment" -->
 
 >>>
 
 ## Changing Configuration at Runtime
 
-- via [REST API](https://docs.tremor.rs/api/)
-- publish, unpublish artefacts, instantiate bindings
+- Via [REST API](https://docs.tremor.rs/api/).
+- Publish, unpublish artefacts, instantiate bindings.
 
 <div style="font-size: 0.8em">
 
@@ -217,7 +217,7 @@ $ cargo install tremor-language-server
 
 ---
 
-## Look ma, no YAML! (almost)
+## Look Ma, no YAML! (almost)
 
 - Proper language means: <!-- .element: class="fragment" -->
   - powerful parser/interpreter <!-- .element: class="fragment" -->
@@ -230,7 +230,7 @@ $ cargo install tremor-language-server
 
 ## Quick Iterative Testing
 
-Example Pipeline
+Example Pipeline:
 
 <div style="font-size: 0.8em;">
 
@@ -258,7 +258,7 @@ select from example into out;
 
 ## Quick Iterative Testing
 
-- Catch errors far before production
+- Catch errors far before production:
 
 ```sh
 tremor run example.trickle
@@ -270,7 +270,7 @@ tremor run example.trickle
 
 ## Quick Iterative Testing
 
-- Test your pipeline against synthetic events
+- Test your pipeline against synthetic events:
 
 <div style="font-size: 0.7em;">
 
@@ -485,7 +485,7 @@ tail -1 apache_access_logs > test_log_line
 ./trecker run /pwd/apache.trickle --decoder string --encoder string -i /pwd/test_log_line | tail -n1 | jq
 ```
 
-Output should be:
+The output should be:
 
 ```json
 {
@@ -545,11 +545,11 @@ Also try switching the encoder to something like `yaml`.
 
 ---
 
-## Extra-credit
+## Extra Credit
 
-* Filter out logs with status code < 400 (i.e. only pass error logs)
-* Throttle logs such that output is just 10 logs per second
-* Each 10 seconds output request duration percentiles by HTTP status code
+* Filter out logs with status code < 400 (i.e. only pass error logs).
+* Throttle logs such that output is just 10 logs per second.
+* Each 10 seconds, output request duration percentiles by HTTP status code.
 
 >>>
 
@@ -557,8 +557,7 @@ Also try switching the encoder to something like `yaml`.
 
 <div style='font-size: 20px'>
 
-In this section, we'll take the processing from the last
-lab and create a deployment from it.
+In this section, we'll take the processing from the last lab and create a deployment from it.
 
 </div>
 
@@ -568,7 +567,7 @@ lab and create a deployment from it.
 
 ## Goal
 
-Create a deployment for tremor that listens on tcp port `4242` and reads a log per line
+Create a deployment for tremor that listens on tcp port `4242` and reads a log per line,
 then process it via the pipeline we created in the last section.
 
 ---
@@ -640,7 +639,7 @@ offramp:
 
 Create a **`binding.yaml`**  with a binding `lab02` that links the sink and source to the pipeline.
 
-Note since we called the pipeline file `apache.trickle` the pipeline will be named `apache`.
+Note: Since we called the pipeline file `apache.trickle`, the pipeline will be named `apache`.
 
 <hr/>
 
@@ -676,11 +675,11 @@ binding:
 
 Create a **`mapping.yaml`** to initialize the binding.
 
-You can use the instance `01` or any other name
+You can use the instance `01` or any other name.
 
 <hr/>
 
-**Reminder**: Mappings instanciate bindings and provide the variables / instances for them
+**Reminder**: Mappings instanciate bindings and provide the variables/instances for them
 to resolve to full names.
 
 </div>
@@ -701,7 +700,7 @@ mapping:
 
 <div style='font-size: 25px'>
 
-Can be tested with the following commands. Note that once trecker is started you need to
+Can be tested with the following commands. Note that once trecker is started, you need to
 use `docker stop` to stop it again. `CTRL+C` has no effect.
 
 ```sh
@@ -723,6 +722,6 @@ cat apache_access_logs | nc 127.0.0.1 4242
 ### End of `operations` guide
 <!-- .slide: data-background="#33FF77" -->
 
-This is the end of the operations guide
+This is the end of the operations guide.
 
-Note: This will only appear in speaker notes window
+Note: This will only appear in speaker notes window.

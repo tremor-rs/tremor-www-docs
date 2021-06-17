@@ -20,23 +20,23 @@ preprocessors:
   - remove-empty
 ```
 
-Note: the proliferation of various lines preprocessors here will go away once preprocessors [support configuration](https://github.com/tremor-rs/tremor-rfcs/pull/31).
+Note: The proliferation of various lines preprocessors here will go away once preprocessors [support configuration](https://github.com/tremor-rs/tremor-rfcs/pull/31).
 
 ### lines-null
 
-Variant of the [lines](#lines) preprocessor, that uses null byte `\0` as the line separator.
+Variant of the [lines](#lines) preprocessor that uses null byte `\0` as the line separator.
 
 ### lines-pipe
 
-Variant of the [lines](#lines) preprocessor, that uses pipe character `|` as the line separator.
+Variant of the [lines](#lines) preprocessor that uses pipe character `|` as the line separator.
 
 ### lines-no-buffer
 
-Variant of the [lines](#lines) preprocessor, that does *not* buffer any data that may be present after the last line separator -- the fragment is forwarded as is (i.e. treated as a full event).
+Variant of the [lines](#lines) preprocessor that does *not* buffer any data that may be present after the last line separator -- the fragment is forwarded as is (i.e. treated as a full event).
 
 ### lines-cr-no-buffer
 
-Variant of the [lines-no-buffer](#lines-no-buffer) preprocessor, that uses character 13 `\r` ([carriage return](https://en.wikipedia.org/wiki/Carriage_return#Computers)) as the line separator.
+Variant of the [lines-no-buffer](#lines-no-buffer) preprocessor that uses character 13 `\r` ([carriage return](https://en.wikipedia.org/wiki/Carriage_return#Computers)) as the line separator.
 
 ### base64
 
@@ -62,15 +62,15 @@ Decompress GZ compressed payload.
 
 ### zlib
 
-Decompress Zlib ( deflate ) compressed payload.
+Decompress Zlib (deflate) compressed payload.
 
 ### xz
 
-Decompress Xz2 ( 7z ) compressed payload.
+Decompress Xz2 (7z) compressed payload.
 
 ### snappy
 
-Decompress framed snappy compressed payload ( does not support raw snappy ).
+Decompress framed snappy compressed payload (does not support raw snappy).
 
 ### lz4
 
@@ -80,7 +80,7 @@ Decompress Lz4 compressed payload.
 
 Reassembles messages that were split apart using the [GELF chunking protocol](https://docs.graylog.org/en/3.0/pages/gelf.html#chunking).
 
-If the GELF messages were sent compressed, you can decompress them by chaining the [decompress](#decompress) preprocessor. An example is documented [here](onramps.md#udp-onramp-example-for-gelf) -- you may need to apply `decompress` either before and/or after the reassembly here, depending on how your GELF client(s) behave.
+If the GELF messages were sent compressed, you can decompress them by chaining the [decompress](#decompress) preprocessor. An example is documented [here](onramps.md#udp-onramp-example-for-gelf) -- you may need to apply `decompress` before and/or after the reassembly here, depending on how your GELF client(s) behave.
 
 ### remove-empty
 

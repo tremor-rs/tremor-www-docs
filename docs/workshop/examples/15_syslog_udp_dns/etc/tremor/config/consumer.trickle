@@ -1,0 +1,1 @@
+select merge $correlation of {"ip": event[0].A} end from in into out

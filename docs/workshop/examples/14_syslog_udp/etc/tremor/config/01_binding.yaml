@@ -1,0 +1,18 @@
+# A binding associates onramps and offramps with pipeline inputs and outputs
+# through their unique identifiers to create a deployment graph template. These
+# typically use variables that are incarnated using runtime mappings so that
+# bindings can be reused where appropriate.
+#
+binding:
+  - id: producer # The unique name of this binding template
+    links:
+      "/onramp/metronome/{instance}/out": # Connect the inpunt to the pipeline
+        - "/pipeline/producer/{instance}/in"
+      "/pipeline/producer/{instance}/out": # Connect the pipeline to the output
+        - "/offramp/syslog-udp-out/{instance}/in"
+  - id: consumer # The unique name of this binding template
+    links:
+      "/onramp/syslog-udp-in/{instance}/out": # Connect the inpunt to the pipeline
+        - "/pipeline/consumer/{instance}/in"
+      "/pipeline/consumer/{instance}/out": # Connect the pipeline to the output
+        - "/offramp/stdout-output/{instance}/in"

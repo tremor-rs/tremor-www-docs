@@ -678,6 +678,32 @@ Known limitations:
 
 It is currently not possible to configure rest onramps via swagger, RAML or OpenAPI configuration files.
 
+### sse 
+
+The SSE (Server Sent Events) onramp subscribes to an sse endpoint treating `sse-event-data` as the event data.
+
+The event [origin URI](../tremor-script/stdlib/tremor/origin.md) set by the onramp is of the form:
+```
+tremor-sse://<tremor-host.local>
+```
+
+Supported configuration options are:
+
+- `url` - The sse endpoint to subscribe.
+- `headers` - A map of headers to set for the requests, where both sides are strings. (optional)
+
+Example:
+
+```yaml
+onramp:
+  - id: sse
+    type: sse
+    config:
+      url: "http://localhost:8000/sse"
+      header:
+       "Client": "Tremor"
+```
+
 ### stdin
 
 An onramp that takes input from `stdin`.

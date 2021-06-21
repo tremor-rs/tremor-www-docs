@@ -5,7 +5,7 @@ Example HTTP proxy application built on top of Tremor and meant to be a demonstr
 ## Setup
 
 !!! tip
-    All the code here is available in the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/32_proxies_lt_http) as well.
+All the code here is available in the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/32_proxies_lt_http) as well.
 
 ### Sources and sinks
 

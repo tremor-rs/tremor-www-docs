@@ -45,7 +45,8 @@ The column `Disconnect events` describes under which circumstances this offramp 
 | elastic   | connection loss   | on 200 replies            |
 | exit      | never             | always                    |
 | file      | never             | always                    |
-| gcs       | never             | on successful send        |
+| gcs       | connection loss   | on successful send        |
+| gpub      | connection loss   | on successful send        |
 | kafka     | see librdkafka    | see librdkafka            |
 | kv        | never             | always                    |
 | nats      | connection loss   | always                    |

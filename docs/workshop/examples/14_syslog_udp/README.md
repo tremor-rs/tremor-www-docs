@@ -64,3 +64,11 @@ select {
   "timestamp": event.ingest_ns
 } from in into out
 ```
+
+## Testing
+
+from inside the docker container, custom syslog messages can be send with the `logger` command:
+
+```bash
+$ logger -d -n 127.0.0.1 -P 12201 "Weeeeh. It works :D"
+```

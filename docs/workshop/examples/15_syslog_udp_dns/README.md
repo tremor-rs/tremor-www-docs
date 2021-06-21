@@ -1,77 +1,59 @@
-# Passthrough
+# syslog udp dns
 
-The `passthrough` example is the simplest possible configuration of tremor. It shows the very basic building blocks: Onramp, Offramp, Binding, Mapping and Pipeline.
+This workshop is the samne as the [syslog_upd](../14_syslog_udp/) workship with the added component of enriching the syslog message we receive with a DNS lookup.
+
+We will only discuss the newly introduced components, for the rest pleas refer to the [syslog_upd](../14_syslog_udp/) workshop.
+
+## Setup
+
+!!! tip
+All the code here is available in the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/14_syslog_udp) as well and can be run with `docker compose up`.
 
 ## Environment
 
-The [onramp](etc/tremor/config/00_ramps.yaml) we use is a websocket onramp listening on port 4242, it receives `JSON` formatted messages.
+We get a new [sink](etc/tremor/config/00_ramps.yaml), the `dns` sink. This is what tremor calls a `linked transport`, aka a `sink` or `source` that can both receive and send messages.
 
-```yaml
-onramp:
-  - id: ws-input # A unique id for binding/mapping
-    type: ws # The unique type descriptor for the onramp ( websocket server here)
-    codec: json # The underlying data format expected for application payload data
-    config:
-      port: 4242 # The TCP port to listen on
-      host: "0.0.0.0" # The IP address to bind on ( all interfaces in this case )
+In the case of the `dns` sink it receives lookup requests and sends the replies.
+
+This changes the [binding](./etc/tremor/config/01_binding.yaml) the following way:
+
 ```
+metronome -> producer -> syslog-udp-out
 
-It connects to the pipeline `example` in the [`example.trickle`](etc/tremor/config/example.trickle) file using the trickle query language to express its logic.
+syslog-udp-in -> dns -> dns
 
-The [offramp](etc/tremor/config/00_ramps.yaml) we used is a console offramp producing to standard output. It receives `JSON` formatted messages.
-
-```yaml
-offramp:
-  - id: stdout-output # The unique id for binding/mapping
-    type: stdout # The unique type descriptor for the offramp ( stdout here )
-    codec: json # The underlying data format expected for application payload data
-    config:
-      prefix: ">> " # A prefix for data emitted on standard output by this offramp
+dns -> consumer -> stdout-output
 ```
-
-The [binding](./etc/tremor/config/01_binding.yaml) expresses those relations and gives the graph of onramp, pipeline and offramp.
-
-```yaml
-binding:
-  - id: example # The unique name of this binding template
-    links:
-      "/onramp/ws-input/{instance}/out": # Connect the input to the pipeline
-        - "/pipeline/example/{instance}/in"
-      "/pipeline/example/{instance}/out": # Connect the pipeline to the output
-        - "/offramp/stdout-output/{instance}/in"
-```
-
-Finally the [mapping](./etc/tremor/config/02_mapping.yaml) instanciates the binding with the given name and instance variable to activate the elements of the binding.
 
 ## Business Logic
 
+The `producer` pipeline remains unchanged however we add a new `dns` pipeline and the `consumer` piepline now includes some logic.
+
+The `dns` pipeline does two things. First it moves the event itself into the `$correlation` metadata. Linked transports will preserve this metadata key over requests allowing to correlate the output event with the input request. Second it changes the event into a lookup of the `A` record (ip address) for the hostname. Finally we do the wiering with select statments.
+
+!!! warn
+    Storing data in `$correlation` will mean this data has to be kept in memory until the event is processed, depending on throughput and pending requests this can be a significant memory cost.
+
 ```trickle
-select event from in into out
+# dns.trickle
+define script dns
+script
+ let $correlation = event;
+ {
+  "lookup": $correlation.hostname,
+  "type": "A"
+ }
+end;
+
+create script dns;
+
+select event from in into dns;
+select event from dns into out;
 ```
 
-## Command line testing during logic development
+In addition the `consumer` pipeline got slightly more complicated. We use `merge` to replace the lookup response from the `dns` sink with it's correlation (the orriginal event) and merge merge it by inserting the IP we looked up into the event. In result we now have the original event with the added `ip` field containing the IP correlating to the hostname.
 
-Run a the passthrough query against a sample input.json
-
-```bash
-$ tremor run -i input.json etc/tremor/config/example.trickle
-{"hello": "world"}
-```
-
-Deploy the solution into a docker environment
-
-```bash
-$ docker-compose up
->> {"hello": "world", "selected": false}
->> {"hello": "again", "selected": true}
-```
-
-Inject test messages via [websocat](https://github.com/vi/websocat)
-
-!!! note
-    Can be installed via `cargo install websocat` for the lazy/impatient amongst us
-
-```bash
-$ cat inputs.txt | websocat ws://localhost:4242
-...
+```trickle
+# consumer.trickle
+select merge $correlation of {"ip": event[0].A} end from in into out
 ```

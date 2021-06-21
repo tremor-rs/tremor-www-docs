@@ -50,6 +50,7 @@ The column `Delivery Acknowledgements` describes when the onramp considers and r
 | crononome  | not supported                                                       |
 | discord    | not supported                                                       |
 | file       | not supported                                                       |
+| gsub       | always                                                              |
 | kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
 | metronome  | not supported                                                       |
 | nats       | not supported                                                       |

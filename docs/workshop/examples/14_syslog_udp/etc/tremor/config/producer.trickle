@@ -11,9 +11,8 @@ select {
   "structured_data": {
               "exampleSDID@32473" :
               [
-                {"eventid": "#{event.id}"},
-                {"eventSource": "Application"},
-                {"eventID": "1011"}
+                {"eventSource": "Tremor"},
+                {"eventID": "#{ event.id }"}
               ]
             },
   "timestamp": event.ingest_ns

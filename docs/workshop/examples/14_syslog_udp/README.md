@@ -1,77 +1,66 @@
-# Passthrough
+# syslog udp
 
-The `passthrough` example is the simplest possible configuration of tremor. It shows the very basic building blocks: Onramp, Offramp, Binding, Mapping and Pipeline.
+The `syslog udp` example is demonstrate a number things:
+
+1. Encoding data in the `syslog` format.
+2. Sending data over `UDP`.
+3. Receiving data over `UDP`.
+4. Decoding `syslog` formated data.
+
+For easy digestion it is entirely selfcontained inside a singel tremor instance using multiple paralell pipelines, sinks and sources.
+
+## Setup
+
+!!! tip
+    All the code here is available in the [git repository](https://github.com/tremor-rs/tremor-www-docs/tree/main/docs/workshop/examples/14_syslog_udp) as well and can be run with `docker compose up`.
 
 ## Environment
 
-The [onramp](etc/tremor/config/00_ramps.yaml) we use is a websocket onramp listening on port 4242, it receives `JSON` formatted messages.
+The [sources and sinks](etc/tremor/config/00_ramps.yaml) we use are:
 
-```yaml
-onramp:
-  - id: ws-input # A unique id for binding/mapping
-    type: ws # The unique type descriptor for the onramp ( websocket server here)
-    codec: json # The underlying data format expected for application payload data
-    config:
-      port: 4242 # The TCP port to listen on
-      host: "0.0.0.0" # The IP address to bind on ( all interfaces in this case )
+- The `metronome` source - to generate data in one second intervals.
+- The `udp` sink - to send the data over `UDP`.
+- The `udp` source - to receive data via `UDP`.
+- The `stdout` sink - to display data decoded and re-formated as `JSON`.
+
+In addition we have two pipelines.
+
+The [producer](etc/tremor/config/consumer.trickle) pipeline takes the tick from metronome and generates a syslog message. It is only handling message rewriting.
+
+The [consumer](etc/tremor/config/consumer.trickle) pipeline takes the syslog message and forwards it. It is a passthrough pipeline.
+
+The [binding](./etc/tremor/config/01_binding.yaml) expresses those relations and gives the graph of onramp, pipeline and offramp. We hare left with those two workflows:
+
 ```
+metronome -> producer -> syslog-udp-out
 
-It connects to the pipeline `example` in the [`example.trickle`](etc/tremor/config/example.trickle) file using the trickle query language to express its logic.
-
-The [offramp](etc/tremor/config/00_ramps.yaml) we used is a console offramp producing to standard output. It receives `JSON` formatted messages.
-
-```yaml
-offramp:
-  - id: stdout-output # The unique id for binding/mapping
-    type: stdout # The unique type descriptor for the offramp ( stdout here )
-    codec: json # The underlying data format expected for application payload data
-    config:
-      prefix: ">> " # A prefix for data emitted on standard output by this offramp
-```
-
-The [binding](./etc/tremor/config/01_binding.yaml) expresses those relations and gives the graph of onramp, pipeline and offramp.
-
-```yaml
-binding:
-  - id: example # The unique name of this binding template
-    links:
-      "/onramp/ws-input/{instance}/out": # Connect the input to the pipeline
-        - "/pipeline/example/{instance}/in"
-      "/pipeline/example/{instance}/out": # Connect the pipeline to the output
-        - "/offramp/stdout-output/{instance}/in"
+syslog-udp-in -> consumer -> stdout-output
 ```
 
 Finally the [mapping](./etc/tremor/config/02_mapping.yaml) instanciates the binding with the given name and instance variable to activate the elements of the binding.
 
 ## Business Logic
 
+The only interesting part to look at is the event rewriting, this uses an example syslog message and adds the `event.id` as a `strucuted_data` field.
+
 ```trickle
-select event from in into out
-```
-
-## Command line testing during logic development
-
-Run a the passthrough query against a sample input.json
-
-```bash
-$ tremor run -i input.json etc/tremor/config/example.trickle
-{"hello": "world"}
-```
-
-Deploy the solution into a docker environment
-
-```bash
-$ docker-compose up
->> {"hello": "world", "selected": false}
->> {"hello": "again", "selected": true}
-```
-
-Inject test messages via [websocat](https://github.com/vi/websocat)
-
-!!! note
-    Can be installed via `cargo install websocat` for the lazy/impatient amongst us
-
-```bash
-$ cat inputs.txt | websocat ws://localhost:4242
-...
+select {
+  "severity": "notice",
+  "facility": "local4",
+  "hostname": "example.com",
+  "appname": "evntsog",
+  "msg": "BOMAn application event log entry...",
+  "procid": null,
+  "msgid": "ID47",
+  "protocol": "RFC5424",
+  "protocol_version": 1,
+  "structured_data": {
+              "exampleSDID@32473" :
+              [
+                {"eventSource": "Tremor"},
+                {"eventID": "#{ event.id }"}
+              ]
+            },
+  "timestamp": event.ingest_ns
+} from in into out
 ```

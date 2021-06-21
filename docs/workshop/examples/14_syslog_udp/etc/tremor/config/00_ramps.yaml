@@ -5,23 +5,23 @@ onramp:
   - id: metronome
     type: metronome
     config:
-      interval: 1000
+      interval: 1000 # 1 second
   - id: syslog-udp-in
     type: udp
-    codec: syslog
+    codec: syslog # The syslog codec to deecode the data coming over UDP
     config:
       host: "127.0.0.1"
       port: 12201
 
 offramp:
-  - id: syslog-udp-out # The unique id for binding/mapping
-    type: udp # The unique type descriptor for the offramp ( stdout here )
-    codec: syslog # The underlying data format expected for application payload data
+  - id: syslog-udp-out
+    type: udp
+    codec: syslog # The syslog codec to enecode the data sent over UDP
     config:
       host: "127.0.0.1"
       port: 12201
-  - id: stdout-output # The unique id for binding/mapping
-    type: stdout # The unique type descriptor for the offramp ( stdout here )
-    codec: json # The underlying data format expected for application payload data
+  - id: stdout-output
+    type: stdout
+    codec: json
     config:
-      prefix: ">> " # A prefix for data emitted on standard output by this offramp
+      prefix: ">> "

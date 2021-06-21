@@ -6,5 +6,6 @@ cache.json
 mkdocs.yml
 docs/tremor-script/stdlib
 docs/operations/cli.md
+docs/api.md
 tremor-runtime
 /temp/

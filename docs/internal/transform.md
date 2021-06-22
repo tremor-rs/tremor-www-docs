@@ -1,6 +1,6 @@
-# match to functional
+# Match to Functional
 
-A useful step by step followup on transforming match style to functional style.
+A useful step-by-step follow-up on transforming match style to functional style.
 
 ```rust
 pub fn get_servant(

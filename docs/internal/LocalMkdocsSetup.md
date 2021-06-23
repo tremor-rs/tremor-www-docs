@@ -21,7 +21,7 @@ pip3 install -r python_scripts/requirements.txt
 
 This installs the `mkdocs-material` theme which we use along with other dependencies.
 
-To enable syntax highlighting for tremor-script/trickle code snippets, install our mkdocs-specifIc, tremor lexer, as well:
+To enable syntax highlighting for tremor-script/trickle code snippets, install our mkdocs-specific, tremor lexer, as well:
 
 ```bash
 .github/scripts/install-lexer.sh

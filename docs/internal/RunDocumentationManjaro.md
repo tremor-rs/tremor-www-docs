@@ -46,6 +46,12 @@ Install CMake, an open-source, cross-platform family of tools designed to build,
 sudo pacman -S cmake
 ```
 
+Install `Clang`, a compiler front end, using `Pamac`, another package manager for Manjaro.
+
+```bash
+pamac install clang
+```
+
 ## Generate Dynamic Documentation and Configuration
 
 ```bash
@@ -56,12 +62,6 @@ make
 `make clean` gets rid of object and executable files that had been created in the meantime so as to get a fresh start and make a clean build. Sometimes, the compiler may link or compile files incorrectly; you only need to recompile the files you changed and link the newly created object files with the pre-existing ones. `make` auto-generates the doc files for tremor stdlib and cli and also produces the default config file for mkdocs, (`mkdocs.yml`) file, at the end (with the right navigation references to the generated stdlib docs).
 
 ## Build Documentation
-
-First, install `Clang`, a compiler front end, using `Pamac`, another package manager for Manjaro.
-
-```bash
-pamac install clang
-```
 
 ```bash
 mkdocs build

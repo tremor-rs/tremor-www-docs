@@ -21,7 +21,7 @@ pip3 install -r python_scripts/requirements.txt
 
 This installs the `mkdocs-material` theme which we use along with other dependencies.
 
-To enable syntax highlighting for tremor-script/trickle code snippets, install our mkdocs-specifc tremor, lexer, as well:
+To enable syntax highlighting for tremor-script/trickle code snippets, install our mkdocs-specifIc, tremor lexer, as well:
 
 ```bash
 .github/scripts/install-lexer.sh
@@ -35,13 +35,13 @@ make
 
 This auto-generates the doc files for tremor stdlib and cli and also produces the default config file for mkdocs, (`mkdocs.yml`) file, at the end (with the right navigation references to the generated stdlib docs).
 
-## Build documentation
+## Build Documentation
 
 ```bash
 mkdocs build
 ```
 
-## Local doc service
+## Local Doc Service
 
 ```bash
 mkdocs serve

@@ -6,7 +6,7 @@ This is a step-by-step guideline for installing and running the MkDocs Documenta
 
 As you may already know, MkDocs is Python-based. Therefore, you need to install a recent version of Python as well as its package manager, `Pip`. Luckily, both of these are installed by default on Manjaro (like on most Linux distros). If you are using the latest version of Python, then Pip is definitely installed by default.
 
-You may, however, need to upgrade Pip to latest version if it's not up-to-date.
+You may, however, need to upgrade Pip to the latest version if it's not up-to-date.
 
 ```bash
 pip install --upgrade pip
@@ -40,13 +40,13 @@ Clone `Lexer`, a Tremor-specific syntax highlighting tool into Tremor:
 
 Install CMake, an open-source, cross-platform family of tools designed to build, test and package software. CMake will help in the compilation process, and to generate native makefiles.
 
-!!! Use `Pacman`, the package manager for Manjaro, for the installation from root:
+Use `pacman`, the he package manager from upstream Arch Linux, for the installation from root:
 
 ```bash
 sudo pacman -S cmake
 ```
 
-Install `Clang`, a compiler front end, using `Pamac`, another package manager for Manjaro.
+Install `Clang`, a compiler front end, using `Pamac`, Manjaro's package manager.
 
 ```bash
 pamac install clang
@@ -75,4 +75,4 @@ Run the built-in development server:
 mkdocs serve
 ```
 
-The doc site will be available on your localhost, at http://127.0.0.1:8000/, for reviewing (supports live-reload as you edit).
+The doc site will be available on your localhost, at [http://127.0.0.1:8000/](http://127.0.0.1:8000/), for reviewing (supports live-reload as you edit).

@@ -40,7 +40,7 @@ Clone `Lexer`, a Tremor-specific syntax highlighting tool into Tremor:
 
 Install CMake, an open-source, cross-platform family of tools designed to build, test and package software. CMake will help in the compilation process, and to generate native makefiles.
 
-Use `pacman`, the he package manager from upstream Arch Linux, for the installation from root:
+Use `pacman`, the package manager from upstream Arch Linux, for the installation from root:
 
 ```bash
 sudo pacman -S cmake

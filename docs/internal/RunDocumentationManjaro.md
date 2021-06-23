@@ -8,62 +8,71 @@ As you may already know, MkDocs is Python-based. Therefore, you need to install 
 
 You may, however, need to upgrade Pip to latest version if it's not up-to-date.
 
-```
+```bash
 pip install --upgrade pip
 ```
+
 To check for the version of Python and Pip you are using:
 
-```
+```bash
 python --version
 pip --version
 ```
+
 You can now install MkDocs using Pip:
 
-```pip install mkdocs
+```bash
+pip install mkdocs
 ```
 
 ## Install Dependencies
 
-```
+```bash
 pip install -r requirements.txt
 pip install -r python_scripts/requirements.txt
 ```
 
 Clone `Lexer`, a Tremor-specific syntax highlighting tool into Tremor:
-```
+
+```bash
 .github/scripts/install-lexer.sh
 ```
+
 Install CMake, an open-source, cross-platform family of tools designed to build, test and package software. CMake will help in the compilation process, and to generate native makefiles.
 
 !!! Use `Pacman`, the package manager for Manjaro, for the installation from root:
-```
+
+```bash
 sudo pacman -S cmake
 ```
 
 ## Generate Dynamic Documentation and Configuration
-```
+
+```bash
 make clean
 make
 ```
+
 `make clean` gets rid of object and executable files that had been created in the meantime so as to get a fresh start and make a clean build. Sometimes, the compiler may link or compile files incorrectly; you only need to recompile the files you changed and link the newly created object files with the pre-existing ones. `make` auto-generates the doc files for tremor stdlib and cli and also produces the default config file for mkdocs, (`mkdocs.yml`) file, at the end (with the right navigation references to the generated stdlib docs).
 
 ## Build Documentation
 
-Change to the `tremor-runtime` directory that contains `Cargo`, the Rust package manager, which you can then use to build the documentation.
+First, install `Clang`, a compiler front end, using `Pamac`, another package manager for Manjaro.
 
-But first, install `Clang`, a compiler front end, using `Pamac`, another package manager for Manjaro.
-```
+```bash
 pamac install clang
 ```
 
+```bash
+mkdocs build
 ```
-cargo clean
-cargo build
-```
+
 ## Local Doc Service
 
 Run the built-in development server:
-```
+
+```bash
 mkdocs serve
 ```
+
 The doc site will be available on your localhost, at http://127.0.0.1:8000/, for reviewing (supports live-reload as you edit).

@@ -107,9 +107,10 @@ nav:
       - Prometheus Interworking: workshop/examples/43_otel_prometheus/README.md
       - Elastic APM Interworking: workshop/examples/44_otel_elastic_apm/README.md
   - Development:
-  -Local MkDocs Testing: internal/LocalMkdocsSetup.md
-  -Setting up MkDocs on Manjaro: internal/RunDocumentationManjaro.md
-  -Match to Functional: internal/transform.md
+    - Quick Start Guide: development/quick-start.md
+    - Local MkDocs Testing: internal/LocalMkdocsSetup.md
+    - Setting up MkDocs on Manjaro: internal/RunDocumentationManjaro.md
+    - Match to Functional: internal/transform.md
     - Profiling: development/profiling.md
     - 'Debugging with LLDB': development/debugging.md
     - Benchmarking:

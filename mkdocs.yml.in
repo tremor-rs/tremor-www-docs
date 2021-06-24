@@ -74,6 +74,7 @@ nav:
   - History: history.md
   - Glossary: Glossary.md
   - Workshops:
+    - Overview: workshop/README.md
     - Basic examples:
       - Passthrough: workshop/examples/00_passthrough/README.md
       - Filter: workshop/examples/01_filter/README.md
@@ -84,6 +85,8 @@ nav:
       - Influx: workshop/examples/11_influx/README.md
       - Timescale: workshop/examples/12_postgres_timescaledb/README.md
       - Grafana : workshop/examples/13_grafana/README.md
+      - Syslog : workshop/examples/14_syslog_udp/README.md
+      - DNS : workshop/examples/15_syslog_udp_dns/README.md
     - Delivery Guarantees:
       - Transient GD: workshop/examples/20_transient_gd/README.md
       - Persistent GD: workshop/examples/21_persistent_gd/README.md

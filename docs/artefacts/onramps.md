@@ -834,7 +834,7 @@ onramp:
       port: 12201
 ```
 
-#### udp onramp example for [syslog](../codecs.md#syslog)
+#### udp onramp example for [syslog](codecs.md#syslog)
 
 ```yaml
 onramp:

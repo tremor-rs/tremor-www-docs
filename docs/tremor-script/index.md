@@ -137,7 +137,6 @@ For strings tremor allows string interpolation, this means embedding code direct
 
 A hash sign followed by a curly bracket needs to be escaped `\#{` hash signs themselves do not need to be escaped.
 
-
 ##### HereDocs
 
 To deal with pre formatted strings in tremor script we allow for **heredocs** they are started by using triple quotes `"""` that terminate the line (aka `"""bla` isn't legal). Heredocs do not truncate leading indentation, only the first leading linebreak after the leading triple-quote `"""` stripped.
@@ -212,20 +211,18 @@ BinaryField grammar:
 
 > ![field grammar](grammar/diagram/BinaryField.png)
 
-
 Parts of each field are: `<value>:<size>/<type>` where both `size` and `type` are optional.
 
 The binary types consists of up to three parts. That is 2 prefixes and 1 main type identifier. Examples: `unsigned-big-integer`, `signed-integer`, `binary`. The types currently supported are:
 
-* `binary` - this can handle both binaries and strings, `size` here refers to the number of bytes
-* `integer` - this can represent integers, `size` here means size in bits. In addition the type can be prefixed with `big` and `little` for indianness and `signed` and `unsigned` for signedness.
+- `binary` - this can handle both binaries and strings, `size` here refers to the number of bytes
+- `integer` - this can represent integers, `size` here means size in bits. In addition the type can be prefixed with `big` and `little` for indianness and `signed` and `unsigned` for signedness.
 
 Some examples would be:
 
-* `<<1:1, 42:7>>`
-* `<<(1 + 1)/unsigned-big-integer>>`
-* `<<1:4, "badger"/binary, -2:4/signed-little-integer>>`
-
+- `<<1:1, 42:7>>`
+- `<<(1 + 1)/unsigned-big-integer>>`
+- `<<1:4, "badger"/binary, -2:4/signed-little-integer>>`
 
 We could construct a TCP package this way:
 
@@ -260,17 +257,16 @@ let event = {
 
 See also:
 
- - [`std::binary`](stdlib/std/binary.md) for useful function for working with binary data.
- - [`std::string::into_binary`](stdlib/std/string.md#into_binarybytes) and [`std::string::from_utf8_lossy`](stdlib/std/string.md#from_utf8_lossybytes)
- - [`std::base64`](stdlib/std/base64.md) for encoding and decoding binary data to string using base64.
-
+- [`std::binary`](stdlib/std/binary.md) for useful function for working with binary data.
+- [`std::string::into_binary`](stdlib/std/string.md#into_binarybytes) and [`std::string::from_utf8_lossy`](stdlib/std/string.md#from_utf8_lossybytes)
+- [`std::base64`](stdlib/std/base64.md) for encoding and decoding binary data to string using base64.
 
 #### Operators
 
 List of binary and unary operators in `tremor-script`, ordered by precedence (from low to high):
 
 | Symbol       | Name                                                  | Example                                                 | Types                          |
-| ------------ | ----------------------------------------------------- | ------------------------------------------------------- |------------------------------- |
+| ------------ | ----------------------------------------------------- | ------------------------------------------------------- | ------------------------------ |
 | or           | Logical OR                                            | `true or false`                                         | bool                           |
 | and          | Logical AND                                           | `true and false`                                        | bool                           |
 | \|           | Bitwise OR                                            | _Bitwise OR has not been implemented yet_               | -                              |
@@ -594,7 +590,7 @@ end;
 #### Matching tuple patterns
 
 !!! tip
-    A *tuple pattern* matches a *target* value if the *target* is an array and **each** test matches the positionally correspondent value in the *target*. The *target* needs to be **at least as long** as the *pattern* but **can be longer** if the *pattern* ends with `...`.
+A _tuple pattern_ matches a _target_ value if the _target_ is an array and **each** test matches the positionally correspondent value in the _target_. The _target_ needs to be **at least as long** as the _pattern_ but **can be longer** if the _pattern_ ends with `...`.
 
     If you are looking for a more set like operation look at the [array pattern](#matching-array-patterns).
 
@@ -610,7 +606,6 @@ Tuple Pattern filter grammar:
 
 In addition to literal array matching, where the case expression tuple literal must exactly match the target of the match expression one for one, tuple patterns enable testing for matching elements within an array and filtering on the basis of matched elements.
 
-
 ```tremor
 let a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 match a of
@@ -624,10 +619,9 @@ end;
 #### Matching array patterns
 
 !!! tip
-    An *array pattern* matches a target value if the *target* is an array and **each** test in the pattern matches **at least for one** element in the *target* indiscriminate of their positions.
+An _array pattern_ matches a target value if the _target_ is an array and **each** test in the pattern matches **at least for one** element in the _target_ indiscriminate of their positions.
 
     If you are looking for a more array like / positional operation look at the [tuple pattern](#matching-tuple-patterns).
-
 
 > ![array case grammar](grammar/diagram/ArrayCase.png)
 
@@ -662,8 +656,7 @@ end;
 #### Matching record patterns
 
 !!! tip
-    A record pattern matches a target if the target is a record that contains **at least all declared keys** and the tests for **each of the declared key** match.
-
+A record pattern matches a target if the target is a record that contains **at least all declared keys** and the tests for **each of the declared key** match.
 
 > ![record case grammar](grammar/diagram/RecordCase.png)
 
@@ -740,9 +733,11 @@ end
 #### Effectors
 
 Effectors grammar:
+
 > ![effectors grammar](grammar/diagram/Effectors.png)
 
 Block:
+
 > ![block grammar](grammar/diagram/Block.png)
 
 Effectors are the expressions evaluated when a case pattern and guard succeeded.
@@ -787,7 +782,11 @@ Patch operation grammar
 
 Patch expressions define a set of record level field operations to be applied to a target record in order to transform a targetted record. Patch allows fields to be: inserted where there was no field before; removed where there was a field before; updated where there was a field before; or inserted or updated regardless of whether or not there was a field before. Patch also allows field level merge operations on records or for the targetted document itself to be merged. Merge operations in patch are syntax sugar in that they are both based on the merge operation.
 
-Patch follows the semantics of [RFC 6902](https://tools.ietf.org/html/rfc6902) with the explicit exclusion of the `copy` and `move` operations and with the addition of an `upsert` operation the variant supported by `tremor-script`
+Patch follows the semantics of [RFC 6902](https://tools.ietf.org/html/rfc6902) with the addition of an `upsert` and `default` operation.
+
+- `upsert "key" => "value"` - functions as a update or insert (replacing an existing value or creating a new one).
+- `default "key" => "value` - functions as a default for a key, inserting `"value"` only if `"key"` isn't present.
+- `default => {"nested": "template"}` - functions as a default template, recursively filling the given keys with values if not present.
 
 | Example                               | Expression                               | Result                      | Explanation                                               |
 | ------------------------------------- | ---------------------------------------- | --------------------------- | --------------------------------------------------------- |
@@ -850,9 +849,11 @@ Since the state storage lives for the lifetime of a pipeline, state will not be 
 > ![test expression grammar](grammar/diagram/TestExpr.png)
 
 TEST_LITERAL Grammar:
+
 > ![test literal grammar](grammar/diagram/TEST_LITERAL.png)
 
 TEST_ESCAPE Grammar:
+
 > ![test literal escape grammar](grammar/diagram/TEST_ESCAPE.png)
 
 The language has pluggable support for a number of microformats with two basic modes of operation that enable predicate tests ( does a particular value match the expected micro-format ) and elementization ( if a value does match a specific micro-format, then extract and elementize accordingly ).
@@ -891,7 +892,9 @@ There is no concept of _injector_ in the `tremor-script` language that is analog
 These rules are referenced in the main tremor-query grammar rules above and are listed here as extended reference.
 
 DocComment Grammar:
+
 > ![doc comment grammar](grammar/diagram/DocComment.png)
 
 DocCommentLine Grammar:
+
 > ![doc comment line grammar](grammar/diagram/DocCommentLine.png)

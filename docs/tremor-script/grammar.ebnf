@@ -83,7 +83,7 @@ Record ::= '{' Fields '}'
 
 Fields ::= Fields ',' Field | Field
 
-Field ::= STRING_LITERAL ':' Expr
+Field ::= String ':' Expr
 
 Array ::= '[' ArrayElements ']' | '[' ']'
 
@@ -145,7 +145,7 @@ FnDeclCases ::=
     FnDeclCases FnCaseClause FnDeclCaseDefault |
     FnDeclCaseDefault
 
-Emit ::= 'emit' Expr ( '=>' STRING_LITERAL )?
+Emit ::= 'emit' Expr ( '=>' String )?
 
 Drop ::= 'drop'
 
@@ -183,7 +183,7 @@ Block ::= Block ',' Expr | Block
 
 Patch ::= 'patch' Expr 'of' PatchOperations 'end'
 PatchOperations ::= PatchOperation ',' PatchOperations | PatchOperation
-PatchOperation ::= ( 'insert' | 'upsert' | 'update' | 'merge' ) Expr '=>' Expr | 'merge' '=>' Expr | 'erase' Id
+PatchOperation ::= ( 'insert' | 'upsert' | 'update' | 'merge' | 'default' ) String '=>' Expr | 'merge' '=>' Expr | | 'default' '=>' Expr | 'erase' Id
 
 Merge ::= 'merge' Expr 'of' Expr 'end'
 
@@ -215,6 +215,7 @@ PathSegment ::= Id
 
 ArraySegment ::= Expr ':' ArraySegment | Expr
 
+String ::= STRING_LITERAL
 STRING_LITERAL
          ::= '"' ( ([^#x22#x5C#xA#xD]) | STRING_ESCAPE )* '"'
 STRING_ESCAPE    ::= '\' [tbnrf\"']

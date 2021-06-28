@@ -6,7 +6,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       
       
-      <meta name="generator" content="Railroad Diagram Generator 1.62">
+      <meta name="generator" content="Railroad Diagram Generator 1.63">
       
       <style type="text/css">
     ::-moz-selection
@@ -196,7 +196,7 @@
   </style>
    </head>
    
-   <body data-new-gr-c-s-check-loaded="8.868.0" data-gr-ext-installed="">
+   <body data-new-gr-c-s-check-loaded="8.877.0" data-gr-ext-installed="">
       
       <p style="font-size: 14px; font-weight:bold"><a name="ModCommentLine">ModCommentLine:</a></p><img border="0" src="diagram/ModCommentLine.png" height="69" width="329"><p>
          
@@ -652,11 +652,11 @@
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Field">Field:</a></p><img border="0" src="diagram/Field.png" height="37" width="295" usemap="#Field.map"><map name="Field.map"><area shape="rect" coords="29,1,153,33" href="#STRING_LITERAL" title="STRING_LITERAL"><area shape="rect" coords="217,1,265,33" href="#Expr" title="Expr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Field">Field:</a></p><img border="0" src="diagram/Field.png" height="37" width="229" usemap="#Field.map"><map name="Field.map"><area shape="rect" coords="29,1,87,33" href="#String" title="String"><area shape="rect" coords="151,1,199,33" href="#Expr" title="Expr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Field" title="Field">Field</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a> ':' <a href="#Expr" title="Expr">Expr</a></div></code></div>
+               <div><a href="#Field" title="Field">Field</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#String" title="String">String</a> ':' <a href="#Expr" title="Expr">Expr</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -877,11 +877,11 @@
             
             <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Emit">Emit:</a></p><img border="0" src="diagram/Emit.png" height="69" width="421" usemap="#Emit.map"><map name="Emit.map"><area shape="rect" coords="99,1,147,33" href="#Expr" title="Expr"><area shape="rect" coords="247,33,371,65" href="#STRING_LITERAL" title="STRING_LITERAL"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Emit">Emit:</a></p><img border="0" src="diagram/Emit.png" height="69" width="355" usemap="#Emit.map"><map name="Emit.map"><area shape="rect" coords="99,1,147,33" href="#Expr" title="Expr"><area shape="rect" coords="247,33,305,65" href="#String" title="String"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Emit" title="Emit">Emit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'emit' <a href="#Expr" title="Expr">Expr</a> ( '=&gt;' <a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a> )?</div></code></div>
+               <div><a href="#Emit" title="Emit">Emit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'emit' <a href="#Expr" title="Expr">Expr</a> ( '=&gt;' <a href="#String" title="String">String</a> )?</div></code></div>
          </p>
       
       <p>referenced by:
@@ -1174,15 +1174,13 @@
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="PatchOperation">PatchOperation:</a></p><img border="0" src="diagram/PatchOperation.png" height="257" width="441" usemap="#PatchOperation.map"><map name="PatchOperation.map"><area shape="rect" coords="195,1,243,33" href="#Expr" title="Expr"><area shape="rect" coords="343,1,391,33" href="#Expr" title="Expr"><area shape="rect" coords="125,221,157,253" href="#Id" title="Id"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="PatchOperation">PatchOperation:</a></p><img border="0" src="diagram/PatchOperation.png" height="365" width="453" usemap="#PatchOperation.map"><map name="PatchOperation.map"><area shape="rect" coords="197,21,255,53" href="#String" title="String"><area shape="rect" coords="355,21,403,53" href="#Expr" title="Expr"><area shape="rect" coords="125,329,157,361" href="#Id" title="Id"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( ( 'insert' | 'upsert' | 'update' | 'merge' ) <a href="#Expr" title="Expr">Expr</a> | 'merge' ) '=&gt;' <a href="#Expr" title="Expr">Expr</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 'erase' <a href="#Id" title="Id">Id</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( ( ( 'insert' | 'upsert' | 'update' | 'merge' | 'default' ) <a href="#String" title="String">String</a> | 'merge' | 'default' ) '=&gt;' <a href="#Expr" title="Expr">Expr</a> | 'erase' <a href="#Id" title="Id">Id</a> )?</div></code></div>
          </p>
       
       <p>referenced by:
@@ -1315,13 +1313,11 @@
             
             <li><a href="#QualifiedSegments" title="QualifiedSegments">QualifiedSegments</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="STRING_LITERAL">STRING_LITERAL:</a></p><img border="0" src="diagram/STRING_LITERAL.png" height="113" width="519" usemap="#STRING_LITERAL.map"><map name="STRING_LITERAL.map"><area shape="rect" coords="135,61,259,93" href="#STRING_ESCAPE" title="STRING_ESCAPE"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="String">String:</a></p><img border="0" src="diagram/String.png" height="37" width="183" usemap="#String.map"><map name="String.map"><area shape="rect" coords="29,1,153,33" href="#STRING_LITERAL" title="STRING_LITERAL"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '"' ( [^#x0022#x005C#x000A#x000D] | <a href="#STRING_ESCAPE" title="STRING_ESCAPE">STRING_ESCAPE</a> )* '"'</div></code></div>
+               <div><a href="#String" title="String">String</a>&nbsp;&nbsp;&nbsp;::= <a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -1331,6 +1327,25 @@
             <li><a href="#Emit" title="Emit">Emit</a></li>
             
             <li><a href="#Field" title="Field">Field</a></li>
+            
+            <li><a href="#Literal" title="Literal">Literal</a></li>
+            
+            <li><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="STRING_LITERAL">STRING_LITERAL:</a></p><img border="0" src="diagram/STRING_LITERAL.png" height="113" width="439" usemap="#STRING_LITERAL.map"><map name="STRING_LITERAL.map"><area shape="rect" coords="135,61,259,93" href="#STRING_ESCAPE" title="STRING_ESCAPE"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '"' ( [^#x22#x5C#xA#xD] | <a href="#STRING_ESCAPE" title="STRING_ESCAPE">STRING_ESCAPE</a> )* '"'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#String" title="String">String</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="STRING_ESCAPE">STRING_ESCAPE:</a></p><img border="0" src="diagram/STRING_ESCAPE.png" height="345" width="175"><p>
          
@@ -1347,13 +1362,13 @@
             
             <li><a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="TEST_LITERAL">TEST_LITERAL:</a></p><img border="0" src="diagram/TEST_LITERAL.png" height="113" width="519" usemap="#TEST_LITERAL.map"><map name="TEST_LITERAL.map"><area shape="rect" coords="135,61,241,93" href="#TEST_ESCAPE" title="TEST_ESCAPE"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="TEST_LITERAL">TEST_LITERAL:</a></p><img border="0" src="diagram/TEST_LITERAL.png" height="113" width="439" usemap="#TEST_LITERAL.map"><map name="TEST_LITERAL.map"><area shape="rect" coords="135,61,241,93" href="#TEST_ESCAPE" title="TEST_ESCAPE"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#TEST_LITERAL" title="TEST_LITERAL">TEST_LITERAL</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '|' ( [^#x0022#x005C#x000A#x000D] | <a href="#TEST_ESCAPE" title="TEST_ESCAPE">TEST_ESCAPE</a> )* '|'</div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '|' ( [^#x22#x5C#xA#xD] | <a href="#TEST_ESCAPE" title="TEST_ESCAPE">TEST_ESCAPE</a> )* '|'</div></code></div>
          </p>
       
       <p>referenced by:
@@ -1485,7 +1500,7 @@
                   <nobr class="signature">... generated by <a name="Railroad-Diagram-Generator" class="signature" title="https://www.bottlecaps.de/rr/ui" href="https://www.bottlecaps.de/rr/ui" target="_blank">RR - Railroad Diagram Generator</a></nobr>
                   </td>
                
-               <td><a name="Railroad-Diagram-Generator" title="https://www.bottlecaps.de/rr/ui" href="https://www.bottlecaps.de/rr/ui" target="_blank"><img border="0" src="diagram/rr-1.62.png" height="16" width="16"></a></td>
+               <td><a name="Railroad-Diagram-Generator" title="https://www.bottlecaps.de/rr/ui" href="https://www.bottlecaps.de/rr/ui" target="_blank"><img border="0" src="diagram/rr-1.63.png" height="16" width="16"></a></td>
                </tr>
             </table>
          </p>

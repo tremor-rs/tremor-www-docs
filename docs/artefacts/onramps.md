@@ -370,6 +370,7 @@ onramp:
     codec: json
     preprocessors:
       - gzip
+      - lines
     config:
       pem: gcp.pem
       subscription: "tremor-sub"

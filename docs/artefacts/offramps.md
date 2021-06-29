@@ -486,9 +486,11 @@ offramp:
     codec: json
     linked: true
     postprocessors:
-      - gzip
+      - lines 
+      - gzip   
     preprocessors:
-      - gzip
+      - gzip 
+      - lines
 ```
 
 If the use case for the offramp requires metadata from the Google Cloud Storage service on the supported operations for this offramp, then set linked to true and configure the output port `out`.
@@ -867,6 +869,7 @@ offramp:
     type: gpub
     codec: json
     postprocessors:
+      - lines
       - gzip    
     linked: true
     config:

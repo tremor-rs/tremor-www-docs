@@ -55,6 +55,7 @@ Supported formats:
 - xz
 - snappy
 - lz4
+- zstd
 
 ### gzip
 
@@ -75,6 +76,10 @@ Decompress framed snappy compressed payload (does not support raw snappy).
 ### lz4
 
 Decompress Lz4 compressed payload.
+
+### zstd
+
+Decompress Zstd compressed payload.
 
 ### gelf-chunking
 

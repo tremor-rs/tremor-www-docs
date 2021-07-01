@@ -35,6 +35,7 @@ Supported formats:
 - xz - Xz2 level 9 compression
 - snappy - Snappy compression
 - lz4 - Lz level 4 compression
+- zstd - Zstd level 3 compression
 
 ### textual-length-prefix
 

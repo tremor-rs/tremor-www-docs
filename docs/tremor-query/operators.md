@@ -34,6 +34,8 @@ An embedded tremor script is created with a special syntax that deviates from th
 
 The tremor script runtime allows to modify events or their metadata. To learn more about Tremor Script please see the [related section](../tremor-script/index.md).
 
+The `script` operator allows to modify the events metadata (via `$`), and the script local `state` which persists across single events.
+
 **Outputs**:
 
 - `out` (default output used with `emit`)
@@ -69,6 +71,8 @@ select event from add into out;
 Bucket will perform a sliding window rate limiting based on event metadata. Limits are applied for every `$class`. In a `$class` each `$dimensions` is allowed to pass `$rate` messages per second.
 
 This operator does not support configuration.
+
+This operator preserves event metadata.
 
 **Metadata Variables**:
 
@@ -133,6 +137,8 @@ This operator is deprecated please use `qos::backpressure` instead.
 
 The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached `timeout`, or an error occurs. On a successful transmission within the timeout limit, the delay is reset.
 
+This operator preserves event metadata.
+
 **Configuration options**:
 
 - `timeout` - Maximum allowed 'write' time in milliseconds.
@@ -161,6 +167,8 @@ see errors / timeouts.
 In general `step_up` should always be significantly smaller then `step_down` to ensure we gradually
 reapproach the ideal state.
 
+This operator preserves event metadata.
+
 **Configuration options**:
 
 - `timeout` - Maximum allowed 'write' time in milliseconds.
@@ -187,6 +195,8 @@ end;
 Evenly distributes events over it's outputs. If a CB trigger event is received from an output this
 output is skipped until the circuit breaker is restored. If all outputs are triggered the operator
 itself triggers a CB event.
+
+This operator preserves event metadata.
 
 **Outputs**:
 
@@ -219,6 +229,8 @@ failed events. On the same way the WAL operator will acknowledge events that it 
 The WAL operator should be used with caution, since every event that passes through it will be
 written to the hard drive it has a significant performance impact.
 
+This operator preserves event metadata.
+
 **Configuration options**:
 
 - `read_count` - Maximum number of events that are read form the WAL at one time.
@@ -248,6 +260,8 @@ end;
 
 The batch operator is used to batch multiple events and send them in a bulk fashion. It also allows to set a timeout of how long the operator should wait for a batch to be filled.
 
+This operator batches both the event payload and event metadata into a single bulk event. Downstream pipeline nodes or offramps will receive 1 such bulk event but will treat its context as multiple events and might act different e.g. when it comes to building a request payload in the offramp context or other use cases. Empty bulk events are usually considered as `no` event.
+
 Supported configuration options are:
 
 - `count` - Elements per batch
@@ -271,6 +285,8 @@ Keeps track of the number of events as they come and emits the current count out
 
 The counter starts when the first event comes through and begins from 1.
 
+This operator preserves event metadata.
+
 **Outputs**:
 
 - `out`
@@ -290,6 +306,8 @@ define generic::counter operator counter;
 This operator generates a history entry in the event metadata underneath the field provided in the `name` config value. Data is pushed to the array as a Striong in the form: `"event: <op>(<event_id>)"`.
 
 This can be used as a tracepoint of events in a complex pipeline setup.
+
+This operator manipulates a section of the event metadata.
 
 **Configuration options**:
 

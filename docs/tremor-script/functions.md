@@ -8,7 +8,7 @@ Functions are namespaced to make identification easier.
 Tremor also supports user defined functions. There are a few
 noteworthy restrictions:
 
-1. Functions are pure / side effect free - you can not mutate `event`, `state`,
+1. Functions are pure / side effect free - you can not access `event`, `state`,
    or `$` inside of a function.
 2. Functions have to return a value, as tremor-script is expression oriented.
 3. Functions can only be defined once, even if they take different forms or

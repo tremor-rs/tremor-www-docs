@@ -68,12 +68,12 @@ This section details the major components of the `tremor-query` language.
 
 ### Tremor-Script
 
-Comments, Literals, Paths and Expression forms supported in **trickle** are the
-same as in `tremor-script`.
+[Comments](../tremor-script/index.md#comments), [Literals](../tremor-script/index.md#literals), [Paths](../tremor-script/index.md#paths) and Expression forms supported in **trickle** are the
+same as in [`tremor-script`](../tremor-script/index.md).
 
 ### Queries
 
-Queries are one or many statements separated by `;`.
+A Query consists of one or many statements separated by `;`.
 
 Queries are compiled into a DAG of operator nodes and validated at compile time. At runtime, the resulting executable tremor pipeline is evaluated/interpreted.
 
@@ -159,17 +159,21 @@ independent from event flow with a granularity of `100ms`. It is thus possible t
 Configuration Parameters:
 
 - `interval`: Time interval in nanoseconds after which the window closes.
-- `emit_empty_windows` - By default, time based windows will only emit, if events arrived. By configuring `emit_empty_windows` as `true` this window will emit every `interval`, regardless if events arrived or not.
+- `emit_empty_windows` - By default, time based windows will only emit, if events arrived. By configuring `emit_empty_windows` as `true` this window will emit every `interval` for groups it has already seen, regardless if events arrived within `interval` or not.
 
 !!! warning
     If you use a window with `emit_empty_windows` in a `group by` query and the cardinality is likely huge, consider using `max_groups` and `eviction_period` to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.
 
+#### Windowing Semantics
+
+A select query using one or more windows is generating _new_ synthetic events, aggregated from the events feeded into it. Even if a window only consists of a single event, it needs to be considered a new event. The shape of the new event is determined by the [`select`](#select-queries) _Target Expression_. Those new events will have an empty metadata and the [origin uri](tremor-script/stdlib/tremor/origin.md) is pointing to the windowed [`select`](#select-queries) query.
 
 ##### Grammar
 > ![window definition grammar](grammar/diagram/DefineWindowDefn.png)
 
 
 See also [Additional Grammar Rules](#additional-grammar-rules).
+
 ##### Examples
 
 For example a 15 second tumbling window based on the event ingest timestamp can be defined as follows
@@ -276,7 +280,7 @@ select event from kfc into out;
 
 > ![select grammar](grammar/diagram/SelectStmt.png)
 
-The select query is a builtin operation that is the workhorse of the `tremor-query` language.
+The select query is a builtin operation that is the workhorse of the `tremor-query` language. A select query describes from where to where an event should be routed (and under which conditions) and how it is transformed along the way.
 
 An example select operation configured to pass through data from a pipeline's default `in` stream to a pipeline's default `out` stream:
 
@@ -284,11 +288,30 @@ An example select operation configured to pass through data from a pipeline's de
 select event from in into out;
 ```
 
+The
+
 Select operations can filter ingested data with the specification of a [`where` clause](#WhereClause). The clause forms a predicate check on the inbound events before any further processing takes place.
 That means the `event` available to the [`where` clause](#WhereClause) is the unprocessed inbound event from the input stream (`in` in this case):
 
 ```trickle
 select event from in where event.is_interesting into out;
+```
+
+The _Target Expression_ of a select query is used to describe transformations of the event. To pass through the event without changes, just use `select event`, otherwise you can construct arbitrary [literals](../tremor-script/index.md#literals) (numbers, records, arrays, ...), call functions, aggregate functions, reference the event metadata via `$` or other [Special paths](../tremor-script/index.md#special-paths). Nearly everything is possible:
+
+```trickle
+use std::string;
+use tremor::system;
+
+select
+  {
+      "accumulated": [event.first, "middle", event.last],
+      "metadata": $meta.nested[0].deep,
+      "shouted": "#{ string::uppercase(event.message) }!",
+      "now": system::nanotime(),
+      "awesome": true
+  }
+from in into out;
 ```
 
 Select operations can filter data being forwarded to other operators with the specification of a [`having` clause](#HavingClause). The clause forms a predicate check on outbound synthetic events after any other processing has taken place.
@@ -310,6 +333,26 @@ select { "count": aggr::stats::count() } from in[fifteen_secs] into out having e
 ```
 
 In the above operation, we emit a synthetic count every fifteen seconds if at least one event has been witnessed during a 15 second window of time.
+
+Windows emit new events which are an aggregation of the events feeded into them. Those new events will have an empty event metadata (accessible via `$`).
+The same is true for the [origin uri](../tremor-script/stdlib/tremor/origin.md), which will point to the windowed query, not the origin of any event feeded into the window.
+
+To drag event metadata across a windowed query, it needs to be selected into the event payload:
+
+```trickle
+define tumbling window take_two
+with
+    size = 2,
+    eviction_period = core::datetime::with_seconds(5)
+end;
+select
+  {
+    "first": aggr::win::first($.kafka.key),
+    "all_metas": aggr::win::collect_flattened($),
+  }
+from in[take_two]
+into out;
+```
 
 
 Select operations can be grouped through defining a [`group by` clause](#GroupByClause).

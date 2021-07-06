@@ -1346,6 +1346,7 @@ Supported configuration options are:
 - `method` - HTTP method to use (default: `POST`)
 - `headers` - A map of headers to set for the requests, where both sides are strings
 - `concurrency` - Number of parallel in-flight requests (default: `4`)
+- `auth` - Provide a token that will authenticate the offramp client. Supports empty string and `gcp` (default: `""`)
 
 Used metadata variables:
 

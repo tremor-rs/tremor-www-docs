@@ -132,7 +132,7 @@ Each select statement maintains the groups for the current windows in an in memo
 If your grouping values possibly have a very high cardinality it is possible to end up with runaway memory growth, as per default the group data structures won't be evicted,
 unless `eviction_period` is set. Old groups will be discarded after `2 x eviction_period` if no event for those groups arrived.
 To configure an upper bound on the number of groups that should be maintained simultaneously for a window, set `max_groups`.
-This will help avoid unbounded memory growth, especially when using `emit_empty_windows` on time based windows.
+
 
 ##### Windows based on number of events
 
@@ -159,10 +159,7 @@ independent from event flow with a granularity of `100ms`. It is thus possible t
 Configuration Parameters:
 
 - `interval`: Time interval in nanoseconds after which the window closes.
-- `emit_empty_windows` - By default, time based windows will only emit, if events arrived. By configuring `emit_empty_windows` as `true` this window will emit every `interval` for groups it has already seen, regardless if events arrived within `interval` or not.
 
-!!! warning
-    If you use a window with `emit_empty_windows` in a `group by` query and the cardinality is likely huge, consider using `max_groups` and `eviction_period` to avoid runaway memory growth such a window will one event per interval and group for which we've seen events before.
 
 #### Windowing Semantics
 

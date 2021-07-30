@@ -49,6 +49,7 @@ The column `Delivery Acknowledgements` describes when the onramp considers and r
 | cb         | not supported                                                       |
 | crononome  | not supported                                                       |
 | discord    | not supported                                                       |
+| env        | not supported                                                       |
 | file       | not supported                                                       |
 | gsub       | always                                                              |
 | kafka      | always, only on `ack` event if `enable.auto.commit` is set to false |
@@ -312,6 +313,23 @@ Replies sent to this onramp can perform multiple operations:
     ],
   }
 }}
+```
+
+### env
+
+The `env` onramp reads the environment variables from the shell starting tremor and sends them as a message on startup. This message is send only once, right when the source is connected.
+
+There are no configuration variables and no codecs since data is provided in a structured format.
+
+The output has the form of a record with the key `env` that holds a record where the key is the name of the environment variable and the value is it's value as a string.
+
+```js
+{
+  "env": {
+    "SHELL": "/usr/bin/zsh"
+    // ...
+  }
+}
 ```
 
 ### file

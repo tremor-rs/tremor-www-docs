@@ -125,14 +125,11 @@ Tremor supports tumbling windows by number of events or by time.
 
 General configuration Parameters:
 
-* `eviction_period`: duration in nanoseconds without events arriving, after which to evict / remove the current window data for a single group.
 * `max_groups`: maximum number of groups to maintain simultaneously in memory. Groups added beyond that number will be ignored. Per default, tremor does not impose any limit on the number of groups kept simultaneously.
 
 Each select statement maintains the groups for the current windows in an in memory data-structure. This contains the group values as well as the aggregate states.
-If your grouping values possibly have a very high cardinality it is possible to end up with runaway memory growth, as per default the group data structures won't be evicted,
-unless `eviction_period` is set. Old groups will be discarded after `2 x eviction_period` if no event for those groups arrived.
+If your grouping values possibly have a very high cardinality it is possible to end up with runaway memory growth, as per default the group data structures won't be evicted as long asd they hold data.
 To configure an upper bound on the number of groups that should be maintained simultaneously for a window, set `max_groups`.
-
 
 ##### Windows based on number of events
 

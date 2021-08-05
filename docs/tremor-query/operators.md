@@ -139,7 +139,7 @@ The backpressure operator is used to introduce delays based on downstream system
 
 The operator supports two modes:
 
-- `discard` - the standard, when backpressure is triggered it will discard new messages. This is designed to fulfill the need of low transport latency at the cost of loss.
+- `discard` - the standard, when backpressure is triggered it will discard new messages by sending them to the `overflow` output port. This is designed to fulfill the need of low transport latency at the cost of loss.
 - `pause` - it will trigger a circuit breaker and ask the sources that send it data to stop sending additional events. No Event is discarded by the backpressure operator. This is designed to deal with situations where losing events is not an option - but the garuantee of losslessness depends on the source and how it can handle circuit breaker events.
 
 

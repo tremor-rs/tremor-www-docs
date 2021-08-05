@@ -137,12 +137,19 @@ This operator is deprecated please use `qos::backpressure` instead.
 
 The backpressure operator is used to introduce delays based on downstream systems load. Longer backpressure steps are introduced every time the latency of a downstream system reached `timeout`, or an error occurs. On a successful transmission within the timeout limit, the delay is reset.
 
+The operator supports two modes:
+
+- `discard` - the standard, when backpressure is triggered it will discard new messages. This is designed to fulfill the need of low transport latency at the cost of loss.
+- `pause` - it will trigger a circuit breaker and ask the sources that send it data to stop sending additional events. This is designed to deal with situations where loss isn't an option - the guarnatee of lossiness is then dependant on the source and how it can handle circuit breaker events.
+
+
 This operator preserves event metadata.
 
 **Configuration options**:
 
 - `timeout` - Maximum allowed 'write' time in milliseconds.
 - `steps` - Array of values to delay when a we detect backpressure. (default: `[50, 100, 250, 500, 1000, 5000, 10000]`)
+- `method` - Either `discard` or `pause` to define how backpressure is handled (default: `discard`)
 
 **Outputs**:
 
@@ -154,7 +161,8 @@ This operator preserves event metadata.
 ```trickle
 define qos::backpressure operator bp
 with
-  timeout = 100
+  timeout = 100,
+  method = "discard"
 end;
 ```
 

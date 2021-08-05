@@ -6,7 +6,7 @@
 binding:
   - id: example # The unique name of this binding template
     links:
-      "/onramp/metronome/{instance}/out": # Connect the inpunt to the pipeline
+      "/onramp/metronome/{instance}/out": # Connect the input to the pipeline
         - "/pipeline/example/{instance}/in"
       "/pipeline/example/{instance}/out": # Connect the pipeline to the output
         - "/offramp/kafka-out/{instance}/in"

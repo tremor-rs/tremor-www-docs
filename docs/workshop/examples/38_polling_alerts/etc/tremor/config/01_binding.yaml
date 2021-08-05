@@ -6,7 +6,7 @@
 binding:
   - id: ingress # The unique name of this binding template
     links:
-      "/onramp/udp-input/{instance}/out": # Connect the inpunt to the pipeline
+      "/onramp/udp-input/{instance}/out": # Connect the input to the pipeline
         - "/pipeline/ingress/{instance}/in"
       "/pipeline/ingress/{instance}/out": # Connect the pipeline to the output
         - "/offramp/influx-output/{instance}/in"

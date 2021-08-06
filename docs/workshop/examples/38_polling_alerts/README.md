@@ -25,7 +25,7 @@ Also there are two new pipelines:
 
 We also have a new onramp (`tick`) and offramp (`influx-query`).
 
-For the sake of not repeating the privious workshop we will focus on those new parts exclusively.
+For the sake of not repeating the previous workshop we will focus on those new parts exclusively.
 
 ## Business Logic
 

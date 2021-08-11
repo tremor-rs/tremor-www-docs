@@ -196,9 +196,26 @@
   </style>
    </head>
    
-   <body data-new-gr-c-s-check-loaded="8.877.0" data-gr-ext-installed="">
+   <body data-new-gr-c-s-check-loaded="8.881.0" data-gr-ext-installed="">
       
-      <p style="font-size: 14px; font-weight:bold"><a name="ModCommentLine">ModCommentLine:</a></p><img border="0" src="diagram/ModCommentLine.png" height="69" width="329"><p>
+      <p style="font-size: 14px; font-weight:bold"><a name="ModComment">ModComment:</a></p><img border="0" src="diagram/ModComment.png" height="53" width="233" usemap="#ModComment.map"><map name="ModComment.map"><area shape="rect" coords="49,17,183,49" href="#ModCommentLine" title="ModCommentLine"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#ModComment" title="ModComment">ModComment</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#ModCommentLine" title="ModCommentLine">ModCommentLine</a>+</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></li>
+            
+            <li><a href="#Script" title="Script">Script</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="ModCommentLine">ModCommentLine:</a></p><img border="0" src="diagram/ModCommentLine.png" height="69" width="329"><p>
          
          <div class="ebnf"><code>
                
@@ -211,7 +228,7 @@
          
          <ul>
             
-            <li><a href="#Script" title="Script">Script</a></li>
+            <li><a href="#ModComment" title="ModComment">ModComment</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="DocComment">DocComment:</a></p><img border="0" src="diagram/DocComment.png" height="53" width="229" usemap="#DocComment.map"><map name="DocComment.map"><area shape="rect" coords="49,17,179,49" href="#DocCommentLine" title="DocCommentLine"></map><p>
          
@@ -253,14 +270,461 @@
             
             <li><a href="#DocComment" title="DocComment">DocComment</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Script">Script:</a></p><img border="0" src="diagram/Script.png" height="115" width="347" usemap="#Script.map"><map name="Script.map"><area shape="rect" coords="49,1,183,33" href="#ModCommentLine" title="ModCommentLine"><area shape="rect" coords="243,35,297,67" href="#Exprs" title="Exprs"><area shape="rect" coords="243,79,291,111" href="#Expr" title="Expr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Query">Query:</a></p><img border="0" src="diagram/Query.png" height="97" width="233" usemap="#Query.map"><map name="Query.map"><area shape="rect" coords="69,17,119,49" href="#Stmt" title="Stmt"><area shape="rect" coords="49,61,99,93" href="#Stmt" title="Stmt"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Script" title="Script">Script</a>&nbsp;&nbsp;&nbsp;::= <a href="#ModCommentLine" title="ModCommentLine">ModCommentLine</a>* ( <a href="#Exprs" title="Exprs">Exprs</a> | <a href="#Expr" title="Expr">Expr</a> )</div></code></div>
+               <div><a href="#Query" title="Query">Query</a>&nbsp;&nbsp;&nbsp;&nbsp;::= ( <a href="#Stmt" title="Stmt">Stmt</a> ';' )+</div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Stmt" title="Stmt">Stmt</a></div></code></div>
          </p>
       
-      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Exprs">Exprs:</a></p><img border="0" src="diagram/Exprs.png" height="53" width="191" usemap="#Exprs.map"><map name="Exprs.map"><area shape="rect" coords="49,17,97,49" href="#Expr" title="Expr"></map><p>
+      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="Stmt">Stmt:</a></p><img border="0" src="diagram/Stmt.png" height="345" width="247" usemap="#Stmt.map"><map name="Stmt.map"><area shape="rect" coords="49,1,143,33" href="#ModuleStmt" title="ModuleStmt"><area shape="rect" coords="49,45,189,77" href="#DefineWindowDefn" title="DefineWindowDefn"><area shape="rect" coords="49,89,187,121" href="#CreateStreamDefn" title="CreateStreamDefn"><area shape="rect" coords="49,133,195,165" href="#DefineOperatorDefn" title="DefineOperatorDefn"><area shape="rect" coords="49,177,197,209" href="#CreateOperatorDefn" title="CreateOperatorDefn"><area shape="rect" coords="49,221,175,253" href="#DefineScriptDefn" title="DefineScriptDefn"><area shape="rect" coords="49,265,177,297" href="#CreateScriptDefn" title="CreateScriptDefn"><area shape="rect" coords="49,309,137,341" href="#SelectStmt" title="SelectStmt"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Stmt" title="Stmt">Stmt</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#CreateStreamDefn" title="CreateStreamDefn">CreateStreamDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#DefineOperatorDefn" title="DefineOperatorDefn">DefineOperatorDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#CreateOperatorDefn" title="CreateOperatorDefn">CreateOperatorDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#DefineScriptDefn" title="DefineScriptDefn">DefineScriptDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#CreateScriptDefn" title="CreateScriptDefn">CreateScriptDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#SelectStmt" title="SelectStmt">SelectStmt</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Query" title="Query">Query</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="ModuleStmt">ModuleStmt:</a></p><img border="0" src="diagram/ModuleStmt.png" height="85" width="691" usemap="#ModuleStmt.map"><map name="ModuleStmt.map"><area shape="rect" coords="97,17,129,49" href="#Id" title="Id"><area shape="rect" coords="239,49,345,81" href="#ModComment" title="ModComment"><area shape="rect" coords="405,17,533,49" href="#ModuleStmtInner" title="ModuleStmtInner"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'mod' <a href="#Id" title="Id">Id</a> 'with' <a href="#ModComment" title="ModComment">ModComment</a>? ( <a href="#ModuleStmtInner" title="ModuleStmtInner">ModuleStmtInner</a> ';' )+ 'end'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleStmtInner" title="ModuleStmtInner">ModuleStmtInner</a></li>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="ModuleStmtInner">ModuleStmtInner:</a></p><img border="0" src="diagram/ModuleStmtInner.png" height="169" width="245" usemap="#ModuleStmtInner.map"><map name="ModuleStmtInner.map"><area shape="rect" coords="49,1,143,33" href="#ModuleStmt" title="ModuleStmt"><area shape="rect" coords="49,45,189,77" href="#DefineWindowDefn" title="DefineWindowDefn"><area shape="rect" coords="49,89,195,121" href="#DefineOperatorDefn" title="DefineOperatorDefn"><area shape="rect" coords="49,133,175,165" href="#DefineScriptDefn" title="DefineScriptDefn"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#ModuleStmtInner" title="ModuleStmtInner">ModuleStmtInner</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#DefineOperatorDefn" title="DefineOperatorDefn">DefineOperatorDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#DefineScriptDefn" title="DefineScriptDefn">DefineScriptDefn</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="CreateStreamDefn">CreateStreamDefn:</a></p><img border="0" src="diagram/CreateStreamDefn.png" height="37" width="259" usemap="#CreateStreamDefn.map"><map name="CreateStreamDefn.map"><area shape="rect" coords="197,1,229,33" href="#Id" title="Id"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#CreateStreamDefn" title="CreateStreamDefn">CreateStreamDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'create' 'stream' <a href="#Id" title="Id">Id</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="DefineWindowDefn">DefineWindowDefn:</a></p><img border="0" src="diagram/DefineWindowDefn.png" height="81" width="723" usemap="#DefineWindowDefn.map"><map name="DefineWindowDefn.map"><area shape="rect" coords="111,1,209,33" href="#WindowKind" title="WindowKind"><area shape="rect" coords="321,1,353,33" href="#Id" title="Id"><area shape="rect" coords="393,1,489,33" href="#WithParams" title="WithParams"><area shape="rect" coords="393,45,531,77" href="#WithPartialParams" title="WithPartialParams"><area shape="rect" coords="551,45,673,77" href="#EmbeddedScript" title="EmbeddedScript"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'define' <a href="#WindowKind" title="WindowKind">WindowKind</a> 'window' <a href="#Id" title="Id">Id</a> ( <a href="#WithParams" title="WithParams">WithParams</a> | <a href="#WithPartialParams" title="WithPartialParams">WithPartialParams</a> <a href="#EmbeddedScript" title="EmbeddedScript">EmbeddedScript</a> )</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleStmtInner" title="ModuleStmtInner">ModuleStmtInner</a></li>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="WindowKind">WindowKind:</a></p><img border="0" src="diagram/WindowKind.png" height="81" width="179"><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#WindowKind" title="WindowKind">WindowKind</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'tumbling'</div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 'sliding'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="WithParams">WithParams:</a></p><img border="0" src="diagram/WithParams.png" height="37" width="261" usemap="#WithParams.map"><map name="WithParams.map"><area shape="rect" coords="99,1,167,33" href="#Params" title="Params"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#WithParams" title="WithParams">WithParams</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'with' <a href="#Params" title="Params">Params</a> 'end'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#CreateOperatorDefn" title="CreateOperatorDefn">CreateOperatorDefn</a></li>
+            
+            <li><a href="#DefineOperatorDefn" title="DefineOperatorDefn">DefineOperatorDefn</a></li>
+            
+            <li><a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="WithPartialParams">WithPartialParams:</a></p><img border="0" src="diagram/WithPartialParams.png" height="37" width="197" usemap="#WithPartialParams.map"><map name="WithPartialParams.map"><area shape="rect" coords="99,1,167,33" href="#Params" title="Params"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#WithPartialParams" title="WithPartialParams">WithPartialParams</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'with' <a href="#Params" title="Params">Params</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#CreateScriptDefn" title="CreateScriptDefn">CreateScriptDefn</a></li>
+            
+            <li><a href="#DefineScriptDefn" title="DefineScriptDefn">DefineScriptDefn</a></li>
+            
+            <li><a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Params">Params:</a></p><img border="0" src="diagram/Params.png" height="81" width="159" usemap="#Params.map"><map name="Params.map"><area shape="rect" coords="49,45,109,77" href="#Param" title="Param"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Params" title="Params">Params</a>&nbsp;&nbsp;&nbsp;::= <a href="#Param" title="Param">Param</a> ( ',' <a href="#Param" title="Param">Param</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#WithParams" title="WithParams">WithParams</a></li>
+            
+            <li><a href="#WithPartialParams" title="WithPartialParams">WithPartialParams</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Param">Param:</a></p><img border="0" src="diagram/Param.png" height="37" width="209" usemap="#Param.map"><map name="Param.map"><area shape="rect" coords="29,1,61,33" href="#Id" title="Id"><area shape="rect" coords="131,1,179,33" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Param" title="Param">Param</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Id" title="Id">Id</a> '=' <a href="#Expr" title="Expr">Expr</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Params" title="Params">Params</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="DefineOperatorDefn">DefineOperatorDefn:</a></p><img border="0" src="diagram/DefineOperatorDefn.png" height="69" width="581" usemap="#DefineOperatorDefn.map"><map name="DefineOperatorDefn.map"><area shape="rect" coords="111,1,143,33" href="#Id" title="Id"><area shape="rect" coords="213,1,245,33" href="#Id" title="Id"><area shape="rect" coords="363,1,395,33" href="#Id" title="Id"><area shape="rect" coords="435,33,531,65" href="#WithParams" title="WithParams"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#DefineOperatorDefn" title="DefineOperatorDefn">DefineOperatorDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'define' <a href="#Id" title="Id">Id</a> '::' <a href="#Id" title="Id">Id</a> 'operator' <a href="#Id" title="Id">Id</a> <a href="#WithParams" title="WithParams">WithParams</a>?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleStmtInner" title="ModuleStmtInner">ModuleStmtInner</a></li>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="CreateOperatorDefn">CreateOperatorDefn:</a></p><img border="0" src="diagram/CreateOperatorDefn.png" height="69" width="643" usemap="#CreateOperatorDefn.map"><map name="CreateOperatorDefn.map"><area shape="rect" coords="209,1,241,33" href="#Id" title="Id"><area shape="rect" coords="353,33,437,65" href="#ModularId" title="ModularId"><area shape="rect" coords="497,33,593,65" href="#WithParams" title="WithParams"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#CreateOperatorDefn" title="CreateOperatorDefn">CreateOperatorDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'create' 'operator' <a href="#Id" title="Id">Id</a> ( 'from' <a href="#ModularId" title="ModularId">ModularId</a> )? <a href="#WithParams" title="WithParams">WithParams</a>?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="DefineScriptDefn">DefineScriptDefn:</a></p><img border="0" src="diagram/DefineScriptDefn.png" height="69" width="591" usemap="#DefineScriptDefn.map"><map name="DefineScriptDefn.map"><area shape="rect" coords="189,1,221,33" href="#Id" title="Id"><area shape="rect" coords="261,33,399,65" href="#WithPartialParams" title="WithPartialParams"><area shape="rect" coords="439,1,561,33" href="#EmbeddedScript" title="EmbeddedScript"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#DefineScriptDefn" title="DefineScriptDefn">DefineScriptDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'define' 'script' <a href="#Id" title="Id">Id</a> <a href="#WithPartialParams" title="WithPartialParams">WithPartialParams</a>? <a href="#EmbeddedScript" title="EmbeddedScript">EmbeddedScript</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#ModuleStmtInner" title="ModuleStmtInner">ModuleStmtInner</a></li>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="CreateScriptDefn">CreateScriptDefn:</a></p><img border="0" src="diagram/CreateScriptDefn.png" height="69" width="665" usemap="#CreateScriptDefn.map"><map name="CreateScriptDefn.map"><area shape="rect" coords="189,1,221,33" href="#Id" title="Id"><area shape="rect" coords="333,33,417,65" href="#ModularId" title="ModularId"><area shape="rect" coords="477,33,615,65" href="#WithPartialParams" title="WithPartialParams"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#CreateScriptDefn" title="CreateScriptDefn">CreateScriptDefn</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'create' 'script' <a href="#Id" title="Id">Id</a> ( 'from' <a href="#ModularId" title="ModularId">ModularId</a> )? <a href="#WithPartialParams" title="WithPartialParams">WithPartialParams</a>?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="EmbeddedScript">EmbeddedScript:</a></p><img border="0" src="diagram/EmbeddedScript.png" height="37" width="257" usemap="#EmbeddedScript.map"><map name="EmbeddedScript.map"><area shape="rect" coords="107,1,163,33" href="#Script" title="Script"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#EmbeddedScript" title="EmbeddedScript">EmbeddedScript</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'script' <a href="#Script" title="Script">Script</a> 'end'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#DefineScriptDefn" title="DefineScriptDefn">DefineScriptDefn</a></li>
+            
+            <li><a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="SelectStmt">SelectStmt:</a></p><img border="0" src="diagram/SelectStmt.png" height="37" width="795" usemap="#SelectStmt.map"><map name="SelectStmt.map"><area shape="rect" coords="109,1,157,33" href="#Expr" title="Expr"><area shape="rect" coords="177,1,271,33" href="#FromClause" title="FromClause"><area shape="rect" coords="291,1,395,33" href="#WhereClause" title="WhereClause"><area shape="rect" coords="415,1,531,33" href="#GroupByClause" title="GroupByClause"><area shape="rect" coords="551,1,639,33" href="#IntoClause" title="IntoClause"><area shape="rect" coords="659,1,765,33" href="#HavingClause" title="HavingClause"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'select' <a href="#Expr" title="Expr">Expr</a> <a href="#FromClause" title="FromClause">FromClause</a> <a href="#WhereClause" title="WhereClause">WhereClause</a> <a href="#GroupByClause" title="GroupByClause">GroupByClause</a> <a href="#IntoClause" title="IntoClause">IntoClause</a> <a href="#HavingClause" title="HavingClause">HavingClause</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#Stmt" title="Stmt">Stmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="ModularId">ModularId:</a></p><img border="0" src="diagram/ModularId.png" height="81" width="131" usemap="#ModularId.map"><map name="ModularId.map"><area shape="rect" coords="49,45,81,77" href="#Id" title="Id"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#ModularId" title="ModularId">ModularId</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Id" title="Id">Id</a> ( '::' <a href="#Id" title="Id">Id</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#CreateOperatorDefn" title="CreateOperatorDefn">CreateOperatorDefn</a></li>
+            
+            <li><a href="#CreateScriptDefn" title="CreateScriptDefn">CreateScriptDefn</a></li>
+            
+            <li><a href="#TiltFrames" title="TiltFrames">TiltFrames</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="FromClause">FromClause:</a></p><img border="0" src="diagram/FromClause.png" height="89" width="439" usemap="#FromClause.map"><map name="FromClause.map"><area shape="rect" coords="121,21,153,53" href="#Id" title="Id"><area shape="rect" coords="239,53,323,85" href="#TiltFrames" title="TiltFrames"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#FromClause" title="FromClause">FromClause</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( 'from' <a href="#Id" title="Id">Id</a> ( '[' <a href="#TiltFrames" title="TiltFrames">TiltFrames</a> ']' )? )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="TiltFrames">TiltFrames:</a></p><img border="0" src="diagram/TiltFrames.png" height="69" width="331" usemap="#TiltFrames.map"><map name="TiltFrames.map"><area shape="rect" coords="29,1,113,33" href="#ModularId" title="ModularId"><area shape="rect" coords="197,33,281,65" href="#ModularId" title="ModularId"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#TiltFrames" title="TiltFrames">TiltFrames</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#ModularId" title="ModularId">ModularId</a> ( ',' <a href="#ModularId" title="ModularId">ModularId</a> )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#FromClause" title="FromClause">FromClause</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="WhereClause">WhereClause:</a></p><img border="0" src="diagram/WhereClause.png" height="57" width="229" usemap="#WhereClause.map"><map name="WhereClause.map"><area shape="rect" coords="131,21,179,53" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#WhereClause" title="WhereClause">WhereClause</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( 'where' <a href="#Expr" title="Expr">Expr</a> )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="GroupByClause">GroupByClause:</a></p><img border="0" src="diagram/GroupByClause.png" height="81" width="375" usemap="#GroupByClause.map"><map name="GroupByClause.map"><area shape="rect" coords="185,45,325,77" href="#GroupByDimension" title="GroupByDimension"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#GroupByClause" title="GroupByClause">GroupByClause</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'group' 'by' <a href="#GroupByDimension" title="GroupByDimension">GroupByDimension</a> ( ',' <a href="#GroupByDimension" title="GroupByDimension">GroupByDimension</a> )*</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="GroupByDimension">GroupByDimension:</a></p><img border="0" src="diagram/GroupByDimension.png" height="81" width="227" usemap="#GroupByDimension.map"><map name="GroupByDimension.map"><area shape="rect" coords="49,1,167,33" href="#SetBasedGroup" title="SetBasedGroup"><area shape="rect" coords="49,45,177,77" href="#EachBasedGroup" title="EachBasedGroup"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#GroupByDimension" title="GroupByDimension">GroupByDimension</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#SetBasedGroup" title="SetBasedGroup">SetBasedGroup</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#EachBasedGroup" title="EachBasedGroup">EachBasedGroup</a></div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#GroupByClause" title="GroupByClause">GroupByClause</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="SetBasedGroup">SetBasedGroup:</a></p><img border="0" src="diagram/SetBasedGroup.png" height="37" width="259" usemap="#SetBasedGroup.map"><map name="SetBasedGroup.map"><area shape="rect" coords="135,1,183,33" href="#Path" title="Path"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#SetBasedGroup" title="SetBasedGroup">SetBasedGroup</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'set' '(' <a href="#Path" title="Path">Path</a> ')'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#GroupByDimension" title="GroupByDimension">GroupByDimension</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="EachBasedGroup">EachBasedGroup:</a></p><img border="0" src="diagram/EachBasedGroup.png" height="37" width="271" usemap="#EachBasedGroup.map"><map name="EachBasedGroup.map"><area shape="rect" coords="147,1,195,33" href="#Path" title="Path"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#EachBasedGroup" title="EachBasedGroup">EachBasedGroup</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'each' '(' <a href="#Path" title="Path">Path</a> ')'</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#GroupByDimension" title="GroupByDimension">GroupByDimension</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="IntoClause">IntoClause:</a></p><img border="0" src="diagram/IntoClause.png" height="57" width="197" usemap="#IntoClause.map"><map name="IntoClause.map"><area shape="rect" coords="115,21,147,53" href="#Id" title="Id"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#IntoClause" title="IntoClause">IntoClause</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( 'into' <a href="#Id" title="Id">Id</a> )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="HavingClause">HavingClause:</a></p><img border="0" src="diagram/HavingClause.png" height="57" width="233" usemap="#HavingClause.map"><map name="HavingClause.map"><area shape="rect" coords="135,21,183,53" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#HavingClause" title="HavingClause">HavingClause</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( 'having' <a href="#Expr" title="Expr">Expr</a> )?</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Script">Script:</a></p><img border="0" src="diagram/Script.png" height="81" width="319" usemap="#Script.map"><map name="Script.map"><area shape="rect" coords="49,33,155,65" href="#ModComment" title="ModComment"><area shape="rect" coords="215,1,269,33" href="#Exprs" title="Exprs"><area shape="rect" coords="215,45,263,77" href="#Expr" title="Expr"></map><p>
+         
+         <div class="ebnf"><code>
+               
+               <div><a href="#Script" title="Script">Script</a>&nbsp;&nbsp;&nbsp;::= <a href="#ModComment" title="ModComment">ModComment</a>? ( <a href="#Exprs" title="Exprs">Exprs</a> | <a href="#Expr" title="Expr">Expr</a> )</div></code></div>
+         </p>
+      
+      <p>referenced by:
+         
+         <ul>
+            
+            <li><a href="#EmbeddedScript" title="EmbeddedScript">EmbeddedScript</a></li>
+            </ul>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Exprs">Exprs:</a></p><img border="0" src="diagram/Exprs.png" height="53" width="191" usemap="#Exprs.map"><map name="Exprs.map"><area shape="rect" coords="49,17,97,49" href="#Expr" title="Expr"></map><p>
          
          <div class="ebnf"><code>
                
@@ -310,17 +774,27 @@
             
             <li><a href="#Guard" title="Guard">Guard</a></li>
             
+            <li><a href="#HavingClause" title="HavingClause">HavingClause</a></li>
+            
             <li><a href="#Match" title="Match">Match</a></li>
             
             <li><a href="#Merge" title="Merge">Merge</a></li>
+            
+            <li><a href="#Param" title="Param">Param</a></li>
             
             <li><a href="#Patch" title="Patch">Patch</a></li>
             
             <li><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></li>
             
+            <li><a href="#Path" title="Path">Path</a></li>
+            
             <li><a href="#Script" title="Script">Script</a></li>
             
+            <li><a href="#SelectStmt" title="SelectStmt">SelectStmt</a></li>
+            
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
+            
+            <li><a href="#WhereClause" title="WhereClause">WhereClause</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="XorExpr">XorExpr:</a></p><img border="0" src="diagram/XorExpr.png" height="81" width="171" usemap="#XorExpr.map"><map name="XorExpr.map"><area shape="rect" coords="49,45,121,77" href="#AndExpr" title="AndExpr"></map><p>
          
@@ -542,8 +1016,6 @@
          
          <ul>
             
-            <li><a href="#BinaryField" title="BinaryField">BinaryField</a></li>
-            
             <li><a href="#Const" title="Const">Const</a></li>
             
             <li><a href="#Let" title="Let">Let</a></li>
@@ -552,7 +1024,7 @@
             
             <li><a href="#RecordPatternFields" title="RecordPatternFields">RecordPatternFields</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Literal">Literal:</a></p><img border="0" src="diagram/Literal.png" height="301" width="173" usemap="#Literal.map"><map name="Literal.map"><area shape="rect" coords="49,45,97,77" href="#Bool" title="Bool"><area shape="rect" coords="49,89,123,121" href="#INTEGER" title="INTEGER"><area shape="rect" coords="49,133,107,165" href="#FLOAT" title="FLOAT"><area shape="rect" coords="49,177,107,209" href="#String" title="String"><area shape="rect" coords="49,221,103,253" href="#Array" title="Array"><area shape="rect" coords="49,265,109,297" href="#Binary" title="Binary"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Literal">Literal:</a></p><img border="0" src="diagram/Literal.png" height="257" width="173" usemap="#Literal.map"><map name="Literal.map"><area shape="rect" coords="49,45,97,77" href="#Bool" title="Bool"><area shape="rect" coords="49,89,123,121" href="#INTEGER" title="INTEGER"><area shape="rect" coords="49,133,107,165" href="#FLOAT" title="FLOAT"><area shape="rect" coords="49,177,107,209" href="#String" title="String"><area shape="rect" coords="49,221,103,253" href="#Array" title="Array"></map><p>
          
          <div class="ebnf"><code>
                
@@ -566,9 +1038,7 @@
                
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#String" title="String">String</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Array" title="Array">Array</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Binary" title="Binary">Binary</a></div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Array" title="Array">Array</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -576,68 +1046,6 @@
          <ul>
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
-            </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Binary">Binary:</a></p><img border="0" src="diagram/Binary.png" height="69" width="315" usemap="#Binary.map"><map name="Binary.map"><area shape="rect" coords="109,33,205,65" href="#BinaryFields" title="BinaryFields"></map><p>
-         
-         <div class="ebnf"><code>
-               
-               <div><a href="#Binary" title="Binary">Binary</a>&nbsp;&nbsp;&nbsp;::= '&lt;&lt;' <a href="#BinaryFields" title="BinaryFields">BinaryFields</a>? '&gt;&gt;'</div></code></div>
-         </p>
-      
-      <p>referenced by:
-         
-         <ul>
-            
-            <li><a href="#Literal" title="Literal">Literal</a></li>
-            </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinaryFields">BinaryFields:</a></p><img border="0" src="diagram/BinaryFields.png" height="81" width="355" usemap="#BinaryFields.map"><map name="BinaryFields.map"><area shape="rect" coords="49,1,145,33" href="#BinaryFields" title="BinaryFields"><area shape="rect" coords="209,1,305,33" href="#BinaryFields" title="BinaryFields"><area shape="rect" coords="49,45,137,77" href="#BinaryField" title="BinaryField"></map><p>
-         
-         <div class="ebnf"><code>
-               
-               <div><a href="#BinaryFields" title="BinaryFields">BinaryFields</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#BinaryFields" title="BinaryFields">BinaryFields</a> ',' <a href="#BinaryFields" title="BinaryFields">BinaryFields</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#BinaryField" title="BinaryField">BinaryField</a></div></code></div>
-         </p>
-      
-      <p>referenced by:
-         
-         <ul>
-            
-            <li><a href="#Binary" title="Binary">Binary</a></li>
-            
-            <li><a href="#BinaryFields" title="BinaryFields">BinaryFields</a></li>
-            </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinaryField">BinaryField:</a></p><img border="0" src="diagram/BinaryField.png" height="69" width="525" usemap="#BinaryField.map"><map name="BinaryField.map"><area shape="rect" coords="29,1,119,33" href="#SimpleExpr" title="SimpleExpr"><area shape="rect" coords="203,33,277,65" href="#INTEGER" title="INTEGER"><area shape="rect" coords="385,33,475,65" href="#BinaryType" title="BinaryType"></map><p>
-         
-         <div class="ebnf"><code>
-               
-               <div><a href="#BinaryField" title="BinaryField">BinaryField</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a> ( ':' <a href="#INTEGER" title="INTEGER">INTEGER</a> )? ( '/' <a href="#BinaryType" title="BinaryType">BinaryType</a> )?</div></code></div>
-         </p>
-      
-      <p>referenced by:
-         
-         <ul>
-            
-            <li><a href="#BinaryFields" title="BinaryFields">BinaryFields</a></li>
-            </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="BinaryType">BinaryType:</a></p><img border="0" src="diagram/BinaryType.png" height="101" width="433" usemap="#BinaryType.map"><map name="BinaryType.map"><area shape="rect" coords="29,1,83,33" href="#Ident" title="Ident"><area shape="rect" coords="169,33,223,65" href="#Ident" title="Ident"><area shape="rect" coords="309,65,363,97" href="#Ident" title="Ident"></map><p>
-         
-         <div class="ebnf"><code>
-               
-               <div><a href="#BinaryType" title="BinaryType">BinaryType</a></div>
-               
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#Ident" title="Ident">Ident</a> ( '-' <a href="#Ident" title="Ident">Ident</a> ( '-' <a href="#Ident" title="Ident">Ident</a> )? )?</div></code></div>
-         </p>
-      
-      <p>referenced by:
-         
-         <ul>
-            
-            <li><a href="#BinaryField" title="BinaryField">BinaryField</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="Record">Record:</a></p><img border="0" src="diagram/Record.png" height="81" width="245" usemap="#Record.map"><map name="Record.map"><area shape="rect" coords="97,45,147,77" href="#Field" title="Field"></map><p>
          
@@ -650,13 +1058,15 @@
          
          <ul>
             
+            <li><a href="#Path" title="Path">Path</a></li>
+            
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Field">Field:</a></p><img border="0" src="diagram/Field.png" height="37" width="229" usemap="#Field.map"><map name="Field.map"><area shape="rect" coords="29,1,87,33" href="#String" title="String"><area shape="rect" coords="151,1,199,33" href="#Expr" title="Expr"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Field">Field:</a></p><img border="0" src="diagram/Field.png" height="37" width="295" usemap="#Field.map"><map name="Field.map"><area shape="rect" coords="29,1,153,33" href="#STRING_LITERAL" title="STRING_LITERAL"><area shape="rect" coords="217,1,265,33" href="#Expr" title="Expr"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Field" title="Field">Field</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#String" title="String">String</a> ':' <a href="#Expr" title="Expr">Expr</a></div></code></div>
+               <div><a href="#Field" title="Field">Field</a>&nbsp;&nbsp;&nbsp;&nbsp;::= <a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a> ':' <a href="#Expr" title="Expr">Expr</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -677,6 +1087,8 @@
          <ul>
             
             <li><a href="#Literal" title="Literal">Literal</a></li>
+            
+            <li><a href="#Path" title="Path">Path</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="Bool">Bool:</a></p><img border="0" src="diagram/Bool.png" height="81" width="151"><p>
          
@@ -877,11 +1289,11 @@
             
             <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Emit">Emit:</a></p><img border="0" src="diagram/Emit.png" height="69" width="355" usemap="#Emit.map"><map name="Emit.map"><area shape="rect" coords="99,1,147,33" href="#Expr" title="Expr"><area shape="rect" coords="247,33,305,65" href="#String" title="String"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Emit">Emit:</a></p><img border="0" src="diagram/Emit.png" height="69" width="421" usemap="#Emit.map"><map name="Emit.map"><area shape="rect" coords="99,1,147,33" href="#Expr" title="Expr"><area shape="rect" coords="247,33,371,65" href="#STRING_LITERAL" title="STRING_LITERAL"></map><p>
          
          <div class="ebnf"><code>
                
-               <div><a href="#Emit" title="Emit">Emit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'emit' <a href="#Expr" title="Expr">Expr</a> ( '=&gt;' <a href="#String" title="String">String</a> )?</div></code></div>
+               <div><a href="#Emit" title="Emit">Emit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= 'emit' <a href="#Expr" title="Expr">Expr</a> ( '=&gt;' <a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a> )?</div></code></div>
          </p>
       
       <p>referenced by:
@@ -1174,13 +1586,15 @@
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="PatchOperation">PatchOperation:</a></p><img border="0" src="diagram/PatchOperation.png" height="365" width="453" usemap="#PatchOperation.map"><map name="PatchOperation.map"><area shape="rect" coords="197,21,255,53" href="#String" title="String"><area shape="rect" coords="355,21,403,53" href="#Expr" title="Expr"><area shape="rect" coords="125,329,157,361" href="#Id" title="Id"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="PatchOperation">PatchOperation:</a></p><img border="0" src="diagram/PatchOperation.png" height="257" width="441" usemap="#PatchOperation.map"><map name="PatchOperation.map"><area shape="rect" coords="195,1,243,33" href="#Expr" title="Expr"><area shape="rect" coords="343,1,391,33" href="#Expr" title="Expr"><area shape="rect" coords="125,221,157,253" href="#Id" title="Id"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></div>
                
-               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( ( ( 'insert' | 'upsert' | 'update' | 'merge' | 'default' ) <a href="#String" title="String">String</a> | 'merge' | 'default' ) '=&gt;' <a href="#Expr" title="Expr">Expr</a> | 'erase' <a href="#Id" title="Id">Id</a> )?</div></code></div>
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= ( ( 'insert' | 'upsert' | 'update' | 'merge' ) <a href="#Expr" title="Expr">Expr</a> | 'merge' ) '=&gt;' <a href="#Expr" title="Expr">Expr</a></div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 'erase' <a href="#Id" title="Id">Id</a></div></code></div>
          </p>
       
       <p>referenced by:
@@ -1241,15 +1655,19 @@
          
          <ul>
             
+            <li><a href="#Path" title="Path">Path</a></li>
+            
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Path">Path:</a></p><img border="0" src="diagram/Path.png" height="327" width="735" usemap="#Path.map"><map name="Path.map"><area shape="rect" coords="117,33,255,65" href="#QualifiedSegments" title="QualifiedSegments"><area shape="rect" coords="231,109,369,141" href="#QualifiedSegments" title="QualifiedSegments"><area shape="rect" coords="233,153,343,185" href="#ArraySegment" title="ArraySegment"><area shape="rect" coords="49,231,81,263" href="#Id" title="Id"><area shape="rect" coords="205,231,311,263" href="#PathSegment" title="PathSegment"><area shape="rect" coords="207,275,317,307" href="#ArraySegment" title="ArraySegment"><area shape="rect" coords="509,231,619,263" href="#ArraySegment" title="ArraySegment"><area shape="rect" coords="507,275,613,307" href="#PathSegment" title="PathSegment"></map><p>
+         </p><br><p style="font-size: 14px; font-weight:bold"><a name="Path">Path:</a></p><img border="0" src="diagram/Path.png" height="503" width="735" usemap="#Path.map"><map name="Path.map"><area shape="rect" coords="117,33,255,65" href="#QualifiedSegments" title="QualifiedSegments"><area shape="rect" coords="231,109,369,141" href="#QualifiedSegments" title="QualifiedSegments"><area shape="rect" coords="233,153,343,185" href="#ArraySegment" title="ArraySegment"><area shape="rect" coords="69,209,123,241" href="#Array" title="Array"><area shape="rect" coords="69,253,133,285" href="#Record" title="Record"><area shape="rect" coords="69,297,127,329" href="#FnCall" title="FnCall"><area shape="rect" coords="115,341,163,373" href="#Expr" title="Expr"><area shape="rect" coords="293,209,431,241" href="#QualifiedSegments" title="QualifiedSegments"><area shape="rect" coords="49,407,81,439" href="#Id" title="Id"><area shape="rect" coords="205,407,311,439" href="#PathSegment" title="PathSegment"><area shape="rect" coords="207,451,317,483" href="#ArraySegment" title="ArraySegment"><area shape="rect" coords="509,407,619,439" href="#ArraySegment" title="ArraySegment"><area shape="rect" coords="507,451,613,483" href="#PathSegment" title="PathSegment"></map><p>
          
          <div class="ebnf"><code>
                
                <div><a href="#Path" title="Path">Path</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= '$' <a href="#QualifiedSegments" title="QualifiedSegments">QualifiedSegments</a>?</div>
                
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ( 'event' | 'state' | 'args' ) ( '.' <a href="#QualifiedSegments" title="QualifiedSegments">QualifiedSegments</a> | '[' <a href="#ArraySegment" title="ArraySegment">ArraySegment</a> ']' )?</div>
+               
+               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ( <a href="#Array" title="Array">Array</a> | <a href="#Record" title="Record">Record</a> | <a href="#FnCall" title="FnCall">FnCall</a> | '(' <a href="#Expr" title="Expr">Expr</a> ')' ) '.' <a href="#QualifiedSegments" title="QualifiedSegments">QualifiedSegments</a></div>
                
                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="#Id" title="Id">Id</a> ( '.' <a href="#PathSegment" title="PathSegment">PathSegment</a> | '[' <a href="#ArraySegment" title="ArraySegment">ArraySegment</a> ']' )* ( '[' <a href="#ArraySegment" title="ArraySegment">ArraySegment</a> ']' | '.' <a href="#PathSegment" title="PathSegment">PathSegment</a> )</div></code></div>
          </p>
@@ -1260,7 +1678,11 @@
             
             <li><a href="#Const" title="Const">Const</a></li>
             
+            <li><a href="#EachBasedGroup" title="EachBasedGroup">EachBasedGroup</a></li>
+            
             <li><a href="#Let" title="Let">Let</a></li>
+            
+            <li><a href="#SetBasedGroup" title="SetBasedGroup">SetBasedGroup</a></li>
             
             <li><a href="#SimpleExpr" title="SimpleExpr">SimpleExpr</a></li>
             </ul>
@@ -1313,25 +1735,6 @@
             
             <li><a href="#QualifiedSegments" title="QualifiedSegments">QualifiedSegments</a></li>
             </ul>
-         </p><br><p style="font-size: 14px; font-weight:bold"><a name="String">String:</a></p><img border="0" src="diagram/String.png" height="37" width="183" usemap="#String.map"><map name="String.map"><area shape="rect" coords="29,1,153,33" href="#STRING_LITERAL" title="STRING_LITERAL"></map><p>
-         
-         <div class="ebnf"><code>
-               
-               <div><a href="#String" title="String">String</a>&nbsp;&nbsp;&nbsp;::= <a href="#STRING_LITERAL" title="STRING_LITERAL">STRING_LITERAL</a></div></code></div>
-         </p>
-      
-      <p>referenced by:
-         
-         <ul>
-            
-            <li><a href="#Emit" title="Emit">Emit</a></li>
-            
-            <li><a href="#Field" title="Field">Field</a></li>
-            
-            <li><a href="#Literal" title="Literal">Literal</a></li>
-            
-            <li><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></li>
-            </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="STRING_LITERAL">STRING_LITERAL:</a></p><img border="0" src="diagram/STRING_LITERAL.png" height="113" width="439" usemap="#STRING_LITERAL.map"><map name="STRING_LITERAL.map"><area shape="rect" coords="135,61,259,93" href="#STRING_ESCAPE" title="STRING_ESCAPE"></map><p>
          
          <div class="ebnf"><code>
@@ -1345,7 +1748,9 @@
          
          <ul>
             
-            <li><a href="#String" title="String">String</a></li>
+            <li><a href="#Emit" title="Emit">Emit</a></li>
+            
+            <li><a href="#Field" title="Field">Field</a></li>
             </ul>
          </p><br><p style="font-size: 14px; font-weight:bold"><a name="STRING_ESCAPE">STRING_ESCAPE:</a></p><img border="0" src="diagram/STRING_ESCAPE.png" height="345" width="175"><p>
          
@@ -1407,6 +1812,18 @@
             
             <li><a href="#ArrayCase" title="ArrayCase">ArrayCase</a></li>
             
+            <li><a href="#CreateOperatorDefn" title="CreateOperatorDefn">CreateOperatorDefn</a></li>
+            
+            <li><a href="#CreateScriptDefn" title="CreateScriptDefn">CreateScriptDefn</a></li>
+            
+            <li><a href="#CreateStreamDefn" title="CreateStreamDefn">CreateStreamDefn</a></li>
+            
+            <li><a href="#DefineOperatorDefn" title="DefineOperatorDefn">DefineOperatorDefn</a></li>
+            
+            <li><a href="#DefineScriptDefn" title="DefineScriptDefn">DefineScriptDefn</a></li>
+            
+            <li><a href="#DefineWindowDefn" title="DefineWindowDefn">DefineWindowDefn</a></li>
+            
             <li><a href="#ExprCase" title="ExprCase">ExprCase</a></li>
             
             <li><a href="#FnCall" title="FnCall">FnCall</a></li>
@@ -1415,11 +1832,21 @@
             
             <li><a href="#ForCaseClause" title="ForCaseClause">ForCaseClause</a></li>
             
+            <li><a href="#FromClause" title="FromClause">FromClause</a></li>
+            
+            <li><a href="#IntoClause" title="IntoClause">IntoClause</a></li>
+            
             <li><a href="#IntrinsicFnDecl" title="IntrinsicFnDecl">IntrinsicFnDecl</a></li>
             
             <li><a href="#MatchingFnDecl" title="MatchingFnDecl">MatchingFnDecl</a></li>
             
+            <li><a href="#ModularId" title="ModularId">ModularId</a></li>
+            
             <li><a href="#Module" title="Module">Module</a></li>
+            
+            <li><a href="#ModuleStmt" title="ModuleStmt">ModuleStmt</a></li>
+            
+            <li><a href="#Param" title="Param">Param</a></li>
             
             <li><a href="#PatchOperation" title="PatchOperation">PatchOperation</a></li>
             
@@ -1447,8 +1874,6 @@
       <p>referenced by:
          
          <ul>
-            
-            <li><a href="#BinaryField" title="BinaryField">BinaryField</a></li>
             
             <li><a href="#Literal" title="Literal">Literal</a></li>
             </ul>
@@ -1505,4 +1930,6 @@
             </table>
          </p>
       </body>
-   </html>
+   
+   <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>

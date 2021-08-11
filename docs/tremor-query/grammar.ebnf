@@ -1,5 +1,6 @@
 /**
  * Literal documentation support
+ * https://www.bottlecaps.de/rr/ui
  */
 
 ModComment ::=
@@ -290,6 +291,10 @@ Path ::= '$' QualifiedSegments | '$'
     | 'event' '.' QualifiedSegments | 'event' '[' ArraySegment ']' | 'event'
     | 'state' '.' QualifiedSegments | 'state' '[' ArraySegment ']' | 'state'
     | 'args' '.' QualifiedSegments  | 'args' '[' ArraySegment ']' | 'args'
+    | Array '.' QualifiedSegments 
+    | Record '.' QualifiedSegments
+    | FnCall '.' QualifiedSegments
+    | '(' Expr ')' '.' QualifiedSegments
     | Id LocalSegments
 
 QualifiedSegments ::= QualifiedSegments '.' PathSegment

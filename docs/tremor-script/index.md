@@ -298,7 +298,7 @@ ArraySegment grammar:
 
 > ![array grammar](grammar/diagram/ArraySegment.png)
 
-Path-like structures in `tremor-script` allow referencing local variables, ingested events, event meta-data, script-local state etc. and also indexing into them if they are records or arrays.
+Path-like structures in `tremor-script` allow referencing local variables, ingested events, event meta-data, script-local state etc. and also indexing into them if they are records or arrays. Functiosn, Record- and Array-semiliterals as well as immutable expressions wrapped in `()` can be used as a path root.
 
 #### Special paths
 

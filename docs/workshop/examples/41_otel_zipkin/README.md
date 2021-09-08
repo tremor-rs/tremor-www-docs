@@ -1,4 +1,4 @@
-# CNCF OpenTelemetry Zipkin Interorking
+# CNCF OpenTelemetry Zipkin Interworking
 
 This example builds on the simple passthrough CNCF OpenTelemetry
 configuration but configures Zipkin as a receiver and exporter in the
